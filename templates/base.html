@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcoEdu{% endblock %}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            bg: '#0E0F12',
+                            surface: '#171A1F',
+                            border: '#2A2E35',
+                        },
+                        brand: {
+                            500: '#10B981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0E0F12;
+            color: #E6E8EB;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0E0F12;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2A2E35;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0E0F12]/80 backdrop-blur-md border-b border-[#2A2E35]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}" class="flex items-center gap-2 group">
+                    <div
+                        class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                        <i class="fas fa-leaf text-sm"></i>
+                    </div>
+                    <span class="font-bold text-lg text-white tracking-tight">Eco<span
+                            class="text-emerald-500">Edu</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-4">
+                    {% if current_user.is_authenticated %}
+                    {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}"
+                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Admin Dashboard</a>
+                    {% else %}
+                    <a href="{{ url_for('dashboard') }}"
+                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Dashboard</a>
+                    <a href="{{ url_for('challenges') }}"
+                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Challenges</a>
+                    <a href="{{ url_for('achievements') }}"
+                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Achievements</a>
+                    <a href="{{ url_for('leaderboard') }}"
+                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Leaderboard</a>
+                    {% endif %}
+
+                    <a href="{{ url_for('profile') }}"
+                        class="group flex items-center gap-3 pl-4 border-l border-[#2A2E35]">
+                        <div class="hidden md:block text-right">
+                            <p class="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">{{
+                                current_user.name }}</p>
+                            <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">{{
+                                current_user.role }}</p>
+                        </div>
+                        <div
+                            class="w-9 h-9 rounded-full bg-[#171A1F] p-0.5 border border-[#2A2E35] group-hover:border-emerald-500 transition-colors cursor-pointer relative">
+                            <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+                                onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
+                                alt="Profile" class="w-full h-full object-cover rounded-full">
+                        </div>
+                    </a>
+                    <a href="{{ url_for('logout') }}"
+                        class="text-sm font-medium text-red-400 hover:text-red-300 transition-colors ml-4">
+                        Log out
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}"
+                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sign in</a>
+                    <a href="{{ url_for('register') }}"
+                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-colors">
+                        Get Started
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        class="text-gray-400 hover:text-white p-2">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-[#2A2E35] bg-[#0E0F12]">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                {% if current_user.is_authenticated %}
+                {% if current_user.role == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Admin
+                    Dashboard</a>
+                {% else %}
+                <a href="{{ url_for('dashboard') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Dashboard</a>
+                <a href="{{ url_for('challenges') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Challenges</a>
+                <a href="{{ url_for('achievements') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Achievements</a>
+                <a href="{{ url_for('leaderboard') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Leaderboard</a>
+                {% endif %}
+                <a href="{{ url_for('profile') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Profile</a>
+                <a href="{{ url_for('logout') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-[#171A1F]">Log out</a>
+                {% else %}
+                <a href="{{ url_for('login') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Sign
+                    in</a>
+                <a href="{{ url_for('register') }}"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-emerald-500 hover:bg-[#171A1F]">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="pt-16 min-h-screen">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+            {% for category, message in messages %}
+            <div
+                class="pointer-events-auto bg-[#171A1F] border border-[#2A2E35] shadow-lg rounded-lg p-4 flex items-start gap-3 w-80 animate-slide-in">
+                {% if category == 'success' %}
+                <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                {% elif category == 'error' %}
+                <i class="fas fa-circle-exclamation text-red-500 mt-0.5"></i>
+                {% else %}
+                <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+                {% endif %}
+                <div>
+                    <h4 class="text-sm font-medium text-white capitalize">{{ category }}</h4>
+                    <p class="text-xs text-gray-400 mt-0.5">{{ message }}</p>
+                </div>
+                <button onclick="this.parentElement.remove()" class="ml-auto text-gray-500 hover:text-white">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

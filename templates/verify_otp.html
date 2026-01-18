@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Code | EcoEdu{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-semibold text-gray-100 mb-2">Verify code</h1>
+            <p class="text-sm text-gray-400">Enter the 6-digit code sent to</p>
+            <p class="text-sm font-medium text-emerald-500 mt-1">{{ email }}</p>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl shadow-2xl p-8">
+            <form method="POST" id="otp-form" class="space-y-8">
+                {{ form.hidden_tag() }}
+                {{ form.email(type="hidden") }}
+                {{ form.otp(type="hidden") }}
+
+                <!-- OTP Input -->
+                <div class="flex justify-between gap-2">
+                    {% for i in range(6) %}
+                    <input type="text" maxlength="1"
+                        class="otp-box w-10 h-12 sm:w-12 sm:h-14 text-center text-lg font-bold rounded-lg bg-[#0E0F12] border border-[#2A2E35] text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                        required>
+                    {% endfor %}
+                </div>
+                {% for error in form.otp.errors %}
+                <p class="text-red-400 text-xs text-center">{{ error }}</p>
+                {% endfor %}
+
+                <button type="submit"
+                    class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg shadow-lg shadow-emerald-900/20 transition-all text-sm">
+                    Verify
+                </button>
+            </form>
+
+            <div class="text-center mt-6">
+                <p class="text-xs text-gray-400">
+                    Didn't receive the code?
+                    <button type="button" id="resend-btn"
+                        class="text-emerald-500 hover:text-emerald-400 font-medium ml-1 transition-colors">Resend</button>
+                </p>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-[#2A2E35] text-center">
+                <a href="{{ url_for('login') }}"
+                    class="text-xs text-gray-400 hover:text-white transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-arrow-left"></i> Back to sign in
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const inputs = document.querySelectorAll('.otp-box');
+    const hiddenOtp = document.querySelector('input[name="otp"]');
+
+    inputs.forEach((input, idx) => {
+        input.addEventListener('input', () => {
+            if (input.value.length > 0 && idx < inputs.length - 1) {
+                inputs[idx + 1].focus();
+            }
+        });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !input.value && idx > 0) {
+                inputs[idx - 1].focus();
+            }
+        });
+    });
+
+    inputs[0].addEventListener('paste', (e) => {
+        e.preventDefault();
+        const paste = (e.clipboardData || window.clipboardData).getData('text').slice(0, 6);
+        paste.split('').forEach((char, idx) => {
+            if (idx < 6 && /\d/.test(char)) {
+                inputs[idx].value = char;
+            }
+        });
+        const nextEmpty = Array.from(inputs).find(i => !i.value);
+        if (nextEmpty) nextEmpty.focus();
+    });
+
+    document.querySelector('#otp-form').addEventListener('submit', () => {
+        hiddenOtp.value = Array.from(inputs).map(i => i.value).join('');
+    });
+
+    const resendBtn = document.getElementById('resend-btn');
+    if (resendBtn) {
+        resendBtn.addEventListener('click', () => {
+            // Mock resend
+            resendBtn.innerText = 'Sent!';
+            resendBtn.disabled = true;
+            resendBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            setTimeout(() => {
+                resendBtn.innerText = 'Resend';
+                resendBtn.disabled = false;
+                resendBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }, 30000);
+        });
+    }
+</script>
+{% endblock %}

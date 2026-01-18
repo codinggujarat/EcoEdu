@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Account Settings | EcoEdu{% endblock %}
+
+{% block content %}
+<div class="px-6 py-12 max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="mb-10">
+        <h2 class="text-3xl font-bold text-gray-100 mb-2">Account Settings</h2>
+        <p class="text-gray-400 text-sm">Manage your personal information and preferences.</p>
+    </div>
+
+    <!-- Main Form -->
+    <form method="POST" enctype="multipart/form-data" class="space-y-8">
+        {{ form.hidden_tag() }}
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Profile Picture Section -->
+            <div class="lg:col-span-1">
+                <div class="bg-[#171A1F] rounded-xl border border-[#2A2E35] p-6 text-center h-full">
+                    <h3 class="text-sm font-semibold text-gray-100 mb-6 text-left">Profile Image</h3>
+
+                    <div class="flex flex-col items-center">
+                        <div class="relative group cursor-pointer mb-6"
+                            onclick="document.getElementById('profile_pic_input').click()">
+                            <img id="profileImage"
+                                src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+                                onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
+                                alt="Profile Picture"
+                                class="w-32 h-32 rounded-full border-4 border-[#2A2E35] object-cover shadow-lg group-hover:border-emerald-500 transition-colors">
+
+                            <!-- Overlay Icon -->
+                            <div
+                                class="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="fas fa-camera text-white text-xl"></i>
+                            </div>
+                        </div>
+
+                        <!-- Hidden File Input -->
+                        {{ form.profile_pic(id="profile_pic_input", class="hidden", onchange="previewImage(event)") }}
+
+                        <button type="button" onclick="document.getElementById('profile_pic_input').click()"
+                            class="text-sm font-medium text-emerald-500 hover:text-emerald-400 transition-colors">
+                            Change Photo
+                        </button>
+                        <p class="text-xs text-gray-500 mt-2">Recommended: 400x400px</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Details Section -->
+            <div class="lg:col-span-2">
+                <div class="bg-[#171A1F] rounded-xl border border-[#2A2E35] p-6 h-full">
+                    <h3 class="text-sm font-semibold text-gray-100 mb-6">Personal Information</h3>
+
+                    <div class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <!-- Name Field -->
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-medium text-gray-400">Full Name</label>
+                                {{ form.name(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg px-4 py-2.5
+                                text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                                focus:ring-emerald-500 outline-none transition-colors", placeholder="Your Name") }}
+                            </div>
+
+                            <!-- School Field -->
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-medium text-gray-400">Institution</label>
+                                {{ form.school(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg px-4 py-2.5
+                                text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                                focus:ring-emerald-500 outline-none transition-colors", placeholder="School Name") }}
+                            </div>
+                        </div>
+
+                        <!-- Class Field -->
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Class / Department</label>
+                            {{ form.class_name(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg px-4 py-2.5
+                            text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                            focus:ring-emerald-500 outline-none transition-colors", placeholder="e.g. Science Div-A") }}
+                        </div>
+
+                        <!-- Email Field (Read-only) -->
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Email Address</label>
+                            <div class="relative">
+                                <div
+                                    class="w-full bg-[#0E0F12]/50 border border-[#2A2E35] rounded-lg px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed">
+                                    {{ current_user.email }}
+                                </div>
+                                <i
+                                    class="fas fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-xs"></i>
+                            </div>
+                            <p class="text-[10px] text-gray-500">Email address cannot be changed for security reasons.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-8 pt-6 border-t border-[#2A2E35] flex items-center justify-end gap-3">
+                        <a href="{{ url_for('dashboard') }}"
+                            class="px-5 py-2 rounded-lg border border-[#2A2E35] text-gray-400 font-medium text-sm hover:text-white hover:bg-[#2A2E35] transition-all">
+                            Cancel
+                        </a>
+                        <button type="submit"
+                            class="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm rounded-lg shadow-lg shadow-emerald-900/20 transition-all">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        const output = document.getElementById('profileImage');
+        reader.onload = function () {
+            output.src = reader.result;
+        }
+        if (event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+</script>
+{% endblock %}

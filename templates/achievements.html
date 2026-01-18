@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Achievements - EcoEdu{% endblock %}
+
+{% block content %}
+<div class="px-6 py-8 max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-10">
+        <h2 class="text-2xl font-semibold text-gray-100 mb-2">Achievement Registry</h2>
+        <p class="text-gray-400 text-sm">Track your professional milestones and contributions.</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col relative group">
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Unlocked</p>
+                <i class="fas fa-trophy text-gray-600"></i>
+            </div>
+            <p class="text-3xl font-semibold text-gray-100">{{ earned_achievements|length }}</p>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col relative group">
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Pending</p>
+                <i class="fas fa-lock text-gray-600"></i>
+            </div>
+            <p class="text-3xl font-semibold text-gray-100">{{ unearned_achievements|length }}</p>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col relative group">
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Impact Score</p>
+                <i class="fas fa-chart-line text-gray-600"></i>
+            </div>
+            <p class="text-3xl font-semibold text-gray-100">{{ user.eco_points }}</p>
+        </div>
+    </div>
+
+    <!-- Unlocked Achievements -->
+    <div class="mb-10">
+        <div class="flex items-center gap-3 mb-6">
+            <h3 class="text-lg font-medium text-gray-200">Unlocked Milestones</h3>
+            <span
+                class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium border border-emerald-500/20">{{
+                earned_achievements|length }}</span>
+        </div>
+
+        {% if earned_achievements %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for ach in earned_achievements %}
+            <div
+                class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-colors duration-200">
+                <div class="flex items-start gap-4 mb-4">
+                    <div
+                        class="w-10 h-10 bg-[#0E0F12] border border-[#2A2E35] rounded-md flex items-center justify-center text-xl">
+                        {{ ach.badge_icon }}
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-200">{{ ach.name }}</h4>
+                        <p class="text-xs text-emerald-600 mt-1 font-medium">Completed</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-400 leading-relaxed">
+                    {{ ach.description }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-8 text-center">
+            <p class="text-gray-500 text-sm">No achievements unlocked yet.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Locked Achievements -->
+    <div>
+        <h3 class="text-lg font-medium text-gray-200 mb-6">Available Milestones</h3>
+
+        {% if unearned_achievements %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for ach in unearned_achievements %}
+            <div
+                class="bg-[#171A1F]/50 border border-[#2A2E35] rounded-lg p-6 hover:bg-[#171A1F] transition-colors duration-200 relative">
+                <div class="flex items-start gap-4 mb-4 opacity-75">
+                    <div
+                        class="w-10 h-10 bg-[#0E0F12] border border-[#2A2E35] rounded-md flex items-center justify-center text-xl grayscale">
+                        {{ ach.badge_icon }}
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-300">{{ ach.name }}</h4>
+                        <div class="flex items-center gap-2 mt-1.5">
+                            {% if ach.points_required > 0 %}
+                            <span class="text-[10px] bg-[#2A2E35] text-gray-400 px-1.5 py-0.5 rounded">
+                                {{ ach.points_required }} PTS
+                            </span>
+                            {% endif %}
+                            {% if ach.challenges_required > 0 %}
+                            <span class="text-[10px] bg-[#2A2E35] text-gray-400 px-1.5 py-0.5 rounded">
+                                {{ ach.challenges_required }} Missions
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    {{ ach.description }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-8 text-center">
+            <p class="text-gray-500 text-sm">All milestones achieved.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Register | EcoEdu{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center p-4 py-12">
+    <div class="w-full max-w-lg">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-semibold text-gray-100 mb-2">Create an account</h1>
+            <p class="text-sm text-gray-400">Join EcoEdu to start your learning journey.</p>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl shadow-2xl p-8">
+            <form method="POST" class="space-y-6">
+                {{ form.hidden_tag() }}
+
+                <!-- Section: Personal -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-[#2A2E35] pb-2">
+                        Personal Details</h3>
+
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Full Name</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-600 text-xs"></i>
+                                </div>
+                                {{ form.name(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-9
+                                pr-4 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                                focus:ring-emerald-500 outline-none transition-colors", placeholder="John Doe") }}
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Email Address</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-600 text-xs"></i>
+                                </div>
+                                {{ form.email(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-9
+                                pr-4 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                                focus:ring-emerald-500 outline-none transition-colors", placeholder="name@example.com")
+                                }}
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-600 text-xs"></i>
+                                </div>
+                                {{ form.password(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5
+                                pl-9 pr-4 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500
+                                focus:ring-1 focus:ring-emerald-500 outline-none transition-colors", placeholder="Create
+                                a password") }}
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Role</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user-tag text-gray-600 text-xs"></i>
+                                </div>
+                                {{ form.role(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-9
+                                pr-8 text-sm text-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500
+                                outline-none transition-colors appearance-none cursor-pointer") }}
+                                <div
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-500">
+                                    <i class="fas fa-chevron-down text-[10px]"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: School -->
+                <div class="space-y-4 pt-2">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-[#2A2E35] pb-2">
+                        Academic Info</h3>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">School / Institution</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-school text-gray-600 text-xs"></i>
+                                </div>
+                                {{ form.school(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-9
+                                pr-4 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                                focus:ring-emerald-500 outline-none transition-colors", placeholder="School Name") }}
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Class / Grade</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-layer-group text-gray-600 text-xs"></i>
+                                </div>
+                                {{ form.class_name(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5
+                                pl-9 pr-4 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500
+                                focus:ring-1 focus:ring-emerald-500 outline-none transition-colors", placeholder="Grade
+                                10") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg shadow-lg shadow-emerald-900/20 transition-all text-sm">
+                        Create Account
+                    </button>
+                    <p class="text-xs text-gray-500 text-center mt-4">
+                        By creating an account, you agree to our <a href="#"
+                            class="text-gray-400 hover:text-white underline">Terms</a> and <a href="#"
+                            class="text-gray-400 hover:text-white underline">Privacy Policy</a>.
+                    </p>
+                </div>
+            </form>
+
+            <div class="mt-6 pt-6 border-t border-[#2A2E35]">
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button"
+                        class="flex items-center justify-center gap-2 py-2.5 bg-[#0E0F12] border border-[#2A2E35] rounded-lg hover:border-gray-600 transition-colors text-xs text-gray-300 font-medium">
+                        <i class="fab fa-google text-gray-400"></i> Google
+                    </button>
+                    <button type="button"
+                        class="flex items-center justify-center gap-2 py-2.5 bg-[#0E0F12] border border-[#2A2E35] rounded-lg hover:border-gray-600 transition-colors text-xs text-gray-300 font-medium">
+                        <i class="fab fa-apple text-gray-400"></i> Apple
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-center mt-6 text-xs text-gray-500">
+                Already have an account?
+                <a href="{{ url_for('login') }}"
+                    class="text-emerald-500 hover:text-emerald-400 font-medium transition-colors">Sign in</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

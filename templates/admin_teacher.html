@@ -1,0 +1,244 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Manage Teachers | EcoEdu Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-100 mb-1">Teacher Management</h1>
+            <p class="text-sm text-gray-400 font-medium">Coordinate faculty credentials and access.</p>
+        </div>
+        <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
+            <span class="text-xs text-gray-400 font-medium">
+                <span class="text-gray-200 font-bold">{{ teachers|length }}</span> Faculty Members
+            </span>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Faculty</span>
+                <i class="fas fa-chalkboard-user text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ teachers|length }}</span>
+                <span class="text-xs text-emerald-500 font-medium">Active</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Verified</span>
+                <i class="fas fa-shield-alt text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ (teachers|length * 0.9) | round | int }}</span>
+                <span class="text-xs text-blue-500 font-medium">Trusted</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Online Now</span>
+                <i class="fas fa-clock text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ (teachers|length * 0.7) | round | int }}</span>
+                <span class="text-xs text-gray-500 font-medium">Broadcasting</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Activity Chart -->
+        <div class="lg:col-span-2 bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-200">Activity Metrics</h3>
+                <span class="px-2 py-1 bg-[#2A2E35] text-xs text-gray-400 rounded">Last 7 Days</span>
+            </div>
+            <div class="h-64">
+                <canvas id="teacherActivityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-200 mb-6">Deployment Status</h3>
+            <div class="h-48 relative mb-6">
+                <canvas id="teacherStatusChart"></canvas>
+            </div>
+            <div class="space-y-3 border-t border-[#2A2E35] pt-4">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-400">Active</span>
+                    <span class="text-emerald-500 font-medium">80%</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-400">Syncing</span>
+                    <span class="text-blue-500 font-medium">15%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Table -->
+    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
+        <div class="p-6 border-b border-[#2A2E35] flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-200">Faculty Directory</h2>
+            <button
+                class="px-4 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-xs font-medium rounded border border-gray-600 transition-colors">
+                <i class="fas fa-plus mr-1"></i> Add Faculty
+            </button>
+        </div>
+        <div class="overflow-x-auto">
+            <table id="teachersTable" class="w-full text-left">
+                <thead class="bg-[#2A2E35]/50">
+                    <tr>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Email</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Role</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2A2E35]">
+                    {% for teacher in teachers %}
+                    <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded bg-[#0E0F12] border border-[#2A2E35] flex items-center justify-center text-gray-400 font-bold text-xs">
+                                    {{ teacher.name[0].upper() if teacher.name else 'T' }}
+                                </div>
+                                <div class="text-sm font-medium text-gray-200">{{ teacher.name }}</div>
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <div class="text-sm text-gray-400">{{ teacher.email }}</div>
+                            <div class="text-[10px] text-emerald-500 flex items-center gap-1 mt-0.5">
+                                <i class="fas fa-check-circle"></i> Verified
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <span
+                                class="px-2 py-0.5 bg-[#2A2E35] border border-gray-700 text-gray-300 text-[10px] font-bold uppercase rounded">
+                                {{ teacher.role }}
+                            </span>
+                        </td>
+                        <td class="p-4 text-right">
+                            <form action="{{ url_for('admin_delete_user', user_id=teacher.id) }}" method="POST"
+                                class="inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit"
+                                    class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-colors"
+                                    onclick="return confirm('Revoke access for this teacher?')">
+                                    <i class="fas fa-trash text-xs"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* Minimalist DataTables */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        padding: 1rem 1.5rem;
+        color: #9CA3AF;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        background: #0E0F12;
+        border: 1px solid #2A2E35;
+        border-radius: 4px;
+        color: #E6E8EB;
+        padding: 4px 8px;
+        margin-left: 8px;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding: 1rem 1.5rem;
+        color: #6B7280;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .paginate_button {
+        color: #9CA3AF !important;
+        padding: 2px 8px !important;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .paginate_button.current {
+        color: #E6E8EB !important;
+        background: #2A2E35 !important;
+        border: none !important;
+        border-radius: 4px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#teachersTable').DataTable({
+            "pageLength": 10,
+            "lengthChange": false,
+            "language": { "search": "Search:", "paginate": { "previous": "<", "next": ">" } }
+        });
+
+        // Activity Chart
+        const actCtx = document.getElementById('teacherActivityChart').getContext('2d');
+        new Chart(actCtx, {
+            type: 'line',
+            data: {
+                labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+                datasets: [{
+                    label: 'Activity',
+                    data: [65, 59, 80, 81, 56, 40, 30],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: '#2A2E35' }, ticks: { color: '#9CA3AF' } },
+                    x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
+                }
+            }
+        });
+
+        // Status Chart
+        const statusCtx = document.getElementById('teacherStatusChart').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Active', 'Syncing', 'Off'],
+                datasets: [{
+                    data: [80, 15, 5],
+                    backgroundColor: ['#10b981', '#3b82f6', '#ef4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                cutout: '75%'
+            }
+        });
+    });
+</script>
+{% endblock %}

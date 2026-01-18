@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Portal | EcoEdu{% endblock %}</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            bg: '#0E0F12',
+                            surface: '#171A1F',
+                            border: '#2A2E35',
+                        },
+                        brand: {
+                            DEFAULT: '#10b981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0E0F12;
+            color: #E6E8EB;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0E0F12;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2A2E35;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4B5563;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #9CA3AF;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover {
+            background-color: #2A2E35;
+            color: #E6E8EB;
+        }
+
+        .sidebar-link.active {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+    </style>
+</head>
+
+<body class="antialiased h-screen flex overflow-hidden" x-data="{ sidebarOpen: false }">
+
+    <!-- Sidebar (Desktop) -->
+    <aside class="hidden lg:flex w-64 bg-[#171A1F] border-r border-[#2A2E35] flex-col z-20">
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-[#2A2E35]">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
+                    <i class="fas fa-leaf text-sm"></i>
+                </div>
+                <span class="font-bold text-lg text-white tracking-tight">EcoEdu <span
+                        class="text-xs font-normal text-gray-500 ml-1">Admin</span></span>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <div class="px-3 mb-2">
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Main</span>
+            </div>
+
+            <a href="{{ url_for('admin_dashboard') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+                <i class="fas fa-grid-2 w-5 text-center"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <div class="px-3 mb-2 mt-6">
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Content</span>
+            </div>
+
+            <a href="{{ url_for('admin_add_challenge') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_add_challenge' %}active{% endif %}">
+                <i class="fas fa-plus-circle w-5 text-center"></i>
+                <span>Add Challenge</span>
+            </a>
+            <a href="{{ url_for('admin_random_challenge') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_random_challenge' %}active{% endif %}">
+                <i class="fas fa-magic w-5 text-center"></i>
+                <span>Auto Generator</span>
+            </a>
+            <a href="{{ url_for('admin_achievements') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_achievements' %}active{% endif %}">
+                <i class="fas fa-trophy w-5 text-center"></i>
+                <span>Achievements</span>
+            </a>
+            <a href="{{ url_for('admin_eco_tips') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_eco_tips' %}active{% endif %}">
+                <i class="fas fa-lightbulb w-5 text-center"></i>
+                <span>Eco Tips</span>
+            </a>
+            <a href="{{ url_for('admin_puzzles') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_puzzles' %}active{% endif %}">
+                <i class="fas fa-puzzle-piece w-5 text-center"></i>
+                <span>Puzzles</span>
+            </a>
+
+            <div class="px-3 mb-2 mt-6">
+                <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Directory</span>
+            </div>
+
+            <a href="{{ url_for('admin_students') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_students' %}active{% endif %}">
+                <i class="fas fa-user-graduate w-5 text-center"></i>
+                <span>Students</span>
+            </a>
+            <a href="{{ url_for('admin_teachers') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_teachers' %}active{% endif %}">
+                <i class="fas fa-chalkboard-teacher w-5 text-center"></i>
+                <span>Teachers</span>
+            </a>
+            <a href="{{ url_for('admin_levels') }}"
+                class="sidebar-link {% if request.endpoint == 'admin_levels' %}active{% endif %}">
+                <i class="fas fa-layer-group w-5 text-center"></i>
+                <span>Levels</span>
+            </a>
+
+        </nav>
+
+        <!-- User Profile -->
+        <div class="p-4 border-t border-[#2A2E35]">
+            <a href="{{ url_for('admin_logout') }}"
+                class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2A2E35] text-gray-400 hover:text-red-400 transition-colors">
+                <i class="fas fa-sign-out-alt w-5 text-center"></i>
+                <span class="text-sm font-medium">Log out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <div
+        class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#171A1F] border-b border-[#2A2E35] flex items-center justify-between px-4 z-30">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
+                <i class="fas fa-leaf text-sm"></i>
+            </div>
+            <span class="font-bold text-white">EcoEdu Admin</span>
+        </div>
+        <button @click="sidebarOpen = !sidebarOpen" class="text-gray-400 hover:text-white">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div x-show="sidebarOpen" class="fixed inset-0 bg-black/50 z-40 lg:hidden" @click="sidebarOpen = false"
+        style="display: none;"></div>
+
+    <!-- Mobile Sidebar -->
+    <div x-show="sidebarOpen"
+        class="fixed inset-y-0 left-0 w-64 bg-[#171A1F] z-50 lg:hidden flex flex-col border-r border-[#2A2E35]"
+        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full"
+        x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" style="display: none;">
+
+        <div class="h-16 flex items-center px-6 border-b border-[#2A2E35]">
+            <span class="font-bold text-lg text-white">Menu</span>
+            <button @click="sidebarOpen = false" class="ml-auto text-gray-500">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+            <a href="{{ url_for('admin_dashboard') }}" class="sidebar-link">Dashboard</a>
+            <a href="{{ url_for('admin_students') }}" class="sidebar-link">Students</a>
+            <a href="{{ url_for('admin_logout') }}" class="sidebar-link text-red-400">Log out</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-[#0E0F12] pt-16 lg:pt-0">
+        <div class="flex-1 overflow-auto p-6 md:p-8">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Alpine.js -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+</body>
+
+</html>

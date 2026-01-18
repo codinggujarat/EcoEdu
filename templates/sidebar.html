@@ -1,0 +1,97 @@
+<div class="flex flex-col md:flex-row h-full">
+    <!-- Mobile toggle -->
+    <div
+        class="md:hidden fixed top-0 left-0 right-0 flex justify-between items-center p-4 bg-[#0E0F12]/80 backdrop-blur-md border-b border-[#2A2E35] z-50">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                <i class="fas fa-leaf text-sm"></i>
+            </div>
+            <span class="text-white font-bold">EcoEdu</span>
+        </div>
+        <button id="sidebarToggle" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fas fa-bars text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar Content -->
+    <div id="sidebar"
+        class="w-64 bg-[#171A1F] border-r border-[#2A2E35] flex flex-col fixed md:sticky top-0 left-0 h-screen transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
+        <!-- Header -->
+        <div class="p-6 border-b border-[#2A2E35]">
+            <a href="{{ url_for('index') }}" class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                    <i class="fas fa-leaf text-sm"></i>
+                </div>
+                <span class="text-lg font-bold text-white tracking-tight">EcoEdu</span>
+            </a>
+        </div>
+
+        <!-- User Profile -->
+        <div class="p-6 border-b border-[#2A2E35]">
+            <div class="flex items-center gap-3">
+                <img src="{{ url_for('static', filename='uploads/' + (profile_image if profile_image else 'default.png')) }}?t={{ timestamp }}"
+                    class="w-10 h-10 rounded-lg object-cover border border-[#2A2E35]">
+                <div class="overflow-hidden">
+                    <h3 class="text-sm font-semibold text-white truncate">{{ current_user.name }}</h3>
+                    <p class="text-xs text-emerald-500 font-medium truncate">{{ current_user.role|capitalize }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Menu</p>
+            {% set nav_items = [
+            ('dashboard', 'Dashboard', 'fas fa-th-large'),
+            ('profile', 'My Profile', 'fas fa-user'),
+            ('challenges', 'Challenges', 'fas fa-bolt'),
+            ('achievements', 'Achievements', 'fas fa-trophy'),
+            ('leaderboard', 'Leaderboard', 'fas fa-chart-bar')
+            ] %}
+
+            {% for endpoint, label, icon in nav_items %}
+            <a href="{{ url_for(endpoint) }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors
+                          {% if request.endpoint == endpoint %}
+                          bg-emerald-500/10 text-emerald-500
+                          {% else %}
+                          text-gray-400 hover:text-white hover:bg-[#2A2E35]
+                          {% endif %}">
+                <i class="{{ icon }} w-5 text-center"></i>
+                {{ label }}
+            </a>
+            {% endfor %}
+        </nav>
+
+        <!-- Footer -->
+        <div class="p-4 border-t border-[#2A2E35]">
+            <a href="{{ url_for('logout') }}"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                <i class="fas fa-sign-out-alt w-5 text-center"></i>
+                Sign out
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black/80 z-30 md:hidden backdrop-blur-sm"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        if (toggle && sidebar && overlay) {
+            toggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+    });
+</script>

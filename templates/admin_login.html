@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | EcoEdu</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            bg: '#0E0F12',
+                            surface: '#171A1F',
+                            border: '#2A2E35',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-[#0E0F12] text-[#E6E8EB] min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md">
+        <!-- Brand -->
+        <div class="flex items-center justify-center gap-3 mb-8">
+            <div
+                class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center text-black shadow-lg shadow-emerald-900/20">
+                <i class="fas fa-leaf text-lg"></i>
+            </div>
+            <span class="text-2xl font-bold tracking-tight text-white">EcoEdu <span
+                    class="text-gray-500 font-normal">Admin</span></span>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl shadow-2xl p-8">
+            <h2 class="text-xl font-semibold text-center mb-2">Welcome back</h2>
+            <p class="text-sm text-gray-400 text-center mb-8">Please enter your credentials to access the portal.</p>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div
+                class="bg-red-900/20 border border-red-900/30 text-red-400 px-4 py-3 rounded-lg text-sm mb-6 flex items-center gap-2">
+                <i class="fas fa-circle-exclamation"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="space-y-5">
+                {{ form.hidden_tag() }}
+
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-medium text-gray-400">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-600 text-sm"></i>
+                        </div>
+                        {{ form.email(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-10 pr-4
+                        text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                        focus:ring-emerald-500 outline-none transition-colors", placeholder="admin@ecoedu.com") }}
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-medium text-gray-400">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-600 text-sm"></i>
+                        </div>
+                        {{ form.password(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-10 pr-4
+                        text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                        focus:ring-emerald-500 outline-none transition-colors", placeholder="••••••••") }}
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg shadow-lg shadow-emerald-900/20 transition-all text-sm flex items-center justify-center gap-2 mt-2">
+                    <span>Sign In</span>
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-[#2A2E35]">
+                <div class="text-center">
+                    <a href="{{ url_for('index') }}"
+                        class="text-xs text-gray-500 hover:text-gray-300 transition-colors flex items-center justify-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-6 text-xs text-gray-600">
+            &copy; 2024 EcoEdu Platform. Protected System.
+        </div>
+    </div>
+
+</body>
+
+</html>

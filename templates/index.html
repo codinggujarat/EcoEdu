@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-[#0E0F12] text-gray-300 min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#171A1F] border border-[#2A2E35] mb-8">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">EcoEdu Platform v2.0</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+                Empowering the next generation of <span class="text-emerald-500">environmental leaders.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                A comprehensive platform tailored for educational institutions to track, manage, and gamify
+                environmental sustainability efforts.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ url_for('register') }}"
+                    class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg text-sm transition-all shadow-lg shadow-emerald-900/20">
+                    Get Started
+                </a>
+                <a href="#features"
+                    class="px-8 py-3 bg-[#171A1F] border border-[#2A2E35] hover:border-gray-600 text-gray-200 font-medium rounded-lg text-sm transition-all">
+                    Learn More
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 border-t border-[#2A2E35] pt-12 max-w-4xl mx-auto">
+                <div>
+                    <div class="text-3xl font-bold text-white mb-1">5,000+</div>
+                    <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Active Students</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-white mb-1">200+</div>
+                    <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Partner Schools</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-white mb-1">50k+</div>
+                    <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Actions Recorded</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none z-0">
+            <div class="absolute top-20 left-10 w-64 h-64 bg-emerald-500/5 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-6 bg-[#0E0F12]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2">Platform Features</h2>
+                <h3 class="text-3xl font-bold text-white">Designed for Impact</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="p-8 bg-[#171A1F] border border-[#2A2E35] rounded-xl hover:border-emerald-500/30 transition-colors group">
+                    <div
+                        class="w-12 h-12 bg-[#0E0F12] border border-[#2A2E35] rounded-lg flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-tree text-lg"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-100 mb-3">Eco-Points System</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Incentivize sustainable actions through a structured rewards system that encourages consistent
+                        participation.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="p-8 bg-[#171A1F] border border-[#2A2E35] rounded-xl hover:border-emerald-500/30 transition-colors group">
+                    <div
+                        class="w-12 h-12 bg-[#0E0F12] border border-[#2A2E35] rounded-lg flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line text-lg"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-100 mb-3">Progress Tracking</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Visualize individual and institutional impact with detailed analytics and progress reporting
+                        tools.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="p-8 bg-[#171A1F] border border-[#2A2E35] rounded-xl hover:border-emerald-500/30 transition-colors group">
+                    <div
+                        class="w-12 h-12 bg-[#0E0F12] border border-[#2A2E35] rounded-lg flex items-center justify-center text-purple-500 mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users text-lg"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-100 mb-3">Community Challenges</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Foster collaboration through school-wide and inter-school challenges that drive collective
+                        action.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-6 bg-[#171A1F] border-t border-[#2A2E35]">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to make a difference?</h2>
+            <p class="text-gray-400 mb-10 max-w-2xl mx-auto">
+                Join thousands of students and educators transforming environmental education into action.
+            </p>
+            <a href="{{ url_for('register') }}"
+                class="inline-flex items-center justify-center px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg text-sm transition-all shadow-lg shadow-emerald-900/20">
+                Create Free Account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0E0F12] border-t border-[#2A2E35] py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center text-black">
+                    <i class="fas fa-leaf text-sm"></i>
+                </div>
+                <span class="text-lg font-bold text-white">EcoEdu</span>
+            </div>
+            <div class="text-sm text-gray-500">
+                &copy; 2024 EcoEdu Platform. All rights reserved.
+            </div>
+            <div class="flex gap-6">
+                <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

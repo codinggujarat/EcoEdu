@@ -1,0 +1,107 @@
+{% extends "adminbase.html" %}
+{% block title %}Manage Levels | EcoEdu Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-100 mb-1">Level Management</h1>
+            <p class="text-sm text-gray-400 font-medium">Define student progression and milestones.</p>
+        </div>
+        <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
+            <span class="text-xs text-gray-400 font-medium">
+                <span class="text-gray-200 font-bold">{{ levels|length }}</span> Active Levels
+            </span>
+        </div>
+    </div>
+
+    <!-- Create Form -->
+    <div class="mb-12">
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-200 mb-6">Create New Level</h3>
+
+            <form method="POST" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+                {{ form.csrf_token }}
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">Level Number</label>
+                    {{ form.level_number(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                    text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500
+                    outline-none transition-all text-sm", placeholder="e.g. 6") }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">Level Name</label>
+                    {{ form.name(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3 text-gray-200
+                    placeholder-gray-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none
+                    transition-all text-sm", placeholder="e.g. Expert") }}
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">XP Required</label>
+                    {{ form.xp_required(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                    text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500
+                    outline-none transition-all text-sm", placeholder="e.g. 500") }}
+                </div>
+
+                <button type="submit"
+                    class="h-[46px] px-6 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded shadow-sm transition-colors flex items-center justify-center gap-2">
+                    <i class="fas fa-plus"></i> Add Level
+                </button>
+            </form>
+
+            <form action="{{ url_for('generate_levels') }}" method="POST" class="mt-6 pt-6 border-t border-[#2A2E35]">
+                {{ form.csrf_token }}
+                <button type="submit"
+                    onclick="return confirm('Generate standard levels? This will add multiple levels.');"
+                    class="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-2">
+                    <i class="fas fa-magic"></i> Auto-Generate Standard Levels
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Levels Grid -->
+    <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-gray-200 px-1">Progression Path</h2>
+
+        {% if levels %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for level in levels %}
+            <div
+                class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 group hover:border-emerald-500/50 transition-colors relative">
+                <div class="flex justify-between items-start mb-4">
+                    <div
+                        class="w-10 h-10 rounded bg-[#0E0F12] border border-[#2A2E35] text-gray-200 flex items-center justify-center font-bold text-lg">
+                        {{ level.level_number }}
+                    </div>
+                    <form action="{{ url_for('delete_level', level_id=level.id) }}" method="POST">
+                        <button type="submit" onclick="return confirm('Delete this level?');"
+                            class="text-gray-500 hover:text-red-500 transition-colors">
+                            <i class="fas fa-trash-can text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <h3 class="text-base font-bold text-gray-200 mb-1 group-hover:text-emerald-500 transition-colors">{{
+                    level.name }}</h3>
+                <div class="flex items-center gap-2 text-xs text-gray-400">
+                    <i class="fas fa-bolt text-emerald-500"></i>
+                    <span>{{ level.xp_required }} XP Required</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-20 bg-[#171A1F] border border-[#2A2E35] rounded-lg">
+            <div class="w-16 h-16 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-layer-group text-gray-500 text-2xl"></i>
+            </div>
+            <h3 class="text-gray-200 font-medium">No Levels Defined</h3>
+            <p class="text-gray-500 text-sm mt-1">Create a new level to start the progression path.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

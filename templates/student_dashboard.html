@@ -1,0 +1,1166 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - EcoEdu{% endblock %}
+
+{% block content %}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="min-h-screen bg-dark">
+    <!-- Include Sidebar -->
+    {% include "student_dashboard_sidebar.html" %}
+
+    <main class="lg:ml-72 min-h-screen transition-all duration-300 pt-20 lg:pt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <!-- Profile Form -->
+            <div class="w-full">
+                <!-- Welcome Header -->
+                <div class="text-left space-y-1 mb-8">
+                    <h1 class="text-3xl font-bold text-text-primary tracking-tight">
+                        Hello, {{ user.name }}
+                    </h1>
+                    <p class="text-text-secondary text-sm font-medium flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
+                        {{ user.school }} • {{ user.class_name }}
+                    </p>
+                </div>
+
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-slide-up">
+
+                    <!-- Eco Points -->
+                    <div
+                        class="bg-dark-surface border border-dark-border rounded-xl p-6 transition-all duration-200 hover:border-brand/30 group relative overflow-hidden mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="fas fa-bolt text-lg"></i>
+                            </div>
+                            <span
+                                class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Eco-Points</span>
+                        </div>
+
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span class="text-3xl font-bold text-text-primary">{{ user.eco_points }}</span>
+                            <span class="text-sm font-medium text-brand flex items-center gap-1">
+                                <i class="fas fa-caret-up"></i> {{ (user.eco_points * 0.12) | round | int }}
+                            </span>
+                        </div>
+                        <p class="text-xs text-text-secondary">Growth this week</p>
+                    </div>
+
+
+                    <!-- Challenges Completed -->
+                    <div
+                        class="bg-dark-surface border border-dark-border rounded-xl p-6 transition-all duration-200 hover:border-brand/30 group relative overflow-hidden mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="fas fa-trophy text-lg"></i>
+                            </div>
+                            <span
+                                class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Completed</span>
+                        </div>
+
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span class="text-3xl font-bold text-text-primary">{{ user.challenge_completions|length
+                                }}</span>
+                            <span class="text-sm font-medium text-brand">
+                                {{ ((user.challenge_completions|length / (challenges|length if challenges|length > 0
+                                else 1)) * 100) | round | int }}%
+                            </span>
+                        </div>
+                        <div class="w-full bg-dark-border rounded-full h-1.5 mt-2">
+                            <div class="bg-brand h-1.5 rounded-full"
+                                style="width: {{ ((user.challenge_completions|length / (challenges|length if challenges|length > 0 else 1)) * 100) | round | int }}%">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Achievements -->
+                    <div
+                        class="bg-dark-surface border border-dark-border rounded-xl p-6 transition-all duration-200 hover:border-brand/30 group relative overflow-hidden mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="fas fa-medal text-lg"></i>
+                            </div>
+                            <span
+                                class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Unlocked</span>
+                        </div>
+
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span class="text-3xl font-bold text-text-primary">{{ user.achievements|length }}</span>
+                            <span class="text-sm font-medium text-brand">+{{ (user.achievements|length * 0.3) | round |
+                                int }}</span>
+                        </div>
+                        <p class="text-xs text-text-secondary">Recent Unlocks</p>
+                    </div>
+                </div>
+
+
+                <!-- View Challenges -->
+                <a href="{{ url_for('challenges') }}" class="block">
+                    <div
+                        class="bg-dark-surface border border-dark-border rounded-xl p-6 transition-all duration-200 hover:border-brand/30 group relative h-full flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="p-3 rounded-lg bg-brand text-black shadow-lg shadow-brand/20">
+                                        <i class="fas fa-flag-checkered text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-text-primary">Challenges</h3>
+                                        <p class="text-sm text-text-secondary">Track your progress</p>
+                                    </div>
+                                </div>
+
+                                <!-- Percentage Ring -->
+                                {% set completed = user.challenge_completions|length %}
+                                {% set total = challenges|length %}
+                                {% set percent = (completed / (total if total > 0 else 1) * 100) | round(1) %}
+
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-brand">{{ percent }}%</div>
+                                    <div class="text-xs text-text-secondary uppercase tracking-wider">Complete</div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-dark-border rounded-full h-2 mb-4">
+                                <div class="bg-brand h-2 rounded-full transition-all duration-500"
+                                    style="width: {{ percent }}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm mt-4">
+                            <span class="text-brand font-medium group-hover:underline">View All Challenges</span>
+                            <i
+                                class="fas fa-arrow-right text-brand transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+            <!-- Annual Civic Contribution Heatmap -->
+            <div class="col-span-12 mb-8">
+                <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="fas fa-calendar-alt text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-primary">Activity Log</h3>
+                                <p class="text-sm text-text-secondary">Your daily contributions</p>
+                            </div>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                            <span>Less</span>
+                            <div class="w-3 h-3 rounded-sm bg-dark-border"></div>
+                            <div class="w-3 h-3 rounded-sm bg-brand/30"></div>
+                            <div class="w-3 h-3 rounded-sm bg-brand/60"></div>
+                            <div class="w-3 h-3 rounded-sm bg-brand"></div>
+                            <span>More</span>
+                        </div>
+                    </div>
+
+
+                    <div class="relative overflow-x-auto pb-2">
+                        <div id="heatmapGrid" class="heatmap-grid min-w-[700px]">
+                            <!-- Grid items will be injected by JS -->
+                        </div>
+                        <div id="month-labels" class="flex text-[10px] text-text-secondary mt-2 px-1 relative h-4">
+                        </div>
+                    </div>
+
+                    <div id="day-details"
+                        class="mt-4 p-3 bg-dark-border/30 rounded-lg hidden animate-slide-up border border-dark-border">
+                        <div class="flex items-center justify-between text-sm">
+                            <div id="selected-date" class="font-bold text-brand"></div>
+                            <div id="selected-activity" class="text-text-secondary"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parent grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 mt-5">
+
+                <!-- Left Side: Quick Actions + Eco Tip (col-span-3 → 30%) -->
+                <div class="lg:col-span-4 space-y-8">
+                    <!-- Quick Actions -->
+                    <div class="bg-dark-surface border border-dark-border rounded-xl p-6 h-full">
+                        <!-- Header Section -->
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="fas fa-bolt text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-primary">Quick Actions</h3>
+                                <p class="text-sm text-text-secondary">Common tasks & shortcuts</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons Section -->
+                        <div class="grid grid-cols-1 gap-4">
+                            <!-- New Challenge Button -->
+                            <a href="{{ url_for('challenges') }}"
+                                class="flex items-center gap-4 p-4 rounded-lg border border-dark-border bg-dark-surface hover:border-brand/30 hover:bg-dark-border/30 transition-all duration-200 group">
+                                <div
+                                    class="p-3 rounded-lg bg-brand/10 text-brand group-hover:bg-brand group-hover:text-black transition-colors">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div>
+                                    <span
+                                        class="block text-sm font-semibold text-text-primary group-hover:text-brand transition-colors">New
+                                        Challenge</span>
+                                    <span class="block text-xs text-text-secondary">Start a new activity</span>
+                                </div>
+                                <i
+                                    class="fas fa-chevron-right ml-auto text-text-secondary group-hover:text-brand transition-colors text-xs"></i>
+                            </a>
+
+                            <!-- Leaderboard Button -->
+                            <a href="{{ url_for('leaderboard') }}"
+                                class="flex items-center gap-4 p-4 rounded-lg border border-dark-border bg-dark-surface hover:border-brand/30 hover:bg-dark-border/30 transition-all duration-200 group">
+                                <div
+                                    class="p-3 rounded-lg bg-brand/10 text-brand group-hover:bg-brand group-hover:text-black transition-colors">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div>
+                                    <span
+                                        class="block text-sm font-semibold text-text-primary group-hover:text-brand transition-colors">Leaderboard</span>
+                                    <span class="block text-xs text-text-secondary">View rankings</span>
+                                </div>
+                                <i
+                                    class="fas fa-chevron-right ml-auto text-text-secondary group-hover:text-brand transition-colors text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Achievements Slider -->
+                    <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
+                        <div class="flex items-center justify-between gap-4 mb-6">
+                            <div class="flex items-center gap-4">
+                                <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                    <i class="fas fa-medal text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-text-primary">Achievements</h3>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button id="achPrev"
+                                    class="p-2 rounded-lg border border-dark-border text-text-secondary hover:text-brand hover:border-brand/30 transition-colors disabled:opacity-50">
+                                    <i class="fas fa-chevron-left text-xs"></i>
+                                </button>
+                                <button id="achNext"
+                                    class="p-2 rounded-lg border border-dark-border text-text-secondary hover:text-brand hover:border-brand/30 transition-colors disabled:opacity-50">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="relative overflow-hidden" style="min-height: 140px;">
+                            <div id="achievementsTrack"
+                                class="flex transition-transform duration-500 ease-out absolute inset-0">
+                                <!-- Achievement Cards -->
+                                {% for achievement in achievements %}
+                                <div class="min-w-full px-1">
+                                    <div
+                                        class="h-full bg-dark bg-opacity-50 border border-dark-border rounded-lg p-5 flex items-center gap-5">
+                                        <div
+                                            class="w-12 h-12 rounded-lg bg-brand/10 flex items-center justify-center flex-shrink-0">
+                                            <i class="{{ achievement.icon }} text-2xl text-brand"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-text-primary mb-1">{{ achievement.name }}
+                                            </h4>
+                                            <p class="text-xs text-text-secondary line-clamp-2">{{
+                                                achievement.description }}</p>
+                                            <div class="mt-2 text-xs font-medium text-brand">
+                                                {{ achievement.date_earned.strftime('%b %d, %Y') if
+                                                achievement.date_earned else 'Locked' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                {% if not achievements %}
+                                <div
+                                    class="min-w-full flex items-center justify-center h-full text-text-secondary text-sm">
+                                    No achievements yet. Start completing challenges!
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Achievements Review -->
+                <div id="achievements-section" class="lg:col-span-6 pt-0">
+                    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl h-full p-6 flex flex-col">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
+                                    <i class="fas fa-medal text-lg"></i>
+                                </div>
+                                <h2 class="text-lg font-bold text-gray-100">Recent Achievements</h2>
+                            </div>
+
+                            <!-- Carousel Controls -->
+                            <div class="flex gap-2">
+                                <button id="prev"
+                                    class="w-8 h-8 rounded-lg border border-[#2A2E35] bg-[#0E0F12] text-gray-400 hover:text-white hover:border-emerald-500/50 transition-all flex items-center justify-center">
+                                    <i class="fas fa-chevron-left text-xs"></i>
+                                </button>
+                                <button id="next"
+                                    class="w-8 h-8 rounded-lg border border-[#2A2E35] bg-[#0E0F12] text-gray-400 hover:text-white hover:border-emerald-500/50 transition-all flex items-center justify-center">
+                                    <i class="fas fa-chevron-right text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Carousel Window -->
+                        <div id="carouselWrapper" class="overflow-hidden relative flex-1 flex items-center">
+                            <div id="carousel" class="flex gap-4 transition-transform duration-500 ease-out w-full">
+                                {% if user.achievements %}
+                                {% for ua in user.achievements %}
+                                <div
+                                    class="carousel-item relative min-w-[280px] bg-[#0E0F12] border border-[#2A2E35] rounded-xl p-6 flex flex-col items-center justify-center text-center group hover:border-emerald-500/30 transition-all">
+                                    <!-- Rarity Badge -->
+                                    <div
+                                        class="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#171A1F] border border-[#2A2E35] text-gray-400">
+                                        {{ ua.achievement.rarity or 'Common' }}
+                                    </div>
+
+                                    <!-- Icon -->
+                                    <div
+                                        class="w-16 h-16 rounded-full bg-[#171A1F] border border-[#2A2E35] flex items-center justify-center text-3xl mb-4 group-hover:bg-emerald-500/5 group-hover:scale-110 transition-all">
+                                        {{ ua.achievement.badge_icon }}
+                                    </div>
+
+                                    <h3
+                                        class="text-base font-bold text-gray-100 mb-1 group-hover:text-emerald-500 transition-colors">
+                                        {{ ua.achievement.name }}</h3>
+                                    <p class="text-xs text-text-secondary line-clamp-2 mb-3 max-w-[200px]">{{
+                                        ua.achievement.description }}</p>
+
+                                    <div
+                                        class="mt-auto pt-3 border-t border-[#2A2E35] w-full flex justify-between items-center text-[10px] text-gray-500">
+                                        <span><i class="fas fa-calendar-alt mr-1"></i> {{ ua.earned_at.strftime('%b %d')
+                                            }}</span>
+                                        <span>+{{ ua.achievement.points_required }} xp</span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="w-full text-center py-10">
+                                    <div
+                                        class="w-16 h-16 bg-[#0E0F12] rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600 border border-[#2A2E35]">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <p class="text-gray-400 text-sm">No achievements earned yet.</p>
+                                    <p class="text-gray-600 text-xs mt-1">Complete challenges to unlock badges!</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 mt-6">
+
+                <!-- Level/XP Card -->
+                <div id="level-progress-section"
+                    class="lg:col-span-4 bg-dark-surface border border-dark-border rounded-xl p-6 h-full">
+
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-4">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="fas fa-bolt text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-primary">{{ current_user.level_name }}</h3>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-widest mt-0.5">
+                                    Level {{ current_user.level }}
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="px-2 py-1 bg-brand/10 border border-brand/20 text-brand rounded-md text-[10px] font-bold uppercase tracking-widest">
+                            Active
+                        </div>
+                    </div>
+
+                    <!-- Progress Circle -->
+                    <div class="flex items-center justify-center mb-8">
+                        <div class="relative w-40 h-40">
+                            <!-- Background Circle -->
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="50%" cy="50%" r="70" stroke="#2A2E35" stroke-width="8" fill="transparent" />
+                                <!-- Progress Circle -->
+                                <circle cx="50%" cy="50%" r="70" stroke="#10b981" stroke-width="8" fill="transparent"
+                                    stroke-dasharray="439.8"
+                                    stroke-dashoffset="{{ 439.8 - (current_user.current_xp / current_user.next_level_xp * 439.8) }}"
+                                    stroke-linecap="round" class="transition-all duration-1000 ease-out" />
+                            </svg>
+
+                            <!-- Center Content -->
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <div class="text-3xl font-bold text-text-primary mb-1">{{ current_user.current_xp }}
+                                </div>
+                                <div class="text-[10px] text-text-secondary font-bold uppercase tracking-widest">
+                                    / {{ current_user.next_level_xp }} XP
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Footer -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-3 rounded-lg bg-dark border border-dark-border">
+                            <div class="text-lg font-bold text-brand">
+                                {{ ((current_user.current_xp / current_user.next_level_xp) * 100) | round(1) }}%
+                            </div>
+                            <div class="text-[10px] text-text-secondary uppercase tracking-widest">Complete</div>
+                        </div>
+                        <div class="text-center p-3 rounded-lg bg-dark border border-dark-border">
+                            <div class="text-lg font-bold text-text-primary">
+                                {{ current_user.next_level_xp - current_user.current_xp }}
+                            </div>
+                            <div class="text-[10px] text-text-secondary uppercase tracking-widest">XP Needed</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Eco Tip of the Day -->
+                <div
+                    class="lg:col-span-6 bg-dark-surface border border-dark-border rounded-xl p-6 h-full flex flex-col">
+
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                                <i class="far fa-lightbulb text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-primary">Eco Tip</h3>
+                                <p class="text-sm text-text-secondary">Daily wisdom</p>
+                            </div>
+                        </div>
+                        <div
+                            class="px-2 py-1 bg-brand/10 border border-brand/20 text-brand rounded-md text-[10px] font-bold uppercase tracking-widest">
+                            Today
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div
+                        class="flex-1 bg-dark/50 border border-dark-border rounded-lg p-6 flex flex-col justify-center">
+                        {% if eco_tip %}
+                        <div class="flex gap-4 mb-4">
+                            <i class="fas fa-quote-left text-brand/40 text-xl"></i>
+                            <p class="text-text-primary text-lg leading-relaxed font-medium italic">
+                                {{ eco_tip.tip or eco_tip.text }}
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-dark-border">
+                            <div
+                                class="flex items-center gap-2 text-[10px] text-text-secondary uppercase tracking-widest">
+                                <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
+                                {{ eco_tip.frequency | capitalize }} Tip
+                            </div>
+                            <div class="text-[10px] text-text-secondary font-bold uppercase tracking-widest">
+                                #{{ (eco_tip.id or 1) }}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="text-center py-8">
+                            <i class="fas fa-leaf text-dark-border text-3xl mb-3"></i>
+                            <p class="text-text-secondary font-medium">No new tips for today.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Footer Action -->
+                    <div class="mt-4 flex justify-end">
+                        <button
+                            class="text-xs text-brand hover:text-brand-light font-medium uppercase tracking-wide transition-colors">
+                            View Archive <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+            <!-- Recommended Challenges Section -->
+            {% if recommendations %}
+            <div class="mt-10 mb-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                        <i class="fas fa-magic text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-text-primary">Recommended for You</h2>
+                        <p class="text-sm text-text-secondary">Personalized actions</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for challenge in recommendations %}
+                    <div
+                        class="bg-dark-surface border border-dark-border rounded-xl p-6 transition-all duration-200 hover:border-brand/30 group flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-4">
+                            <span
+                                class="px-2 py-1 bg-dark text-text-secondary border border-dark-border rounded-md text-[10px] font-bold uppercase tracking-widest">
+                                {{ challenge.difficulty }}
+                            </span>
+                            <span class="text-xs font-bold text-brand bg-brand/10 px-2 py-1 rounded-md">
+                                <i class="fas fa-bolt text-[10px] mr-1"></i>{{ challenge.difficulty_score or 1.0 }}
+                            </span>
+                        </div>
+
+                        <h3 class="text-base font-bold text-text-primary mb-2 group-hover:text-brand transition-colors">
+                            {{ challenge.title }}
+                        </h3>
+                        <p class="text-sm text-text-secondary mb-6 line-clamp-2">{{ challenge.description }}</p>
+
+                        <a href="{{ url_for('complete_challenge', challenge_id=challenge.id) }}"
+                            class="mt-auto block w-full text-center py-2.5 rounded-lg bg-brand/10 border border-brand/20 text-brand hover:bg-brand hover:text-black font-semibold text-xs uppercase tracking-wider transition-all">
+                            View Challenge
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+
+            <!-- Charts Section (Placeholder for Chart.js) -->
+            <div id="analytics-section" class="mt-8 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Chart 1 -->
+                    <div class="bg-dark-surface border border-dark-border rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-chart-area text-brand"></i>
+                            <h3 class="text-sm font-bold text-text-primary">Impact Trajectory</h3>
+                        </div>
+                        <div class="h-64 w-full">
+                            <canvas id="pointsGrowthChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2 -->
+                    <div class="bg-dark-surface border border-dark-border rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-chart-pie text-brand"></i>
+                            <h3 class="text-sm font-bold text-text-primary">Protocol Completion</h3>
+                        </div>
+                        <div class="h-64 w-full">
+                            <canvas id="achievementsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3 -->
+                    <div class="bg-dark-surface border border-dark-border rounded-xl p-6 shadow-sm">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fas fa-chart-bar text-brand"></i>
+                            <h3 class="text-sm font-bold text-text-primary">Ops by Category</h3>
+                        </div>
+                        <div class="h-64 w-full">
+                            <canvas id="challengesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certificates Section -->
+            <div id="certificates-section" class="mt-10 mb-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                        <i class="fas fa-certificate text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-text-primary">Verified Certificates</h2>
+                        <p class="text-sm text-text-secondary">Proof of impact</p>
+                    </div>
+                </div>
+
+                {% if user.certificates %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for cert in user.certificates %}
+                    <div
+                        class="bg-dark-surface border border-dark-border rounded-xl p-6 group relative overflow-hidden transition-all hover:border-brand/30">
+                        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <i class="fas fa-stamp text-6xl text-brand rotate-12"></i>
+                        </div>
+
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3
+                                        class="font-bold text-text-primary text-base group-hover:text-brand transition-colors">
+                                        {{ cert.milestone }} Points Milestone
+                                    </h3>
+                                    <p class="text-xs text-text-secondary font-medium mt-1">
+                                        Issued: {{ cert.issued_at.strftime('%Y-%m-%d') }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="bg-brand/10 text-brand px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-brand/20">
+                                    Verified
+                                </div>
+                            </div>
+
+                            <a href="{{ url_for('download_certificate', cert_id=cert.id) }}"
+                                class="flex items-center justify-center gap-2 bg-dark border border-dark-border hover:bg-brand/10 hover:border-brand/30 text-text-secondary hover:text-brand py-2.5 rounded-lg transition-all font-semibold uppercase tracking-wider text-xs">
+                                <i class="fas fa-download"></i> Download PDF
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="bg-dark-surface border border-dark-border rounded-xl p-8 text-center">
+                    <div class="text-4xl mb-3 opacity-50">📜</div>
+                    <h3 class="text-lg font-bold text-text-primary mb-2">No Certificates Yet</h3>
+                    <p class="text-text-secondary text-sm max-w-md mx-auto">
+                        Reach 1000 eco-points to unlock your first verified certificate.
+                        <br>
+                        <span class="text-brand mt-2 block font-semibold">Current Progress: {{ user.eco_points }} /
+                            1000</span>
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Learning Journey Section -->
+            <div id="learning-journey-section" class="mt-10 pb-10">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-2 rounded-lg bg-brand/10 text-brand">
+                        <i class="fas fa-route text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-text-primary">Learning Journey</h2>
+                        <p class="text-sm text-text-secondary">Track your professional evolution</p>
+                    </div>
+                </div>
+
+                <!-- Level Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {% set current_lvl = user.level %}
+
+                    {% for level in levels if level.level == current_lvl - 1 or level.level == current_lvl or
+                    level.level == current_lvl + 1 %}
+                    {% set is_current = level.level == current_lvl %}
+                    {% set is_completed = level.completed %}
+
+                    <div
+                        class="relative flex items-center justify-between p-6 rounded-xl border transition-all duration-300 overflow-hidden
+                        {{ 'bg-brand/5 border-brand/30 shadow-soft' if is_current else ('bg-dark-surface border-dark-border opacity-60' if is_completed else 'bg-dark border-dark-border opacity-40 grayscale') }}">
+
+                        {% if is_current %}
+                        <div class="absolute top-0 left-0 w-1 h-full bg-brand"></div>
+                        {% endif %}
+
+                        <!-- Left: Icon -->
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center
+                            {{ 'bg-brand/20 text-brand' if is_current else ('bg-dark-border text-text-secondary' if is_completed else 'bg-dark text-gray-700') }}">
+                            <i
+                                class="fas {{ 'fa-bolt' if is_current else ('fa-check' if is_completed else 'fa-lock') }} text-sm"></i>
+                        </div>
+
+                        <!-- Center: Info -->
+                        <div class="flex-1 px-4">
+                            <div
+                                class="text-[10px] font-bold uppercase tracking-widest {{ 'text-brand' if is_current else 'text-text-secondary' }} mb-1">
+                                Level {{ level.level }}
+                            </div>
+                            <div class="text-sm font-bold text-text-primary truncate">
+                                {{ level.name }}
+                            </div>
+                        </div>
+
+                        <!-- Right: Progress -->
+                        <div class="relative w-12 h-12 flex-shrink-0">
+                            {% if is_current %}
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="50%" cy="50%" r="20" stroke="#2A2E35" stroke-width="4" fill="transparent" />
+                                <circle cx="50%" cy="50%" r="20" stroke="#10b981" stroke-width="4" fill="transparent"
+                                    stroke-dasharray="125.6"
+                                    stroke-dashoffset="{{ 125.6 * (1 - (level.current_xp / level.next_level_xp)) }}"
+                                    stroke-linecap="round" class="transition-all duration-1000" />
+                            </svg>
+                            <div
+                                class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-brand">
+                                {{ ((level.current_xp / level.next_level_xp) * 100) | round | int }}%
+                            </div>
+                            {% elif is_completed %}
+                            <div class="flex items-center justify-center w-full h-full text-brand/50">
+                                <i class="fas fa-check-circle text-2xl"></i>
+                            </div>
+                            {% else %}
+                            <div class="flex items-center justify-center w-full h-full text-text-secondary/20">
+                                <i class="fas fa-lock text-xl"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+</div>
+
+
+
+<script>
+    // Prepare activity data
+    const activityData = {};
+
+    // Initialize all dates in the last 365 days with 0 challenges
+    const today = new Date();
+    for (let i = 0; i < 365; i++) {
+        const date = new Date();
+
+</script>
+
+
+
+// <!-- Explicit Chart.js v4 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+// <!-- Charts Initialization Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                console.log("🚀 Chart Manager Started (Fixed & Robust)");
+
+                // --- Safe Data Injection ---
+                const userPoints = {{ user.eco_points | default (0) | tojson
+            }};
+        const nextLevelXP = {{ user.next_level_xp | default (100) | tojson
+    }};
+
+    // Safely parse counts
+    let achievementsCount = 0;
+    {% if user.achievements %}
+    achievementsCount = {{ user.achievements | length | tojson }};
+    {% endif %}
+
+    let challengeCompletions = 0;
+    let totalChallenges = {{ challenges| length | default (0) | tojson }};
+    {% if user.challenge_completions %}
+    challengeCompletions = {{ user.challenge_completions | length | tojson }};
+    {% endif %}
+
+    // (Level Data Parsing Removed - Not used for remaining charts)
+
+    // --- 1. Chart.js Availability Check ---
+    if (typeof Chart === 'undefined') {
+        throw new Error("Chart.js library not loaded. Check network or CDN.");
+    }
+
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#9ca3af' } },
+            x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+        }
+    };
+
+    // --- 2. Render Charts Safely ---
+    const renderChart = (id, type, data, options) => {
+        const ctx = document.getElementById(id);
+        if (ctx) {
+            new Chart(ctx, { type, data, options });
+        } else {
+            console.warn(`Canvas element '${id}' not found via JS.`);
+        }
+    };
+
+    // Chart 1: Eco-Points
+    renderChart('pointsGrowthChart', 'line', {
+        labels: ['Start', 'Now', 'Next Level'],
+        datasets: [{
+            label: 'Points',
+            data: [0, userPoints, nextLevelXP],
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            fill: true,
+            tension: 0.4,
+            borderWidth: 3,
+            pointRadius: 6,
+            pointBackgroundColor: '#10b981',
+            pointBorderColor: '#000',
+            pointBorderWidth: 2
+        }]
+    }, commonOptions);
+
+
+    // Chart 2: Achievements
+    renderChart('achievementsChart', 'bar', {
+        labels: ['Earned', 'Pending'],
+        datasets: [{
+            label: 'Count',
+            data: [achievementsCount, 5 - achievementsCount],
+            backgroundColor: ['#10b981', '#064e3b'],
+            borderRadius: 12
+        }]
+    }, commonOptions);
+
+
+    // Chart 4: Challenges
+    renderChart('challengesChart', 'doughnut', {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+            data: [challengeCompletions, totalChallenges > challengeCompletions ? totalChallenges - challengeCompletions : 0],
+            backgroundColor: ['#10b981', '#064e3b'],
+            borderWidth: 0,
+            hoverOffset: 10
+        }]
+    }, {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: '#9ca3af',
+                    font: { family: 'Inter', weight: 'bold', size: 10 },
+                    padding: 20,
+                    usePointStyle: true
+                }
+            }
+        },
+        cutout: '75%'
+    });
+
+
+            } catch (err) {
+        console.error("CRITICAL CHART ERROR:", err);
+        const section = document.getElementById('analytics-section');
+        if (section) {
+            const msg = document.createElement('div');
+            msg.className = "bg-red-500/20 border border-red-500 text-red-100 p-4 rounded-xl mb-6";
+            msg.innerHTML = `< strong > Chart Loading Error:</strong > ${err.message} <br><small>Please check console for details.</small>`;
+            section.prepend(msg);
+        }
+    }
+        });
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- Heatmap Logic -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const grid = document.getElementById('heatmapGrid');
+        const details = document.getElementById('day-details');
+        const selectedDateEl = document.getElementById('selected-date');
+        const selectedActivityEl = document.getElementById('selected-activity');
+
+        async function loadHeatmapData() {
+            try {
+                const response = await fetch('/api/contribution-data');
+                if (!response.ok) throw new Error('API request failed');
+                const data = await response.json();
+
+                const activityMap = {};
+                data.forEach(item => {
+                    activityMap[item.date] = item;
+                });
+
+                renderHeatmap(activityMap);
+            } catch (err) {
+                console.error('Heatmap Data Error:', err);
+            }
+        }
+
+        function renderHeatmap(activityMap) {
+            const today = new Date();
+            const totalDays = 365;
+
+            const start = new Date();
+            start.setDate(today.getDate() - 364);
+
+            const startDay = start.getDay();
+            start.setDate(start.getDate() - startDay);
+
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            // Month labels logic
+            const monthLabelsContainer = document.getElementById('month-labels');
+            if (monthLabelsContainer) monthLabelsContainer.innerHTML = '';
+            let lastMonth = -1;
+
+            for (let i = 0; i < 371; i++) {
+                const current = new Date(start);
+                current.setDate(start.getDate() + i);
+
+                const dateStr = current.toISOString().split('T')[0];
+                const isFuture = current > today;
+
+                // Add month labels
+                if (i % 7 === 0 && monthLabelsContainer) {
+                    const month = current.getMonth();
+                    if (month !== lastMonth) {
+                        const monthSpan = document.createElement('span');
+                        monthSpan.className = 'absolute';
+                        // i/7 is the column index. Each column is approx 17px (cell 13 + gap 4)
+                        // We need to sync this with the grid's visual position.
+                        // In a 7-row grid with column flow, i is the cell index.
+                        // i/7 gives the 0-indexed column.
+                        monthSpan.style.left = `${(i / 7) * 17}px`;
+                        monthSpan.textContent = current.toLocaleString('default', { month: 'short' });
+                        monthLabelsContainer.appendChild(monthSpan);
+                        lastMonth = month;
+                    }
+                }
+
+                const cell = document.createElement('div');
+
+                if (isFuture) {
+                    cell.className = 'heatmap-cell opacity-5 pointer-events-none';
+                    grid.appendChild(cell);
+                    continue;
+                }
+
+                const activity = activityMap[dateStr] || { completed_challenges: 0, eco_points: 0 };
+
+                let level = 0;
+                const count = activity.completed_challenges;
+                if (count >= 10) level = 4;
+                else if (count >= 5) level = 3;
+                else if (count >= 2) level = 2;
+                else if (count >= 1) level = 1;
+
+                cell.className = `heatmap-cell level-${level} rounded-sm border border-emerald-500/5 cursor-pointer transition-all duration-200 hover:scale-110 hover:shadow-md`;
+                if (level === 0) cell.style.backgroundColor = '#0a0a0a';
+                else if (level === 1) cell.style.backgroundColor = '#064e3b';
+                else if (level === 2) cell.style.backgroundColor = '#065f46';
+                else if (level === 3) cell.style.backgroundColor = '#059669';
+                else if (level === 4) cell.style.backgroundColor = '#10b981';
+
+
+                const formattedDate = current.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                const tooltip = document.createElement('div');
+                tooltip.className = 'heatmap-tooltip';
+                tooltip.innerHTML = `
+                        <div class="font-bold text-white mb-1">${formattedDate}</div>
+                        <div class="text-green-400 font-medium">${count} challenges • ${activity.eco_points} pts</div>
+                    `;
+                cell.appendChild(tooltip);
+
+                cell.onclick = () => {
+                    details.classList.remove('hidden');
+                    selectedDateEl.textContent = formattedDate;
+                    selectedActivityEl.innerHTML = `
+                            <span class="text-green-400 font-bold">${count}</span> challenges completed • 
+                            <span class="text-green-400 font-bold">${activity.eco_points}</span> Eco Points earned
+                        `;
+                    details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                };
+
+                grid.appendChild(cell);
+            }
+        }
+
+        loadHeatmapData();
+    });
+</script>
+
+<style>
+    /* Heatmap Styles */
+    .heatmap-grid {
+        display: grid;
+        grid-template-rows: repeat(7, 1fr);
+        grid-auto-flow: column;
+        gap: 4px;
+    }
+
+    .heatmap-cell {
+        width: 13px;
+        height: 13px;
+        border-radius: 2px;
+        background-color: #ebedf0;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .heatmap-cell:hover {
+        transform: scale(1.4);
+        z-index: 50;
+        box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+        outline: 2px solid rgba(74, 222, 128, 0.8);
+    }
+
+    .level-0 {
+        background-color: #ebedf0;
+    }
+
+    .level-1 {
+        background-color: #9be9a8;
+    }
+
+    .level-2 {
+        background-color: #40c463;
+    }
+
+    .level-3 {
+        background-color: #30a14e;
+    }
+
+    .level-4 {
+        background-color: #216e39;
+    }
+
+    .heatmap-tooltip {
+        position: absolute;
+        bottom: 160%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1c1c1c;
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 11px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: all 0.2s ease;
+        z-index: 100;
+        border: 1px solid #393939;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        visibility: hidden;
+    }
+
+    .heatmap-cell:hover .heatmap-tooltip {
+        opacity: 1;
+        visibility: visible;
+        bottom: 190%;
+    }
+
+    .heatmap-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -6px;
+        border-width: 6px;
+        border-style: solid;
+        border-color: #393939 transparent transparent transparent;
+    }
+</style>
+
+
+// <!-- Achievement Arsenal JavaScript -->
+<script>
+    // Recent Achievements Carousel
+    document.addEventListener('DOMContentLoaded', function () {
+        const carousel = document.getElementById('carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+
+        if (carousel && items.length > 0) {
+            let currentIndex = 0;
+            const itemWidth = items[0].offsetWidth + 16; // width + gap
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+
+                // Update buttons
+                if (prevBtn) prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+                if (nextBtn) nextBtn.style.opacity = currentIndex >= items.length - 1 ? '0.5' : '1';
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    // Calculate visible items based on container width
+                    const containerWidth = document.getElementById('carouselWrapper').offsetWidth;
+                    const visibleItems = Math.floor(containerWidth / itemWidth);
+
+                    if (currentIndex < items.length - visibleItems && currentIndex < items.length - 1) {
+                        currentIndex++;
+                        updateCarousel();
+                    } else if (items.length > visibleItems) {
+                        // Optional: loop back to start? Currently just stops at end.
+                        // For now, let's stop at end to avoid confusion.
+                    }
+                });
+            }
+
+            // Initial update
+            updateCarousel();
+
+            // Window resize handler
+            window.addEventListener('resize', updateCarousel);
+        }
+    });
+
+    // Enhanced particle animation on scroll
+    window.addEventListener('scroll', () => {
+        const particles = document.querySelectorAll('.particle');
+        const scrollY = window.scrollY;
+
+        particles.forEach((particle, index) => {
+            const speed = (index + 1) * 0.1;
+            particle.style.transform = `translateY(${scrollY * speed}px) rotate(${scrollY * 0.1}deg)`;
+        });
+    });
+
+    // Gaming hover effects
+    document.querySelectorAll('.gaming-btn, .eco-card').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            element.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+
+        element.addEventListener('mouseleave', () => {
+            element.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+</script>
+
+{% endblock %}

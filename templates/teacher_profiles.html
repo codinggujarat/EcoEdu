@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Student Directory | EcoEdu Teacher{% endblock %}
+
+{% block content %}
+<div class="px-6 py-8 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-semibold text-gray-100 mb-1">Student Directory</h1>
+        <p class="text-xs text-gray-400 font-medium">Manage and monitor student performance</p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 mb-8">
+        <form method="POST" class="flex flex-col md:flex-row gap-4">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="flex-1 relative">
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" name="search" placeholder="Search by name, email, or class..."
+                    value="{{ search_query }}"
+                    class="w-full pl-10 pr-4 py-2 bg-[#0E0F12] border border-[#2A2E35] rounded-md text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-colors">
+            </div>
+            <button type="submit"
+                class="px-6 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-sm font-medium rounded-md border border-gray-600 transition-colors flex items-center justify-center gap-2">
+                <span>Filter</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Results Header -->
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-sm font-semibold text-gray-300">
+            {% if search_query %}
+            Results for "{{ search_query }}"
+            {% else %}
+            All Students
+            {% endif %}
+        </h2>
+
+        <div class="flex items-center gap-4">
+            <span class="text-xs text-gray-500 font-medium">{{ students|length }} records found</span>
+            {% if search_query %}
+            <a href="{{ url_for('teacher_profiles') }}"
+                class="text-xs text-gray-400 hover:text-gray-200 transition-colors">
+                <i class="fas fa-times-circle mr-1"></i> Clear Filter
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Student Grid -->
+    {% if students %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for student in students %}
+        <div
+            class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-all duration-200 group">
+            <div class="flex items-start gap-4 mb-6">
+                <div
+                    class="w-12 h-12 bg-[#0E0F12] border border-[#2A2E35] rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user text-gray-500 text-lg"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-sm font-bold text-gray-200 truncate">{{ student.name }}</h3>
+                    <p class="text-xs text-gray-500 truncate mt-0.5">{{ student.email }}</p>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span
+                            class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-[#2A2E35] text-gray-400 border border-gray-700">
+                            {{ student.school }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mb-6 text-center border-t border-b border-[#2A2E35] py-4">
+                <div>
+                    <div class="text-sm font-bold text-gray-200">{{ student.eco_points }}</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Points</div>
+                </div>
+                <div>
+                    <div class="text-sm font-bold text-gray-200">{{ student.challenge_completions|length }}</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Tasks</div>
+                </div>
+                <div>
+                    <div class="text-sm font-bold text-gray-200">{{ student.achievements|length }}</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Badges</div>
+                </div>
+            </div>
+
+            <a href="{{ url_for('teacher_view_profile', student_id=student.id) }}"
+                class="block w-full py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-xs font-medium text-center rounded border border-gray-700 transition-colors">
+                View Profile
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-12 text-center">
+        <div class="w-16 h-16 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-users-slash text-gray-500 text-2xl"></i>
+        </div>
+        <h3 class="text-sm font-bold text-gray-300 mb-1">No Students Found</h3>
+        <p class="text-xs text-gray-500 max-w-xs mx-auto mb-6">
+            {% if search_query %}
+            We couldn't find any students matching your search criteria.
+            {% else %}
+            Your directory is currently empty.
+            {% endif %}
+        </p>
+        {% if search_query %}
+        <a href="{{ url_for('teacher_profiles') }}"
+            class="px-4 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-xs font-medium rounded border border-gray-600 transition-colors">
+            Reset Search
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

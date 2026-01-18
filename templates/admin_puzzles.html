@@ -1,0 +1,158 @@
+{% extends "adminbase.html" %}
+{% block title %}Manage Puzzles | EcoEdu Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-100 mb-1">Puzzles</h1>
+            <p class="text-sm text-gray-400 font-medium">Manage logic puzzles and riddles.</p>
+        </div>
+        <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
+            <span class="text-xs text-gray-400 font-medium">
+                <span class="text-gray-200 font-bold">{{ puzzles|length }}</span> Active Puzzles
+            </span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Create Form -->
+        <div class="lg:col-span-4 space-y-6">
+            <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 sticky top-8">
+                <h3 class="text-lg font-semibold text-gray-200 mb-6">Create Puzzle</h3>
+
+                <form method="POST" class="space-y-6">
+                    {{ form.hidden_tag() }}
+
+                    <div class="space-y-4">
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Title</label>
+                            {{ form.title(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                            text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                            focus:ring-emerald-500 outline-none transition-all text-sm", placeholder="Puzzle Title") }}
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label
+                                    class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Difficulty</label>
+                                {{ form.difficulty(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                                text-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none
+                                transition-all text-sm appearance-none cursor-pointer") }}
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Points</label>
+                                {{ form.points(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                                text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                                focus:ring-emerald-500 outline-none transition-all text-sm", placeholder="50") }}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Question</label>
+                            {{ form.question(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                            text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                            focus:ring-emerald-500 outline-none transition-all text-sm min-h-[100px]",
+                            placeholder="Enter riddle or question...") }}
+                        </div>
+
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Options</label>
+                            <div class="space-y-3">
+                                {{ form.option_a(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-3 py-2
+                                text-gray-200 text-xs focus:border-emerald-500 outline-none", placeholder="Option A") }}
+                                {{ form.option_b(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-3 py-2
+                                text-gray-200 text-xs focus:border-emerald-500 outline-none", placeholder="Option B") }}
+                                {{ form.option_c(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-3 py-2
+                                text-gray-200 text-xs focus:border-emerald-500 outline-none", placeholder="Option C") }}
+                                {{ form.option_d(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-3 py-2
+                                text-gray-200 text-xs focus:border-emerald-500 outline-none", placeholder="Option D") }}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Correct
+                                Answer</label>
+                            {{ form.correct_option(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded px-4 py-3
+                            text-emerald-400 font-medium focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500
+                            outline-none transition-all text-sm appearance-none cursor-pointer") }}
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded shadow-sm transition-colors mt-2">
+                        Create Puzzle
+                    </button>
+                </form>
+
+                <form action="{{ url_for('auto_generate_puzzle') }}" method="POST"
+                    class="mt-6 pt-6 border-t border-[#2A2E35]">
+                    {{ form.csrf_token }}
+                    <button type="submit" onclick="return confirm('Generate AI puzzle?');"
+                        class="w-full px-6 py-3 bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-sm font-medium rounded border border-gray-600 transition-colors flex items-center justify-center gap-2">
+                        <i class="fas fa-magic text-purple-400"></i> Auto-Generate with AI
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Puzzle List -->
+        <div class="lg:col-span-8 space-y-6">
+            <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-6">Puzzle Library</h3>
+
+                {% if puzzles %}
+                <div class="grid grid-cols-1 gap-4">
+                    {% for puzzle in puzzles %}
+                    <div
+                        class="bg-[#0E0F12] border border-[#2A2E35] rounded-lg p-5 group hover:border-emerald-500/30 transition-all relative">
+                        <div class="absolute top-5 right-5">
+                            <form action="{{ url_for('delete_puzzle', puzzle_id=puzzle.id) }}" method="POST">
+                                {{ form.csrf_token }}
+                                <button type="submit" onclick="return confirm('Delete this puzzle?');"
+                                    class="text-gray-600 hover:text-red-500 transition-colors">
+                                    <i class="fas fa-trash-can text-sm"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="flex items-center gap-3 mb-3">
+                            <span
+                                class="px-2 py-0.5 bg-[#2A2E35] border border-gray-700 text-gray-300 text-[10px] font-bold uppercase rounded">
+                                {{ puzzle.difficulty }}
+                            </span>
+                            <span
+                                class="px-2 py-0.5 bg-[#171A1F] text-emerald-500 text-[10px] font-bold uppercase rounded flex items-center gap-1">
+                                <i class="fas fa-bolt text-[8px]"></i> {{ puzzle.points }} XP
+                            </span>
+                        </div>
+
+                        <h4 class="text-base font-semibold text-gray-200 mb-2 pr-8">{{ puzzle.title }}</h4>
+                        <p class="text-sm text-gray-400 mb-4 line-clamp-2">{{ puzzle.question }}</p>
+
+                        <div class="flex items-center gap-2 text-xs">
+                            <span class="text-gray-500 font-medium">Solution:</span>
+                            <span class="text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">{{
+                                puzzle.correct_option }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-12">
+                    <div class="w-12 h-12 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-puzzle-piece text-gray-500"></i>
+                    </div>
+                    <p class="text-gray-500 text-sm">No puzzles found.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

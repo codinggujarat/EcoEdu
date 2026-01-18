@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Login | EcoEdu{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-semibold text-gray-100 mb-2">Welcome back</h1>
+            <p class="text-sm text-gray-400">Enter your credentials to access your account.</p>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl shadow-2xl p-8">
+            <form method="POST" class="space-y-5">
+                {{ form.hidden_tag() }}
+
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-medium text-gray-400">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-600 text-sm"></i>
+                        </div>
+                        {{ form.email(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-10 pr-4
+                        text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                        focus:ring-emerald-500 outline-none transition-colors", placeholder="name@example.com") }}
+                    </div>
+                    {% for error in form.email.errors %}
+                    <p class="text-red-400 text-xs mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-medium text-gray-400">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-600 text-sm"></i>
+                        </div>
+                        {{ form.password(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg py-2.5 pl-10 pr-4
+                        text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                        focus:ring-emerald-500 outline-none transition-colors", placeholder="••••••••") }}
+                        <div
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-300 transition-colors">
+                            <i class="fas fa-eye text-xs"></i>
+                        </div>
+                    </div>
+                    {% for error in form.password.errors %}
+                    <p class="text-red-400 text-xs mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox"
+                            class="rounded bg-[#0E0F12] border-[#2A2E35] text-emerald-600 focus:ring-emerald-500/20">
+                        <span class="text-xs text-gray-400">Remember me</span>
+                    </label>
+                    <a href="{{ url_for('forgot_password') }}"
+                        class="text-xs text-emerald-500 hover:text-emerald-400 font-medium transition-colors">Forgot
+                        password?</a>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg shadow-lg shadow-emerald-900/20 transition-all text-sm flex items-center justify-center gap-2">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="mt-6 pt-6 border-t border-[#2A2E35]">
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button"
+                        class="flex items-center justify-center gap-2 py-2.5 bg-[#0E0F12] border border-[#2A2E35] rounded-lg hover:border-gray-600 transition-colors text-xs text-gray-300 font-medium">
+                        <i class="fab fa-google text-gray-400"></i> Google
+                    </button>
+                    <button type="button"
+                        class="flex items-center justify-center gap-2 py-2.5 bg-[#0E0F12] border border-[#2A2E35] rounded-lg hover:border-gray-600 transition-colors text-xs text-gray-300 font-medium">
+                        <i class="fab fa-apple text-gray-400"></i> Apple
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-center mt-6 text-xs text-gray-500">
+                Don't have an account?
+                <a href="{{ url_for('register') }}"
+                    class="text-emerald-500 hover:text-emerald-400 font-medium transition-colors">Create account</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

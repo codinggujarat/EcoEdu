@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Challenges | EcoEdu Teacher{% endblock %}
+
+{% block content %}
+<div class="px-6 py-8 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-100 mb-1">Verification Requests</h1>
+            <p class="text-xs text-gray-400 font-medium">Validate student mission completions.</p>
+        </div>
+        <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
+            <span class="text-xs text-gray-400 font-medium">
+                <span class="text-gray-200 font-bold">{{ pending_completions|length }}</span> Pending Review
+            </span>
+        </div>
+    </div>
+
+    <!-- Verification Queue -->
+    {% if pending_completions %}
+    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-[#2A2E35]/50 border-b border-[#2A2E35]">
+                        <th class="p-4 text-[10px] text-gray-500 font-bold uppercase tracking-wider">Student</th>
+                        <th class="p-4 text-[10px] text-gray-500 font-bold uppercase tracking-wider">Mission</th>
+                        <th class="p-4 text-[10px] text-gray-500 font-bold uppercase tracking-wider text-center">Points
+                        </th>
+                        <th class="p-4 text-[10px] text-gray-500 font-bold uppercase tracking-wider">Evidence</th>
+                        <th class="p-4 text-[10px] text-gray-500 font-bold uppercase tracking-wider text-right">Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2A2E35]">
+                    {% for completion, challenge, user in pending_completions %}
+                    <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-[#0E0F12] border border-[#2A2E35] rounded-full flex items-center justify-center text-gray-500">
+                                    <i class="fas fa-user text-xs"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-200">{{ user.name }}</div>
+                                    <div class="text-[10px] text-gray-500 mt-0.5">{{ user.school }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <div>
+                                <div class="text-sm font-medium text-gray-300">{{ challenge.title }}</div>
+                                <div class="text-[10px] text-gray-500 mt-0.5 capitalize">{{ challenge.difficulty }}
+                                    Difficulty</div>
+                            </div>
+                        </td>
+                        <td class="p-4 text-center">
+                            <span
+                                class="inline-flex px-2 py-0.5 bg-[#2A2E35] text-gray-300 text-[10px] font-bold rounded border border-gray-700">
+                                +{{ challenge.points }}
+                            </span>
+                        </td>
+                        <td class="p-4">
+                            {% if completion.notes %}
+                            <div x-data="{ open: false }">
+                                <button @click="open = true"
+                                    class="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors">
+                                    <i class="fas fa-file-alt"></i> View Notes
+                                </button>
+
+                                <!-- Modal -->
+                                <div x-show="open"
+                                    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                                    style="display: none;">
+
+                                    <div @click.away="open = false"
+                                        class="bg-[#171A1F] border border-[#2A2E35] w-full max-w-lg rounded-lg shadow-2xl overflow-hidden p-6 relative">
+
+                                        <div class="flex items-start justify-between mb-4">
+                                            <h3 class="text-lg font-semibold text-gray-200">Submission Details</h3>
+                                            <button @click="open = false" class="text-gray-500 hover:text-gray-300">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+
+                                        <div
+                                            class="bg-[#0E0F12] rounded p-4 border border-[#2A2E35] text-sm text-gray-300 mb-6 max-h-60 overflow-y-auto">
+                                            {{ completion.notes|safe }}
+                                        </div>
+
+                                        <div class="flex justify-end">
+                                            <button @click="open = false"
+                                                class="px-4 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-xs font-medium rounded border border-gray-600 transition-colors">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <span class="text-[10px] text-gray-600 italic">No notes attached</span>
+                            {% endif %}
+                        </td>
+                        <td class="p-4 text-right">
+                            <div class="flex justify-end gap-2">
+                                <form method="POST"
+                                    action="{{ url_for('verify_challenge_completion', completion_id=completion.id, action='approve') }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit"
+                                        class="w-8 h-8 bg-[#2A2E35] hover:bg-emerald-900/30 text-emerald-600 hover:text-emerald-500 rounded flex items-center justify-center border border-transparent hover:border-emerald-500/20 transition-all"
+                                        title="Approve" onclick="return confirm('Approve this completion?')">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </button>
+                                </form>
+                                <form method="POST"
+                                    action="{{ url_for('verify_challenge_completion', completion_id=completion.id, action='reject') }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit"
+                                        class="w-8 h-8 bg-[#2A2E35] hover:bg-red-900/30 text-red-600 hover:text-red-500 rounded flex items-center justify-center border border-transparent hover:border-red-500/20 transition-all"
+                                        title="Reject" onclick="return confirm('Reject this completion?')">
+                                        <i class="fas fa-times text-xs"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-12 text-center">
+        <div class="w-16 h-16 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-check-double text-gray-500 text-2xl"></i>
+        </div>
+        <h3 class="text-sm font-bold text-gray-300 mb-1">All Caught Up</h3>
+        <p class="text-xs text-gray-500 max-w-xs mx-auto">
+            There are no pending verification requests at this time.
+        </p>
+    </div>
+    {% endif %}
+</div>
+<script src="//unpkg.com/alpinejs" defer></script>
+{% endblock %}

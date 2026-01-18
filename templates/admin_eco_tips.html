@@ -1,0 +1,286 @@
+{% extends "adminbase.html" %}
+{% block title %}Eco Tips | EcoEdu Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-100 mb-1">Eco Tips</h1>
+            <p class="text-sm text-gray-400 font-medium">Manage daily environmental tips and content.</p>
+        </div>
+        <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
+            <span class="text-xs text-gray-400 font-medium">
+                <span class="text-gray-200 font-bold">{{ tips|length }}</span> Active Tips
+            </span>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total</span>
+                <i class="fas fa-database text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ tips|length }}</span>
+                <span class="text-xs text-emerald-500 font-medium">Published</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Daily</span>
+                <i class="fas fa-sun text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ tips|selectattr('frequency', 'equalto',
+                    'daily')|list|length }}</span>
+                <span class="text-xs text-blue-500 font-medium">Rotating</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Weekly</span>
+                <i class="fas fa-calendar-week text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ tips|selectattr('frequency', 'equalto',
+                    'weekly')|list|length }}</span>
+                <span class="text-xs text-yellow-500 font-medium">Scheduled</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Monthly</span>
+                <i class="fas fa-calendar-alt text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ tips|selectattr('frequency', 'equalto',
+                    'monthly')|list|length }}</span>
+                <span class="text-xs text-purple-500 font-medium">Long-term</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Form -->
+        <div class="lg:col-span-4 space-y-8">
+            <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 sticky top-8">
+                <h3 class="text-lg font-semibold text-gray-200 mb-6">{{ "Edit Tip" if edit else "Add New Tip" }}</h3>
+
+                <form method="POST" class="space-y-6">
+                    {{ form.hidden_tag() }}
+
+                    <div>
+                        <label
+                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Content</label>
+                        {{ form.tip(value=tip.tip if edit else "", class="w-full bg-[#0E0F12] border border-[#2A2E35]
+                        rounded px-4 py-3 text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                        focus:ring-emerald-500 outline-none transition-all text-sm min-h-[150px]", placeholder="Enter
+                        tip content here...") }}
+                    </div>
+
+                    <div>
+                        <label
+                            class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Frequency</label>
+                        {{ form.frequency(value=tip.frequency if edit else "", class="w-full bg-[#0E0F12] border
+                        border-[#2A2E35] rounded px-4 py-3 text-gray-200 focus:border-emerald-500 focus:ring-1
+                        focus:ring-emerald-500 outline-none transition-all text-sm appearance-none cursor-pointer") }}
+                    </div>
+
+                    <div class="flex flex-col gap-3 pt-2">
+                        <button type="submit"
+                            class="w-full px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded shadow-sm transition-colors">
+                            {{ "Update Tip" if edit else "Publish Tip" }}
+                        </button>
+                        {% if edit %}
+                        <a href="{{ url_for('admin_eco_tips') }}"
+                            class="w-full px-6 py-3 bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-center text-sm font-medium rounded border border-gray-600 transition-colors">
+                            Cancel Edit
+                        </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lists & Charts -->
+        <div class="lg:col-span-8 space-y-8">
+            <!-- Table -->
+            <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
+                <div class="p-6 border-b border-[#2A2E35]">
+                    <h2 class="text-lg font-semibold text-gray-200">Content Library</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="ecoTipsTable" class="w-full text-left">
+                        <thead class="bg-[#2A2E35]/50">
+                            <tr>
+                                <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Details</th>
+                                <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Frequency</th>
+                                <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#2A2E35]">
+                            {% for tip in tips %}
+                            <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+                                <td class="p-4">
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="mt-1 w-6 h-6 rounded bg-[#0E0F12] border border-[#2A2E35] flex items-center justify-center text-emerald-500 flex-shrink-0">
+                                            <i class="fas fa-leaf text-xs"></i>
+                                        </div>
+                                        <p class="text-sm text-gray-300">{{ tip.tip }}</p>
+                                    </div>
+                                </td>
+                                <td class="p-4">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase border
+                                        {% if tip.frequency == 'daily' %} bg-blue-900/20 text-blue-400 border-blue-900/30
+                                        {% elif tip.frequency == 'weekly' %} bg-yellow-900/20 text-yellow-400 border-yellow-900/30
+                                        {% else %} bg-purple-900/20 text-purple-400 border-purple-900/30 {% endif %}">
+                                        {{ tip.frequency }}
+                                    </span>
+                                </td>
+                                <td class="p-4 text-right">
+                                    <div class="flex justify-end gap-2">
+                                        <a href="{{ url_for('admin_edit_eco_tip', tip_id=tip.id) }}"
+                                            class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-blue-900/30 text-gray-400 hover:text-blue-400 flex items-center justify-center transition-colors">
+                                            <i class="fas fa-pen text-xs"></i>
+                                        </a>
+                                        <form action="{{ url_for('admin_delete_eco_tip', tip_id=tip.id) }}"
+                                            method="POST" class="inline">
+                                            {{ form.csrf_token }}
+                                            <button type="submit" onclick="return confirm('Delete this tip?');"
+                                                class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-red-900/30 text-gray-400 hover:text-red-400 flex items-center justify-center transition-colors">
+                                                <i class="fas fa-trash text-xs"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                    <h3 class="text-sm font-semibold text-gray-200 mb-4">Frequency Distribution</h3>
+                    <div class="h-48">
+                        <canvas id="frequencyChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                    <h3 class="text-sm font-semibold text-gray-200 mb-4">Content Balance</h3>
+                    <div class="h-48 relative">
+                        <canvas id="frequencyDoughnut"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    /* Minimalist DataTables */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 1rem;
+        color: #9CA3AF;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        background: #0E0F12;
+        border: 1px solid #2A2E35;
+        border-radius: 4px;
+        color: #E6E8EB;
+        padding: 4px 8px;
+        margin-left: 8px;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding: 1rem 0;
+        color: #6B7280;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .paginate_button {
+        color: #9CA3AF !important;
+        padding: 2px 8px !important;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .paginate_button.current {
+        color: #E6E8EB !important;
+        background: #2A2E35 !important;
+        border: none !important;
+        border-radius: 4px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#ecoTipsTable').DataTable({
+            "pageLength": 5,
+            "lengthChange": false,
+            "language": { "search": "Search:", "paginate": { "previous": "<", "next": ">" } }
+        });
+
+        const dailyTips = {{ tips| selectattr("frequency", "equalto", "daily") | list | length
+    }};
+    const weeklyTips = {{ tips| selectattr("frequency", "equalto", "weekly") | list | length }};
+    const monthlyTips = {{ tips| selectattr("frequency", "equalto", "monthly") | list | length }};
+
+    new Chart(document.getElementById('frequencyChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Daily', 'Weekly', 'Monthly'],
+            datasets: [{
+                label: 'Count',
+                data: [dailyTips, weeklyTips, monthlyTips],
+                backgroundColor: ['#3b82f6', '#fbbf24', '#a855f7'],
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: '#2A2E35' }, ticks: { color: '#9CA3AF' } },
+                x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('frequencyDoughnut'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Daily', 'Weekly', 'Monthly'],
+            datasets: [{
+                data: [dailyTips, weeklyTips, monthlyTips],
+                backgroundColor: ['#3b82f6', '#fbbf24', '#a855f7'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            cutout: '70%'
+        }
+    });
+    });
+</script>
+{% endblock %}

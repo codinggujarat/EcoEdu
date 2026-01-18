@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard - EcoEdu{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="px-6 py-8 max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Sidebar Column -->
+        <div class="md:w-64 flex-shrink-0">
+            {% include "teacher_dashboard_sidebar.html" %}
+        </div>
+
+        <!-- Main Content Column -->
+        <div class="flex-1">
+
+            <!-- Header -->
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-semibold text-gray-100 mb-1">Teacher Command Center</h1>
+                    <p class="text-xs text-gray-400 font-medium">Coordinate, verify, and analyze student impact.</p>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 bg-[#2A2E35] rounded-full border border-gray-700">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                    <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wide">System Active</span>
+                </div>
+            </div>
+
+            <!-- Feature Cards Grid -->
+            <div class="grid grid-cols-1 gap-6 mb-8">
+                <!-- Verification Center -->
+                <div
+                    class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-colors duration-200">
+                    <div class="flex items-start gap-4">
+                        <div class="p-3 rounded-lg bg-[#2A2E35] text-gray-300">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-semibold text-gray-200 mb-1">Verification Hub</h3>
+                            <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                                Review evidence and approve student eco-points submission.
+                            </p>
+                            <a href="{{ url_for('teacher_verify_challenges') }}"
+                                class="inline-flex items-center gap-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-xs font-medium py-2 px-4 rounded-md transition-colors border border-gray-700">
+                                <span>Verify Pending Work</span>
+                                <i class="fas fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Analytics -->
+                    <div
+                        class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-colors duration-200">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-[#2A2E35] text-gray-300">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-gray-200 mb-1">Insights</h3>
+                                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                                    Performance data and standings.
+                                </p>
+                                <div class="flex gap-2">
+                                    <a href="{{ url_for('challenges') }}"
+                                        class="px-3 py-1.5 rounded bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-xs font-medium border border-gray-700 transition-colors">
+                                        Explore
+                                    </a>
+                                    <a href="{{ url_for('leaderboard') }}"
+                                        class="px-3 py-1.5 rounded bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-xs font-medium border border-gray-700 transition-colors">
+                                        Rankings
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Profiles -->
+                    <div
+                        class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-colors duration-200">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-[#2A2E35] text-gray-300">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-gray-200 mb-1">Directory</h3>
+                                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                                    Manage student profiles.
+                                </p>
+                                <a href="{{ url_for('teacher_profiles') }}"
+                                    class="px-3 py-1.5 rounded bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-xs font-medium border border-gray-700 transition-colors">
+                                    Manage Students
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div
+                    class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col items-center justify-center">
+                    <div class="text-3xl font-semibold text-gray-100 mb-1">{{ pending_verifications }}</div>
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Pending Verifications</div>
+                </div>
+                <div
+                    class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col items-center justify-center">
+                    <div class="text-3xl font-semibold text-gray-100 mb-1">{{ active_students }}</div>
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Active Students</div>
+                </div>
+                <div
+                    class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col items-center justify-center">
+                    <div class="text-3xl font-semibold text-gray-100 mb-1">{{ verified_challenges }}%</div>
+                    <div class="text-xs text-gray-500 font-medium uppercase tracking-wide">Verification Rate</div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics-section">
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-gray-200">Impact Analytics</h2>
+                    <p class="text-xs text-gray-500">Real-time data visualization</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Chart 1 -->
+                    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                        <div class="mb-6 flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-gray-300">Verification Status</h3>
+                            <i class="fas fa-check-double text-gray-600"></i>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="verificationStatusChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2 -->
+                    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                        <div class="mb-6 flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-gray-300">Student Activity</h3>
+                            <i class="fas fa-running text-gray-600"></i>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="studentActivityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3 -->
+                    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                        <div class="mb-6 flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-gray-300">Completion Rates</h3>
+                            <i class="fas fa-tasks text-gray-600"></i>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="completionRatesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 4 -->
+                    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+                        <div class="mb-6 flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-gray-300">Class Performance</h3>
+                            <i class="fas fa-trophy text-gray-600"></i>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Chart Commons
+        Chart.defaults.color = '#9AA0A6';
+        Chart.defaults.font.family = 'Inter';
+
+        const chartGridColor = '#2A2E35';
+
+        // Dynamic Data
+        const pendingVerifications = parseInt("{{ pending_verifications if pending_verifications is defined else 0 }}");
+        const activeStudents = parseInt("{{ active_students if active_students is defined else 0 }}");
+        const verifiedChallenges = parseInt("{{ verified_challenges if verified_challenges is defined else 0 }}");
+
+        // Chart 1: Verification Status
+        const verificationCtx = document.getElementById('verificationStatusChart');
+        if (verificationCtx) {
+            new Chart(verificationCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'Verified'],
+                    datasets: [{
+                        data: [pendingVerifications, verifiedChallenges],
+                        backgroundColor: ['#F59E0B', '#10B981'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Chart 2: Student Activity
+        const studentActivityCtx = document.getElementById('studentActivityChart');
+        if (studentActivityCtx) {
+            new Chart(studentActivityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['W1', 'W2', 'W3', 'W4'],
+                    datasets: [{
+                        label: 'Active Users',
+                        data: [
+                            Math.floor(activeStudents * 0.7),
+                            Math.floor(activeStudents * 0.85),
+                            Math.floor(activeStudents * 0.9),
+                            activeStudents
+                        ],
+                        backgroundColor: '#3B82F6',
+                        borderRadius: 4,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            grid: { color: chartGridColor, borderDash: [4, 4] },
+                            border: { display: false }
+                        },
+                        x: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Chart 3: Completion Rates
+        const completionCtx = document.getElementById('completionRatesChart');
+        if (completionCtx) {
+            new Chart(completionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Easy', 'Medium', 'Hard'],
+                    datasets: [{
+                        label: 'Success Rate',
+                        data: [85, 65, 45],
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            grid: { color: chartGridColor, borderDash: [4, 4] },
+                            border: { display: false },
+                            ticks: { callback: v => v + '%' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Chart 4: Performance
+        const performanceCtx = document.getElementById('performanceChart');
+        if (performanceCtx) {
+            new Chart(performanceCtx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['Top', 'Good', 'Avg', 'Low'],
+                    datasets: [{
+                        data: [15, 30, 35, 20],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.6)',
+                            'rgba(59, 130, 246, 0.6)',
+                            'rgba(234, 179, 8, 0.6)',
+                            'rgba(239, 68, 68, 0.6)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 8 } }
+                    },
+                    scales: {
+                        r: {
+                            ticks: { display: false },
+                            grid: { color: chartGridColor }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

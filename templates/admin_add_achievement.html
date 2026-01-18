@@ -1,0 +1,180 @@
+{% extends "adminbase.html" %}
+{% block title %}Create Achievement | EcoEdu Admin{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-100">Create Achievement</h1>
+            <p class="text-sm text-gray-400 mt-1">Configure new platform milestones and rewards.</p>
+        </div>
+        <a href="{{ url_for('admin_achievements') }}"
+            class="px-4 py-2 bg-[#171A1F] border border-[#2A2E35] rounded-lg text-sm text-gray-300 hover:text-white hover:border-gray-500 transition-all flex items-center gap-2">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Input Form -->
+        <div class="lg:col-span-2 space-y-6">
+            <form method="POST" class="space-y-6">
+                {{ form.hidden_tag() }}
+
+                <!-- Basic Info -->
+                <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-gray-100 mb-4 border-b border-[#2A2E35] pb-2">Basic
+                        Information</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="md:col-span-3 space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Achievement Title</label>
+                            {{ form.name(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg px-4 py-2.5
+                            text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                            focus:ring-emerald-500 outline-none transition-colors", placeholder="e.g. Eco Warrior") }}
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Icon (Emoji)</label>
+                            {{ form.badge_icon(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg px-4 py-2.5
+                            text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                            focus:ring-emerald-500 outline-none transition-colors text-center", placeholder="🏆") }}
+                        </div>
+
+                        <div class="md:col-span-4 space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Description</label>
+                            {{ form.description(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg px-4
+                            py-2.5 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500 focus:ring-1
+                            focus:ring-emerald-500 outline-none transition-colors min-h-[100px]", placeholder="Describe
+                            how to earn this achievement...") }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Criteria -->
+                <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-gray-100 mb-4 border-b border-[#2A2E35] pb-2">Earning Criteria
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Points Required</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-bolt text-emerald-500 text-xs"></i>
+                                </div>
+                                {{ form.points_required(class="w-full bg-[#0E0F12] border border-[#2A2E35] rounded-lg
+                                pl-9 pr-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 focus:border-emerald-500
+                                focus:ring-1 focus:ring-emerald-500 outline-none transition-colors", placeholder="0",
+                                type="number") }}
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-medium text-gray-400">Challenges Required</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-tasks text-blue-500 text-xs"></i>
+                                </div>
+                                {{ form.challenges_required(class="w-full bg-[#0E0F12] border border-[#2A2E35]
+                                rounded-lg pl-9 pr-4 py-2.5 text-sm text-gray-200 placeholder-gray-600
+                                focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none
+                                transition-colors", placeholder="0", type="number") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center gap-3 p-3 bg-blue-500/5 border border-blue-500/10 rounded-lg">
+                        <i class="fas fa-info-circle text-blue-400"></i>
+                        <p class="text-xs text-blue-300">Achievements with high requirements will be marked as "Elite"
+                            automatically.</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <button type="button" onclick="resetForm()"
+                        class="px-6 py-2.5 bg-[#171A1F] border border-[#2A2E35] rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:border-gray-500 transition-colors">
+                        Reset Form
+                    </button>
+                    <button type="submit"
+                        class="flex-1 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg shadow-lg shadow-emerald-900/20 transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-plus"></i> Create Achievement
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview -->
+        <div class="lg:col-span-1">
+            <div class="sticky top-6 space-y-4">
+                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Live Preview</h3>
+
+                <div
+                    class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-6 text-center shadow-lg relative overflow-hidden group">
+                    <div
+                        class="w-16 h-16 bg-[#0E0F12] border border-[#2A2E35] rounded-2xl flex items-center justify-center text-3xl mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <span id="preview-icon">🏆</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white mb-2" id="preview-name">New Achievement</h3>
+                    <p class="text-sm text-gray-400 mb-6" id="preview-description">Description will appear here...</p>
+
+                    <div class="grid grid-cols-2 gap-3 text-left">
+                        <div class="bg-[#0E0F12] p-3 rounded-lg border border-[#2A2E35]">
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Points</p>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-bolt text-emerald-500 text-xs"></i>
+                                <span class="text-sm font-bold text-gray-200" id="preview-points">0</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#0E0F12] p-3 rounded-lg border border-[#2A2E35]">
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Tasks</p>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check-circle text-blue-500 text-xs"></i>
+                                <span class="text-sm font-bold text-gray-200" id="preview-challenges">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nameInput = document.querySelector('input[name="name"]');
+        const descriptionInput = document.querySelector('textarea[name="description"]');
+        const badgeInput = document.querySelector('input[name="badge_icon"]');
+        const pointsInput = document.querySelector('input[name="points_required"]');
+        const challengesInput = document.querySelector('input[name="challenges_required"]');
+
+        const previewIcon = document.getElementById('preview-icon');
+        const previewName = document.getElementById('preview-name');
+        const previewDescription = document.getElementById('preview-description');
+        const previewPoints = document.getElementById('preview-points');
+        const previewChallenges = document.getElementById('preview-challenges');
+
+        function updatePreview() {
+            previewName.textContent = nameInput.value || 'New Achievement';
+            previewDescription.textContent = descriptionInput.value || 'Description will appear here...';
+            previewIcon.textContent = badgeInput.value || '🏆';
+            previewPoints.textContent = pointsInput.value || '0';
+            previewChallenges.textContent = challengesInput.value || '0';
+        }
+
+        [nameInput, descriptionInput, badgeInput, pointsInput, challengesInput].forEach(el => {
+            el.addEventListener('input', updatePreview);
+        });
+
+        window.resetForm = function () {
+            nameInput.value = '';
+            descriptionInput.value = '';
+            badgeInput.value = '';
+            pointsInput.value = '';
+            challengesInput.value = '';
+            updatePreview();
+        };
+    });
+</script>
+{% endblock %}

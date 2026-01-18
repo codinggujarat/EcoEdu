@@ -1,0 +1,115 @@
+<aside class="hidden lg:flex flex-col w-64 h-screen fixed inset-y-0 left-0 bg-[#171A1F] border-r border-[#2A2E35] z-50">
+    <!-- Header -->
+    <div class="flex items-center gap-3 h-16 px-6 border-b border-[#2A2E35]">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+            <i class="fas fa-leaf text-sm"></i>
+        </div>
+        <span class="text-lg font-bold text-white tracking-tight">EcoEdu</span>
+    </div>
+
+    <!-- User Info -->
+    <div class="p-6 border-b border-[#2A2E35]">
+        <div class="flex items-center gap-3">
+            <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+                onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" alt="Profile"
+                class="w-10 h-10 rounded-full object-cover border border-[#2A2E35]">
+            <div class="overflow-hidden">
+                <p class="text-sm font-semibold text-white truncate">{{ current_user.name }}</p>
+                <p class="text-xs text-emerald-500 truncate">{{ current_user.role or 'Student' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Navigation</p>
+
+        <a href="#analytics-section" data-target="analytics-section"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#2A2E35] transition-colors group">
+            <i class="fas fa-chart-line w-5 text-center group-hover:text-emerald-500 transition-colors"></i>
+            Analytics
+        </a>
+
+        <a href="#learning-journey-section" data-target="learning-journey-section"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#2A2E35] transition-colors group">
+            <i class="fas fa-map w-5 text-center group-hover:text-emerald-500 transition-colors"></i>
+            Journey
+        </a>
+
+        <a href="#level-progress-section" data-target="level-progress-section"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#2A2E35] transition-colors group">
+            <i class="fas fa-bolt w-5 text-center group-hover:text-emerald-500 transition-colors"></i>
+            Level Progress
+        </a>
+
+        <a href="#problem-solving-section" data-target="problem-solving-section"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#2A2E35] transition-colors group">
+            <i class="fas fa-puzzle-piece w-5 text-center group-hover:text-emerald-500 transition-colors"></i>
+            Puzzles
+        </a>
+
+        <a href="#achievements-section" data-target="achievements-section"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#2A2E35] transition-colors group">
+            <i class="fas fa-trophy w-5 text-center group-hover:text-emerald-500 transition-colors"></i>
+            Achievements
+        </a>
+    </nav>
+
+    <!-- Footer -->
+    <div class="p-4 border-t border-[#2A2E35]">
+        <a href="{{ url_for('logout') }}"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-red-500/10 hover:text-red-400 transition-colors">
+            <i class="fas fa-sign-out-alt w-5 text-center"></i>
+            Log Out
+        </a>
+    </div>
+</aside>
+
+<!-- Mobile Toggle -->
+<button id="mobile-menu-toggle"
+    class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#171A1F] border border-[#2A2E35] rounded-lg text-white shadow-lg">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Mobile Overlay -->
+<div id="mobile-sidebar-overlay"
+    class="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm hidden lg:hidden transition-opacity"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('aside a[href^="#"]');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu
+                    document.querySelector('aside').classList.add('-translate-x-full');
+                    document.getElementById('mobile-sidebar-overlay').classList.add('hidden');
+                }
+            });
+        });
+
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.querySelector('aside');
+        const overlay = document.getElementById('mobile-sidebar-overlay');
+
+        if (toggleBtn) {
+            sidebar.classList.add('-translate-x-full', 'lg:translate-x-0'); // Ensure hidden on mobile initially
+
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.remove('hidden'); // Ensure display flex/block
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        }
+    });
+</script>

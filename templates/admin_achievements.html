@@ -1,0 +1,268 @@
+{% extends "adminbase.html" %}
+{% block title %}Achievements | EcoEdu Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-100 mb-1">Achievements</h1>
+            <p class="text-sm text-gray-400 font-medium">Manage badges and milestone rewards.</p>
+        </div>
+        <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
+            <span class="text-xs text-gray-400 font-medium">
+                <span class="text-gray-200 font-bold">{{ achievements|length }}</span> Active Badges
+            </span>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total</span>
+                <i class="fas fa-award text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ achievements|length }}</span>
+                <span class="text-xs text-emerald-500 font-medium">Active</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Elite Tier</span>
+                <i class="fas fa-crown text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ achievements|selectattr('points_required', 'gt',
+                    500)|list|length }}</span>
+                <span class="text-xs text-blue-500 font-medium">High Value</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Mission Linked</span>
+                <i class="fas fa-link text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ achievements|selectattr('challenges_required',
+                    'gt', 0)|list|length }}</span>
+                <span class="text-xs text-yellow-500 font-medium">Integrated</span>
+            </div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Starter</span>
+                <i class="fas fa-seedling text-gray-600"></i>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span class="text-3xl font-semibold text-gray-100">{{ achievements|selectattr('points_required', 'le',
+                    100)|list|length }}</span>
+                <span class="text-xs text-purple-500 font-medium">Base</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-4 mb-8">
+        <a href="{{ url_for('admin_add_achievement') }}"
+            class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-md shadow-sm transition-colors flex items-center gap-2">
+            <i class="fas fa-plus"></i> Create Achievement
+        </a>
+
+        <form action="{{ url_for('auto_generate_achievements') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" onclick="return confirm('Generate standard achievements?');"
+                class="px-4 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-sm font-medium rounded-md border border-gray-600 transition-colors flex items-center gap-2">
+                <i class="fas fa-magic"></i> Auto-Generate Defaults
+            </button>
+        </form>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Distribution Chart -->
+        <div class="lg:col-span-2 bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-200 mb-6">Type Distribution</h3>
+            <div class="h-64">
+                <canvas id="pointsDistribution"></canvas>
+            </div>
+        </div>
+
+        <!-- Difficulty Chart -->
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-200 mb-6">Difficulty Spread</h3>
+            <div class="h-48 relative mb-4">
+                <canvas id="difficultyChart"></canvas>
+            </div>
+            <div class="text-center text-xs text-gray-500">
+                Breakdown by point cost tiers
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
+        <div class="p-6 border-b border-[#2A2E35] flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-200">Achievement List</h2>
+        </div>
+        <div class="overflow-x-auto">
+            <table id="achievementsTable" class="w-full text-left">
+                <thead class="bg-[#2A2E35]/50">
+                    <tr>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Achievement</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Icon</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Criteria</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Tier</th>
+                        <th class="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#2A2E35]">
+                    {% for ach in achievements %}
+                    <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+                        <td class="p-4">
+                            <div class="text-sm font-medium text-gray-200">{{ ach.name }}</div>
+                            <div class="text-[10px] text-gray-500 mt-0.5 line-clamp-1">{{ ach.description }}</div>
+                        </td>
+                        <td class="p-4">
+                            <span class="text-2xl">{{ ach.badge_icon if ach.badge_icon else '🏆' }}</span>
+                        </td>
+                        <td class="p-4">
+                            <div class="text-xs text-gray-300">
+                                <span class="font-bold text-emerald-500">{{ ach.points_required }}</span> Pts
+                                {% if ach.challenges_required > 0 %}
+                                <span class="text-gray-500 mx-1">+</span>
+                                <span class="font-bold text-blue-500">{{ ach.challenges_required }}</span> Missions
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            {% if ach.points_required <= 100 %} <span
+                                class="px-2 py-0.5 bg-[#2A2E35] text-gray-400 text-[10px] font-bold uppercase rounded">
+                                Starter</span>
+                                {% elif ach.points_required <= 500 %} <span
+                                    class="px-2 py-0.5 bg-yellow-900/20 text-yellow-500 text-[10px] font-bold uppercase rounded">
+                                    Advanced</span>
+                                    {% else %}
+                                    <span
+                                        class="px-2 py-0.5 bg-red-900/20 text-red-500 text-[10px] font-bold uppercase rounded">Legend</span>
+                                    {% endif %}
+                        </td>
+                        <td class="p-4 text-right">
+                            <form action="{{ url_for('delete_achievement', achievement_id=ach.id) }}" method="POST"
+                                class="inline">
+                                <button type="submit" onclick="return confirm('Delete this achievement?');"
+                                    class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-colors">
+                                    <i class="fas fa-trash text-xs"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* Minimalist DataTables */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        padding: 1rem 1.5rem;
+        color: #9CA3AF;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        background: #0E0F12;
+        border: 1px solid #2A2E35;
+        border-radius: 4px;
+        color: #E6E8EB;
+        padding: 4px 8px;
+        margin-left: 8px;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding: 1rem 1.5rem;
+        color: #6B7280;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .paginate_button {
+        color: #9CA3AF !important;
+        padding: 2px 8px !important;
+        font-size: 0.75rem;
+    }
+
+    .dataTables_wrapper .paginate_button.current {
+        color: #E6E8EB !important;
+        background: #2A2E35 !important;
+        border: none !important;
+        border-radius: 4px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#achievementsTable').DataTable({
+            "pageLength": 10,
+            "lengthChange": false,
+            "language": { "search": "Search:", "paginate": { "previous": "<", "next": ">" } }
+        });
+
+        // Charts
+        const easyCount = {{ achievements| selectattr("points_required", "le", 100) | list | length
+    }};
+    const mediumCount = {{ achievements| selectattr("points_required", "gt", 100) | selectattr("points_required", "le", 500) | list | length }};
+    const hardCount = {{ achievements| selectattr("points_required", "gt", 500) | list | length }};
+    const challengeCount = {{ achievements| selectattr("challenges_required", "gt", 0) | list | length }};
+    const pointsOnlyCount = {{ achievements| selectattr("challenges_required", "eq", 0) | list | length }};
+
+    new Chart(document.getElementById('difficultyChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Starter', 'Advanced', 'Legend'],
+            datasets: [{
+                data: [easyCount, mediumCount, hardCount],
+                backgroundColor: ['#10b981', '#fbbf24', '#ef4444'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            cutout: '75%'
+        }
+    });
+
+    new Chart(document.getElementById('pointsDistribution'), {
+        type: 'bar',
+        data: {
+            labels: ['Mission Linked', 'Points Only'],
+            datasets: [{
+                label: 'Count',
+                data: [challengeCount, pointsOnlyCount],
+                backgroundColor: ['#3b82f6', '#8b5cf6'],
+                borderRadius: 4,
+                barThickness: 32
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: '#2A2E35' }, ticks: { color: '#9CA3AF' } },
+                x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }
+            }
+        }
+    });
+    });
+</script>
+{% endblock %}

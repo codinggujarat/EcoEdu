@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Student Details: {{ student.name }} | EcoEdu Teacher{% endblock %}
+
+{% block content %}
+<div class="px-6 py-8 max-w-7xl mx-auto">
+
+    <!-- Header & Navigation -->
+    <div class="mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-6">
+            <a href="{{ url_for('teacher_profiles') }}"
+                class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#2A2E35] bg-[#171A1F] text-gray-400 hover:text-white hover:border-gray-600 transition-colors">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div>
+                <h1 class="text-2xl font-semibold text-gray-100">{{ student.name }}</h1>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="text-sm text-gray-400">{{ student.school }}</span>
+                    <span class="text-gray-600">&bull;</span>
+                    <span class="text-sm text-gray-500">{{ student.class_name }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="text-right">
+                <div class="text-xs text-gray-500 uppercase tracking-wide font-medium">Clearance</div>
+                <div class="text-sm font-bold text-emerald-500">{{ student.level_name }}</div>
+            </div>
+            <div
+                class="w-10 h-10 rounded-full bg-[#171A1F] border border-[#2A2E35] flex items-center justify-center text-emerald-500 font-bold">
+                {{ student.level }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xs text-gray-500 uppercase tracking-wide font-medium">Total Eco Points</h3>
+                <i class="fas fa-bolt text-emerald-500/50"></i>
+            </div>
+            <div class="text-3xl font-semibold text-gray-100">{{ student.eco_points }}</div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xs text-gray-500 uppercase tracking-wide font-medium">Missions Completed</h3>
+                <i class="fas fa-check-circle text-blue-500/50"></i>
+            </div>
+            <div class="text-3xl font-semibold text-gray-100">{{ challenges_completed }}</div>
+        </div>
+
+        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xs text-gray-500 uppercase tracking-wide font-medium">Achievements</h3>
+                <i class="fas fa-trophy text-yellow-500/50"></i>
+            </div>
+            <div class="text-3xl font-semibold text-gray-100">{{ achievements_count }}</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Activity Log -->
+        <div class="lg:col-span-2">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-200">Activity Log</h3>
+            </div>
+
+            {% if challenge_completions %}
+            <div class="space-y-4">
+                {% for completion in challenge_completions %}
+                <div
+                    class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-colors">
+                    <div class="flex flex-col md:flex-row gap-4 justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span
+                                    class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#0E0F12] border border-[#2A2E35] text-gray-400">
+                                    {{ completion.challenge.category }}
+                                </span>
+                                <h4 class="text-sm font-bold text-gray-200">{{ completion.challenge.title }}</h4>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 line-clamp-2">
+                                {{ completion.challenge.description }}
+                            </p>
+
+                            <!-- Metadata -->
+                            <div class="flex items-center gap-4 text-xs text-gray-500">
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-calendar-alt"></i> {{ completion.completed_at.strftime('%Y-%m-%d')
+                                    }}
+                                </span>
+                                <span class="flex items-center gap-1 pt-0.5">
+                                    <span
+                                        class="w-1.5 h-1.5 rounded-full {% if completion.verified %}bg-emerald-500{% else %}bg-yellow-500{% endif %}"></span>
+                                    {% if completion.verified %}Verified{% else %}Pending{% endif %}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="text-sm font-bold text-emerald-500">+{{ completion.challenge.points }}</span>
+                            {% if completion.verified %}
+                            <div
+                                class="w-8 h-8 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                                <i class="fas fa-check text-xs"></i>
+                            </div>
+                            {% else %}
+                            <div
+                                class="w-8 h-8 rounded bg-yellow-500/10 flex items-center justify-center text-yellow-500 border border-yellow-500/20">
+                                <i class="fas fa-clock text-xs"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if completion.notes %}
+                    <div class="mt-4 pt-4 border-t border-[#2A2E35]">
+                        <p class="text-xs text-gray-400 italic">"{{ completion.notes }}"</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-12 text-center">
+                <p class="text-gray-500 text-sm">No activity recorded for this student.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar: Achievements -->
+        <div class="lg:col-span-1">
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-200">Earned Badges</h3>
+            </div>
+
+            {% if achievements %}
+            <div class="space-y-4">
+                {% for user_achievement in achievements %}
+                <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-4 flex items-start gap-4">
+                    <div
+                        class="w-10 h-10 bg-[#0E0F12] border border-[#2A2E35] rounded-md flex items-center justify-center text-xl flex-shrink-0">
+                        {{ user_achievement.achievement.badge_icon }}
+                    </div>
+                    <div class="min-w-0">
+                        <h4 class="text-xs font-bold text-gray-200 truncate">{{ user_achievement.achievement.name }}
+                        </h4>
+                        <p class="text-[10px] text-gray-500 mt-0.5 line-clamp-2">{{
+                            user_achievement.achievement.description }}</p>
+                        <div class="mt-2 text-[10px] text-gray-600">
+                            {{ user_achievement.earned_at.strftime('%Y-%m-%d') }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-8 text-center">
+                <p class="text-gray-500 text-xs">No badges earned yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
