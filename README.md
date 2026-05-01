@@ -194,6 +194,7 @@ EcoEdu/
 *   **Members**:
     *   Vinit Patel
     *   Dadhaniya Hiren
+    *   Ronak Prajapati
 
 ## 🤝 Contribution
 1.  Fork the repository
