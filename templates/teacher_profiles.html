@@ -1,121 +1,144 @@
-{% extends "base.html" %}
+{% extends "dashboard_layout.html" %}
 
-{% block title %}Student Directory | EcoEdu Teacher{% endblock %}
+{% block title %}Student Directory | EduEco{% endblock %}
 
-{% block content %}
-<div class="px-6 py-8 max-w-7xl mx-auto">
+{% block hero_section %}
+{% from 'hero.html' import render_hero with context %}
+{{ render_hero('Student Directory', 'Manage and monitor student progress and impact.', 'Back to Dashboard', url_for('dashboard'), 'arrow-left') }}
+{% endblock %}
 
-    <!-- Header -->
-    <div class="mb-8">
-        <h1 class="text-2xl font-semibold text-gray-100 mb-1">Student Directory</h1>
-        <p class="text-xs text-gray-400 font-medium">Manage and monitor student performance</p>
-    </div>
+{% block dashboard_content %}
+<style>
+/* ── Student Directory — Homepage Editorial Layout ── */
+body { background: #FAF9F6 !important; }
 
-    <!-- Search Section -->
-    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 mb-8">
-        <form method="POST" class="flex flex-col md:flex-row gap-4">
+.tp-section     { background: #FFFFFF; padding: 56px 24px; width: 100%; box-sizing: border-box; min-height: 50vh; }
+.tp-inner       { max-width: 1000px; margin: 0 auto; }
+
+.tp-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
+.tp-p  { font-size: 17px; color: #707070; line-height: 1.5; margin-bottom: 32px; }
+
+/* Search Bar */
+.tp-search {
+    width: 100%; height: 56px; background: #F3F2EC;
+    border: 1px solid rgba(42,74,48,.12); border-radius: 999px;
+    padding: 0 20px 0 52px; font-size: 15px; color: #1B1B1B;
+    outline: none; transition: border-color .2s ease, background .2s ease;
+}
+.tp-search:focus { border-color: #2A4A30; background: #FFFFFF; }
+.tp-search::placeholder { color: #A1A1AA; }
+
+/* Student List/Grid Hybrid */
+.tp-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.tp-card {
+    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    border-radius: 20px; padding: 16px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    transition: border-color .2s, transform .2s; text-decoration: none; color: inherit;
+}
+.tp-card:hover { border-color: rgba(42,74,48,.3); transform: translateY(-4px); }
+
+.tp-avatar-wrap { position:relative; margin-bottom:12px; flex-shrink:0; }
+.tp-avatar { width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid rgba(42,74,48,.1); }
+.tp-lv-badge { position:absolute; bottom:-4px; right:-8px; background:#FFFFFF; border:1px solid rgba(42,74,48,.1); border-radius:999px; padding:2px 6px; font-size:10px; font-weight:700; color:#2A4A30; box-shadow:0 2px 4px rgba(0,0,0,.05); }
+
+.tp-info-wrap { width:100%; min-width:0; }
+.tp-name { font-size:15px; font-weight:600; color:#1B1B1B; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tp-school { font-size:11px; color:#707070; margin-bottom:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+.tp-xp-wrap { width:100%; background:rgba(42,74,48,.05); border-radius:12px; padding:8px; display:flex; justify-content:center; align-items:center; gap:4px; margin-top:auto; flex-shrink:0; }
+.tp-xp-val { font-size:14px; font-weight:700; color:#2A4A30; }
+.tp-xp-lbl { font-size:10px; font-weight:700; color:#707070; text-transform:uppercase; }
+
+/* Desktop overrides: List format */
+@media (min-width: 768px) {
+    .tp-grid { display: flex; flex-direction: column; gap: 12px; }
+    .tp-card { flex-direction: row; text-align: left; justify-content: space-between; padding: 20px 24px; border-radius: 24px; }
+    .tp-card:hover { transform: translateY(-2px); }
+    .tp-card-left { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 0; }
+    
+    .tp-avatar-wrap { margin-bottom: 0; }
+    .tp-avatar { width: 56px; height: 56px; }
+    .tp-lv-badge { right: -4px; }
+    
+    .tp-info-wrap { flex: 1; }
+    .tp-name { font-size: 16px; margin-bottom: 4px; }
+    .tp-school { font-size: 13px; margin-bottom: 0; }
+    
+    .tp-xp-wrap { width: auto; margin-top: 0; padding: 10px 20px; background: rgba(42,74,48,.08); border: 1px solid rgba(42,74,48,.1); border-radius: 999px; }
+    .tp-xp-val { font-size: 16px; }
+}
+
+.tp-btn {
+    height: 40px; background: #F3F2EC; color: #1B1B1B;
+    border-radius: 999px; padding: 0 20px; font-size: 13px; font-weight: 600;
+    border: 1px solid rgba(42,74,48,.1); cursor: pointer; transition: background .2s;
+    display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
+}
+.tp-btn:hover { background: rgba(42,74,48,.1); }
+
+@media (min-width: 768px) {
+    .tp-section { padding: 56px 48px; }
+    .tp-h2 { font-size: 40px; }
+}
+@media (min-width: 1024px) {
+    .tp-section { padding: 64px 64px; }
+}
+</style>
+
+<div class="premium-section">
+<div class="">
+
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:32px; flex-wrap:wrap; gap:16px;">
+        <div>
+            <h2 class="premium-section-title">Roster</h2>
+            <p class="premium-section-desc" style="margin-bottom:0;">View profiles and track eco-points for your students.</p>
+        </div>
+        
+        <form method="POST" style="display:flex; gap:12px; flex:1; min-width:300px; max-width:400px; position:relative;">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <div class="flex-1 relative">
-                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <i class="fas fa-search"></i>
-                </div>
-                <input type="text" name="search" placeholder="Search by name, email, or class..."
-                    value="{{ search_query }}"
-                    class="w-full pl-10 pr-4 py-2 bg-[#0E0F12] border border-[#2A2E35] rounded-md text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-colors">
+            <div style="position:relative; flex:1;">
+                <i data-lucide="search" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:#A1A1AA;"></i>
+                <input type="text" name="search" placeholder="Search students..." value="{{ search_query }}" class="tp-search">
             </div>
-            <button type="submit"
-                class="px-6 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-sm font-medium rounded-md border border-gray-600 transition-colors flex items-center justify-center gap-2">
-                <span>Filter</span>
-            </button>
+            <button type="submit" class="premium-btn" style="height:56px; display:inline-flex; align-items:center; justify-content:center; padding:0 32px; background:#2A4A30; color:#FFFFFF; border-radius:999px; font-weight:600; font-size:15px; letter-spacing:0.3px; border:none; cursor:pointer;">Search</button>
+            {% if search_query %}
+            <a href="{{ url_for('teacher_profiles') }}" class="premium-btn" style="height:56px; display:inline-flex; align-items:center; justify-content:center; padding:0 24px; background:#F3F2EC; color:#707070; border-radius:999px; font-weight:600; font-size:15px; letter-spacing:0.3px; text-decoration:none; border:1px solid rgba(0,0,0,0.05);">Clear</a>
+            {% endif %}
         </form>
     </div>
 
-    <!-- Results Header -->
-    <div class="flex items-center justify-between mb-6">
-        <h2 class="text-sm font-semibold text-gray-300">
-            {% if search_query %}
-            Results for "{{ search_query }}"
-            {% else %}
-            All Students
-            {% endif %}
-        </h2>
-
-        <div class="flex items-center gap-4">
-            <span class="text-xs text-gray-500 font-medium">{{ students|length }} records found</span>
-            {% if search_query %}
-            <a href="{{ url_for('teacher_profiles') }}"
-                class="text-xs text-gray-400 hover:text-gray-200 transition-colors">
-                <i class="fas fa-times-circle mr-1"></i> Clear Filter
-            </a>
-            {% endif %}
-        </div>
-    </div>
-
-    <!-- Student Grid -->
     {% if students %}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for student in students %}
-        <div
-            class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-all duration-200 group">
-            <div class="flex items-start gap-4 mb-6">
-                <div
-                    class="w-12 h-12 bg-[#0E0F12] border border-[#2A2E35] rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-user text-gray-500 text-lg"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-sm font-bold text-gray-200 truncate">{{ student.name }}</h3>
-                    <p class="text-xs text-gray-500 truncate mt-0.5">{{ student.email }}</p>
-                    <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-[#2A2E35] text-gray-400 border border-gray-700">
-                            {{ student.school }}
-                        </span>
+        <div class="tp-grid">
+            {% for student in students %}
+            <a href="{{ url_for('teacher_view_profile', student_id=student.id) }}" class="premium-card">
+                <div class="tp-card-left">
+                    <div class="tp-avatar-wrap">
+                        <img src="{{ url_for('static', filename='uploads/' + (student.profile_pic or 'default.png')) }}" onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" class="tp-avatar">
+                        <div class="tp-lv-badge">Lv{{ (student.eco_points // 100) + 1 }}</div>
+                    </div>
+                    <div class="tp-info-wrap">
+                        <h4 class="tp-name">{{ student.name }}</h4>
+                        <p class="tp-school">{{ student.school or 'EduEco Academy' }}</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 mb-6 text-center border-t border-b border-[#2A2E35] py-4">
-                <div>
-                    <div class="text-sm font-bold text-gray-200">{{ student.eco_points }}</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Points</div>
+                <div class="tp-xp-wrap">
+                    <span class="tp-xp-val">{{ student.eco_points }}</span>
+                    <span class="tp-xp-lbl">XP</span>
                 </div>
-                <div>
-                    <div class="text-sm font-bold text-gray-200">{{ student.challenge_completions|length }}</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Tasks</div>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-gray-200">{{ student.achievements|length }}</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Badges</div>
-                </div>
-            </div>
-
-            <a href="{{ url_for('teacher_view_profile', student_id=student.id) }}"
-                class="block w-full py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-300 text-xs font-medium text-center rounded border border-gray-700 transition-colors">
-                View Profile
             </a>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
     {% else %}
-    <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-12 text-center">
-        <div class="w-16 h-16 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-users-slash text-gray-500 text-2xl"></i>
+        <div style="padding:80px 24px; text-align:center; background:#F3F2EC; border-radius:28px;">
+            <i data-lucide="users" style="width:48px; height:48px; color:#A1A1AA; margin:0 auto 16px;"></i>
+            <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">No students found</h3>
+            <p style="font-size:15px; color:#707070;">Try adjusting your search query.</p>
         </div>
-        <h3 class="text-sm font-bold text-gray-300 mb-1">No Students Found</h3>
-        <p class="text-xs text-gray-500 max-w-xs mx-auto mb-6">
-            {% if search_query %}
-            We couldn't find any students matching your search criteria.
-            {% else %}
-            Your directory is currently empty.
-            {% endif %}
-        </p>
-        {% if search_query %}
-        <a href="{{ url_for('teacher_profiles') }}"
-            class="px-4 py-2 bg-[#2A2E35] hover:bg-[#323842] text-gray-200 text-xs font-medium rounded border border-gray-600 transition-colors">
-            Reset Search
-        </a>
-        {% endif %}
-    </div>
     {% endif %}
+
+</div>
 </div>
 {% endblock %}

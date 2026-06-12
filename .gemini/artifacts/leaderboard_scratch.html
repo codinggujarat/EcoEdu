@@ -1,0 +1,154 @@
+{% extends "dashboard_layout.html" %}
+
+{% block title %}Leaderboard - EcoEdu{% endblock %}
+
+{% block dashboard_content %}
+{% set total_students = users|length %}
+{% set current_rank = namespace(value='-') %}
+{% for u in users %}
+    {% if u.id == current_user.id %}
+        {% set current_rank.value = loop.index %}
+    {% endif %}
+{% endfor %}
+
+<div class="w-full pb-12">
+    <!-- SECTION 1: Hero Header & Stats -->
+    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 mb-12 mt-4">
+        <div>
+            <h1 class="text-[36px] font-bold text-[#FFFFFF] tracking-tight mb-2 leading-none">Leaderboard</h1>
+            <p class="text-[#A1A1AA] text-[16px]">Top performing students making a difference.</p>
+        </div>
+
+        <div class="flex items-center gap-4 flex-wrap">
+            <!-- Stat Card 1 -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px 28px; min-width:150px; height:100px; display:flex; flex-direction:column; justify-content:center;">
+                <p style="font-size:13px; color:#A1A1AA; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Total Students</p>
+                <p style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1;">{{ total_students }}</p>
+            </div>
+            <!-- Stat Card 2 -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px 28px; min-width:150px; height:100px; display:flex; flex-direction:column; justify-content:center;">
+                <p style="font-size:13px; color:#A1A1AA; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Your Rank</p>
+                <p style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1;">#{{ current_rank.value }}</p>
+            </div>
+            <!-- Stat Card 3 -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px 28px; min-width:150px; height:100px; display:flex; flex-direction:column; justify-content:center;">
+                <p style="font-size:13px; color:#A1A1AA; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Total Points</p>
+                <p style="font-size:32px; font-weight:700; color:#22C55E; line-height:1;">{{ current_user.eco_points }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: Top 3 Podium -->
+    {% if users|length >= 3 %}
+    <div class="flex flex-col md:flex-row items-end justify-center gap-6 mb-16 px-4">
+        
+        <!-- Rank 2 -->
+        <div style="height:340px; background:linear-gradient(180deg, #111111, #08140C); border:1px solid rgba(30,142,66,.2); border-radius:32px; width:100%; max-width:300px; padding:32px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; box-shadow:0 10px 40px -10px rgba(0,0,0,0.5);">
+            <div style="position:absolute; top:-20px; width:48px; height:48px; background:#111111; border:2px solid #94A3B8; color:#94A3B8; font-size:20px; font-weight:700; border-radius:50%; display:flex; align-items:center; justify-content:center;">2</div>
+            <img src="{{ url_for('static', filename='uploads/' + (users[1].profile_pic or 'default.png')) }}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid #94A3B8; margin-bottom:16px;">
+            <h3 style="font-size:24px; font-weight:700; color:#FFFFFF; margin-bottom:4px; text-align:center;">{{ users[1].name }}</h3>
+            <p style="font-size:14px; color:#A1A1AA; margin-bottom:16px;">{{ users[1].school or 'EcoEdu Academy' }}</p>
+            <div style="background:rgba(30,142,66,.1); border:1px solid rgba(30,142,66,.2); padding:6px 16px; border-radius:999px; color:#22C55E; font-size:14px; font-weight:700;">
+                {{ users[1].eco_points }} XP
+            </div>
+        </div>
+
+        <!-- Rank 1 -->
+        <div style="height:420px; background:linear-gradient(180deg, #111111, #08140C); border:1px solid rgba(30,142,66,.4); border-radius:32px; width:100%; max-width:340px; padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; z-index:10; box-shadow:0 0 60px -15px rgba(30,142,66,0.3);">
+            <i data-lucide="crown" style="position:absolute; top:-40px; color:#EAB308; width:36px; height:36px;"></i>
+            <div style="position:absolute; top:-24px; width:56px; height:56px; background:#111111; border:3px solid #EAB308; color:#EAB308; font-size:24px; font-weight:700; border-radius:50%; display:flex; align-items:center; justify-content:center;">1</div>
+            <img src="{{ url_for('static', filename='uploads/' + (users[0].profile_pic or 'default.png')) }}" style="width:140px; height:140px; border-radius:50%; object-fit:cover; border:6px solid #EAB308; margin-bottom:20px;">
+            <h3 style="font-size:28px; font-weight:700; color:#FFFFFF; margin-bottom:6px; text-align:center;">{{ users[0].name }}</h3>
+            <p style="font-size:15px; color:#A1A1AA; margin-bottom:24px;">Level {{ (users[0].eco_points // 100) + 1 }} • {{ users[0].school or 'EcoEdu Academy' }}</p>
+            <div style="background:#1E8E42; border:1px solid #22C55E; padding:10px 24px; border-radius:999px; color:#FFFFFF; font-size:18px; font-weight:700; box-shadow:0 4px 20px -5px rgba(30,142,66,0.5);">
+                {{ users[0].eco_points }} XP
+            </div>
+        </div>
+
+        <!-- Rank 3 -->
+        <div style="height:340px; background:linear-gradient(180deg, #111111, #08140C); border:1px solid rgba(30,142,66,.2); border-radius:32px; width:100%; max-width:300px; padding:32px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; box-shadow:0 10px 40px -10px rgba(0,0,0,0.5);">
+            <div style="position:absolute; top:-20px; width:48px; height:48px; background:#111111; border:2px solid #B45309; color:#B45309; font-size:20px; font-weight:700; border-radius:50%; display:flex; align-items:center; justify-content:center;">3</div>
+            <img src="{{ url_for('static', filename='uploads/' + (users[2].profile_pic or 'default.png')) }}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid #B45309; margin-bottom:16px;">
+            <h3 style="font-size:24px; font-weight:700; color:#FFFFFF; margin-bottom:4px; text-align:center;">{{ users[2].name }}</h3>
+            <p style="font-size:14px; color:#A1A1AA; margin-bottom:16px;">{{ users[2].school or 'EcoEdu Academy' }}</p>
+            <div style="background:rgba(30,142,66,.1); border:1px solid rgba(30,142,66,.2); padding:6px 16px; border-radius:999px; color:#22C55E; font-size:14px; font-weight:700;">
+                {{ users[2].eco_points }} XP
+            </div>
+        </div>
+        
+    </div>
+    {% endif %}
+
+    <!-- SECTION 3: Trending Players -->
+    {% if users|length > 3 %}
+    <div class="mb-16">
+        <h2 style="font-size:20px; font-weight:700; color:#FFFFFF; margin-bottom:20px; letter-spacing:0.5px; text-transform:uppercase;">Trending Players</h2>
+        <div class="flex items-center gap-6 overflow-x-auto pb-4 scrollbar-hide">
+            {% for i in range(3, [10, users|length]|min) %}
+            <div style="height:140px; min-width:320px; background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px; display:flex; align-items:center; gap:20px; transition:.3s ease;" class="hover:border-[rgba(30,142,66,.45)]">
+                <img src="{{ url_for('static', filename='uploads/' + (users[i].profile_pic or 'default.png')) }}" style="width:90px; height:90px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid rgba(255,255,255,.1);">
+                <div class="flex-1 min-w-0">
+                    <p style="font-size:13px; color:#1E8E42; font-weight:700; margin-bottom:2px; text-transform:uppercase;">Rank #{{ i + 1 }}</p>
+                    <h4 style="font-size:18px; font-weight:700; color:#FFFFFF; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ users[i].name }}</h4>
+                    <p style="font-size:14px; font-weight:600; color:#A1A1AA; margin-bottom:8px;">{{ users[i].eco_points }} XP</p>
+                    <div style="width:100%; height:4px; background:rgba(255,255,255,.05); border-radius:999px; overflow:hidden;">
+                        <div style="width:{{ (users[i].eco_points % 100) }}%; height:100%; background:#22C55E;"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- SECTION 4: Global Rankings -->
+    <div>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <h2 style="font-size:24px; font-weight:700; color:#FFFFFF;">Global Rankings</h2>
+            <!-- Filter Chips -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide w-full md:w-auto">
+                <button style="height:40px; padding:0 20px; border-radius:999px; background:#1E8E42; color:#FFFFFF; font-size:13px; font-weight:600; white-space:nowrap; border:none;">All Time</button>
+                <button style="height:40px; padding:0 20px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:13px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06);" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF] transition-all">Monthly</button>
+                <button style="height:40px; padding:0 20px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:13px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06);" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF] transition-all">Weekly</button>
+                <button style="height:40px; padding:0 20px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:13px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06);" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF] transition-all">Today</button>
+            </div>
+        </div>
+
+        <!-- Ranking Rows -->
+        <div class="flex flex-col gap-4">
+            {% for u in users %}
+            {% set rank = loop.index %}
+            {% set accent = '#EAB308' if rank == 1 else '#94A3B8' if rank == 2 else '#B45309' if rank == 3 else '#1E8E42' %}
+            
+            <div style="height:80px; background:#111111; border-radius:22px; border:1px solid rgba(255,255,255,.04); display:flex; items-center; justify-content:space-between; padding:0 24px; transition:.3s ease;" 
+                 onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(30,142,66,.45)';"
+                 onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,.04)';">
+                
+                <div class="flex items-center gap-6 h-full flex-1">
+                    <span style="font-size:20px; font-weight:700; color:{{ accent }}; width:32px; text-align:center;">{{ rank }}</span>
+                    <img src="{{ url_for('static', filename='uploads/' + (u.profile_pic or 'default.png')) }}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.1);">
+                    <div>
+                        <h4 style="font-size:16px; font-weight:700; color:#FFFFFF;">{{ u.name }}</h4>
+                        <p style="font-size:13px; color:#A1A1AA;">Level {{ (u.eco_points // 100) + 1 }} <span class="hidden md:inline">• {{ u.school or 'EcoEdu Academy' }}</span></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-8 h-full">
+                    <!-- Progress Bar (hidden on mobile) -->
+                    <div class="hidden lg:flex items-center gap-3 w-[150px]">
+                        <div style="width:100%; height:6px; background:rgba(255,255,255,.05); border-radius:999px; overflow:hidden;">
+                            <div style="width:{{ (u.eco_points % 100) }}%; height:100%; background:{{ accent }};"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); padding:6px 16px; border-radius:999px; display:flex; align-items:center; gap:6px;">
+                        <i data-lucide="star" style="width:14px; height:14px; color:{{ accent }};"></i>
+                        <span style="font-size:15px; font-weight:700; color:#FFFFFF;">{{ u.eco_points }} XP</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

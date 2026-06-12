@@ -1,0 +1,203 @@
+{% extends "dashboard_layout.html" %}
+
+{% block title %}Student Details: {{ student.name }} - EcoEdu{% endblock %}
+
+{% block hero_section %}
+<!-- ============================================
+ PREMIUM HERO HEADER
+============================================ -->
+<div class="w-full relative overflow-hidden" style="
+ background:
+  radial-gradient(circle at top left, rgba(30,142,66,.18) 0%, transparent 45%),
+  radial-gradient(circle at top right, rgba(34,197,94,.10) 0%, transparent 40%),
+  linear-gradient(135deg, #000000 0%, #06150B 25%, #0B1F11 55%, #000000 100%);
+ border-bottom: 1px solid rgba(255,255,255,0.05);
+ border-radius: 0 0 42px 42px;
+ margin-left: 0;
+ margin-right: 0;
+ padding-left: 48px;
+ padding-right: 48px;
+ padding-top: 48px;
+ height: 320px;
+ display: flex;
+ align-items: center;
+ width: 100%;
+ max-width: none;">
+
+    <!-- Top Right -->
+    <div class="absolute top-8 right-12 flex items-center gap-3">
+        <a href="{{ url_for('teacher_profiles') }}" style="height:40px; border-radius:14px; padding:0 16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:#D4D4D8; font-size:13px; font-weight:600; display:flex; items-center; gap:6px; transition:.2s ease;" class="hover:bg-[rgba(255,255,255,.1)] hover:text-[#FFFFFF]">
+            <i data-lucide="arrow-left" style="width:14px; height:14px;"></i>
+            Back to Directory
+        </a>
+    </div>
+
+    <!-- Center Content -->
+    <div class="w-full flex items-end justify-between gap-8 mt-4 mb-8">
+        <div>
+            <h1 style="font-size:36px; font-weight:700; color:#FFFFFF; line-height:1.1; letter-spacing:-0.5px;"
+                class="mb-2">
+                {{ student.name }}
+            </h1>
+            <p style="font-size:15px; color:#A1A1AA; font-weight:400;">
+                Detailed student impact report and activity.
+            </p>
+        </div>
+        
+        <!-- Stats -->
+        <div class="shrink-0 hidden md:flex items-center gap-4">
+            <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:12px 24px;">
+                <span style="font-size:24px; font-weight:700; color:#1E8E42; margin-right:8px;">{{ student.eco_points }}</span>
+                <span style="font-size:13px; font-weight:600; color:#A1A1AA; text-transform:uppercase; letter-spacing:0.5px;">XP Total</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="w-full" style="margin-top: -60px;">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-[32px] items-start z-10 relative">
+        
+        <!-- LEFT COLUMN: Profile Summary Card -->
+        <div style="background:#111111; border:1px solid rgba(255,255,255,.05); border-radius:32px; padding:32px; display:flex; flex-direction:column; align-items:center;">
+            <!-- Avatar -->
+            <div class="mb-6">
+                <img src="{{ url_for('static', filename='uploads/' + (student.profile_pic or 'default.png')) }}"
+                     onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
+                     style="width:160px; height:160px; border-radius:50%; object-fit:cover; border:4px solid #1A1A1A;">
+            </div>
+            
+            <h3 style="font-size:24px; font-weight:700; color:#FFFFFF; margin-bottom:4px; text-align:center;">{{ student.name }}</h3>
+            <div style="background:rgba(30,142,66,.1); color:#22C55E; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:4px 10px; border-radius:999px; margin-bottom:16px;">
+                Student
+            </div>
+            
+            <p style="font-size:15px; color:#A1A1AA; margin-bottom:24px; text-align:center;">{{ student.school or 'EcoEdu Academy' }}</p>
+
+            <!-- Level & Progress -->
+            <div class="w-full bg-[#0D0D0D] border border-[rgba(255,255,255,.05)] rounded-2xl p-4 mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span style="font-size:13px; font-weight:600; color:#A1A1AA;">Level {{ (student.eco_points // 100) + 1 }}</span>
+                    <span style="font-size:13px; font-weight:600; color:#FFFFFF;">{{ student.eco_points }} XP</span>
+                </div>
+                <div class="w-full bg-[rgba(255,255,255,.05)] rounded-full h-1.5 overflow-hidden">
+                    <div style="width:{{ (student.eco_points % 100) }}%; height:100%; background:#1E8E42; border-radius:999px;"></div>
+                </div>
+            </div>
+
+            <div class="w-full pt-6 border-t border-[rgba(255,255,255,.05)]">
+                <div class="flex items-center justify-between mb-4">
+                    <span style="font-size:13px; font-weight:600; color:#A1A1AA;">Email</span>
+                    <span style="font-size:13px; font-weight:600; color:#FFFFFF;">{{ student.email }}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span style="font-size:13px; font-weight:600; color:#A1A1AA;">Joined</span>
+                    <span style="font-size:13px; font-weight:600; color:#FFFFFF;">{{ student.created_at.strftime('%B %Y') if student.created_at else 'N/A' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Activity & Achievements -->
+        <div class="flex flex-col gap-[32px]">
+            
+            <!-- Quick Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Missions -->
+                <div style="background:#111111; border:1px solid rgba(255,255,255,.05); border-radius:32px; padding:32px;">
+                    <div class="flex items-center justify-between mb-3">
+                        <div style="background:rgba(59,130,246,.1); color:#3B82F6; padding:6px; border-radius:8px;">
+                            <i data-lucide="check-circle" style="width:20px; height:20px;"></i>
+                        </div>
+                        <span style="font-size:12px; font-weight:600; color:#A1A1AA; letter-spacing:0.5px; text-transform:uppercase;">Missions Completed</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span style="font-size:30px; font-weight:700; color:#FFFFFF; line-height:1;">{{ challenges_completed }}</span>
+                    </div>
+                </div>
+                <!-- Badges -->
+                <div style="background:#111111; border:1px solid rgba(255,255,255,.05); border-radius:32px; padding:32px;">
+                    <div class="flex items-center justify-between mb-3">
+                        <div style="background:rgba(234,179,8,.1); color:#EAB308; padding:6px; border-radius:8px;">
+                            <i data-lucide="award" style="width:20px; height:20px;"></i>
+                        </div>
+                        <span style="font-size:12px; font-weight:600; color:#A1A1AA; letter-spacing:0.5px; text-transform:uppercase;">Earned Badges</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span style="font-size:30px; font-weight:700; color:#FFFFFF; line-height:1;">{{ achievements_count }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.05); border-radius:32px; padding:32px;">
+                <h2 style="font-size:20px; font-weight:700; color:#FFFFFF; margin-bottom:24px;">Activity Log</h2>
+                
+                {% if challenge_completions %}
+                <div class="flex flex-col gap-4">
+                    {% for completion in challenge_completions %}
+                    <div style="background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); border-radius:20px; padding:20px; display:flex; flex-col md:flex-row gap-4 items-start md:items-center justify-between transition:.2s ease;" class="hover:bg-[rgba(255,255,255,.04)]">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span style="background:#000000; border:1px solid rgba(255,255,255,.1); padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700; color:#A1A1AA;">{{ completion.challenge.difficulty }}</span>
+                                <h4 style="font-size:15px; font-weight:700; color:#FFFFFF;">{{ completion.challenge.title }}</h4>
+                            </div>
+                            <div class="flex items-center gap-4 text-[12px] text-[#A1A1AA]">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="calendar" style="width:12px; height:12px;"></i> {{ completion.completed_at.strftime('%Y-%m-%d') }}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <span style="width:6px; height:6px; border-radius:50%; background:{% if completion.verified %}#22C55E{% else %}#EAB308{% endif %};"></span>
+                                    {% if completion.verified %}Verified{% else %}Pending{% endif %}
+                                </span>
+                            </div>
+                            {% if completion.notes %}
+                            <p style="font-size:13px; color:#A1A1AA; font-style:italic; margin-top:8px;">"{{ completion.notes }}"</p>
+                            {% endif %}
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <span style="font-size:16px; font-weight:700; color:#1E8E42;">+{{ completion.challenge.points }} XP</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div style="padding:40px; text-align:center;">
+                    <i data-lucide="clock" style="color:#52525B; width:32px; height:32px; margin:0 auto 12px auto;"></i>
+                    <p style="font-size:14px; color:#A1A1AA;">No activity recorded for this student.</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Badges -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.05); border-radius:32px; padding:32px;">
+                <h2 style="font-size:20px; font-weight:700; color:#FFFFFF; margin-bottom:24px;">Earned Badges</h2>
+                
+                {% if achievements %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for user_achievement in achievements %}
+                    <div style="background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); border-radius:20px; padding:20px; display:flex; align-items:start; gap:16px;">
+                        <div style="width:48px; height:48px; background:#000000; border:1px solid rgba(255,255,255,.05); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px;">
+                            {{ user_achievement.achievement.badge_icon }}
+                        </div>
+                        <div class="flex-1">
+                            <h4 style="font-size:14px; font-weight:700; color:#FFFFFF; margin-bottom:2px;">{{ user_achievement.achievement.name }}</h4>
+                            <p style="font-size:12px; color:#A1A1AA; margin-bottom:6px;">{{ user_achievement.achievement.description }}</p>
+                            <span style="font-size:10px; color:#71717A;">Earned: {{ user_achievement.earned_at.strftime('%Y-%m-%d') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div style="padding:40px; text-align:center;">
+                    <i data-lucide="award" style="color:#52525B; width:32px; height:32px; margin:0 auto 12px auto;"></i>
+                    <p style="font-size:14px; color:#A1A1AA;">No badges earned yet.</p>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

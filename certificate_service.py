@@ -68,7 +68,7 @@ class CertificateService:
 
             # 4. Header Section
             # LOGO (Text representation)
-            logo_text = "EcoEdu"
+            logo_text = "EduEco"
             bbox = draw.textbbox((0, 0), logo_text, font=font_logo)
             logo_w = bbox[2] - bbox[0]
             draw.text(((width - logo_w)/2, 150), logo_text, fill=color_green, font=font_logo)
@@ -124,7 +124,7 @@ class CertificateService:
             
             # Signature
             sig_label = "SIGNATURE"
-            sig_name = "EcoEdu Team"
+            sig_name = "EduEco Team"
             
             # Position: Date Left, Sig Right
             left_x = 400
@@ -144,7 +144,7 @@ class CertificateService:
             # Sig Right
             draw.line([(right_x - 150, footer_y), (right_x + 150, footer_y)], fill=color_text, width=3)
             # Fake signature font? Just italic/script if available, otherwise plain
-            draw.text((right_x - 100, footer_y - 60), "EcoEdu Team", fill=color_dark_green, font=font_body) # Pseudo sig
+            draw.text((right_x - 100, footer_y - 60), "EduEco Team", fill=color_dark_green, font=font_body) # Pseudo sig
             
             bbox = draw.textbbox((0, 0), sig_label, font=font_small)
             sl_w = bbox[2] - bbox[0]

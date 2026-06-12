@@ -1,7 +1,7 @@
-# 🌱 EcoEdu
+# 🌱 EduEco
 ### AI-Powered Environmental Awareness Platform
 
-EcoEdu is an AI-driven, gamified environmental education platform that motivates students to take real-world eco-friendly actions. By combining Agentic AI, computer vision, recommendation systems, and gamification, EcoEdu transforms sustainability learning into an engaging, measurable, and rewarding experience.
+EduEco is an AI-driven, gamified environmental education platform that motivates students to take real-world eco-friendly actions. By combining Agentic AI, computer vision, recommendation systems, and gamification, EduEco transforms sustainability learning into an engaging, measurable, and rewarding experience.
 
 This project was built for a hackathon environment, focusing on innovation, automation, and real-world impact.
 
@@ -13,12 +13,12 @@ Environmental awareness among students is often limited to theory, with little m
 *   Personalized engagement
 *   Formal recognition for impact
 
-EcoEdu solves this gap by encouraging students to perform real eco-activities, verifying them using AI, and rewarding genuine impact with certificates and achievements.
+EduEco solves this gap by encouraging students to perform real eco-activities, verifying them using AI, and rewarding genuine impact with certificates and achievements.
 
 ## 🚀 Key Features
 
 ### 🧠 Agentic AI Core
-EcoEdu uses multiple AI agents working together to automate decisions and improve engagement:
+EduEco uses multiple AI agents working together to automate decisions and improve engagement:
 
 *   **Automated Challenge Verification**
     *   Uses MobileNetV2 (TensorFlow) to analyze uploaded images
@@ -114,8 +114,8 @@ EcoEdu uses multiple AI agents working together to automate decisions and improv
 
 1.  **Clone Repository**
     ```bash
-    git clone https://github.com/codinggujarat/EcoEdu.git
-    cd EcoEdu
+    git clone https://github.com/codinggujarat/EduEco.git
+    cd EduEco
     ```
 
 2.  **Create Virtual Environment**
@@ -150,7 +150,7 @@ Access at: 👉 http://127.0.0.1:5000
 
 ## 📂 Project Structure
 ```text
-EcoEdu/
+EduEco/
 ├── app.py                  # 🚀 Main Entry Point (Flask)
 ├── ai_service.py           # 🧠 AI Core (Verification, Recommendations, Fraud)
 ├── certificate_service.py  # 📜 Certificate Generation Engine (Pillow)
@@ -208,4 +208,4 @@ This project is licensed under the MIT License.
 ---
 
 ### 🌱 Final Note
-*EcoEdu is not just a project — it is a scalable blueprint for AI-driven environmental action.*
+*EduEco is not just a project — it is a scalable blueprint for AI-driven environmental action.*

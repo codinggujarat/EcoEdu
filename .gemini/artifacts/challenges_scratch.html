@@ -1,0 +1,220 @@
+{% extends "dashboard_layout.html" %}
+
+{% block title %}Challenges | EcoEdu{% endblock %}
+
+{% block dashboard_content %}
+<div class="w-full">
+    <!-- Top Header Section (Replaces Left Sidebar) -->
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10 mt-4">
+        <div>
+            <h1 class="text-[40px] font-bold text-[#FFFFFF] tracking-tight mb-2 leading-none">Challenges</h1>
+            <p class="text-[#A1A1AA] text-[16px]">Earn points and badges.</p>
+        </div>
+
+        <!-- Horizontal Controls -->
+        <div class="flex flex-wrap items-center gap-4">
+            <!-- Search -->
+            <div class="relative w-full sm:w-[260px]">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-[#71717A] w-4 h-4"></i>
+                <input type="text" id="searchInput" placeholder="Search challenges..."
+                    class="w-full bg-[#111111] border border-[rgba(255,255,255,0.06)] rounded-[999px] pl-10 pr-4 h-[44px] text-[14px] font-medium text-[#FFFFFF] placeholder-[#A1A1AA] focus:border-[#1E8E42] focus:ring-1 focus:ring-[#1E8E42] outline-none transition-all">
+            </div>
+
+            <!-- Status Filters (Chips) -->
+            <div class="flex items-center gap-2 bg-[#111111] border border-[rgba(255,255,255,0.06)] p-1 rounded-[999px]">
+                <label class="cursor-pointer">
+                    <input type="checkbox" name="status" value="all" checked class="peer sr-only">
+                    <span class="flex items-center justify-center h-[36px] px-4 rounded-[999px] text-[13px] font-medium text-[#A1A1AA] peer-checked:bg-[#1E8E42] peer-checked:text-[#FFFFFF] transition-all">All</span>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="checkbox" name="status" value="incomplete" class="peer sr-only">
+                    <span class="flex items-center justify-center h-[36px] px-4 rounded-[999px] text-[13px] font-medium text-[#A1A1AA] peer-checked:bg-[#1E8E42] peer-checked:text-[#FFFFFF] transition-all">To Do</span>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="checkbox" name="status" value="completed" class="peer sr-only">
+                    <span class="flex items-center justify-center h-[36px] px-4 rounded-[999px] text-[13px] font-medium text-[#A1A1AA] peer-checked:bg-[#1E8E42] peer-checked:text-[#FFFFFF] transition-all">Completed</span>
+                </label>
+            </div>
+
+            <!-- Difficulty Filters (Chips) -->
+            <div class="flex items-center gap-2 bg-[#111111] border border-[rgba(255,255,255,0.06)] p-1 rounded-[999px]">
+                <label class="cursor-pointer">
+                    <input type="checkbox" name="difficulty" value="easy" class="peer sr-only">
+                    <span class="flex items-center justify-center h-[36px] px-4 rounded-[999px] text-[13px] font-medium text-[#A1A1AA] peer-checked:bg-[#1E8E42] peer-checked:text-[#FFFFFF] transition-all">Easy</span>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="checkbox" name="difficulty" value="medium" class="peer sr-only">
+                    <span class="flex items-center justify-center h-[36px] px-4 rounded-[999px] text-[13px] font-medium text-[#A1A1AA] peer-checked:bg-[#1E8E42] peer-checked:text-[#FFFFFF] transition-all">Medium</span>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="checkbox" name="difficulty" value="hard" class="peer sr-only">
+                    <span class="flex items-center justify-center h-[36px] px-4 rounded-[999px] text-[13px] font-medium text-[#A1A1AA] peer-checked:bg-[#1E8E42] peer-checked:text-[#FFFFFF] transition-all">Hard</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenges Grid -->
+    {% if challenges %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[28px]" id="challengesGrid">
+        {% for challenge in challenges %}
+        {% set is_completed = challenge.id in completed_ids %}
+
+        <div class="challenge-card flex flex-col relative group"
+            data-difficulty="{{ challenge.difficulty|lower }}"
+            data-status="{{ 'completed' if is_completed else 'incomplete' }}"
+            data-title="{{ challenge.title|lower }}"
+            style="height:340px; background:#111111; border-radius:28px; padding:28px; border:1px solid rgba(255,255,255,.06); transition: .3s ease;"
+            onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='rgba(30,142,66,.4)';"
+            onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,.06)';">
+
+            <!-- Top of Card -->
+            <div class="flex items-start justify-between mb-5">
+                <div style="width:52px; height:52px; background:#171717; border:1px solid rgba(255,255,255,.04); border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:24px;">
+                    {{ challenge.badge_icon or '📜' }}
+                </div>
+                
+                {% if is_completed %}
+                <div style="background:rgba(30,142,66,.1); color:#22C55E; font-size:11px; font-weight:700; padding:6px 12px; border-radius:999px; border:1px solid rgba(30,142,66,.2); display:flex; items-center; gap:4px; text-transform:uppercase; letter-spacing:0.5px;">
+                    <i data-lucide="check" style="width:14px; height:14px;"></i> Completed
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Content -->
+            <h3 style="font-size:20px; font-weight:700; color:#FFFFFF; margin-bottom:8px; line-height:1.2;" class="group-hover:text-[#22C55E] transition-colors">
+                {{ challenge.title }}
+            </h3>
+            <p style="font-size:14px; color:#A1A1AA; line-height:1.5; flex-grow:1;" class="line-clamp-3">
+                {{ challenge.description }}
+            </p>
+
+            <!-- Bottom of Card -->
+            <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,.05)]">
+                <div class="flex items-center gap-3 mb-5">
+                    <div style="font-size:12px; font-weight:600; color:#A1A1AA; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.04); padding:6px 12px; border-radius:999px; display:flex; align-items:center; gap:6px;">
+                        <i data-lucide="star" class="text-[#EAB308]" style="width:14px; height:14px;"></i>
+                        {{ challenge.points }} pts
+                    </div>
+                    {% set diff_color = '#22C55E' if challenge.difficulty == 'Easy' else '#F59E0B' if challenge.difficulty == 'Medium' else '#EF4444' %}
+                    <div style="font-size:12px; font-weight:600; color:{{ diff_color }}; background:{{ diff_color }}1A; border:1px solid {{ diff_color }}33; padding:6px 12px; border-radius:999px;">
+                        {{ challenge.difficulty }}
+                    </div>
+                </div>
+
+                {% if is_completed %}
+                <div style="width:100%; height:44px; background:rgba(30,142,66,.1); color:#22C55E; border:1px solid rgba(30,142,66,.2); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600;">
+                    Challenge Completed
+                </div>
+                {% else %}
+                <form action="{{ url_for('complete_challenge', challenge_id=challenge.id) }}" method="POST">
+                    <button type="submit" style="width:100%; height:44px; background:#1E8E42; color:#FFFFFF; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; transition:background 150ms ease;" onmouseover="this.style.background='#22C55E'" onmouseout="this.style.background='#1E8E42'">
+                        Start Challenge
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Empty State / No Results -->
+    <div id="noResults" class="hidden py-24 text-center mt-8" style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:28px;">
+        <div class="w-16 h-16 bg-[#171717] rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[rgba(255,255,255,.05)]">
+            <i data-lucide="search-x" class="w-8 h-8 text-[#A1A1AA]"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-[#FFFFFF] mb-3">No Challenges Found</h3>
+        <p class="text-[#A1A1AA] text-[15px] font-medium max-w-md mx-auto leading-relaxed">
+            Try adjusting your search or filter criteria to find what you're looking for.
+        </p>
+    </div>
+
+    {% else %}
+    <div class="py-24 text-center mt-8" style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:28px;">
+        <div class="w-16 h-16 bg-[#171717] rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[rgba(255,255,255,.05)]">
+            <i data-lucide="target" class="w-8 h-8 text-[#1E8E42]"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-[#FFFFFF] mb-3">No Challenges Available</h3>
+        <p class="text-[#A1A1AA] text-[15px] font-medium max-w-md mx-auto leading-relaxed">
+            There are currently no active challenges. Check back later for new missions!
+        </p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const statusCheckboxes = document.querySelectorAll('input[name="status"]');
+        const difficultyCheckboxes = document.querySelectorAll('input[name="difficulty"]');
+        const cards = document.querySelectorAll('.challenge-card');
+        const noResults = document.getElementById('noResults');
+
+        function filterChallenges() {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            // Get selected statuses
+            const statusChecked = Array.from(statusCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            // Handle "All" logic
+            const showAllStatus = statusChecked.includes('all') || statusChecked.length === 0;
+
+            // Get selected difficulties
+            const difficultyChecked = Array.from(difficultyCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title');
+                const status = card.getAttribute('data-status');
+                const difficulty = card.getAttribute('data-difficulty');
+
+                const matchesSearch = title.includes(searchTerm);
+                const matchesStatus = showAllStatus || statusChecked.includes(status);
+                const matchesDifficulty = difficultyChecked.length === 0 || difficultyChecked.includes(difficulty);
+
+                if (matchesSearch && matchesStatus && matchesDifficulty) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0 && cards.length > 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', filterChallenges);
+
+        statusCheckboxes.forEach(cb => {
+            cb.addEventListener('change', (e) => {
+                // Exclusive "All" behavior logic
+                if (e.target.value === 'all' && e.target.checked) {
+                    statusCheckboxes.forEach(c => { if (c.value !== 'all') c.checked = false; });
+                } else if (e.target.value !== 'all' && e.target.checked) {
+                    document.querySelector('input[name="status"][value="all"]').checked = false;
+                }
+                // If nothing checked, check "All"
+                const anyChecked = Array.from(statusCheckboxes).some(c => c.checked);
+                if (!anyChecked) {
+                    document.querySelector('input[name="status"][value="all"]').checked = true;
+                }
+                filterChallenges();
+            });
+        });
+
+        difficultyCheckboxes.forEach(cb => {
+            cb.addEventListener('change', filterChallenges);
+        });
+    });
+</script>
+{% endblock %}

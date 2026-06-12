@@ -1,120 +1,182 @@
-{% extends "base.html" %}
+{% extends "dashboard_layout.html" %}
 
-{% block title %}Achievements - EcoEdu{% endblock %}
+{% block title %}Achievements | EduEco{% endblock %}
 
-{% block content %}
-<div class="px-6 py-8 max-w-7xl mx-auto">
-    <!-- Header -->
-    <div class="mb-10">
-        <h2 class="text-2xl font-semibold text-gray-100 mb-2">Achievement Registry</h2>
-        <p class="text-gray-400 text-sm">Track your professional milestones and contributions.</p>
-    </div>
+{% block hero_section %}
+{% from 'hero.html' import render_hero with context %}
+{{ render_hero("Celebrate Meaningful Progress", "Every badge earned is a step towards a more sustainable future.", "Start a Challenge", url_for('challenges'), "zap") }}
+{% endblock %}
 
-    <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col relative group">
-            <div class="flex items-center justify-between mb-4">
-                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Unlocked</p>
-                <i class="fas fa-trophy text-gray-600"></i>
-            </div>
-            <p class="text-3xl font-semibold text-gray-100">{{ earned_achievements|length }}</p>
+{% block dashboard_content %}
+<style>
+/* ── Achievements Page — Homepage Editorial Layout ── */
+body { background: #FAF9F6 !important; }
+
+.ac-section     { background: #FFFFFF; padding: 56px 24px; width: 100%; box-sizing: border-box; }
+.ac-section-alt { background: #F3F2EC; padding: 56px 24px; width: 100%; box-sizing: border-box; }
+.ac-inner       { max-width: 1280px; margin: 0 auto; }
+
+.ac-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
+.ac-p  { font-size: 17px; color: #707070; line-height: 1.5; margin-bottom: 32px; }
+
+/* Stat card */
+.ac-stat { background: #FFFFFF; border: 1px solid rgba(42,74,48,.10); border-radius: 24px; padding: 28px; }
+.ac-stat-val   { font-size: 40px; font-weight: 500; color: #2A4A30; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+.ac-stat-label { font-size: 12px; font-weight: 600; color: #707070; text-transform: uppercase; letter-spacing: .1em; }
+
+/* Achievement card — homepage edit-card */
+.ac-card {
+    min-width: 0; box-sizing: border-box;
+    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    border-radius: 28px; padding: 40px;
+    display: flex; flex-direction: column;
+    transition: border-color .2s, transform .2s;
+    box-shadow: 0 10px 40px rgba(0,0,0,.02);
+}
+.ac-card:hover { border-color: rgba(42,74,48,.35); transform: translateY(-4px); }
+.ac-card.locked { opacity: 0.55; }
+
+/* Featured spotlight */
+.ac-featured {
+    background: #FFFFFF; border: 1px solid rgba(42,74,48,.12);
+    border-radius: 28px; padding: 40px;
+    display: flex; flex-direction: column; gap: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.03);
+}
+@media (min-width: 768px) { .ac-featured { flex-direction: row; align-items: center; } }
+
+/* Filter pills */
+.ac-pill {
+    display: inline-flex; align-items: center; height: 44px; padding: 0 20px;
+    border-radius: 999px; font-size: 14px; font-weight: 500; cursor: pointer;
+    background: #FFFFFF; border: 1px solid rgba(42,74,48,.12); color: #707070;
+    transition: all .2s; white-space: nowrap;
+}
+.ac-pill:hover, .ac-pill.active { background: #2A4A30; color: #FFFFFF; border-color: #2A4A30; }
+
+@media (min-width: 768px) {
+    .ac-section, .ac-section-alt { padding: 56px 48px; }
+    .ac-h2 { font-size: 40px; }
+}
+@media (min-width: 1024px) {
+    .ac-section, .ac-section-alt { padding: 64px 64px; }
+}
+@media (max-width: 639px) {
+    .ac-card { padding: 24px !important; border-radius: 20px !important; }
+    .ac-featured { padding: 24px !important; border-radius: 20px !important; }
+    
+    .ac-stat-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+    .ac-stat { padding: 16px 4px !important; border-radius: 16px !important; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .ac-stat-val { font-size: 24px !important; margin-bottom: 4px !important; }
+    .ac-stat-val span { font-size: 14px !important; }
+    .ac-stat-label { font-size: 10px !important; letter-spacing: 0 !important; }
+}
+</style>
+
+{% set total_earned = earned_achievements|length %}
+{% set total_unearned = unearned_achievements|length %}
+{% set total_achievements = total_earned + total_unearned %}
+{% set completion_percentage = (total_earned / total_achievements * 100)|round|int if total_achievements > 0 else 0 %}
+
+{# ── SECTION 1: Stats ── #}
+<div class="premium-section">
+<div class="">
+    <h2 class="premium-section-title">Your Progress</h2>
+    <p class="premium-section-desc">Badges earned, levels reached, and how close you are to the next milestone.</p>
+    <div class="ac-stat-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px;">
+        <div class="ac-stat">
+            <div class="ac-stat-val">{{ total_earned }}<span style="font-size:20px; color:#707070;">/{{ total_achievements }}</span></div>
+            <div class="ac-stat-label">Badges Earned</div>
         </div>
-
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col relative group">
-            <div class="flex items-center justify-between mb-4">
-                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Pending</p>
-                <i class="fas fa-lock text-gray-600"></i>
-            </div>
-            <p class="text-3xl font-semibold text-gray-100">{{ unearned_achievements|length }}</p>
+        <div class="ac-stat">
+            <div class="ac-stat-val">{{ current_user.level }}</div>
+            <div class="ac-stat-label">Current Level</div>
         </div>
-
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex flex-col relative group">
-            <div class="flex items-center justify-between mb-4">
-                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Impact Score</p>
-                <i class="fas fa-chart-line text-gray-600"></i>
-            </div>
-            <p class="text-3xl font-semibold text-gray-100">{{ user.eco_points }}</p>
+        <div class="ac-stat" style="background:#2A4A30; border-color:#2A4A30;">
+            <div class="ac-stat-val" style="color:#FFFFFF;">{{ completion_percentage }}%</div>
+            <div class="ac-stat-label" style="color:rgba(255,255,255,.65);">Complete</div>
         </div>
-    </div>
-
-    <!-- Unlocked Achievements -->
-    <div class="mb-10">
-        <div class="flex items-center gap-3 mb-6">
-            <h3 class="text-lg font-medium text-gray-200">Unlocked Milestones</h3>
-            <span
-                class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium border border-emerald-500/20">{{
-                earned_achievements|length }}</span>
-        </div>
-
-        {% if earned_achievements %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for ach in earned_achievements %}
-            <div
-                class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 hover:border-gray-600 transition-colors duration-200">
-                <div class="flex items-start gap-4 mb-4">
-                    <div
-                        class="w-10 h-10 bg-[#0E0F12] border border-[#2A2E35] rounded-md flex items-center justify-center text-xl">
-                        {{ ach.badge_icon }}
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-semibold text-gray-200">{{ ach.name }}</h4>
-                        <p class="text-xs text-emerald-600 mt-1 font-medium">Completed</p>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-400 leading-relaxed">
-                    {{ ach.description }}
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-8 text-center">
-            <p class="text-gray-500 text-sm">No achievements unlocked yet.</p>
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Locked Achievements -->
-    <div>
-        <h3 class="text-lg font-medium text-gray-200 mb-6">Available Milestones</h3>
-
-        {% if unearned_achievements %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for ach in unearned_achievements %}
-            <div
-                class="bg-[#171A1F]/50 border border-[#2A2E35] rounded-lg p-6 hover:bg-[#171A1F] transition-colors duration-200 relative">
-                <div class="flex items-start gap-4 mb-4 opacity-75">
-                    <div
-                        class="w-10 h-10 bg-[#0E0F12] border border-[#2A2E35] rounded-md flex items-center justify-center text-xl grayscale">
-                        {{ ach.badge_icon }}
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-semibold text-gray-300">{{ ach.name }}</h4>
-                        <div class="flex items-center gap-2 mt-1.5">
-                            {% if ach.points_required > 0 %}
-                            <span class="text-[10px] bg-[#2A2E35] text-gray-400 px-1.5 py-0.5 rounded">
-                                {{ ach.points_required }} PTS
-                            </span>
-                            {% endif %}
-                            {% if ach.challenges_required > 0 %}
-                            <span class="text-[10px] bg-[#2A2E35] text-gray-400 px-1.5 py-0.5 rounded">
-                                {{ ach.challenges_required }} Missions
-                            </span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-500 leading-relaxed">
-                    {{ ach.description }}
-                </p>
-            </div>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-8 text-center">
-            <p class="text-gray-500 text-sm">All milestones achieved.</p>
-        </div>
-        {% endif %}
     </div>
 </div>
+</div>
+
+{# ── SECTION 2: Featured badge ── #}
+{% if earned_achievements %}
+{% set featured = earned_achievements[0] %}
+<div class="premium-section">
+<div class="">
+    <h2 class="premium-section-title">Latest Achievement</h2>
+    <p class="premium-section-desc">Your most recently unlocked badge.</p>
+    <div class="ac-featured">
+        <div style="width:100px; height:100px; background:#F3F2EC; border:1px solid rgba(42,74,48,.10); border-radius:28px; display:flex; align-items:center; justify-content:center; font-size:52px; flex-shrink:0;">
+            {{ featured.badge_icon }}
+        </div>
+        <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+                <h3 style="font-size:28px; font-weight:500; color:#1B1B1B; letter-spacing:-0.02em; line-height:1.1;">{{ featured.name }}</h3>
+                <span style="background:rgba(42,74,48,.12); color:#2A4A30; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;">Latest</span>
+            </div>
+            <p style="font-size:17px; color:#707070; line-height:1.6; margin-bottom:20px; max-width:600px;">{{ featured.description }}</p>
+            <div style="display:flex; gap:20px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:8px; font-size:15px; font-weight:500; color:#1B1B1B;">
+                    <i data-lucide="star" style="width:16px; height:16px; color:#EAB308;"></i>
+                    {{ featured.points_required }} XP Reward
+                </div>
+                <div style="display:flex; align-items:center; gap:8px; font-size:15px; font-weight:500; color:#1B1B1B;">
+                    <i data-lucide="check-circle" style="width:16px; height:16px; color:#2A4A30;"></i>
+                    Unlocked
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endif %}
+
+{# ── SECTION 3: All Badges gallery ── #}
+<div class="premium-section">
+<div class="">
+    <h2 class="premium-section-title">All Badges</h2>
+    <p class="premium-section-desc">Collect every badge by completing challenges and hitting milestones.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px;">
+
+        {# Earned #}
+        {% for ach in earned_achievements %}
+        <div class="premium-card">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px;">
+                <div style="width:72px; height:72px; background:#F3F2EC; border:1px solid rgba(42,74,48,.10); border-radius:22px; display:flex; align-items:center; justify-content:center; font-size:36px; flex-shrink:0;">{{ ach.badge_icon }}</div>
+                <span style="background:rgba(42,74,48,.12); color:#2A4A30; font-size:11px; font-weight:700; padding:6px 12px; border-radius:999px; border:1px solid rgba(42,74,48,.2); text-transform:uppercase; letter-spacing:.05em; display:flex; align-items:center; gap:4px;">
+                    <i data-lucide="check" style="width:12px; height:12px;"></i> Earned
+                </span>
+            </div>
+            <h3 style="font-size:22px; font-weight:500; color:#1B1B1B; margin-bottom:8px; letter-spacing:-0.02em;">{{ ach.name }}</h3>
+            <p style="font-size:15px; color:#707070; line-height:1.6;">{{ ach.description }}</p>
+        </div>
+        {% endfor %}
+
+        {# Locked #}
+        {% for ach in unearned_achievements %}
+        <div class="premium-card locked">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px;">
+                <div style="width:72px; height:72px; background:#F3F2EC; border:1px solid rgba(42,74,48,.10); border-radius:22px; display:flex; align-items:center; justify-content:center; font-size:36px; filter:grayscale(100%); flex-shrink:0;">{{ ach.badge_icon }}</div>
+                <span style="background:rgba(42,74,48,.08); color:#707070; font-size:11px; font-weight:700; padding:6px 12px; border-radius:999px; border:1px solid rgba(42,74,48,.10); text-transform:uppercase; letter-spacing:.05em; display:flex; align-items:center; gap:4px;">
+                    <i data-lucide="lock" style="width:12px; height:12px;"></i> Locked
+                </span>
+            </div>
+            <h3 style="font-size:22px; font-weight:500; color:#1B1B1B; margin-bottom:8px; letter-spacing:-0.02em;">{{ ach.name }}</h3>
+            <p style="font-size:15px; color:#707070; line-height:1.6; margin-bottom:20px;">{{ ach.description }}</p>
+            <div style="width:100%; height:6px; background:rgba(42,74,48,.10); border-radius:999px; overflow:hidden; margin-bottom:8px;">
+                <div style="width:{{ [(current_user.eco_points / ach.points_required * 100), 100]|min if ach.points_required > 0 else 0 }}%; height:100%; background:#2A4A30;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; color:#707070;">
+                <span>Progress</span>
+                <span style="color:#1B1B1B;">{{ current_user.eco_points }} / {{ ach.points_required }} XP</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
 {% endblock %}

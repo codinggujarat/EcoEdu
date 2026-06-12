@@ -1,0 +1,151 @@
+{% extends "dashboard_layout.html" %}
+
+{% block title %}Achievements - EcoEdu{% endblock %}
+
+{% block dashboard_content %}
+{% set total_earned = earned_achievements|length %}
+{% set total_unearned = unearned_achievements|length %}
+{% set total_achievements = total_earned + total_unearned %}
+{% set completion_percentage = (total_earned / total_achievements * 100)|round|int if total_achievements > 0 else 0 %}
+
+<div class="w-full pb-12">
+    <!-- SECTION 1: Hero Header & Stats -->
+    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 mb-12 mt-4">
+        <div>
+            <h1 class="text-[40px] md:text-[48px] font-bold text-[#FFFFFF] tracking-tight mb-3 leading-none">Achievement Registry</h1>
+            <p class="text-[#A1A1AA] text-[18px]">Track milestones and eco contributions.</p>
+        </div>
+
+        <div class="flex items-center gap-4 flex-wrap">
+            <!-- Stat Card 1 -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px 28px; min-width:150px;">
+                <p style="font-size:13px; color:#A1A1AA; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Total</p>
+                <p style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1;">{{ total_earned }}<span style="color:#71717A;">/{{ total_achievements }}</span></p>
+            </div>
+            <!-- Stat Card 2 -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px 28px; min-width:150px;">
+                <p style="font-size:13px; color:#A1A1AA; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Level</p>
+                <p style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1;">{{ (current_user.total_points // 100) + 1 }}</p>
+            </div>
+            <!-- Stat Card 3 -->
+            <div style="background:#111111; border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:20px 28px; min-width:150px;">
+                <p style="font-size:13px; color:#A1A1AA; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Completion</p>
+                <p style="font-size:32px; font-weight:700; color:#22C55E; line-height:1;">{{ completion_percentage }}%</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: Featured Achievement -->
+    {% if earned_achievements %}
+    {% set featured = earned_achievements[0] %}
+    <div style="height:240px; background:linear-gradient(135deg, #111111, #08140C); border:1px solid rgba(255,255,255,.06); border-radius:32px; padding:40px; display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; position:relative; overflow:hidden;">
+        
+        <div class="flex items-center gap-8 relative z-10 w-full">
+            <!-- Large Icon -->
+            <div style="width:120px; height:120px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:32px; display:flex; align-items:center; justify-content:center; font-size:64px; flex-shrink:0;">
+                {{ featured.badge_icon }}
+            </div>
+            
+            <!-- Details -->
+            <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                    <h2 style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1.1; letter-spacing:-0.5px;">{{ featured.name }}</h2>
+                    <div style="background:rgba(30,142,66,.15); color:#22C55E; font-size:12px; font-weight:700; padding:4px 12px; border-radius:999px; border:1px solid rgba(30,142,66,.3); text-transform:uppercase; letter-spacing:1px;">
+                        Latest
+                    </div>
+                </div>
+                <p style="font-size:16px; color:#A1A1AA; max-width:600px; margin-bottom:20px; line-height:1.5;">{{ featured.description }}</p>
+                
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="star" style="width:16px; height:16px; color:#EAB308;"></i>
+                        <span style="font-size:15px; font-weight:600; color:#FFFFFF;">{{ featured.points_required }} XP Reward</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="calendar-check" style="width:16px; height:16px; color:#22C55E;"></i>
+                        <span style="font-size:15px; font-weight:600; color:#FFFFFF;">Unlocked Recently</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Status Badge -->
+            <div class="shrink-0 hidden md:flex items-center justify-center">
+                <div style="width:80px; height:80px; border-radius:50%; background:rgba(30,142,66,.1); border:2px solid rgba(30,142,66,.3); display:flex; align-items:center; justify-content:center;">
+                    <i data-lucide="check" style="width:40px; height:40px; color:#22C55E;"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Decoration -->
+        <div class="absolute right-0 top-0 w-1/2 h-full" style="background:radial-gradient(circle at center, rgba(30,142,66,.1) 0%, transparent 70%); pointer-events:none;"></div>
+    </div>
+    {% endif %}
+
+    <!-- SECTION 3: Achievement Categories -->
+    <div class="flex items-center gap-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#1E8E42; color:#FFFFFF; font-size:15px; font-weight:600; white-space:nowrap; border:none; transition: .2s ease;" class="hover:bg-[#22C55E]">All</button>
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:15px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06); transition: .2s ease;" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF]">Eco</button>
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:15px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06); transition: .2s ease;" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF]">Water</button>
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:15px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06); transition: .2s ease;" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF]">Energy</button>
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:15px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06); transition: .2s ease;" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF]">Recycling</button>
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:15px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06); transition: .2s ease;" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF]">Nature</button>
+        <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:15px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06); transition: .2s ease;" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF]">Carbon</button>
+    </div>
+
+    <!-- SECTION 4: Achievements Gallery -->
+    <div style="column-count:1; column-gap:28px;" class="md:!columns-2 lg:!columns-3">
+        
+        <!-- Earned Achievements -->
+        {% for ach in earned_achievements %}
+        <div style="background:#111111; border-radius:30px; border:1px solid rgba(255,255,255,.06); padding:28px; margin-bottom:28px; break-inside:avoid; transition:.3s ease; display:inline-block; width:100%;" 
+             onmouseover="this.style.transform='translateY(-8px)'; this.style.borderColor='rgba(30,142,66,.45)';"
+             onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,.06)';">
+             
+            <div class="flex items-start justify-between mb-6">
+                <div style="width:72px; height:72px; background:#171717; border:1px solid rgba(255,255,255,.04); border-radius:24px; display:flex; align-items:center; justify-content:center; font-size:36px;">
+                    {{ ach.badge_icon }}
+                </div>
+                <div style="background:rgba(30,142,66,.15); color:#22C55E; font-size:11px; font-weight:700; padding:6px 12px; border-radius:999px; border:1px solid rgba(30,142,66,.3); display:flex; align-items:center; gap:4px; text-transform:uppercase; letter-spacing:0.5px;">
+                    <i data-lucide="unlock" style="width:14px; height:14px;"></i> Unlocked
+                </div>
+            </div>
+
+            <h3 style="font-size:22px; font-weight:700; color:#FFFFFF; margin-bottom:10px; line-height:1.2; letter-spacing:-0.5px;">{{ ach.name }}</h3>
+            <p style="font-size:16px; color:#A1A1AA; line-height:1.6;">{{ ach.description }}</p>
+            
+        </div>
+        {% endfor %}
+
+        <!-- Locked Achievements -->
+        {% for ach in unearned_achievements %}
+        <div style="background:#111111; border-radius:30px; border:1px solid rgba(255,255,255,.06); padding:28px; margin-bottom:28px; break-inside:avoid; transition:.3s ease; opacity:0.55; display:inline-block; width:100%;" 
+             onmouseover="this.style.transform='translateY(-8px)'; this.style.borderColor='rgba(30,142,66,.45)';"
+             onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,.06)';">
+             
+            <div class="flex items-start justify-between mb-6">
+                <div style="width:72px; height:72px; background:#171717; border:1px solid rgba(255,255,255,.04); border-radius:24px; display:flex; align-items:center; justify-content:center; font-size:36px; filter:grayscale(100%);">
+                    {{ ach.badge_icon }}
+                </div>
+                <div style="background:rgba(255,255,255,.05); color:#A1A1AA; font-size:11px; font-weight:700; padding:6px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; gap:4px; text-transform:uppercase; letter-spacing:0.5px;">
+                    <i data-lucide="lock" style="width:14px; height:14px;"></i> Locked
+                </div>
+            </div>
+
+            <h3 style="font-size:22px; font-weight:700; color:#FFFFFF; margin-bottom:10px; line-height:1.2; letter-spacing:-0.5px;">{{ ach.name }}</h3>
+            <p style="font-size:16px; color:#A1A1AA; line-height:1.6; margin-bottom:24px;">{{ ach.description }}</p>
+            
+            <div style="width:100%; height:6px; background:rgba(255,255,255,.06); border-radius:999px; overflow:hidden; margin-bottom:12px;">
+                <div style="width:{{ (current_user.total_points / ach.points_required * 100) if ach.points_required > 0 else 0 }}%; height:100%; background:#1E8E42; max-width:100%;"></div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <span style="font-size:14px; font-weight:600; color:#A1A1AA;">Progress</span>
+                <span style="font-size:14px; font-weight:600; color:#FFFFFF;">{{ current_user.total_points }} / {{ ach.points_required }} XP</span>
+            </div>
+            
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

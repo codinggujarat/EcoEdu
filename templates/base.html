@@ -2,226 +2,767 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}EcoEdu{% endblock %}</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>{% block title %}EduEco{% endblock %}</title>
+ <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}">
+ <meta name="view-transition" content="same-origin">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ <!-- Fonts -->
+ <link rel="preconnect" href="https://api.fontshare.com">
+ <link href="https://api.fontshare.com/v2/css?f[]=general-sans@200,201,300,301,400,401,500,501,600,601,700,701,1,2&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+ <!-- Icons -->
+ <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: {
-                            bg: '#0E0F12',
-                            surface: '#171A1F',
-                            border: '#2A2E35',
-                        },
-                        brand: {
-                            500: '#10B981',
-                            600: '#059669',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+ <!-- Swup SPA Routing -->
+ <script src="https://unpkg.com/swup@4"></script>
+ <script src="https://unpkg.com/@swup/scroll-plugin@3"></script>
 
-    <style>
-        body {
-            background-color: #0E0F12;
-            color: #E6E8EB;
-        }
+ <!-- Tailwind -->
+ <script src="https://cdn.tailwindcss.com"></script>
+ <script>
+ tailwind.config = {
+ theme: {
+ extend: {
+ fontFamily: {
+ sans: ['General Sans', 'sans-serif'],
+ },
+ colors: {
+ dark: {
+ bg: '#0A0A0A',
+ surface: '#121212',
+ elevated: '#171717',
+ card: '#121212',
+ hover: '#1B1B1B',
+ sidebar: '#0A0A0A',
+ border: 'rgba(42,74,48,0.10)',
+ },
+ brand: {
+ DEFAULT: '#2A4A30',
+ 500: '#2A4A30',
+ 600: '#355D3D',
+ soft: 'rgba(42,74,48,0.10)',
+ border: 'rgba(34,197,94,0.20)',
+ active: 'rgba(42,74,48,0.20)',
+ },
+ text: {
+ primary: '#1B1B1B',
+ secondary: '#707070',
+ muted: '#A1A1AA',
+ placeholder: '#A1A1AA',
+ },
+ status: {
+ success: '#2A4A30',
+ warning: '#F59E0B',
+ error: '#EF4444',
+ }
+ },
+ boxShadow: {
+ 'premium': '0 1px 4px rgba(0,0,0,0.4)',
+ 'premium-hover': '0 2px 8px rgba(0,0,0,0.5)',
+ }
+ }
+ }
+ }
+ </script>
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
+ <style>
+ /* ======================================================
+    ECOEDU GLOBAL DESIGN TOKENS
+    ====================================================== */
+ :root {
+   --color-bg:           #FAF9F6;
+   --color-surface:      #FFFFFF;
+   --color-secondary:    #F3F2EC;
+   --color-primary:      #2A4A30;
+   --color-primary-h:    #355D3D;
+   --color-text:         #1B1B1B;
+   --color-muted:        #707070;
+   --color-border:       rgba(42,74,48,.10);
+   --shadow-card:        0 10px 40px rgba(0,0,0,.05);
+   --radius-hero:        40px;
+   --radius-card:        28px;
+   --radius-stat:        24px;
+   --radius-pill:        999px;
+   --radius-input:       18px;
+ }
+ /* Section Headings */
+ .section-heading { font-size:20px; font-weight:700; color:var(--color-text); letter-spacing:-.01em; margin-bottom:20px; }
+ .section-subheading { font-size:14px; color:var(--color-muted); margin-top:4px; }
+ /* Podium Cards */
+ .podium-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:28px; padding:40px 28px; display:flex; flex-direction:column; align-items:center; box-shadow:var(--shadow-card); position:relative; transition:box-shadow .2s; }
+ .podium-card:hover { box-shadow:0 20px 50px rgba(0,0,0,.07); }
+ .podium-rank-badge { position:absolute; top:-16px; width:36px; height:36px; border-radius:50%; background:var(--color-surface); border:2px solid var(--color-border); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:var(--color-text); }
+ .podium-card.rank-1 { border-color:rgba(234,179,8,.25); }
+ .podium-card.rank-1 .podium-rank-badge { border-color:#EAB308; color:#EAB308; }
+ .podium-card.rank-2 .podium-rank-badge { border-color:#94A3B8; color:#94A3B8; }
+ .podium-card.rank-3 .podium-rank-badge { border-color:#B45309; color:#B45309; }
+ /* XP Pill */
+ .xp-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(42,74,48,.08); border:1px solid var(--color-border); border-radius:999px; padding:6px 16px; font-size:14px; font-weight:700; color:var(--color-primary); }
+ .xp-pill.accent { background:var(--color-primary); color:#FFFFFF; border-color:var(--color-primary); }
+ /* Featured Achievement Banner */
+ .featured-achievement { background:var(--color-secondary); border:1px solid var(--color-border); border-radius:28px; padding:40px; display:flex; align-items:center; gap:32px; margin-bottom:40px; flex-wrap:wrap; }
+ .featured-achievement-icon { width:96px; height:96px; font-size:48px; border-radius:20px; background:var(--color-surface); border:1px solid var(--color-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+ /* Filter Pills */
+ .filter-pill { height:40px; padding:0 20px; border-radius:999px; font-size:14px; font-weight:600; white-space:nowrap; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-muted); cursor:pointer; transition:border-color .15s,color .15s,background .15s; }
+ .filter-pill:hover { border-color:var(--color-primary); color:var(--color-primary); }
+ .filter-pill.active { background:var(--color-primary); color:#FFFFFF; border-color:var(--color-primary); }
+ body {
 
-        ::-webkit-scrollbar-track {
-            background: #0E0F12;
-        }
+ background-color: #FAF9F6;
+ color: #1B1B1B;
+ font-family: 'General Sans', sans-serif;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ }
 
-        ::-webkit-scrollbar-thumb {
-            background: #2A2E35;
-            border-radius: 4px;
-        }
+ * {
+ font-family: 'General Sans', sans-serif;
+ box-sizing: border-box;
+ max-width: 100%;
+ }
+ 
+ html, body {
+ overflow-x: hidden;
+ }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #374151;
-        }
-    </style>
+ img {
+ max-width: 100%;
+ height: auto;
+ }
+
+ /* Custom Scrollbar */
+ ::-webkit-scrollbar { width: 6px; height: 6px; }
+ ::-webkit-scrollbar-track { background: #FAF9F6; }
+ ::-webkit-scrollbar-thumb { background: rgba(42,74,48,0.15); border-radius: 4px; }
+ ::-webkit-scrollbar-thumb:hover { background: rgba(42,74,48,0.25); }
+
+ /* ============ PREMIUM SAAS SECTION & CARD SYSTEM ============ */
+ .premium-section {
+     background: rgba(255, 255, 255, 0.88);
+     border-radius: 32px;
+     border: 1px solid rgba(0, 0, 0, 0.05);
+     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), 0 2px 10px rgba(0, 0, 0, 0.03);
+     padding: 32px;
+     margin: 32px 24px;
+     backdrop-filter: blur(20px);
+     -webkit-backdrop-filter: blur(20px);
+ }
+ 
+ .premium-card {
+     background: #FFFFFF;
+     border-radius: 24px;
+     border: 1px solid rgba(0, 0, 0, 0.04);
+     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+     padding: 24px;
+     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+ }
+ .premium-card:hover {
+     transform: translateY(-4px);
+     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+ }
+
+ .premium-section-title {
+     font-size: 28px;
+     font-weight: 600;
+     color: #1F4D36;
+     letter-spacing: -0.02em;
+     margin-bottom: 8px;
+     line-height: 1.2;
+ }
+ .premium-section-desc {
+     font-size: 15px;
+     color: #707070;
+     margin-bottom: 32px;
+     line-height: 1.5;
+ }
+
+ .premium-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+ @media (min-width: 768px) {
+    .sidebar-item { border-radius: 22px; }
+    .input-field { border-radius: 999px; }
+    .btn-primary, .btn-secondary { border-radius: 999px; }
+ }
+ @media (max-width: 767px) {
+     .premium-section { padding: 24px; margin: 16px 16px; border-radius: 24px; }
+ }
+
+ /* ============ PREMIUM HERO — EDITORIAL GRID SYSTEM ============ */
+ .premium-hero {
+   background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%);
+   border-radius: 0 0 24px 24px;
+   margin: 0 16px 24px 16px;
+   padding: 32px 24px;
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+   box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.1);
+   box-sizing: border-box;
+   overflow: hidden;
+   position: relative;
+ }
+
+ /* Desktop */
+ @media (min-width: 1024px) {
+   .premium-hero {
+     margin: 0 24px 32px 24px;
+     padding: 40px 48px;
+     display: grid;
+     grid-template-columns: 1fr auto;
+     align-items: center;
+     gap: 32px;
+   }
+ }
+
+ /* Heading */
+ .premium-hero-title {
+   font-size: 26px;
+   font-weight: 600;
+   color: #FFFFFF;
+   line-height: 1.2;
+   letter-spacing: -0.01em;
+   margin: 0;
+ }
+ @media (min-width: 640px) {
+   .premium-hero-title { font-size: 30px; }
+ }
+ @media (min-width: 1024px) {
+   .premium-hero-title { font-size: 34px; letter-spacing: -0.02em; }
+ }
+
+ /* Subtitle */
+ .premium-hero-sub {
+   font-size: 15px;
+   line-height: 1.5;
+   color: rgba(255,255,255,0.85);
+   margin-top: 8px;
+   margin-bottom: 0;
+   max-width: 600px;
+ }
+ @media (min-width: 640px) {
+   .premium-hero-sub { font-size: 16px; margin-top: 10px; }
+ }
+
+ 
+ .hero-top-info {
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   gap: 12px;
+   width: 100%;
+   margin-bottom: 12px;
+ }
+ @media (min-width: 1024px) {
+   .hero-top-info { margin-bottom: 0; }
+ }
+
+ .hero-avatar-link {
+   display: block;
+   width: 42px;
+   height: 42px;
+   border-radius: 50%;
+   border: 2px solid rgba(255,255,255,0.25);
+   overflow: hidden;
+   flex-shrink: 0;
+ }
+
+ /* Right action column */
+ .hero-actions {
+   display: flex;
+   flex-direction: column;
+   gap: 14px;
+ }
+ @media (min-width: 1024px) {
+   .hero-actions {
+     align-items: flex-end;
+     gap: 18px;
+   }
+ }
+
+ /* Date badge */
+ .hero-date-badge {
+
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     background: rgba(255,255,255,0.12);
+     border: 1px solid rgba(255,255,255,0.2);
+     border-radius: 12px;
+     padding: 0 16px;
+     height: 38px;
+     font-size: 13px;
+     font-weight: 500;
+     color: rgba(255,255,255,0.85);
+     white-space: nowrap;
+   
+   display: inline-flex;
+ }
+
+ /* CTA Button */
+ .hero-cta {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   width: 100%;
+   height: 54px;
+   padding: 0 28px;
+   border-radius: 999px;
+   background: #FFFFFF;
+   color: #2A4A30;
+   font-size: 15px;
+   font-weight: 600;
+   text-decoration: none;
+   transition: background 150ms ease, transform 150ms ease;
+   white-space: nowrap;
+ }
+ @media (min-width: 1024px) {
+   .hero-cta {
+     width: auto;
+     height: 56px;
+     padding: 0 32px;
+     font-size: 15px;
+   }
+ }
+ .hero-cta:hover {
+   background: #F3F2EC;
+   transform: translateY(-1px);
+ }
+
+ .premium-card:hover {
+ border-color: rgba(42,74,48,0.10);
+ background: #FFFFFF; box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+ transform: translateY(-2px);
+ }
+
+ .btn-primary {
+ background-color: #2A4A30;
+ color: #1B1B1B;
+ height: 56px;
+ border-radius: 999px;
+ padding: 0 28px;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: 600;
+ font-size: 15px;
+ transition: background-color 150ms ease, transform 150ms ease;
+ }
+
+ .btn-primary:hover {
+ background-color: #355D3D;
+ transform: translateY(-1px);
+ }
+
+ .btn-secondary {
+ background-color: #1B1B1B;
+ color: #1B1B1B;
+ height: 56px;
+ border-radius: 999px;
+ border: 1px solid rgba(42,74,48,0.10);
+ padding: 0 28px;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ font-weight: 600;
+ font-size: 15px;
+ transition: border-color 150ms ease, color 150ms ease, transform 150ms ease;
+ }
+
+ .btn-secondary:hover {
+ border-color: #2A4A30;
+ color: #2A4A30;
+ transform: translateY(-1px);
+ }
+
+ .premium-input {
+ height: 42px;
+ border-radius: 12px;
+ background: #FFFFFF;
+ border: 1px solid rgba(42,74,48,0.10);
+ padding: 0 14px;
+ color: #1B1B1B;
+ font-size: 14px;
+ transition: border-color 150ms ease;
+ width: 100%;
+ }
+
+ .premium-input:focus {
+ outline: none;
+ border-color: rgba(34,197,94,0.5);
+ background: #F3F2EC;
+ }
+
+ .premium-input::placeholder {
+ color: #52525B;
+ }
+
+ /* =============================================
+ GLOBAL RESPONSIVE CARD SYSTEM
+ ============================================= */
+
+ /* Cards: never overflow, never fixed size */
+ .premium-card {
+ width: 100%;
+ height: auto;
+ box-sizing: border-box;
+ overflow: hidden;
+ }
+
+ /* All images inside cards are responsive */
+ .premium-card img {
+ max-width: 100%;
+ height: auto;
+ }
+
+ /* Avatar images stay circular */
+ .premium-card img.rounded-full {
+ object-fit: cover;
+ flex-shrink: 0;
+ }
+
+ /* Tables inside cards scroll on small screens */
+ .table-responsive {
+ width: 100%;
+ overflow-x: auto;
+ -webkit-overflow-scrolling: touch;
+ border-radius: 20px;
+ }
+
+ .table-responsive table {
+ width: 100%;
+ min-width: 600px;
+ }
+
+ /* Buttons wrap and never overflow cards */
+ .btn-primary, .btn-secondary {
+ white-space: nowrap;
+ max-width: 100%;
+ }
+
+ .btn-group {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+ }
+
+ /* Progress bars are always 100% width */
+ .progress-bar-track {
+ width: 100%;
+ height: 6px;
+ background: rgba(42,74,48,0.10);
+ border-radius: 999px;
+ overflow: hidden;
+ }
+
+ .progress-bar-fill {
+ height: 100%;
+ border-radius: 999px;
+ background: #22C55E;
+ }
+
+ /* Stats grid: 3 square cards in 1 row on all screen sizes */
+ .stats-grid {
+ display: grid;
+ gap: 10px;
+ grid-template-columns: repeat(3, minmax(0, 1fr));
+ }
+
+ .stats-grid .premium-card {
+ justify-content: center;
+ align-items: center;
+ text-align: center;
+ }
+
+ @media (min-width: 640px) {
+ .stats-grid {
+ gap: 20px;
+ }
+ .stats-grid .premium-card {
+ aspect-ratio: unset;
+ justify-content: flex-start;
+ align-items: flex-start;
+ text-align: left;
+ }
+ }
+
+ @media (min-width: 768px) {
+ .stats-grid { 
+ gap: 24px;
+ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+ }
+ }
+
+ /* Achievement / generic card grid */
+ .card-grid {
+ display: grid;
+ gap: 24px;
+ grid-template-columns: 1fr;
+ }
+
+ @media (max-width: 768px) {
+ .card-grid { 
+     display: flex; 
+     overflow-x: auto; 
+     scroll-snap-type: x mandatory; 
+     padding-bottom: 16px; 
+     gap: 16px;
+ }
+ .card-grid .premium-card {
+     min-width: 280px;
+     scroll-snap-align: start;
+ }
+ }
+
+ @media (min-width: 768px) {
+ .card-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+ }.card-grid .premium-card {
+ height: 100%;
+ display: flex;
+ flex-direction: column;
+ }
+
+ /* Truncate long text gracefully */
+ .card-truncate {
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+ max-width: 100%;
+ }
+
+ /* Challenge sidebar layout */
+ @media (max-width: 1023px) {
+ .challenges-layout {
+ flex-direction: column !important;
+ }
+ .challenges-sidebar {
+ width: 100% !important;
+ }
+ }
+ </style>
 </head>
 
 <body class="antialiased">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0E0F12]/80 backdrop-blur-md border-b border-[#2A2E35]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <a href="{{ url_for('index') }}" class="flex items-center gap-2 group">
-                    <div
-                        class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                        <i class="fas fa-leaf text-sm"></i>
-                    </div>
-                    <span class="font-bold text-lg text-white tracking-tight">Eco<span
-                            class="text-emerald-500">Edu</span></span>
-                </a>
+ <!-- Navigation -->
+ {% if not current_user.is_authenticated %}
+ <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#2A4A30]/10 transition-all duration-300">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="flex items-center justify-between h-[72px]">
+ <!-- Logo -->
+ <a href="{{ url_for('index') }}" class="flex items-center gap-2 group">
+ <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" class="w-8 h-8 rounded-full object-cover">
+ <span class="font-bold text-xl text-text-primary tracking-tight">Eco<span
+ class="text-brand-500">Edu</span></span>
+ </a>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-4">
-                    {% if current_user.is_authenticated %}
-                    {% if current_user.role == 'admin' %}
-                    <a href="{{ url_for('admin_dashboard') }}"
-                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Admin Dashboard</a>
-                    {% else %}
-                    <a href="{{ url_for('dashboard') }}"
-                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Dashboard</a>
-                    <a href="{{ url_for('challenges') }}"
-                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Challenges</a>
-                    <a href="{{ url_for('achievements') }}"
-                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Achievements</a>
-                    <a href="{{ url_for('leaderboard') }}"
-                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Leaderboard</a>
-                    {% endif %}
+ <!-- Desktop Menu -->
+ <div class="hidden md:flex items-center space-x-6">
+ {% if current_user.is_authenticated %}
+ {% if current_user.role == 'admin' %}
+ <a href="{{ url_for('admin_dashboard') }}"
+ class="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">Admin Dashboard</a>
+ {% else %}
+ <a href="{{ url_for('dashboard') }}"
+ class="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">Dashboard</a>
+ <a href="{{ url_for('challenges') }}"
+ class="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">Challenges</a>
+ <a href="{{ url_for('achievements') }}"
+ class="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">Achievements</a>
+ <a href="{{ url_for('leaderboard') }}"
+ class="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">Leaderboard</a>
+ {% endif %}
 
-                    <a href="{{ url_for('profile') }}"
-                        class="group flex items-center gap-3 pl-4 border-l border-[#2A2E35]">
-                        <div class="hidden md:block text-right">
-                            <p class="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">{{
-                                current_user.name }}</p>
-                            <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">{{
-                                current_user.role }}</p>
-                        </div>
-                        <div
-                            class="w-9 h-9 rounded-full bg-[#171A1F] p-0.5 border border-[#2A2E35] group-hover:border-emerald-500 transition-colors cursor-pointer relative">
-                            <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
-                                onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
-                                alt="Profile" class="w-full h-full object-cover rounded-full">
-                        </div>
-                    </a>
-                    <a href="{{ url_for('logout') }}"
-                        class="text-sm font-medium text-red-400 hover:text-red-300 transition-colors ml-4">
-                        Log out
-                    </a>
-                    {% else %}
-                    <a href="{{ url_for('login') }}"
-                        class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Sign in</a>
-                    <a href="{{ url_for('register') }}"
-                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-colors">
-                        Get Started
-                    </a>
-                    {% endif %}
-                </div>
+ <a href="{{ url_for('profile') }}"
+ class="group flex items-center gap-3 pl-6 border-l border-[#2A4A30]/10 ml-2">
+ <div class="hidden md:block text-right">
+ <p class="text-sm font-semibold text-text-primary group-hover:text-brand-500 transition-colors">{{
+ current_user.name }}</p>
+ <p class="text-[11px] text-text-secondary font-medium tracking-wide">{{
+ current_user.role | capitalize }}</p>
+ </div>
+ <div
+ class="w-10 h-10 rounded-full bg-[#FFFFFF] border border-[#2A4A30]/10 group-hover:border-brand-500 transition-colors cursor-pointer">
+ <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+ onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
+ alt="Profile" class="w-full h-full object-cover rounded-full">
+ </div>
+ </a>
+ <a href="{{ url_for('logout') }}"
+ class="text-sm font-medium text-status-error hover:text-[#fca5a5] transition-colors ml-2">
+ Log out
+ </a>
+ {% else %}
+ <a href="{{ url_for('login') }}"
+ class="btn-secondary h-10 px-4 text-sm rounded-lg">Sign in</a>
+ <a href="{{ url_for('register') }}"
+ class="btn-primary h-10 px-4 text-sm rounded-lg">
+ Get Started
+ </a>
+ {% endif %}
+ </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-                        class="text-gray-400 hover:text-white p-2">
-                        <i class="fas fa-bars text-lg"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+ <!-- Mobile Menu Button -->
+ <div class="md:hidden">
+ <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+ class="text-text-secondary hover:text-text-primary p-2 transition-colors">
+ <i data-lucide="menu" class="w-5 h-5"></i>
+ </button>
+ </div>
+ </div>
+ </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-[#2A2E35] bg-[#0E0F12]">
-            <div class="px-4 pt-2 pb-4 space-y-1">
-                {% if current_user.is_authenticated %}
-                {% if current_user.role == 'admin' %}
-                <a href="{{ url_for('admin_dashboard') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Admin
-                    Dashboard</a>
-                {% else %}
-                <a href="{{ url_for('dashboard') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Dashboard</a>
-                <a href="{{ url_for('challenges') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Challenges</a>
-                <a href="{{ url_for('achievements') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Achievements</a>
-                <a href="{{ url_for('leaderboard') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Leaderboard</a>
-                {% endif %}
-                <a href="{{ url_for('profile') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Profile</a>
-                <a href="{{ url_for('logout') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-[#171A1F]">Log out</a>
-                {% else %}
-                <a href="{{ url_for('login') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-[#171A1F]">Sign
-                    in</a>
-                <a href="{{ url_for('register') }}"
-                    class="block px-3 py-2 rounded-md text-base font-medium text-emerald-500 hover:bg-[#171A1F]">Register</a>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
+ <!-- Mobile Menu -->
+ <div id="mobile-menu" class="hidden md:hidden border-t border-[#2A4A30]/10 bg-[#FAF9F6]">
+ <div class="px-4 pt-2 pb-6 space-y-1">
+ {% if current_user.is_authenticated %}
+ {% if current_user.role == 'admin' %}
+ <a href="{{ url_for('admin_dashboard') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Admin
+ Dashboard</a>
+ {% else %}
+ <a href="{{ url_for('dashboard') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Dashboard</a>
+ <a href="{{ url_for('challenges') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Challenges</a>
+ <a href="{{ url_for('achievements') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Achievements</a>
+ <a href="{{ url_for('leaderboard') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Leaderboard</a>
+ {% endif %}
+ <a href="{{ url_for('profile') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Profile</a>
+ <a href="{{ url_for('logout') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-status-error hover:bg-status-error/10 transition-colors">Log out</a>
+ {% else %}
+ <a href="{{ url_for('login') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-text-secondary hover:text-text-primary hover:bg-[#FFFFFF] transition-colors">Sign
+ in</a>
+ <a href="{{ url_for('register') }}"
+ class="block px-4 py-3 rounded-xl text-base font-medium text-brand-500 hover:bg-brand-500/10 transition-colors">Register</a>
+ {% endif %}
+ </div>
+ </div>
+ </nav>
+ {% endif %}
 
-    <!-- Content -->
-    <main class="pt-16 min-h-screen">
-        <!-- Flash Messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none">
-            {% for category, message in messages %}
-            <div
-                class="pointer-events-auto bg-[#171A1F] border border-[#2A2E35] shadow-lg rounded-lg p-4 flex items-start gap-3 w-80 animate-slide-in">
-                {% if category == 'success' %}
-                <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
-                {% elif category == 'error' %}
-                <i class="fas fa-circle-exclamation text-red-500 mt-0.5"></i>
-                {% else %}
-                <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
-                {% endif %}
-                <div>
-                    <h4 class="text-sm font-medium text-white capitalize">{{ category }}</h4>
-                    <p class="text-xs text-gray-400 mt-0.5">{{ message }}</p>
-                </div>
-                <button onclick="this.parentElement.remove()" class="ml-auto text-gray-500 hover:text-white">
-                    <i class="fas fa-times text-xs"></i>
-                </button>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% endwith %}
+ <!-- Content -->
+ <main class="{% if not current_user.is_authenticated %}pt-16{% endif %} min-h-screen">
+ <!-- Flash Messages -->
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+ <div class="fixed top-24 right-6 z-50 flex flex-col gap-3 pointer-events-none">
+ {% for category, message in messages %}
+ <div
+ class="pointer-events-auto bg-[#FFFFFF] border border-[#2A4A30]/10 shadow-premium rounded-2xl p-4 flex items-start gap-3 w-80 animate-slide-in">
+ {% if category == 'success' %}
+ <div class="w-8 h-8 rounded-full bg-status-success/10 flex items-center justify-center text-status-success shrink-0">
+ <i data-lucide="check" class="w-5 h-5"></i>
+ </div>
+ {% elif category == 'error' %}
+ <div class="w-8 h-8 rounded-full bg-status-error/10 flex items-center justify-center text-status-error shrink-0">
+ <i data-lucide="alert-circle" class="w-5 h-5"></i>
+ </div>
+ {% else %}
+ <div class="w-8 h-8 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-500 shrink-0">
+ <i data-lucide="info" class="w-5 h-5"></i>
+ </div>
+ {% endif %}
+ <div class="flex-1 mt-1.5">
+ <h4 class="text-[13px] font-semibold text-text-primary capitalize leading-none mb-1">{{ category }}</h4>
+ <p class="text-[13px] text-text-secondary leading-snug">{{ message }}</p>
+ </div>
+ <button onclick="this.parentElement.remove()" class="ml-auto text-text-secondary hover:text-text-primary transition-colors p-1 mt-0.5">
+ <i data-lucide="x" class="w-5 h-5"></i>
+ </button>
+ </div>
+ {% endfor %}
+ </div>
+ {% endif %}
+ {% endwith %}
 
-        {% block content %}{% endblock %}
-    </main>
+ {% block content %}{% endblock %}
+ </main>
 
-    <style>
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
+ <style>
+ @keyframes slideIn {
+ from {
+ transform: translateX(100%);
+ opacity: 0;
+ }
 
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+ to {
+ transform: translateX(0);
+ opacity: 1;
+ }
+ }
 
-        .animate-slide-in {
-            animation: slideIn 0.3s ease-out forwards;
-        }
-    </style>
+ .animate-slide-in {
+ animation: slideIn 0.3s ease-out forwards;
+ }
+   /* ============ EDITORIAL DASHBOARD SECTIONS — Homepage Style ============ */
+  /* Sections are full-width, edge-to-edge with alternating backgrounds.
+     Layout mirrors the homepage edit-section system exactly. */
 
-    {% block scripts %}{% endblock %}
+  .edit-dashboard-section {
+      background-color: #FFFFFF;
+      padding: 48px 0;
+      width: 100%;
+  }
+
+  .edit-dashboard-section-alt {
+      background-color: #F3F2EC;
+      padding: 48px 0;
+      width: 100%;
+  }
+
+  /* Section inner container — matches homepage max-width and horizontal padding */
+  .edit-dashboard-section > *,
+  .edit-dashboard-section-alt > * {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .edit-dashboard-heading {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.15;
+      color: #1B1B1B;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+  }
+
+  .edit-dashboard-subheading {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #707070;
+      margin-bottom: 28px;
+  }
+
+  @media (max-width: 767px) {
+      .edit-dashboard-section,
+      .edit-dashboard-section-alt {
+          padding: 32px 0;
+      }
+      .edit-dashboard-heading {
+          font-size: 24px;
+      }
+      .edit-dashboard-subheading {
+          margin-bottom: 20px;
+      }
+  }
+</style>
+
+ {% block scripts %}{% endblock %}
+ <script>
+ lucide.createIcons();
+ </script>
 </body>
 
 </html>

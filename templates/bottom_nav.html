@@ -1,0 +1,161 @@
+<!-- BOTTOM NAVIGATION BAR (MOBILE ONLY) -->
+<nav class="lg:hidden fixed bottom-0 left-0 right-0 z-[100] flex items-end justify-between" 
+     style="background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); height: 84px; padding: 0 16px; box-shadow: 0 -10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);">
+    
+    <div id="bottom-floating-pill"></div>
+    
+    <a href="{{ url_for('dashboard') }}" class="bottom-nav-item {% if request.endpoint == 'dashboard' %}active{% endif %}">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Home</span>
+    </a>
+
+    {% if current_user.role == 'teacher' or current_user.role == 'admin' %}
+    <a href="{{ url_for('teacher_profiles') }}" class="bottom-nav-item {% if request.endpoint == 'teacher_profiles' or request.endpoint == 'teacher_view_profile' %}active{% endif %}">
+        <i data-lucide="users"></i>
+        <span>Students</span>
+    </a>
+    <a href="{{ url_for('teacher_verify_challenges') }}" class="bottom-nav-item {% if request.endpoint == 'teacher_verify_challenges' %}active{% endif %}">
+        <i data-lucide="check-circle"></i>
+        <span>Verify</span>
+    </a>
+    {% else %}
+    <a href="{{ url_for('challenges') }}" class="bottom-nav-item {% if request.endpoint == 'challenges' %}active{% endif %}">
+        <i data-lucide="puzzle"></i>
+        <span>Quests</span>
+    </a>
+    <a href="{{ url_for('achievements') }}" class="bottom-nav-item {% if request.endpoint == 'achievements' %}active{% endif %}">
+        <i data-lucide="award"></i>
+        <span>Badges</span>
+    </a>
+    {% endif %}
+
+    <a href="{{ url_for('leaderboard') }}" class="bottom-nav-item {% if request.endpoint == 'leaderboard' %}active{% endif %}">
+        <i data-lucide="bar-chart-2"></i>
+        <span>Rank</span>
+    </a>
+
+    <a href="{{ url_for('profile') }}" class="bottom-nav-item {% if request.endpoint == 'profile' %}active{% endif %}">
+        <div class="bottom-nav-avatar">
+            <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+                 onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
+                 alt="Profile">
+        </div>
+        <span>Profile</span>
+    </a>
+
+</nav>
+
+<style>
+/* Bottom Nav Base */
+.bottom-nav-item {
+    position: relative;
+    width: 64px; /* Fixed width to reduce white space */
+    height: 100%; /* Fill entire height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 0 0 36px 36px; /* Flat top, highly rounded bottom */
+    z-index: 10;
+}
+
+.bottom-nav-item i {
+    width: 22px; /* Exact size from sidebar */
+    height: 22px;
+    stroke-width: 1.5;
+    transition: all 0.2s;
+}
+
+.bottom-nav-item span {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+}
+
+/* Floating Pill */
+#bottom-floating-pill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 64px; /* Will be overridden dynamically but good default */
+    background: #FAF9F6;
+    border-radius: 0 0 36px 36px;
+    z-index: 5;
+    transition: left 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    opacity: 0; /* Hidden initially until positioned */
+}
+
+/* Inverted Cutout Curves hanging from TOP */
+#bottom-floating-pill::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -28px;
+    width: 28px;
+    height: 28px;
+    background: radial-gradient(circle at bottom left, transparent 28px, #FAF9F6 28px);
+    pointer-events: none;
+}
+
+#bottom-floating-pill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -28px;
+    width: 28px;
+    height: 28px;
+    background: radial-gradient(circle at bottom right, transparent 28px, #FAF9F6 28px);
+    pointer-events: none;
+}
+
+/* Active State Styles */
+.bottom-nav-item.active {
+    background: #FAF9F6;
+    color: #2A4A30;
+    font-weight: 600;
+    z-index: 5; /* Lower z-index so cutouts go under inactive siblings if overlapping */
+}
+
+.bottom-nav-item.active i {
+    color: #2A4A30;
+}
+
+.bottom-nav-item.active span {
+    font-weight: 600;
+}
+
+
+
+.bottom-nav-item.active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -28px;
+    width: 28px;
+    height: 28px;
+    background: radial-gradient(circle at bottom right, transparent 28px, #FAF9F6 28px);
+    pointer-events: none;
+}
+
+/* Avatar styling for Profile nav item */
+.bottom-nav-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    overflow: hidden;
+    padding: 2px;
+}
+.bottom-nav-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+</style>

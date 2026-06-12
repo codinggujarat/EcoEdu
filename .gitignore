@@ -8,6 +8,8 @@ __pycache__/
 # Virtual environments
 .venv/
 venv/
+env/
+ENV/
 
 # Local environment & configs
 .env
@@ -16,8 +18,19 @@ venv/
 replit.*
 uv.lock
 
-# Instance & uploads
+# Database
+*.sqlite3
+*.db
+eco_education.db
 instance/
+
+# Uploads and User Data
+static/uploads/*
+!static/uploads/default.png
+!static/uploads/.gitkeep
+
+# Project specific
+scratch/
 attached_assets/
 
 # Distribution / packaging
@@ -32,6 +45,8 @@ build/
 # IDE / Editor settings
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS files
 .DS_Store

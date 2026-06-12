@@ -1,0 +1,154 @@
+{% extends "dashboard_layout.html" %}
+
+{% block title %}Verify Challenges - EcoEdu{% endblock %}
+
+{% block hero_section %}
+<!-- ============================================
+ PREMIUM HERO HEADER
+============================================ -->
+<div class="w-full relative overflow-hidden" style="
+ background:
+  radial-gradient(circle at top left, rgba(30,142,66,.18) 0%, transparent 45%),
+  radial-gradient(circle at top right, rgba(34,197,94,.10) 0%, transparent 40%),
+  linear-gradient(135deg, #000000 0%, #06150B 25%, #0B1F11 55%, #000000 100%);
+ border-bottom: 1px solid rgba(255,255,255,0.05);
+ border-radius: 0 0 42px 42px;
+ margin-left: 0;
+ margin-right: 0;
+ padding-left: 48px;
+ padding-right: 48px;
+ padding-top: 48px;
+ height: 320px;
+ display: flex;
+ align-items: center;
+ width: 100%;
+ max-width: none;">
+
+    <!-- Top Right Date & Avatar -->
+    <div class="absolute top-8 right-12 flex items-center gap-3">
+        <!-- Date -->
+        <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); height:40px; border-radius:14px; padding:0 16px; color:#D4D4D8; font-weight:500; display:flex; align-items:center; gap:6px;">
+            <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#71717A]"></i>
+            <span id="hero-date" class="text-[13px]"></span>
+        </div>
+        <!-- Avatar -->
+        <a href="{{ url_for('profile') }}" style="width:40px; height:40px; border-radius:50%; border:2px solid rgba(30,142,66,.5); overflow:hidden; display:block;">
+            <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+                onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
+                style="width:100%; height:100%; object-fit:cover;">
+        </a>
+    </div>
+
+    <!-- Center Content -->
+    <div class="w-full flex items-end justify-between gap-8 mt-4 mb-8">
+        <div>
+            <h1 style="font-size:36px; font-weight:700; color:#FFFFFF; line-height:1.1; letter-spacing:-0.5px;"
+                class="mb-2">
+                Verification Hub
+            </h1>
+            <p style="font-size:15px; color:#A1A1AA; font-weight:400;">
+                Review evidence and approve student submissions.
+            </p>
+        </div>
+        
+        <!-- Stats -->
+        <div class="shrink-0 hidden md:block" style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:12px 24px;">
+            <span style="font-size:24px; font-weight:700; color:#1E8E42; margin-right:8px;">{{ pending_completions|length }}</span>
+            <span style="font-size:13px; font-weight:600; color:#A1A1AA; text-transform:uppercase; letter-spacing:0.5px;">Pending</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateSpan = document.getElementById('hero-date');
+        if (dateSpan) {
+            const date = new Date();
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            dateSpan.textContent = date.toLocaleDateString('en-US', options);
+        }
+    });
+</script>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="w-full">
+    <!-- Horizontal Controls -->
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10 mt-4">
+        <!-- Search -->
+        <div class="relative w-full lg:w-[320px]">
+            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-[#71717A] w-4 h-4"></i>
+            <input type="text" placeholder="Search submissions..."
+                class="w-full bg-[#111111] border border-[rgba(255,255,255,0.06)] rounded-[999px] pl-10 pr-4 h-[44px] text-[14px] font-medium text-[#FFFFFF] placeholder-[#A1A1AA] focus:border-[#1E8E42] focus:ring-1 focus:ring-[#1E8E42] outline-none transition-all">
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide w-full lg:w-auto">
+            <button style="height:44px; padding:0 24px; border-radius:999px; background:#1E8E42; color:#FFFFFF; font-size:14px; font-weight:600; white-space:nowrap; border:none;">Pending</button>
+            <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:14px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06);" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF] transition-all">Approved</button>
+            <button style="height:44px; padding:0 24px; border-radius:999px; background:#111111; color:#A1A1AA; font-size:14px; font-weight:600; white-space:nowrap; border:1px solid rgba(255,255,255,.06);" class="hover:border-[rgba(30,142,66,.4)] hover:text-[#FFFFFF] transition-all">Rejected</button>
+        </div>
+    </div>
+
+    <!-- Verification Grid (Masonry-like) -->
+    {% if pending_completions %}
+    <div style="column-count:1; column-gap:24px;" class="md:columns-2 xl:columns-3 2xl:columns-4">
+        {% for completion, challenge, user in pending_completions %}
+        <div style="background:#111111; border:1px solid rgba(255,255,255,0.06); border-radius:24px; padding:24px; transition:0.3s ease; break-inside:avoid; margin-bottom:24px;" class="hover:translate-y-[-8px] hover:border-[rgba(30,142,66,0.45)] group flex flex-col">
+            
+            <!-- Student Header -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <img src="{{ url_for('static', filename='uploads/' + (user.profile_pic or 'default.png')) }}" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.1);">
+                    <div>
+                        <h4 style="font-size:15px; font-weight:700; color:#FFFFFF; line-height:1.2;">{{ user.name }}</h4>
+                        <p style="font-size:12px; color:#A1A1AA;">{{ user.school }}</p>
+                    </div>
+                </div>
+                <span style="background:rgba(30,142,66,.1); color:#1E8E42; padding:6px 14px; border-radius:999px; font-size:12px; font-weight:700;">+{{ challenge.points }} XP</span>
+            </div>
+
+            <!-- Challenge Title -->
+            <h3 style="font-size:20px; font-weight:700; color:#FFFFFF; margin-bottom:8px; line-height:1.3;">{{ challenge.title }}</h3>
+            
+            <!-- Notes / Evidence -->
+            {% if completion.notes %}
+            <div style="background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); border-radius:16px; padding:16px; margin-bottom:24px; margin-top:16px;">
+                <p style="font-size:14px; color:#D4D4D8; line-height:1.6; font-style:italic;">"{{ completion.notes }}"</p>
+            </div>
+            {% else %}
+            <div style="background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); border-radius:16px; padding:16px; margin-bottom:24px; margin-top:16px; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="info" style="color:#71717A; width:16px; height:16px;"></i>
+                <p style="font-size:13px; color:#71717A;">No notes provided.</p>
+            </div>
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="flex gap-3 mt-auto pt-4 border-t border-[rgba(255,255,255,.05)]">
+                <form method="POST" action="{{ url_for('verify_challenge_completion', completion_id=completion.id, action='reject') }}" class="w-full">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" style="width:100%; height:44px; background:rgba(239,68,68,.05); border:1px solid rgba(239,68,68,.2); color:#EF4444; border-radius:14px; font-size:14px; font-weight:600; transition:.2s ease;" class="hover:bg-[rgba(239,68,68,.1)]">
+                        Reject
+                    </button>
+                </form>
+                <form method="POST" action="{{ url_for('verify_challenge_completion', completion_id=completion.id, action='approve') }}" class="w-full">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" style="width:100%; height:44px; background:#1E8E42; border-radius:14px; color:#FFFFFF; font-size:14px; font-weight:600; transition:.2s ease;" class="hover:bg-[#22C55E]">
+                        Approve
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="background:#111111; border:1px solid rgba(255,255,255,0.06); border-radius:32px; padding:64px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+        <div style="width:80px; height:80px; background:rgba(30,142,66,.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:24px;">
+            <i data-lucide="check-check" style="color:#1E8E42; width:36px; height:36px;"></i>
+        </div>
+        <h3 style="font-size:24px; font-weight:700; color:#FFFFFF; margin-bottom:8px;">All Caught Up</h3>
+        <p style="font-size:15px; color:#A1A1AA; max-width:400px;">There are no pending verification requests at this time. Great job keeping the queue empty!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

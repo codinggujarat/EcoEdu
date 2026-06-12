@@ -283,7 +283,8 @@ class ChallengeCompletion(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), nullable=False)
     completed_at = db.Column(db.DateTime, default=datetime.utcnow)
-    verified = db.Column(db.Boolean, default=False)
+    verified = db.Column(db.Boolean, default=False) # Legacy
+    status = db.Column(db.String(20), default='pending') # 'pending', 'approved', 'rejected'
     notes = db.Column(db.Text)
     
     # AI Features: Auto-Verification
@@ -319,30 +320,30 @@ def generate_otp():
 def send_otp_email(email, otp):
     try:
         msg = Message(
-            'Your EcoEdu Verification Code',
+            'Your EduEco Verification Code',
             sender=app.config['MAIL_USERNAME'],
             recipients=[email]
         )
         # Plain text body
         msg.body = f"""
-Your verification code for EcoEdu is: {otp}
+Your verification code for EduEco is: {otp}
 
 This code will expire in 10 minutes.
 
 If you didn't request this code, please ignore this email.
 
 Best regards,
-EcoEdu Team
+EduEco Team
         """
 
         # HTML body (for better formatting in modern clients)
         msg.html = f"""
-        <h2>Your EcoEdu Verification Code</h2>
+        <h2>Your EduEco Verification Code</h2>
         <p><b>{otp}</b></p>
         <p>This code will expire in <b>10 minutes</b>.</p>
         <p>If you didn't request this code, please ignore this email.</p>
         <br>
-        <p>Best regards,<br>EcoEdu Team</p>
+        <p>Best regards,<br>EduEco Team</p>
         """
 
         # Actually send the mail
@@ -536,6 +537,47 @@ def dashboard():
         pending_verifications = ChallengeCompletion.query.filter_by(verified=False).count()
         verified_challenges = ChallengeCompletion.query.filter_by(verified=True).count()
         active_students = User.query.filter_by(role="student").count()
+        
+        # Calculate total points awarded to all students
+        total_points_awarded = db.session.query(db.func.sum(User.eco_points)).filter_by(role="student").scalar() or 0
+        
+        # Get recent activity (last 5 challenge completions)
+        recent_activity = ChallengeCompletion.query.order_by(ChallengeCompletion.completed_at.desc()).limit(5).all()
+
+        # Calculate impact trends for the last 7 days
+        from datetime import datetime, timedelta
+        impact_trends = []
+        today = datetime.utcnow().date()
+        seven_days_ago = datetime.utcnow() - timedelta(days=7)
+        
+        # Query all verified completions in the last 7 days
+        recent_completions = ChallengeCompletion.query.filter(
+            ChallengeCompletion.completed_at >= seven_days_ago,
+            ChallengeCompletion.verified == True
+        ).all()
+        
+        # Group points by date string (YYYY-MM-DD)
+        daily_points = {}
+        for c in recent_completions:
+            if c.challenge: # Ensure challenge exists
+                date_str = c.completed_at.date().isoformat()
+                daily_points[date_str] = daily_points.get(date_str, 0) + c.challenge.points
+                
+        for i in range(6, -1, -1):
+            day = today - timedelta(days=i)
+            points = daily_points.get(day.isoformat(), 0)
+            impact_trends.append({
+                'day': day.strftime('%a'),
+                'points': points,
+                'is_today': i == 0
+            })
+            
+        # Calculate percentages for the CSS chart heights
+        max_points = max((t['points'] for t in impact_trends), default=0)
+        for t in impact_trends:
+            t['height'] = int((t['points'] / max_points) * 100) if max_points > 0 else 5 # 5% min height
+            t['height'] = max(5, t['height'])
+
         # Generate timestamp for cache-busting
         import time
         timestamp = int(time.time())
@@ -549,7 +591,10 @@ def dashboard():
             verified_challenges=verified_challenges,
             profile_image=profile_image,
             timestamp=timestamp,
-            active_students=active_students
+            active_students=active_students,
+            total_points_awarded=total_points_awarded,
+            recent_activity=recent_activity,
+            impact_trends=impact_trends
         )
     else:
         # Student dashboard
@@ -857,18 +902,57 @@ def teacher_verify_challenges():
     if current_user.role != 'teacher':
         flash('Access denied. Teachers only.', 'error')
         return redirect(url_for('dashboard'))
-    
-    # Get all pending challenge completions (unverified)
-    pending_completions = db.session.query(ChallengeCompletion, Challenge, User).join(
+
+    all_completions = db.session.query(ChallengeCompletion, Challenge, User).join(
         Challenge, ChallengeCompletion.challenge_id == Challenge.id
     ).join(
         User, ChallengeCompletion.user_id == User.id
     ).filter(
-        ChallengeCompletion.verified == False,
         Challenge.verification_required == True
     ).order_by(ChallengeCompletion.completed_at.desc()).all()
-    
-    return render_template('teacher_verify.html', pending_completions=pending_completions)
+
+    pending_count = sum(1 for c, ch, u in all_completions if c.status == 'pending')
+
+    # Parse raw notes (Quill HTML + appended markers) into clean data
+    import re as _re
+    from html.parser import HTMLParser as _HTMLParser
+
+    class _Strip(_HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.parts = []
+        def handle_data(self, d):
+            s = d.strip()
+            if s:
+                self.parts.append(s)
+
+    def parse_notes(raw):
+        if not raw:
+            return dict(plain_text='', ai_feedback='', has_photo=False,
+                        is_flagged=False, fraud_reason='')
+        has_photo  = '[Photo Included]' in raw
+        is_flagged = '[Flagged:' in raw
+        ai_fb = fraud = ''
+        m = _re.search(r'\[AI Feedback: (.+?)\]', raw)
+        if m: ai_fb = m.group(1).strip()
+        m = _re.search(r'\[Flagged: (.+?)\]', raw)
+        if m: fraud = m.group(1).strip()
+        clean = _re.sub(r'\[(Photo Included|AI Feedback: .+?|Flagged: .+?)\]', '', raw).strip()
+        p = _Strip()
+        try: p.feed(clean)
+        except Exception: pass
+        return dict(plain_text=' '.join(p.parts).strip(),
+                    ai_feedback=ai_fb, has_photo=has_photo,
+                    is_flagged=is_flagged, fraud_reason=fraud)
+
+    parsed_completions = [
+        (completion, challenge, user, parse_notes(completion.notes))
+        for completion, challenge, user in all_completions
+    ]
+
+    return render_template('teacher_verify.html',
+                           completions=parsed_completions,
+                           pending_count=pending_count)
 
 @app.route('/teacher/verify-challenges/<int:completion_id>/<action>', methods=['POST'])
 @login_required
@@ -892,13 +976,15 @@ def verify_challenge_completion(completion_id, action):
     
     if action == 'approve':
         completion.verified = True
+        completion.status = 'approved'
         user.eco_points += challenge.points
-        user.challenges_completed += 1 # Update challenges completed count
+        user.challenges_completed += 1
         achievements_awarded = check_and_award_achievements(user)
         db.session.commit()
         flash(f'Challenge approved! {user.name} earned {challenge.points} points.', 'success')
     elif action == 'reject':
-        db.session.delete(completion)
+        completion.verified = False
+        completion.status = 'rejected'
         db.session.commit()
         flash(f'Challenge completion rejected for {user.name}.', 'info')
     
@@ -1224,14 +1310,14 @@ def send_reset_email(user, token):
     reset_url = url_for('reset_password', token=token, _external=True)
     try:
         msg = Message(
-            "Password Reset Request - EcoEdu",
+            "Password Reset Request - EduEco",
             sender=app.config['MAIL_USERNAME'],
             recipients=[user.email]
         )
         msg.body = f"""
 Hello {user.name},
 
-We received a request to reset your EcoEdu password.
+We received a request to reset your EduEco password.
 Click the link below to reset your password (valid for 15 minutes):
 
 {reset_url}
@@ -1703,24 +1789,67 @@ def teacher_view_profile(student_id):
     achievements = student.achievements
     
     # Get student's challenge completions
-    challenge_completions = student.challenge_completions
+    raw_completions = student.challenge_completions
+    
+    # Parse raw notes (Quill HTML + appended markers) into clean data
+    import re as _re
+    from html.parser import HTMLParser as _HTMLParser
+
+    class _Strip(_HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.parts = []
+            self.images = []
+        def handle_data(self, d):
+            s = d.strip()
+            if s:
+                self.parts.append(s)
+        def handle_starttag(self, tag, attrs):
+            if tag == 'img':
+                src = dict(attrs).get('src', '')
+                if src.startswith('http'):
+                    self.images.append(src)
+
+    def parse_notes(raw):
+        if not raw:
+            return dict(plain_text='', ai_feedback='', has_photo=False,
+                        is_flagged=False, fraud_reason='', images=[])
+        has_photo  = '[Photo Included]' in raw
+        is_flagged = '[Flagged:' in raw
+        ai_fb = fraud = ''
+        m = _re.search(r'\[AI Feedback: (.+?)\]', raw)
+        if m: ai_fb = m.group(1).strip()
+        m = _re.search(r'\[Flagged: (.+?)\]', raw)
+        if m: fraud = m.group(1).strip()
+        clean = _re.sub(r'\[(Photo Included|AI Feedback: .+?|Flagged: .+?)\]', '', raw).strip()
+        p = _Strip()
+        try: p.feed(clean)
+        except Exception: pass
+        return dict(plain_text=' '.join(p.parts).strip(),
+                    ai_feedback=ai_fb, has_photo=has_photo,
+                    is_flagged=is_flagged, fraud_reason=fraud,
+                    images=p.images)
+
+    parsed_completions = [
+        (c, parse_notes(c.notes)) for c in raw_completions
+    ]
     
     # Get all challenges for reference
     all_challenges = Challenge.query.all()
     
     # Calculate statistics
     total_points = student.eco_points
-    challenges_completed = len(challenge_completions)
+    challenges_completed = len(raw_completions)
     total_challenges = len(all_challenges)
     achievements_count = len(achievements)
     
     # Get verified completions for points calculation
-    verified_completions = [cc for cc in challenge_completions if cc.verified]
+    verified_completions = [cc for cc in raw_completions if cc.verified]
     
     return render_template('teacher_student_profile.html',
                          student=student,
                          achievements=achievements,
-                         challenge_completions=challenge_completions,
+                         challenge_completions=parsed_completions,
                          all_challenges=all_challenges,
                          total_points=total_points,
                          challenges_completed=challenges_completed,

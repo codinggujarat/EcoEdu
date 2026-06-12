@@ -1,159 +1,174 @@
-{% extends "base.html" %}
+{% extends "dashboard_layout.html" %}
 
-{% block title %}Leaderboard | EcoEdu{% endblock %}
+{% block title %}Leaderboard | EduEco{% endblock %}
 
-{% block content %}
-<div class="min-h-screen py-12 px-6">
-    <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-gray-100 mb-2">Leaderboard</h1>
-            <p class="text-gray-400 max-w-xl mx-auto">Top performing students making a difference.</p>
+{% block hero_section %}
+{% from 'hero.html' import render_hero with context %}
+{{ render_hero("Rise Together", "Celebrate the students making the biggest environmental impact.", "Start a Challenge", url_for('challenges'), "zap") }}
+{% endblock %}
+
+{% block dashboard_content %}
+<style>
+/* ── Leaderboard Page — Homepage Editorial Layout ── */
+body { background: #FAF9F6 !important; }
+
+/* Responsive Containers */
+.lb-wrapper { max-width: 900px; margin: 0 auto; width: 100%; padding: 0 24px; }
+
+/* Responsive User Card */
+.user-card {
+    background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%);
+    border-radius: 24px; padding: 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    box-shadow: 0 12px 40px rgba(42,74,48,.2); color: white;
+    margin-bottom: 16px;
+}
+.user-card-profile {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    padding-right: 32px; border-right: 1px solid rgba(255,255,255,.2); min-width: 120px;
+}
+.user-card-profile img {
+    width: 72px; height: 72px; border-radius: 50%; border: 3px solid white; object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+}
+.user-card-profile span { font-size: 18px; font-weight: 700; }
+.user-card-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1;
+}
+.stat-item { display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+.stat-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: 0.1em; }
+.stat-value { font-size: 28px; font-weight: 700; display:flex; align-items:center; gap:6px; }
+
+/* Responsive Podium */
+.podium-container {
+    display: flex; align-items: flex-end; justify-content: center; gap: 16px; padding: 48px 0 64px 0; max-width: 700px; margin: 0 auto;
+}
+.podium-col {
+    display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 180px; width: 100%;
+}
+.podium-avatar {
+    border-radius: 50%; object-fit: cover; margin-bottom: 16px; border: 4px solid white; box-shadow: 0 8px 24px rgba(0,0,0,.12); flex-shrink: 0;
+}
+.podium-name { font-size: 16px; font-weight: 700; color: #1B1B1B; text-align: center; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+.podium-pts { font-size: 14px; font-weight: 500; color: #707070; margin-bottom: 24px; }
+.podium-bar {
+    width: 100%; border-radius: 20px 20px 0 0; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700;
+}
+.podium-col.rank-3 .podium-bar { height: 130px; background: rgba(42,74,48,.08); color: #2A4A30; }
+.podium-col.rank-2 .podium-bar { height: 170px; background: rgba(42,74,48,.12); color: #2A4A30; }
+.podium-col.rank-1 .podium-bar { height: 230px; background: linear-gradient(135deg, #173D25 0%, #4F8A5B 100%); color: white; box-shadow: 0 16px 40px rgba(42,74,48,.25); }
+
+/* Responsive List */
+.list-row {
+    display: flex; align-items: center; justify-content: space-between; padding: 24px 0;
+    border-bottom: 1px solid rgba(0,0,0,.05); transition: background .2s; border-radius: 12px;
+}
+.list-row:hover { background: rgba(42,74,48,.02); padding-left: 16px; padding-right: 16px; }
+
+@media (max-width: 639px) {
+    .lb-wrapper { padding: 0 16px; }
+    .user-card { flex-direction: column; padding: 24px; gap: 24px; }
+    .user-card-profile { padding-right: 0; border-right: none; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.2); width: 100%; flex-direction: row; justify-content: center; }
+    .user-card-stats { gap: 16px; }
+    .stat-label { font-size: 11px; }
+    .stat-value { font-size: 20px; }
+    
+    .podium-container { gap: 12px; padding: 24px 0 32px 0; }
+    .podium-col.rank-3 .podium-bar { height: 100px; font-size: 24px; }
+    .podium-col.rank-2 .podium-bar { height: 140px; font-size: 24px; }
+    .podium-col.rank-1 .podium-bar { height: 180px; font-size: 32px; }
+    
+    .list-row { padding: 20px 0; }
+    .list-row:hover { padding-left: 0; padding-right: 0; background: transparent; }
+}
+</style>
+
+{% set total_students = users|length %}
+{% set current_rank = namespace(value='-') %}
+{% for u in users %}
+    {% if u.id == current_user.id %}{% set current_rank.value = loop.index %}{% endif %}
+{% endfor %}
+
+{# ── SECTION 1: Stats ── #}
+{% if current_user.role == 'student' %}
+<div class="lb-wrapper" style="padding-bottom: 32px; padding-top: 32px;">
+    <div class="user-card">
+        <div class="user-card-profile">
+            <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}">
+            <span>{{ current_user.name.split(' ')[0] }}</span>
         </div>
-
-        <!-- Top 3 Podium (If enough users) -->
-        {% if users|length >= 3 %}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end mb-12 max-w-4xl mx-auto">
-
-            <!-- Rank 2 -->
-            <div
-                class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-6 flex flex-col items-center order-2 md:order-1 relative top-4">
-                <div
-                    class="absolute -top-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full border border-[#171A1F]">
-                    #2</div>
-                <img src="{{ url_for('static', filename='uploads/' + (users[1].profile_pic or 'default.png')) }}"
-                    class="w-20 h-20 rounded-full object-cover border-4 border-[#2A2E35] mb-4">
-                <div class="text-center">
-                    <h3 class="text-gray-100 font-bold truncate max-w-[150px]">{{ users[1].name }}</h3>
-                    <p class="text-gray-400 text-sm mb-2">{{ users[1].school }}</p>
-                    <div
-                        class="inline-flex items-center gap-1.5 bg-[#0E0F12] border border-[#2A2E35] px-3 py-1 rounded-lg">
-                        <i class="fas fa-bolt text-emerald-500 text-xs"></i>
-                        <span class="text-emerald-500 font-bold text-sm">{{ users[1].eco_points }}</span>
-                    </div>
-                </div>
+        <div class="user-card-stats">
+            <div class="stat-item">
+                <span class="stat-label">Points</span>
+                <span class="stat-value">{{ current_user.eco_points }}</span>
             </div>
-
-            <!-- Rank 1 -->
-            <div
-                class="bg-[#171A1F] border border-emerald-500/30 rounded-xl p-8 flex flex-col items-center order-1 md:order-2 shadow-lg shadow-emerald-900/10 z-10">
-                <div
-                    class="absolute -top-4 bg-emerald-500 text-black text-xs font-bold px-3 py-1 rounded-full border-4 border-[#0E0F12]">
-                    #1</div>
-                <div class="relative mb-4">
-                    <i
-                        class="fas fa-crown text-yellow-400 absolute -top-6 left-1/2 -translate-x-1/2 text-2xl drop-shadow-lg"></i>
-                    <img src="{{ url_for('static', filename='uploads/' + (users[0].profile_pic or 'default.png')) }}"
-                        class="w-24 h-24 rounded-full object-cover border-4 border-emerald-500/30">
-                </div>
-                <div class="text-center">
-                    <h3 class="text-white text-lg font-bold truncate max-w-[180px]">{{ users[0].name }}</h3>
-                    <p class="text-gray-400 text-sm mb-3">{{ users[0].school }}</p>
-                    <div
-                        class="inline-flex items-center gap-2 bg-[#0E0F12] border border-emerald-500/20 px-4 py-1.5 rounded-lg">
-                        <i class="fas fa-bolt text-emerald-500"></i>
-                        <span class="text-emerald-500 font-bold text-lg">{{ users[0].eco_points }}</span>
-                    </div>
-                </div>
+            <div class="stat-item">
+                <span class="stat-label">Level</span>
+                <span class="stat-value">{{ (current_user.eco_points // 100) + 1 }} <i data-lucide="crown" style="width:20px; height:20px; color:white; fill:white;"></i></span>
             </div>
-
-            <!-- Rank 3 -->
-            <div
-                class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-6 flex flex-col items-center order-3 md:order-3 relative top-4">
-                <div
-                    class="absolute -top-4 bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full border border-[#171A1F]">
-                    #3</div>
-                <img src="{{ url_for('static', filename='uploads/' + (users[2].profile_pic or 'default.png')) }}"
-                    class="w-20 h-20 rounded-full object-cover border-4 border-[#2A2E35] mb-4">
-                <div class="text-center">
-                    <h3 class="text-gray-100 font-bold truncate max-w-[150px]">{{ users[2].name }}</h3>
-                    <p class="text-gray-400 text-sm mb-2">{{ users[2].school }}</p>
-                    <div
-                        class="inline-flex items-center gap-1.5 bg-[#0E0F12] border border-[#2A2E35] px-3 py-1 rounded-lg">
-                        <i class="fas fa-bolt text-emerald-500 text-xs"></i>
-                        <span class="text-emerald-500 font-bold text-sm">{{ users[2].eco_points }}</span>
-                    </div>
-                </div>
+            <div class="stat-item">
+                <span class="stat-label">Rank</span>
+                <span class="stat-value">#{{ current_rank.value }}</span>
             </div>
-        </div>
-        {% elif users|length > 0 %}
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-8 mb-8 text-center">
-            <div
-                class="w-16 h-16 bg-[#0E0F12] rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-500 text-2xl border border-[#2A2E35]">
-                <i class="fas fa-trophy"></i>
-            </div>
-            <h2 class="text-xl font-bold text-white mb-2">Current Leader</h2>
-            <div class="flex items-center justify-center gap-3">
-                <img src="{{ url_for('static', filename='uploads/' + (users[0].profile_pic or 'default.png')) }}"
-                    class="w-10 h-10 rounded-full object-cover">
-                <div class="text-left">
-                    <p class="text-gray-200 font-bold">{{ users[0].name }}</p>
-                    <p class="text-emerald-500 text-sm font-bold">{{ users[0].eco_points }} pts</p>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- Rankings Table -->
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr
-                            class="bg-[#0E0F12] border-b border-[#2A2E35] text-xs uppercase text-gray-500 tracking-wider">
-                            <th class="px-6 py-4 font-bold text-center w-20">Rank</th>
-                            <th class="px-6 py-4 font-bold">Student</th>
-                            <th class="px-6 py-4 font-bold hidden md:table-cell">School</th>
-                            <th class="px-6 py-4 font-bold text-right">Points</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-[#2A2E35]">
-                        {% for user in users[3:] %}
-                        {% set rank = loop.index + 3 %}
-                        <tr
-                            class="group hover:bg-[#2A2E35]/30 transition-colors {% if current_user.id == user.id %} bg-emerald-500/5 {% endif %}">
-                            <td class="px-6 py-4 text-center">
-                                <span
-                                    class="text-sm font-bold text-gray-400 group-hover:text-white transition-colors">#{{
-                                    rank }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="{{ url_for('static', filename='uploads/' + (user.profile_pic or 'default.png')) }}"
-                                        class="w-10 h-10 rounded-full object-cover border border-[#2A2E35]">
-                                    <div>
-                                        <p
-                                            class="text-sm font-bold text-gray-200 group-hover:text-white transition-colors flex items-center gap-2">
-                                            {{ user.name }}
-                                            {% if current_user.id == user.id %}
-                                            <span
-                                                class="text-[10px] bg-emerald-500/10 text-emerald-500 px-1.5 py-0.5 rounded border border-emerald-500/20">YOU</span>
-                                            {% endif %}
-                                        </p>
-                                        <p class="text-xs text-gray-500">Level {{ (user.eco_points // 100) + 1 }}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-400 hidden md:table-cell">
-                                {{ user.school }}
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <div class="flex items-center justify-end gap-2">
-                                    <span class="text-emerald-500 font-bold">{{ user.eco_points }}</span>
-                                    <span class="text-xs text-gray-500 uppercase">pts</span>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% if users|length == 0 %}
-            <div class="p-12 text-center">
-                <p class="text-gray-500">No students have earned points yet.</p>
-            </div>
-            {% endif %}
         </div>
     </div>
 </div>
+{% endif %}
+
+{# ── SECTION 2: Podium ── #}
+{% if users|length >= 3 %}
+<div class="lb-wrapper">
+    <div class="podium-container">
+        <!-- Rank 2 -->
+        <div class="podium-col rank-2">
+            <img class="podium-avatar" src="{{ url_for('static', filename='uploads/' + (users[1].profile_pic or 'default.png')) }}" style="width:72px; height:72px;">
+            <div class="podium-name">{{ users[1].name }}</div>
+            <div class="podium-pts">{{ users[1].eco_points }} pts</div>
+            <div class="podium-bar">2</div>
+        </div>
+
+        <!-- Rank 1 -->
+        <div class="podium-col rank-1">
+            <div style="position:relative; margin-bottom:12px;">
+                <img class="podium-avatar" src="{{ url_for('static', filename='uploads/' + (users[0].profile_pic or 'default.png')) }}" style="width:88px; height:88px; margin-bottom:0;">
+                <div style="position:absolute; top:-8px; right:-8px; background:white; border-radius:50%; padding:6px; box-shadow:0 4px 12px rgba(0,0,0,.15);">
+                    <i data-lucide="crown" style="width:20px; height:20px; color:#EAB308; fill:#EAB308;"></i>
+                </div>
+            </div>
+            <div class="podium-name" style="font-size:18px;">{{ users[0].name }}</div>
+            <div class="podium-pts">{{ users[0].eco_points }} pts</div>
+            <div class="podium-bar">1</div>
+        </div>
+
+        <!-- Rank 3 -->
+        <div class="podium-col rank-3">
+            <img class="podium-avatar" src="{{ url_for('static', filename='uploads/' + (users[2].profile_pic or 'default.png')) }}" style="width:64px; height:64px;">
+            <div class="podium-name">{{ users[2].name }}</div>
+            <div class="podium-pts">{{ users[2].eco_points }} pts</div>
+            <div class="podium-bar">3</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{# ── SECTION 3: Full Rankings ── #}
+<div class="lb-wrapper" style="padding-bottom: 80px; max-width: 700px;">
+    <div style="display:flex; flex-direction:column;">
+        {% for u in users[3:] %}
+        {% set rank = loop.index + 3 %}
+        <div class="list-row">
+            <div style="display:flex; align-items:center; gap:32px;">
+                <span style="font-size:36px; font-weight:400; color:#1B1B1B; width:56px; text-align:center; opacity:0.8;">{{ '%02d' % rank }}</span>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:22px; font-weight:700; color:#1B1B1B; letter-spacing:-0.01em;">{{ u.name }}</span>
+                    <span style="font-size:15px; font-weight:500; color:#707070;">{{ u.eco_points }} points</span>
+                </div>
+            </div>
+            <div>
+                <i data-lucide="crown" style="width:36px; height:36px; color:#2A4A30; fill:rgba(42,74,48,0.15);"></i>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

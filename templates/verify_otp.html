@@ -1,106 +1,143 @@
 {% extends "base.html" %}
-
-{% block title %}Verify Code | EcoEdu{% endblock %}
-
+{% block title %}Verify Code | EduEco{% endblock %}
 {% block content %}
-<div class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-2xl font-semibold text-gray-100 mb-2">Verify code</h1>
-            <p class="text-sm text-gray-400">Enter the 6-digit code sent to</p>
-            <p class="text-sm font-medium text-emerald-500 mt-1">{{ email }}</p>
-        </div>
+<style>
+body > nav { display: none !important; }
+main { padding: 0 !important; margin: 0 !important; }
+body { background-color: #FAF9F6 !important; font-family: 'General Sans', sans-serif !important; color: #1B1B1B !important; margin: 0; }
+@media (min-width: 1024px) { body { height: 100vh; overflow: hidden; } }
+.edit-split-layout { display: flex; flex-direction: column; min-height: 100vh; width: 100%; }
+@media (min-width: 1024px) { 
+    .edit-split-layout { display: grid; grid-template-columns: 55% 45%; } 
+}
+.edit-split-left { display: none; background-color: #F3F2EC; position: relative; overflow: hidden; height: 100vh; }
+@media (min-width: 1024px) { .edit-split-left { display: block; } }
+.edit-split-right { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 24px; position: relative; overflow-y: auto; }
+@media (min-width: 1024px) { .edit-split-right { padding: 40px; overflow-y: hidden; } }
+.edit-auth-card { background: #FFFFFF; border-radius: 32px; padding: 40px; width: 100%; max-width: 480px; box-shadow: 0 20px 40px rgba(0,0,0,0.03); border: 1px solid rgba(42,74,48,0.05); }
+.edit-input { width: 100%; height: 56px; border: 1px solid rgba(42,74,48,0.10); border-radius: 18px; padding: 0 16px 0 48px; font-size: 16px; color: #1B1B1B; transition: all 0.2s ease; background: #FFFFFF; }
+.edit-input:focus { border-color: #2A4A30; outline: none; box-shadow: 0 0 0 1px #2A4A30; }
+.edit-input::placeholder { color: #A1A1AA; }
+.edit-input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #707070; transition: color 0.2s ease; width: 18px; height: 18px; }
+.edit-input:focus + .edit-input-icon, .edit-input-icon-wrapper:focus-within .edit-input-icon { color: #2A4A30; }
+.edit-btn { width: 100%; height: 56px; border-radius: 999px; background: #2A4A30; color: #FFFFFF; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; border: none; cursor: pointer; margin-top: 18px; }
+.edit-btn:hover { background: #355D3D; transform: translateY(-2px); }
+.edit-h1 { font-size: 40px; font-weight: 600; color: #1B1B1B; letter-spacing: -0.02em; margin-bottom: 12px; }
+.edit-p { font-size: 18px; color: #707070; margin-bottom: 28px; }
+.edit-label { display: block; font-size: 15px; font-weight: 500; color: #1B1B1B; margin-bottom: 8px; }
+.edit-error { color: #EF4444; font-size: 13px; margin-top: 6px; }
+.edit-link { color: #707070; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 0.2s ease; }
+.edit-link:hover { color: #2A4A30; }
+.otp-input { width: 60px; height: 60px; border: 1px solid rgba(42,74,48,0.10); border-radius: 16px; text-align: center; font-size: 24px; font-weight: 600; color: #1B1B1B; transition: all 0.2s; }
+.otp-input:focus { border-color: #2A4A30; outline: none; box-shadow: 0 0 0 1px #2A4A30; }
+.field-wrapper { margin-bottom: 18px; }
+</style>
 
-        <!-- Card -->
-        <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl shadow-2xl p-8">
-            <form method="POST" id="otp-form" class="space-y-8">
-                {{ form.hidden_tag() }}
-                {{ form.email(type="hidden") }}
-                {{ form.otp(type="hidden") }}
+<!-- Top Nav (Logo only) for Mobile & Desktop -->
+<div style="position: absolute; top: 40px; left: 40px; z-index: 50;">
+    <a href="/" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+        <span style="font-weight: 500; font-size: 24px; color: #1B1B1B; letter-spacing: -0.02em;">EduEco</span>
+    </a>
+</div>
 
-                <!-- OTP Input -->
-                <div class="flex justify-between gap-2">
-                    {% for i in range(6) %}
-                    <input type="text" maxlength="1"
-                        class="otp-box w-10 h-12 sm:w-12 sm:h-14 text-center text-lg font-bold rounded-lg bg-[#0E0F12] border border-[#2A2E35] text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
-                        required>
+<div class="edit-split-layout">
+    
+<div class="edit-split-left">
+    <div style="position: absolute; inset: 0; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1200&auto=format&fit=crop'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.9;"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(42,74,48,0.4), transparent);"></div>
+    <div style="position: absolute; left: 70px; bottom: 70px; z-index: 10; max-width: 500px;">
+        <h2 style="font-size: 48px; font-weight: 500; color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;">The future of environmental education.</h2>
+        <p style="font-size: 20px; color: rgba(255,255,255,0.8); margin: 0;">Join thousands of schools making a measurable impact.</p>
+    </div>
+</div>
+
+    <div class="edit-split-right">
+        <div class="edit-auth-card">
+            <h1 class="edit-h1">Check your email</h1>
+            <p class="edit-p">We sent a 6-digit verification code to your email.</p>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div style="background: #FEF2F2; border: 1px solid #FCA5A5; color: #DC2626; padding: 16px; border-radius: 16px; margin-bottom: 24px; font-size: 14px; display: flex; align-items: center; gap: 12px;">
+                            <i data-lucide="alert-circle" style="width: 20px; height: 20px;"></i>
+                            {{ message }}
+                        </div>
                     {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" id="otp-form">
+                <input type="hidden" name="otp" id="final-otp">
+                
+                <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px;">
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
                 </div>
-                {% for error in form.otp.errors %}
-                <p class="text-red-400 text-xs text-center">{{ error }}</p>
-                {% endfor %}
 
-                <button type="submit"
-                    class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg shadow-lg shadow-emerald-900/20 transition-all text-sm">
-                    Verify
+                <button type="submit" class="edit-btn" id="verify-btn">
+                    Verify Code
                 </button>
             </form>
-
-            <div class="text-center mt-6">
-                <p class="text-xs text-gray-400">
-                    Didn't receive the code?
-                    <button type="button" id="resend-btn"
-                        class="text-emerald-500 hover:text-emerald-400 font-medium ml-1 transition-colors">Resend</button>
-                </p>
-            </div>
-
-            <div class="mt-6 pt-6 border-t border-[#2A2E35] text-center">
-                <a href="{{ url_for('login') }}"
-                    class="text-xs text-gray-400 hover:text-white transition-colors flex items-center justify-center gap-2">
-                    <i class="fas fa-arrow-left"></i> Back to sign in
-                </a>
+            
+            <div style="text-align: center; margin-top: 24px;">
+                <p style="font-size: 15px; color: #707070; margin-bottom: 8px;">Didn't receive the code?</p>
+                <form action="{{ url_for('forgot_password') }}" method="POST">
+                    <input type="hidden" name="email" value="{{ session.get('reset_email', '') }}">
+                    <button type="submit" style="background: none; border: none; color: #2A4A30; font-weight: 500; font-size: 15px; cursor: pointer; padding: 0;">
+                        Resend Code <span id="countdown" style="color: #707070; margin-left: 4px;">(60s)</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const inputs = document.querySelectorAll('.otp-box');
-    const hiddenOtp = document.querySelector('input[name="otp"]');
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = document.querySelectorAll('.otp-input');
+        const hiddenInput = document.getElementById('final-otp');
+        const form = document.getElementById('otp-form');
 
-    inputs.forEach((input, idx) => {
-        input.addEventListener('input', () => {
-            if (input.value.length > 0 && idx < inputs.length - 1) {
-                inputs[idx + 1].focus();
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                updateHiddenInput();
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        function updateHiddenInput() {
+            hiddenInput.value = Array.from(inputs).map(input => input.value).join('');
+        }
+        
+        form.addEventListener('submit', (e) => {
+            updateHiddenInput();
+        });
+
+        // Countdown timer
+        let timeLeft = 60;
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                countdownEl.textContent = '';
+            } else {
+                countdownEl.textContent = `(${timeLeft}s)`;
             }
-        });
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !input.value && idx > 0) {
-                inputs[idx - 1].focus();
-            }
-        });
+        }, 1000);
     });
-
-    inputs[0].addEventListener('paste', (e) => {
-        e.preventDefault();
-        const paste = (e.clipboardData || window.clipboardData).getData('text').slice(0, 6);
-        paste.split('').forEach((char, idx) => {
-            if (idx < 6 && /\d/.test(char)) {
-                inputs[idx].value = char;
-            }
-        });
-        const nextEmpty = Array.from(inputs).find(i => !i.value);
-        if (nextEmpty) nextEmpty.focus();
-    });
-
-    document.querySelector('#otp-form').addEventListener('submit', () => {
-        hiddenOtp.value = Array.from(inputs).map(i => i.value).join('');
-    });
-
-    const resendBtn = document.getElementById('resend-btn');
-    if (resendBtn) {
-        resendBtn.addEventListener('click', () => {
-            // Mock resend
-            resendBtn.innerText = 'Sent!';
-            resendBtn.disabled = true;
-            resendBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            setTimeout(() => {
-                resendBtn.innerText = 'Resend';
-                resendBtn.disabled = false;
-                resendBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            }, 30000);
-        });
-    }
 </script>
 {% endblock %}
