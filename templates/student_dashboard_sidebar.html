@@ -6,12 +6,12 @@
 
 <!-- FLUSH CUTOUT SIDEBAR -->
 <aside id="sidebar-container" class="hidden lg:flex flex-col fixed inset-y-0 left-0 z-[90] transition-transform duration-300" 
-       style="width: 260px; background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset -1px 0 0 rgba(0,0,0,0.1);">
+       style="width: 320px; background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset -1px 0 0 rgba(0,0,0,0.1);">
     
     <!-- Top Header -->
-    <div style="display: flex; height: 100px; align-items: center; padding-top: 16px; flex-shrink: 0;">
-        <div style="width: 56px; flex-shrink: 0;"></div>
-        <div style="flex: 1; padding-left: 12px; padding-right: 16px;">
+    <div style="display: flex; height: 140px; align-items: center; padding-top: 32px; flex-shrink: 0;">
+        <div style="width: 72px; flex-shrink: 0;"></div>
+        <div style="flex: 1; padding-left: 24px; padding-right: 20px;">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover;">
                 <span style="color: white; font-size: 22px; font-weight: 500; letter-spacing: 0.5px;">EduEco</span>
@@ -100,16 +100,16 @@
 /* Nav Row Base */
 .nav-row {
     display: flex;
-    height: 44px;
+    height: 58px;
     align-items: center;
     text-decoration: none;
     position: relative;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 /* Left Rail Icon Box */
 .icon-part {
-    width: 56px;
+    width: 72px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -133,10 +133,10 @@
 #floating-pill {
     position: absolute;
     right: 0;
-    width: calc(100% - 64px);
-    height: 44px;
+    width: calc(100% - 92px);
+    height: 58px;
     background: #FAF9F6;
-    border-radius: 24px 0 0 24px;
+    border-radius: 40px 0 0 40px;
     z-index: 0;
     pointer-events: none;
     transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -147,24 +147,24 @@
     content: "";
     position: absolute;
     right: 0;
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     pointer-events: none;
 }
 #floating-pill::before {
-    top: -24px;
-    background: radial-gradient(circle at top left, transparent 24px, #FAF9F6 24px);
+    top: -40px;
+    background: radial-gradient(circle at top left, transparent 40px, #FAF9F6 40px);
 }
 #floating-pill::after {
-    bottom: -24px;
-    background: radial-gradient(circle at bottom left, transparent 24px, #FAF9F6 24px);
+    bottom: -40px;
+    background: radial-gradient(circle at bottom left, transparent 40px, #FAF9F6 40px);
 }
 
 #floating-indicator {
     position: absolute;
     left: 0;
     width: 4px;
-    height: 24px;
+    height: 36px;
     background: #FFFFFF;
     border-radius: 0 4px 4px 0;
     z-index: 10;
@@ -189,10 +189,10 @@
     height: 100%;
     display: flex;
     align-items: center;
-    margin-left: 8px; /* Space between left rail and text pill */
-    padding-left: 12px;
-    padding-right: 16px;
-    border-radius: 24px 0 0 24px;
+    margin-left: 20px; /* Space between left rail and text pill */
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 40px 0 0 40px;
     position: relative;
     color: #FFFFFF;
     font-size: 15px;
