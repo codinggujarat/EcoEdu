@@ -28,6 +28,55 @@ body { background: #FAF9F6 !important; }
 .tp-search:focus { border-color: #2A4A30; background: #FFFFFF; }
 .tp-search::placeholder { color: #A1A1AA; }
 
+.premium-btn {
+    height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 32px;
+    background: #2A4A30;
+    color: #FFFFFF;
+    border-radius: 999px;
+    font-weight: 500;
+    font-family: 'General Sans', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(42,74,48,0.1);
+}
+
+.premium-btn:hover {
+    background: #355D3D;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(42,74,48,0.15);
+}
+
+.premium-btn-secondary {
+    height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    background: #F3F2EC;
+    color: #707070;
+    border-radius: 999px;
+    font-weight: 500;
+    font-family: 'General Sans', sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    border: 1px solid rgba(42,74,48,0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-btn-secondary:hover {
+    background: #EAE8DE;
+    color: #1B1B1B;
+    transform: translateY(-2px);
+}
+
 /* Student List/Grid Hybrid */
 .tp-grid {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
@@ -103,9 +152,9 @@ body { background: #FAF9F6 !important; }
                 <i data-lucide="search" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:#A1A1AA;"></i>
                 <input type="text" name="search" placeholder="Search students..." value="{{ search_query }}" class="tp-search">
             </div>
-            <button type="submit" class="premium-btn" style="height:56px; display:inline-flex; align-items:center; justify-content:center; padding:0 32px; background:#2A4A30; color:#FFFFFF; border-radius:999px; font-weight:600; font-size:15px; letter-spacing:0.3px; border:none; cursor:pointer;">Search</button>
+            <button type="submit" class="premium-btn">Search</button>
             {% if search_query %}
-            <a href="{{ url_for('teacher_profiles') }}" class="premium-btn" style="height:56px; display:inline-flex; align-items:center; justify-content:center; padding:0 24px; background:#F3F2EC; color:#707070; border-radius:999px; font-weight:600; font-size:15px; letter-spacing:0.3px; text-decoration:none; border:1px solid rgba(0,0,0,0.05);">Clear</a>
+            <a href="{{ url_for('teacher_profiles') }}" class="premium-btn-secondary">Clear</a>
             {% endif %}
         </form>
     </div>

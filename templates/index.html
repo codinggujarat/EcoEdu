@@ -34,37 +34,59 @@
 
         /* ── Typography ── */
         .edit-h1 {
-            font-size: clamp(48px, 7vw, 88px);
+            font-size: 36px;
             font-weight: 500;
-            line-height: 1.05;
+            line-height: 1.1;
             letter-spacing: -0.04em;
             color: #1B1B1B;
         }
+        @media (min-width: 768px) {
+            .edit-h1 { font-size: 56px; line-height: 1.05; }
+        }
+        @media (min-width: 1024px) {
+            .edit-h1 { font-size: 72px; }
+        }
 
         .edit-h2 {
-            font-size: clamp(36px, 5vw, 64px);
+            font-size: 28px;
             font-weight: 500;
-            line-height: 1.1;
+            line-height: 1.2;
             letter-spacing: -0.02em;
             color: #1B1B1B;
         }
+        @media (min-width: 768px) {
+            .edit-h2 { font-size: 36px; line-height: 1.1; }
+        }
+        @media (min-width: 1024px) {
+            .edit-h2 { font-size: 48px; }
+        }
 
         .edit-p {
-            font-size: clamp(18px, 2vw, 24px);
-            line-height: 1.55;
+            font-size: 15px;
+            line-height: 1.5;
             color: #707070;
+        }
+        @media (min-width: 768px) {
+            .edit-p { font-size: 16px; line-height: 1.55; }
+        }
+        @media (min-width: 1024px) {
+            .edit-p { font-size: 18px; }
         }
 
         /* ── Layout ── */
         .edit-section {
-            padding: 120px 24px;
+            padding: 60px 20px;
             max-width: 1400px;
             margin: 0 auto;
         }
-
         @media (min-width: 768px) {
             .edit-section {
-                padding: 180px 64px;
+                padding: 90px 40px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .edit-section {
+                padding: 120px 64px;
             }
         }
 
@@ -79,10 +101,10 @@
             justify-content: center;
             background-color: #2A4A30;
             color: #fff;
-            height: 64px;
-            padding: 0 40px;
+            height: 50px;
+            padding: 0 24px;
             border-radius: 999px;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 500;
             text-decoration: none;
             position: relative;
@@ -90,6 +112,15 @@
             will-change: transform;
             transition: background-color 0.3s ease;
             cursor: none;
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .edit-btn-primary {
+                height: 64px;
+                padding: 0 40px;
+                font-size: 18px;
+                width: auto;
+            }
         }
 
         .edit-btn-secondary {
@@ -99,10 +130,10 @@
             background-color: transparent;
             color: #1B1B1B;
             border: 1px solid rgba(42, 74, 48, 0.2);
-            height: 64px;
-            padding: 0 40px;
+            height: 50px;
+            padding: 0 24px;
             border-radius: 999px;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 500;
             text-decoration: none;
             position: relative;
@@ -110,6 +141,15 @@
             will-change: transform;
             transition: border-color 0.3s ease;
             cursor: none;
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .edit-btn-secondary {
+                height: 64px;
+                padding: 0 40px;
+                font-size: 18px;
+                width: auto;
+            }
         }
 
         /* Ripple effect */
@@ -154,13 +194,16 @@
         .edit-card {
             background: #fff;
             border: 1px solid rgba(42, 74, 48, 0.10);
-            border-radius: 28px;
+            border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
-            padding: 48px;
+            padding: 24px;
             will-change: transform, box-shadow;
             transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             transform-style: preserve-3d;
             cursor: none;
+        }
+        @media (min-width: 768px) {
+            .edit-card { border-radius: 28px; padding: 48px; }
         }
 
         /* ── Image container ── */
@@ -177,13 +220,16 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 32px 24px;
+            padding: 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 1400px;
             margin: 0 auto;
             transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+        }
+        @media (min-width: 768px) {
+            .edit-nav { padding: 32px 24px; }
         }
 
         /* Full-width nav backdrop */
@@ -893,8 +939,58 @@
             background: linear-gradient(to right, transparent, rgba(42, 74, 48, 0.15), transparent);
             margin: 0;
         }
-    </style>
+    @media (min-width: 1024px) { .feature-grid { grid-template-columns: 1fr 1fr !important; gap: 120px !important; } }
+</style>
+<style>
+/* Global Mobile Fixes */
+img { max-width: 100%; height: auto; object-fit: cover; }
+.hero-btns { flex-direction: column; width: 100%; gap: 12px; }
+@media (min-width: 768px) { .hero-btns { flex-direction: row; width: auto; gap: 24px; } }
+.stats-grid { grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+@media (min-width: 1024px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 40px; } }
+.footer-grid { grid-template-columns: 1fr; gap: 40px; }
+@media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; } }
+@media (min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; gap: 80px; } }
+@media (min-width: 1024px) { .feature-grid { grid-template-columns: 1fr 1fr !important; gap: 120px !important; } }
+.hero-section { padding-top: 100px; padding-bottom: 40px; max-width: 1400px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+@media (min-width: 768px) { .hero-section { padding-top: 128px; padding-bottom: 80px; padding-left: 40px; padding-right: 40px; } }
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr !important; gap: 64px !important; } }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+.hero-text-col { max-width: 100%; text-align: center; }
+@media (min-width: 1024px) { .hero-text-col { max-width: 580px; text-align: left; } }
+.stat-card-padding { padding: 24px !important; }
+@media (min-width: 768px) { .stat-card-padding { padding: 40px !important; } }
+</style>
+
+<style>
+/* More Mobile Layout Fixes */
+.section-header-margin { text-align:center; margin-bottom: 40px; max-width:720px; margin-left:auto; margin-right:auto; }
+@media (min-width: 768px) { .section-header-margin { margin-bottom: 96px; } }
+
+.h2-margin { margin-bottom: 40px; max-width: 520px; }
+@media (min-width: 768px) { .h2-margin { margin-bottom: 96px; } }
+
+.step-col-gap { display: flex; flex-direction: column; gap: 48px; max-width: 800px; margin: 0 auto; }
+@media (min-width: 768px) { .step-col-gap { gap: 96px; } }
+
+.step-row-flex { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+@media (min-width: 768px) { .step-row-flex { flex-direction: row; gap: 48px; } }
+
+.lb-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+@media (min-width: 1024px) { .lb-grid { grid-template-columns: 1fr 1fr; } }
+
+.lb-card { flex-direction: column; text-align: center; gap: 16px; padding: 24px; }
+@media (min-width: 768px) { .lb-card { flex-direction: row; text-align: left; gap: 24px; } }
+
+.badge-card { padding: 24px; }
+@media (min-width: 768px) { .badge-card { padding: 32px; } }
+
+.badge-grid { grid-template-columns: 1fr 1fr; }
+@media (min-width: 768px) { .badge-grid { grid-template-columns: repeat(4, 1fr); } }
+</style>
 </head>
+
 
 <body>
 
@@ -940,13 +1036,11 @@
     <!-- ============================================================
      1. HERO
      ============================================================ -->
-    <section
-        style="padding-top:128px;padding-bottom:80px;max-width:1400px;margin:0 auto;padding-left:24px;padding-right:24px;"
-        id="hero">
-        <div style="display:grid;grid-template-columns:1fr;gap:64px;align-items:center;" class="hero-grid">
+    <section class="hero-section" id="hero">
+        <div class="hero-grid">
 
             <!-- Left: Text -->
-            <div style="max-width:580px;" class="hero-text-col">
+            <div class="hero-text-col">
 
 
                 <!-- H1 — will be word-split by JS -->
@@ -959,7 +1053,7 @@
                     real-world challenges.
                 </p>
 
-                <div style="display:flex;flex-wrap:wrap;gap:16px;" class="hero-btns">
+                <div class="hero-btns" style="display:flex;justify-content:center;margin-top:24px;margin-bottom:24px;">
                     <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn" style="opacity:0;">
                         <span class="btn-inner">Start Your Journey</span>
                     </a>
@@ -1021,32 +1115,32 @@
         <div class="edit-section" style="padding-top:96px;padding-bottom:96px;">
             <div class="grid-4 stats-grid">
 
-                <div class="edit-card stat-card tilt-card"
-                    style="padding:40px;display:flex;flex-direction:column;align-items:flex-start;">
+                <div class="edit-card stat-card tilt-card stat-card-padding"
+                    style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="12" data-suffix="k+">0</span>
                     <span
                         style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Active
                         Students</span>
                 </div>
 
-                <div class="edit-card stat-card tilt-card"
-                    style="padding:40px;display:flex;flex-direction:column;align-items:flex-start;">
+                <div class="edit-card stat-card tilt-card stat-card-padding"
+                    style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="450" data-suffix="+">0</span>
                     <span
                         style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Verified
                         Teachers</span>
                 </div>
 
-                <div class="edit-card stat-card tilt-card"
-                    style="padding:40px;display:flex;flex-direction:column;align-items:flex-start;">
+                <div class="edit-card stat-card tilt-card stat-card-padding"
+                    style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="85" data-suffix="">0</span>
                     <span
                         style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Partner
                         Schools</span>
                 </div>
 
-                <div class="edit-card stat-card tilt-card"
-                    style="padding:40px;display:flex;flex-direction:column;align-items:flex-start;">
+                <div class="edit-card stat-card tilt-card stat-card-padding"
+                    style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="1.2" data-suffix="M">0</span>
                     <span
                         style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Points
@@ -1061,7 +1155,7 @@
      3. FEATURES
      ============================================================ -->
     <section class="edit-section" id="features">
-        <div style="text-align:center;margin-bottom:96px;max-width:720px;margin-left:auto;margin-right:auto;"
+        <div class="section-header-margin"
             class="section-header">
             <h2 class="edit-h2 reveal-heading" style="margin-bottom:24px;">Engineered for real-world impact.</h2>
             <p class="edit-p reveal-text">Everything your school needs to run a modern, engaging environmental program
@@ -1143,12 +1237,12 @@
      ============================================================ -->
     <section class="edit-bg-alt" id="how-it-works">
         <div class="edit-section">
-            <h2 class="edit-h2 reveal-heading" style="margin-bottom:96px;max-width:520px;">A seamless framework for real
+            <h2 class="edit-h2 reveal-heading" class="h2-margin">A seamless framework for real
                 action.</h2>
 
-            <div style="display:flex;flex-direction:column;gap:96px;max-width:800px;margin:0 auto;">
+            <div class="step-col-gap">
 
-                <div class="step-row" style="display:flex;flex-direction:row;gap:48px;align-items:flex-start;">
+                <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">01</div>
                     <div style="padding-top:24px;flex:1;">
                         <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
@@ -1158,7 +1252,7 @@
                     </div>
                 </div>
 
-                <div class="step-row" style="display:flex;flex-direction:row;gap:48px;align-items:flex-start;">
+                <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">02</div>
                     <div style="padding-top:24px;flex:1;">
                         <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
@@ -1168,7 +1262,7 @@
                     </div>
                 </div>
 
-                <div class="step-row" style="display:flex;flex-direction:row;gap:48px;align-items:flex-start;">
+                <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">03</div>
                     <div style="padding-top:24px;flex:1;">
                         <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
@@ -1178,7 +1272,7 @@
                     </div>
                 </div>
 
-                <div class="step-row" style="display:flex;flex-direction:row;gap:48px;align-items:flex-start;">
+                <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">04</div>
                     <div style="padding-top:24px;flex:1;">
                         <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
@@ -1188,7 +1282,7 @@
                     </div>
                 </div>
 
-                <div class="step-row" style="display:flex;flex-direction:row;gap:48px;align-items:flex-start;">
+                <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">05</div>
                     <div style="padding-top:24px;flex:1;">
                         <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
@@ -1206,11 +1300,11 @@
      5 & 6. LEADERBOARD + BADGES
      ============================================================ -->
     <section class="edit-section">
-        <div style="display:grid;grid-template-columns:1fr;gap:96px;" class="lb-badges-grid">
+        <div class="lb-badges-grid lb-grid">
 
             <!-- Leaderboard -->
             <div>
-                <h2 class="edit-h2 reveal-heading" style="margin-bottom:64px;">Leaderboard</h2>
+                <h2 class="edit-h2 reveal-heading" class="h2-margin">Leaderboard</h2>
                 <div style="display:flex;flex-direction:column;gap:24px;">
 
                     <div class="lb-card reveal-card" data-rank="1">
@@ -1257,8 +1351,8 @@
 
             <!-- Badges -->
             <div>
-                <h2 class="edit-h2 reveal-heading" style="margin-bottom:64px;">Badges</h2>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+                <h2 class="edit-h2 reveal-heading" class="h2-margin">Badges</h2>
+                <div class="badge-grid" style="display:grid; gap:24px;">
 
                     <div class="badge-card tilt-card reveal-card">
                         <div style="position:relative;margin-bottom:20px;">

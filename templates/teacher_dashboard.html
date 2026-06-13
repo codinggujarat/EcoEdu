@@ -4,7 +4,7 @@
 
 {% block hero_section %}
 {% from 'hero.html' import render_hero with context %}
-{{ render_hero('Hello, ' ~ current_user.name.split()[0] ~ ' 👋', 'Teacher Command Center. Coordinate, verify, and analyze student impact.', ('Verify Pending (' ~ pending_verifications ~ ')' if pending_verifications > 0 else 'Verify Pending'), url_for('teacher_verify_challenges'), 'check-circle') }}
+{{ render_hero('Hello, ' ~ current_user.name.split()[0] ~ ' 👋', 'Teacher Command Center. Coordinate, verify, and analyze student impact.', 'Verify Pending', url_for('teacher_verify_challenges'), 'check-circle') }}
 {% endblock %}
 
 {% block dashboard_content %}
