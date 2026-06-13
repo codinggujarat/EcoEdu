@@ -1,0 +1,284 @@
+import os
+
+with open('templates/admin_teacher.html', 'r', encoding='utf-8') as f:
+    teacher_html = f.read()
+
+# We need to extract the structure from teacher_html and apply it to admin_students.html
+# Basically the asymmetric grid
+
+students_html = """{% extends "adminbase.html" %}
+
+{% block title %}Manage Students | EduEco Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto pb-10">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Students Directory</h1>
+            <p class="text-[15px] text-admin-textMuted">Manage all student accounts and view their progress.</p>
+        </div>
+        <div class="px-4 py-2 bg-[#FFFFFF] border border-[rgba(0,0,0,0.08)] rounded-[16px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ students|length }}</span> Total Students
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- 3 Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-[#181D00] bg-gray-100 px-2 py-1 rounded-md">Active</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Total Students</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ students|length }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-[#181D00] bg-gray-100 px-2 py-1 rounded-md">Verified</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Active Students</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ (students|length * 0.95) | round | int }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-[#181D00] bg-gray-100 px-2 py-1 rounded-md">Top Tier</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Top Achievers</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ high_tier }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Table -->
+            <div class="premium-card bg-white flex flex-col">
+                <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-[#FAFAFA]">
+                    <div class="relative w-full max-w-sm">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                        <input type="text" placeholder="Search students by name, email or school..." class="admin-input pl-10">
+                    </div>
+                    <button class="btn-secondary">
+                        <i data-lucide="filter" class="w-4 h-4"></i> Filter
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" id="studentsTable">
+                        <thead class="bg-[#F9F9F8] border-b border-admin-border sticky top-0 z-10">
+                            <tr>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Student Name</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">School / Class</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Eco Points</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-white">
+                            {% for student in students %}
+                            <tr class="hover:bg-admin-tableAlt transition-none group">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <img src="{{ url_for('static', filename='images/' ~ student.profile_pic) if student.profile_pic else url_for('static', filename='images/default.png') }}" alt="" class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-sm">
+                                        <div>
+                                            <div class="font-medium text-gray-900">{{ student.name }}</div>
+                                            <div class="text-[13px] text-gray-500 mt-0.5">{{ student.email }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="text-sm font-medium text-gray-700">{{ student.school or 'N/A' }}</div>
+                                    <div class="text-[12px] text-gray-500 mt-0.5">{{ student.class_name or 'N/A' }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#F4F4EF] border border-gray-200 text-[#181D00] text-xs font-semibold">
+                                        <i data-lucide="layers" class="w-3.5 h-3.5"></i> Level {{ student.level }}
+                                    </div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-900">
+                                        <i data-lucide="zap" class="w-3.5 h-3.5 text-[#181D00]"></i> {{ student.eco_points }}
+                                    </div>
+                                </td>
+                                <td class="p-4 text-right">
+                                    <button class="btn-secondary ml-auto text-xs py-1.5 px-3 h-auto">
+                                        Actions <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Activity Chart Widget -->
+            <div class="premium-card p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-admin-text">Engagement Trends</h3>
+                    <span class="px-2 py-0.5 bg-gray-100 border border-gray-200 text-[11px] font-bold text-[#181D00] rounded uppercase tracking-wider">6 Months</span>
+                </div>
+                <div class="h-64 mb-2">
+                    <canvas id="studentActivityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Status Widget -->
+            <div class="premium-card p-6 !bg-[#111111] !border-[#222222] !text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Performance Tiers</h3>
+                            <p class="text-xs text-white/60 mt-1">Student Eco Points distribution</p>
+                        </div>
+                        <i data-lucide="activity" class="text-white/40 w-5 h-5"></i>
+                    </div>
+                    <div class="h-48 relative mb-8">
+                        <canvas id="studentStatusChart"></canvas>
+                    </div>
+                    <div class="space-y-4 pt-4 border-t border-white/10">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="flex items-center gap-3 text-white/80 font-medium">
+                                <span class="w-2.5 h-2.5 rounded-full bg-white"></span> High Tier
+                            </span>
+                            <span class="font-bold text-white">{{ high_pct }}%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="flex items-center gap-3 text-white/80 font-medium">
+                                <span class="w-2.5 h-2.5 rounded-full bg-white/40"></span> Mid Tier
+                            </span>
+                            <span class="font-bold text-white">{{ mid_pct }}%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="flex items-center gap-3 text-white/80 font-medium">
+                                <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span> Low Tier
+                            </span>
+                            <span class="font-bold text-white">{{ 100 - high_pct - mid_pct }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+ /* Professional DataTables Override */
+ .dataTables_wrapper .dataTables_length,
+ .dataTables_wrapper .dataTables_filter {
+ padding: 1rem 1.5rem;
+ color: #111111;
+ font-size: 0.875rem;
+ font-weight: 500;
+ }
+
+ .dataTables_wrapper .dataTables_filter input {
+ background: #FFFFFF;
+ border: 1px solid rgba(0,0,0,0.12);
+ border-radius: 6px;
+ color: #111111;
+ padding: 6px 12px;
+ margin-left: 8px;
+ outline: none;
+ transition: none;
+ }
+
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
+ color: #FFFFFF !important;
+ background: #2A4A30 !important;
+ border: 1px solid #2A4A30 !important;
+ font-weight: 500;
+ }
+</style>
+
+<script>
+ $(document).ready(function () {
+ $('#studentsTable').DataTable({
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
+ });
+
+ // Activity Chart
+ const activityCtx = document.getElementById('studentActivityChart').getContext('2d');
+ new Chart(activityCtx, {
+ type: 'bar',
+ data: {
+ labels: {{ engagement_labels | tojson | safe }},
+ datasets: [{
+ label: 'Completions',
+ data: {{ engagement_values | tojson | safe }},
+ backgroundColor: '#111111',
+ borderRadius: 4,
+ barThickness: 16
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ scales: {
+ y: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { color: '#888888', font: {family: "'General Sans', sans-serif"} } },
+ x: { grid: { display: false }, ticks: { color: '#888888', font: {family: "'General Sans', sans-serif"} } }
+ }
+ }
+ });
+
+ // Status Chart
+ const statusCtx = document.getElementById('studentStatusChart').getContext('2d');
+ new Chart(statusCtx, {
+ type: 'doughnut',
+ data: {
+ labels: ['High Tier', 'Mid Tier', 'Low Tier'],
+ datasets: [{
+ data: [{{ high_tier }}, {{ mid_tier }}, {{ low_tier }}],
+ backgroundColor: ['#FFFFFF', 'rgba(255,255,255,0.4)', 'rgba(255,255,255,0.1)'],
+ borderWidth: 0
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ cutout: '75%'
+ }
+ });
+ });
+</script>
+{% endblock %}
+"""
+
+with open('templates/admin_students.html', 'w', encoding='utf-8') as f:
+    f.write(students_html)

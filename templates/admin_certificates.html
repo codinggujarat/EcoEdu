@@ -1,0 +1,70 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Manage Certificates | EduEco Admin{% endblock %}
+
+{% block content %}
+<div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight-heading text-gray-900 mb-1">Certificates Ledger</h1>
+        <p class="text-sm text-gray-500">Track and manage issued completion certificates.</p>
+    </div>
+</div>
+
+<div class="premium-card bg-white flex flex-col">
+    <!-- Toolbar -->
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-[#FAFAFA]">
+        <div class="relative w-full max-w-sm">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+            <input type="text" placeholder="Search by recipient or ID..." class="admin-input pl-10">
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="overflow-x-auto">
+        <table class="premium-table">
+            <thead>
+                <tr>
+                    <th>Certificate ID</th>
+                    <th>Recipient</th>
+                    <th>Date Issued</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cert in certificates %}
+                <tr class="group">
+                    <td>
+                        <div class="font-mono text-sm font-medium text-gray-600 bg-gray-50 px-2 py-1 rounded inline-block">CERT-{{ "%05d" | format(cert.id) }}</div>
+                    </td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-[#F4F4EF] text-[#181D00] flex items-center justify-center font-bold text-xs">{{ cert.user.name[0] | upper }}</div>
+                            <div class="font-medium text-gray-900">{{ cert.user.name }}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-sm text-gray-600">{{ cert.issued_at.strftime('%Y-%m-%d %H:%M') if cert.issued_at else 'Unknown' }}</div>
+                    </td>
+                    <td class="text-right">
+                        <button class="btn-secondary ml-auto">
+                            <i data-lucide="download" class="w-4 h-4"></i> Download
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not certificates %}
+                <tr>
+                    <td colspan="4" class="p-12 text-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                            <i data-lucide="file-badge" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-900 mb-1">No certificates issued</h3>
+                        <p class="text-xs text-gray-500">Certificates will appear here once students unlock them.</p>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

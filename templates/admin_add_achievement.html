@@ -3,74 +3,79 @@
 {% block title %}Add Achievement | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-[1400px] mx-auto pb-10 flex justify-center">
-    
-    <div class="w-full max-w-3xl">
-        <!-- Header -->
-        <div class="mb-8 flex items-center justify-between">
-            <div>
-                <a href="{{ url_for('admin_achievements') }}" class="inline-flex items-center gap-2 text-[13px] font-semibold text-admin-textMuted hover:text-[#111111] transition-none mb-3">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Directory
-                </a>
-                <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Create Achievement</h1>
-                <p class="text-[15px] text-admin-textMuted">Design a new badge and unlocking criteria.</p>
-            </div>
-        </div>
-
-        <div class="admin-card">
-            <form method="POST" class="space-y-8">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Achievement Name</label>
-                        <input type="text" name="name" required
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                            placeholder="e.g. Master Recycler">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Description</label>
-                    <textarea name="description" required rows="3"
-                        class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                        placeholder="e.g. Awarded for completing 50 waste reduction challenges."></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Badge Icon</label>
-                        <input type="text" name="badge_icon" required
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-2xl text-center text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                            placeholder="🌟">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Points Required</label>
-                        <input type="number" name="points_required" required min="0" value="0"
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                            placeholder="0">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Challenges Required</label>
-                        <input type="number" name="challenges_required" required min="0" value="0"
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                            placeholder="0">
-                    </div>
-                </div>
-
-                <div class="pt-8 flex justify-end gap-4">
-                    <a href="{{ url_for('admin_achievements') }}"
-                        class="px-6 py-2.5 bg-admin-surface border border-admin-border text-admin-text text-sm font-semibold rounded-lg hover:bg-[#FAFAF8] transition-none">
-                        Cancel
-                    </a>
-                    <button type="submit"
-                        class="px-8 py-2.5 bg-[#111111] hover:bg-[#2A4A30] text-white text-sm font-semibold rounded-lg shadow-sm border border-transparent transition-none">
-                        Create Badge
-                    </button>
-                </div>
-            </form>
-        </div>
+<div class="max-w-3xl mx-auto">
+    <div class="mb-8">
+        <a href="{{ url_for('admin_achievements') }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors mb-4">
+            <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back to Achievements
+        </a>
+        <h1 class="text-3xl font-bold tracking-tight-heading text-gray-900 mb-1">Create New Achievement</h1>
+        <p class="text-sm text-gray-500">Design a milestone badge for students to unlock.</p>
     </div>
 
+    <div class="premium-card bg-white p-8">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="space-y-6">
+                
+                <!-- Title & Icon -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="md:col-span-3">
+                        {{ form.name.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        {{ form.name(class="admin-input", placeholder="E.g., Eco Warrior") }}
+                        {% for error in form.name.errors %}
+                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {{ form.badge_icon.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        {{ form.badge_icon(class="admin-input", placeholder="🌍") }}
+                        {% for error in form.badge_icon.errors %}
+                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    {{ form.description.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                    {{ form.description(class="admin-textarea", rows="3", placeholder="What does this badge signify?") }}
+                    {% for error in form.description.errors %}
+                        <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <!-- Split Grid for Requirements & Points -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        {{ form.points_required.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        <div class="relative">
+                            <i data-lucide="target" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            {{ form.points_required(class="admin-input", placeholder="500") }}
+                        </div>
+                        {% for error in form.points_required.errors %}
+                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        {{ form.challenges_required.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        <div class="relative">
+                            <i data-lucide="zap" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            {{ form.challenges_required(class="admin-input", placeholder="5") }}
+                        </div>
+                        {% for error in form.challenges_required.errors %}
+                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-gray-100 flex justify-end gap-3">
+                    <a href="{{ url_for('admin_achievements') }}" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary">Create Achievement</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

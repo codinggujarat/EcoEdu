@@ -603,6 +603,168 @@ def admin_students():
                            engagement_labels=engagement_labels,
                            engagement_values=engagement_values)
 
+@app.route('/admin/challenges')
+@login_required
+def admin_challenges():
+    if current_user.role != 'admin':
+        abort(403)
+    challenges = Challenge.query.all()
+    
+    total_challenges = len(challenges)
+    completed_challenges = ChallengeCompletion.query.count()
+    
+    categories = list(set([c.category for c in challenges if c.category]))
+    active_categories = len(categories)
+    
+    # Chart 1: Completions by Day (Last 7 Days)
+    today = datetime.utcnow()
+    completion_labels = []
+    completion_values = []
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        completion_labels.append(target_date.strftime('%a'))
+        start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        comps = ChallengeCompletion.query.filter(ChallengeCompletion.completed_at >= start_of_day, ChallengeCompletion.completed_at <= end_of_day).count()
+        completion_values.append(comps)
+        
+    # Chart 2: Challenges by Category
+    category_labels = categories
+    category_values = []
+    for cat in categories:
+        count = Challenge.query.filter_by(category=cat).count()
+        category_values.append(count)
+
+    if not category_labels:
+        category_labels = ['None']
+        category_values = [1]
+
+    return render_template('admin_challenges.html', 
+                           challenges=challenges,
+                           total_challenges=total_challenges,
+                           completed_challenges=completed_challenges,
+                           active_categories=active_categories,
+                           completion_labels=completion_labels,
+                           completion_values=completion_values,
+                           category_labels=category_labels,
+                           category_values=category_values)
+
+@app.route('/admin/analytics')
+@login_required
+def admin_analytics():
+    if current_user.role != 'admin':
+        abort(403)
+        
+    # User Acquisition (Last 6 Months)
+    today = datetime.utcnow()
+    months_order = []
+    month_names = {1:'Jan', 2:'Feb', 3:'Mar', 4:'Apr', 5:'May', 6:'Jun', 7:'Jul', 8:'Aug', 9:'Sep', 10:'Oct', 11:'Nov', 12:'Dec'}
+    
+    for i in range(5, -1, -1):
+        m = (today - timedelta(days=30*i)).month
+        months_order.append(m)
+        
+    labels = [month_names[m] for m in months_order]
+    
+    students = User.query.filter_by(role='student').all()
+    acquisition_data = {m: 0 for m in months_order}
+    for s in students:
+        if s.created_at and s.created_at.month in acquisition_data:
+            acquisition_data[s.created_at.month] += 1
+    acq_values = [acquisition_data[m] for m in months_order]
+
+    # Challenge Completions by Category
+    completions = ChallengeCompletion.query.filter_by(status='approved').all()
+    categories = {}
+    for c in completions:
+        cat = c.challenge.category.title() if c.challenge and c.challenge.category else 'General'
+        categories[cat] = categories.get(cat, 0) + 1
+    
+    comp_labels = list(categories.keys()) if categories else ['Waste', 'Energy', 'Water', 'Nature']
+    comp_values = list(categories.values()) if categories else [0, 0, 0, 0]
+
+    # Engagement Heatmap (Last 7 Days)
+    heatmap_labels = []
+    heatmap_values = []
+    for i in range(6, -1, -1):
+        d = today - timedelta(days=i)
+        heatmap_labels.append(d.strftime('%a'))
+        day_count = sum(1 for c in completions if c.completed_at and c.completed_at.date() == d.date())
+        heatmap_values.append(day_count)
+
+    return render_template('admin_analytics.html', 
+                           acq_labels=labels, acq_values=acq_values,
+                           comp_labels=comp_labels, comp_values=comp_values,
+                           heatmap_labels=heatmap_labels, heatmap_values=heatmap_values)
+
+@app.route('/admin/reports')
+@login_required
+def admin_reports():
+    if current_user.role != 'admin':
+        abort(403)
+        
+    reports_dir = os.path.join(app.root_path, 'static', 'reports')
+    os.makedirs(reports_dir, exist_ok=True)
+    
+    reports = []
+    for filename in os.listdir(reports_dir):
+        if filename.endswith('.csv'):
+            file_path = os.path.join(reports_dir, filename)
+            timestamp = os.path.getmtime(file_path)
+            reports.append({
+                "name": filename.replace('_', ' ').replace('.csv', ''),
+                "filename": filename,
+                "date": datetime.fromtimestamp(timestamp).strftime('%b %d, %Y %H:%M'),
+                "type": "CSV Export",
+                "status": "Ready",
+                "timestamp": timestamp
+            })
+            
+    reports.sort(key=lambda x: x["timestamp"], reverse=True)
+    return render_template('admin_reports.html', reports=reports)
+
+@app.route('/admin/reports/generate', methods=['POST'])
+@login_required
+def admin_generate_report():
+    if current_user.role != 'admin':
+        abort(403)
+        
+    import csv
+    import io
+    
+    reports_dir = os.path.join(app.root_path, 'static', 'reports')
+    os.makedirs(reports_dir, exist_ok=True)
+    
+    filename = f"System_Engagement_Report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.csv"
+    filepath = os.path.join(reports_dir, filename)
+    
+    students = User.query.filter_by(role='student').all()
+    
+    with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Student Name', 'Email', 'School', 'Class Name', 'Points', 'Joined Date'])
+        for s in students:
+            writer.writerow([
+                s.name, 
+                s.email, 
+                s.school or 'N/A', 
+                s.class_name or 'N/A', 
+                s.eco_points,
+                s.created_at.strftime('%Y-%m-%d') if s.created_at else 'Unknown'
+            ])
+            
+    flash(f'Report "{filename}" generated successfully!', 'success')
+    return redirect(url_for('admin_reports'))
+
+@app.route('/admin/certificates')
+@login_required
+def admin_certificates():
+    if current_user.role != 'admin':
+        abort(403)
+    certificates = Certificate.query.order_by(Certificate.issued_at.desc()).all()
+    return render_template('admin_certificates.html', certificates=certificates)
+
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -1174,13 +1336,64 @@ def admin_dashboard():
     teachers = [u for u in users if u.role == 'teacher']
     challenges = Challenge.query.all()
     achievements = Achievement.query.all()  # ✅ Add this
+    
+    # Real-time Platform Activity (Last 4 Weeks Completions)
+    today = datetime.utcnow()
+    activity_labels = []
+    activity_values = []
+    completions = ChallengeCompletion.query.filter_by(status='approved').all()
+    
+    for i in range(3, -1, -1):
+        start_date = today - timedelta(days=(i+1)*7)
+        end_date = today - timedelta(days=i*7)
+        week_count = sum(1 for c in completions if c.completed_at and start_date <= c.completed_at < end_date)
+        activity_labels.append(f"{start_date.strftime('%b %d')}")
+        activity_values.append(week_count)
+        
+    # Generate Recent Logs
+    recent_logs = []
+    
+    # 1. New Users
+    recent_users = User.query.order_by(User.created_at.desc()).limit(5).all()
+    for u in recent_users:
+        if not u.created_at: continue
+        recent_logs.append({
+            'type': 'user',
+            'title': f"New {u.role} registered",
+            'desc': f"{u.name} from {u.school or 'Unknown School'}.",
+            'time': u.created_at,
+            'icon': 'user-plus',
+            'bg_class': 'bg-blue-50',
+            'text_class': 'text-blue-600'
+        })
+        
+    # 2. Recent Completions
+    recent_comps = ChallengeCompletion.query.order_by(ChallengeCompletion.completed_at.desc()).limit(5).all()
+    for c in recent_comps:
+        if not c.completed_at: continue
+        recent_logs.append({
+            'type': 'challenge',
+            'title': f"Challenge {c.status}",
+            'desc': f"{c.user.name} completed '{c.challenge.title}'.",
+            'time': c.completed_at,
+            'icon': 'check-circle' if c.status == 'approved' else 'clock',
+            'bg_class': 'bg-green-50' if c.status == 'approved' else 'bg-amber-50',
+            'text_class': 'text-green-600' if c.status == 'approved' else 'text-amber-600'
+        })
+        
+    # Sort and take top 5
+    recent_logs.sort(key=lambda x: x['time'], reverse=True)
+    recent_logs = recent_logs[:5]
 
     return render_template(
         'admin_dashboard.html',
         students=students,
         teachers=teachers,
         challenges=challenges,
-        achievements=achievements  # ✅ Pass it here
+        achievements=achievements,
+        activity_labels=activity_labels,
+        activity_values=activity_values,
+        recent_logs=recent_logs
     )
 
 @app.route('/admin/add-challenge', methods=['GET','POST'])
@@ -1203,6 +1416,18 @@ def admin_add_challenge():
         flash('Challenge added successfully', 'success')
         return redirect(url_for('admin_dashboard'))
     return render_template('admin_add_challenge.html', form=form)
+
+@app.route('/admin/challenges/delete/<int:challenge_id>', methods=['POST'])
+@login_required
+def delete_challenge(challenge_id):
+    if current_user.role != 'admin':
+        abort(403)
+        
+    challenge = Challenge.query.get_or_404(challenge_id)
+    db.session.delete(challenge)
+    db.session.commit()
+    flash(f'Challenge "{challenge.title}" deleted successfully!', 'success')
+    return redirect(url_for('admin_challenges'))
 
 def generate_random_challenge():
     titles = [
@@ -1349,7 +1574,44 @@ def admin_achievements():
         abort(403)
     
     achievements = Achievement.query.all()
-    return render_template('admin_achievements.html', achievements=achievements)
+    total_achievements = len(achievements)
+    completed_achievements = UserAchievement.query.count()
+    
+    types = list(set([a.badge_icon for a in achievements if a.badge_icon]))
+    active_types = len(types)
+
+    # Chart 1: Completions by Day (Last 7 Days)
+    today = datetime.utcnow()
+    completion_labels = []
+    completion_values = []
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        completion_labels.append(target_date.strftime('%a'))
+        start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        comps = UserAchievement.query.filter(UserAchievement.earned_at >= start_of_day, UserAchievement.earned_at <= end_of_day).count()
+        completion_values.append(comps)
+        
+    # Chart 2: Achievements by Type/Icon
+    type_labels = types
+    type_values = []
+    for t in types:
+        count = Achievement.query.filter_by(badge_icon=t).count()
+        type_values.append(count)
+
+    if not type_labels:
+        type_labels = ['None']
+        type_values = [1]
+        
+    return render_template('admin_achievements.html', 
+                           achievements=achievements,
+                           total_achievements=total_achievements,
+                           completed_achievements=completed_achievements,
+                           active_types=active_types,
+                           completion_labels=completion_labels,
+                           completion_values=completion_values,
+                           type_labels=type_labels,
+                           type_values=type_values)
 @app.route('/admin/achievements/delete/<int:achievement_id>', methods=['POST'])
 @login_required
 def delete_achievement(achievement_id):

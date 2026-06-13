@@ -1,103 +1,83 @@
 {% extends "adminbase.html" %}
 
-{% block title %}Add New Challenge | EduEco Admin{% endblock %}
+{% block title %}Add Challenge | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-[1400px] mx-auto pb-10 flex justify-center">
-    
-    <div class="w-full max-w-3xl">
-        <!-- Header -->
-        <div class="mb-8 flex items-center justify-between">
-            <div>
-                <a href="{{ url_for('admin_dashboard') }}" class="inline-flex items-center gap-2 text-[13px] font-semibold text-admin-textMuted hover:text-[#111111] transition-none mb-3">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Dashboard
-                </a>
-                <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Create Challenge</h1>
-                <p class="text-[15px] text-admin-textMuted">Design a new environmental task for students.</p>
-            </div>
-        </div>
+<div class="max-w-[1000px] mx-auto pb-10">
+    <div class="flex flex-col mb-8">
+        <a href="{{ url_for('admin_challenges') }}" class="inline-flex items-center text-sm font-medium text-[#707070] hover:text-[#181D00] transition-colors mb-4">
+            <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back to Challenges
+        </a>
+        <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Create New Challenge</h1>
+        <p class="text-[15px] text-admin-textMuted">Design a new gamification task for students to complete.</p>
+    </div>
 
-        <div class="admin-card">
-            <form method="POST" class="space-y-8">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
-                <!-- Title & Category Row -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Challenge Title</label>
-                        <input type="text" name="title" required
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                            placeholder="e.g. Zero Waste Week">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Category</label>
-                        <select name="category" required
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none appearance-none">
-                            <option value="Waste">Waste Reduction</option>
-                            <option value="Energy">Energy Conservation</option>
-                            <option value="Water">Water Savings</option>
-                            <option value="Nature">Nature & Biodiversity</option>
-                            <option value="Community">Community Action</option>
-                        </select>
-                    </div>
+    <div class="premium-card p-6 md:p-8 bg-white border border-[rgba(0,0,0,0.08)] rounded-[20px] shadow-sm">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="space-y-8">
+                
+                <!-- Title -->
+                <div>
+                    {{ form.title.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
+                    {{ form.title(class="admin-input", placeholder="E.g., Zero Waste Lunch Week") }}
+                    {% for error in form.title.errors %}
+                        <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
+                    {% endfor %}
                 </div>
 
                 <!-- Description -->
                 <div>
-                    <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Detailed Description</label>
-                    <textarea name="description" required rows="4"
-                        class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                        placeholder="Explain the rules and objectives of this challenge..."></textarea>
+                    {{ form.description.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
+                    {{ form.description(class="admin-textarea", rows="4", placeholder="Explain what the student needs to do...") }}
+                    {% for error in form.description.errors %}
+                        <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
+                    {% endfor %}
                 </div>
 
-                <!-- Points & Difficulty Row -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Split Grid for Category & Difficulty & Points -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Reward Points (XP)</label>
-                        <input type="number" name="points" required min="10" max="1000" step="10"
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
-                            placeholder="e.g. 50">
+                        {{ form.category.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
+                        <div class="relative">
+                            {{ form.category(class="admin-input appearance-none") }}
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                        </div>
+                        {% for error in form.category.errors %}
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
+                        {% endfor %}
                     </div>
+
                     <div>
-                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Difficulty Level</label>
-                        <select name="difficulty" required
-                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none appearance-none">
-                            <option value="Easy">Easy (10-50 pts)</option>
-                            <option value="Medium">Medium (60-150 pts)</option>
-                            <option value="Hard">Hard (160+ pts)</option>
-                        </select>
+                        {{ form.difficulty.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
+                        <div class="relative">
+                            {{ form.difficulty(class="admin-input appearance-none") }}
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                        </div>
+                        {% for error in form.difficulty.errors %}
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        {{ form.points.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
+                        <div class="relative">
+                            <i data-lucide="zap" class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            {{ form.points(class="admin-input pl-11", placeholder="50") }}
+                        </div>
+                        {% for error in form.points.errors %}
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
+                        {% endfor %}
                     </div>
                 </div>
 
-                <!-- Settings -->
-                <div class="pt-6 border-t border-admin-border space-y-4">
-                    <h3 class="text-[13px] font-bold text-admin-text uppercase tracking-wider">Verification Settings</h3>
-                    
-                    <label class="flex items-start gap-3 p-4 border border-[rgba(0,0,0,0.12)] rounded-lg hover:bg-[#FAFAF8] cursor-pointer transition-none">
-                        <div class="flex items-center h-5">
-                            <input type="checkbox" name="verification_required" value="true" class="w-4 h-4 text-[#2A4A30] bg-[#FFFFFF] border-[rgba(0,0,0,0.12)] rounded focus:ring-[#2A4A30]">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-sm font-semibold text-admin-text">Require Teacher Verification</span>
-                            <span class="text-xs text-admin-textMuted mt-0.5">Students must upload proof (photo/text) which requires manual approval from a teacher to award points.</span>
-                        </div>
-                    </label>
+                <div class="pt-8 mt-4 border-t border-[rgba(0,0,0,0.08)] flex justify-end gap-3">
+                    <a href="{{ url_for('admin_challenges') }}" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary">Create Challenge</button>
                 </div>
-
-                <!-- Submit Action -->
-                <div class="pt-8 flex justify-end gap-4">
-                    <a href="{{ url_for('admin_dashboard') }}"
-                        class="px-6 py-2.5 bg-admin-surface border border-admin-border text-admin-text text-sm font-semibold rounded-lg hover:bg-[#FAFAF8] transition-none">
-                        Cancel
-                    </a>
-                    <button type="submit"
-                        class="px-8 py-2.5 bg-[#111111] hover:bg-[#2A4A30] text-white text-sm font-semibold rounded-lg shadow-sm border border-transparent transition-none">
-                        Publish Challenge
-                    </button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-
 </div>
 {% endblock %}

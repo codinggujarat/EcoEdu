@@ -1,0 +1,300 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Manage Challenges | EduEco Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-[1400px] mx-auto pb-10">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Challenge Directory</h1>
+            <p class="text-[15px] text-admin-textMuted">Manage and oversee all gamification challenges.</p>
+        </div>
+        <div class="px-4 py-2 bg-[#FFFFFF] border border-[rgba(0,0,0,0.08)] rounded-[16px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ total_challenges }}</span> Total Challenges
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- 3 Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="target" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Total Challenges</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ total_challenges }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Completions</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ completed_challenges }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Categories</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ active_categories }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="premium-card flex flex-col">
+                <div class="p-6 border-b border-[rgba(0,0,0,0.08)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white">
+                    <h2 class="text-lg font-semibold text-admin-text">All Challenges</h2>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <a href="{{ url_for('admin_add_challenge') }}" class="btn-primary whitespace-nowrap text-sm h-10 px-4 rounded-xl">
+                            <i data-lucide="plus" class="w-4 h-4"></i> New Challenge
+                        </a>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" id="challengesTable">
+                        <thead class="bg-[#F9F9F8] border-b border-admin-border sticky top-0 z-10">
+                            <tr>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Challenge</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Category</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Difficulty</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-white">
+                            {% for challenge in challenges %}
+                            <tr class="hover:bg-admin-tableAlt transition-none group">
+                                <td class="p-4">
+                                    <div class="font-medium text-gray-900">{{ challenge.title }}</div>
+                                    <div class="text-[13px] text-gray-500 mt-0.5 line-clamp-1 max-w-sm">{{ challenge.description }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#F4F4EF] text-[#181D00] border border-[rgba(0,0,0,0.08)] uppercase tracking-wide">
+                                        {{ challenge.category }}
+                                    </span>
+                                </td>
+                                <td class="p-4">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#F4F4EF] text-[#181D00] border border-[rgba(0,0,0,0.08)] uppercase tracking-wide">
+                                        {{ challenge.difficulty }}
+                                    </span>
+                                </td>
+                                <td class="p-4 text-right">
+                                    <form action="{{ url_for('delete_challenge', challenge_id=challenge.id) }}" method="POST" class="inline">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn-secondary text-[#181D00] hover:bg-gray-100 hover:border-red-200" onclick="return confirm('Delete this challenge?')">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% if not challenges %}
+                            <tr>
+                                <td colspan="4" class="p-12 text-center">
+                                    <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                                        <i data-lucide="target" class="w-5 h-5 text-gray-400"></i>
+                                    </div>
+                                    <h3 class="text-sm font-medium text-gray-900 mb-1">No challenges found</h3>
+                                    <p class="text-xs text-gray-500">There are no challenges created yet.</p>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Activity Chart Widget -->
+            <div class="premium-card p-6 md:p-8 rounded-[20px] shadow-sm text-white" style="background: linear-gradient(180deg, #181D00 0%, #234A2B 50%, #2A4A30 100%); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-lg font-semibold text-white">Completions</h3>
+                    <span class="px-3 py-1 bg-white/10 border border-white/20 text-[11px] font-bold text-white rounded-md uppercase tracking-wider">7 Days</span>
+                </div>
+                <div class="h-64 mb-4">
+                    <canvas id="challengeActivityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Status Widget -->
+            <div class="premium-card p-6 md:p-8 rounded-[20px] shadow-sm relative overflow-hidden text-white" style="background: linear-gradient(180deg, #181D00 0%, #234A2B 50%, #2A4A30 100%); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Category Split</h3>
+                            <p class="text-xs text-white/60 mt-1">Challenges by type</p>
+                        </div>
+                        <i data-lucide="layers" class="text-white/40 w-5 h-5"></i>
+                    </div>
+                    <div class="h-48 relative mb-8 flex justify-center items-center">
+                        <canvas id="challengeStatusChart"></canvas>
+                    </div>
+                    <!-- Small Legend below -->
+                    <div class="space-y-4 pt-6 border-t border-white/10">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="flex items-center gap-3 text-white/80 font-medium">
+                                <span class="w-3 h-3 rounded-full bg-white"></span> Most Common
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="flex items-center gap-3 text-white/80 font-medium">
+                                <span class="w-3 h-3 rounded-full bg-white/40"></span> Secondary
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="flex items-center gap-3 text-white/80 font-medium">
+                                <span class="w-3 h-3 rounded-full bg-white/10"></span> Minor
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+ /* Professional DataTables Override */
+ .dataTables_wrapper .dataTables_length,
+ .dataTables_wrapper .dataTables_filter {
+ padding: 1rem 1.5rem;
+ color: #111111;
+ font-size: 0.875rem;
+ font-weight: 500;
+ }
+
+ .dataTables_wrapper .dataTables_filter input {
+ background: #FFFFFF;
+ border: 1px solid rgba(0,0,0,0.12);
+ border-radius: 6px;
+ color: #111111;
+ padding: 6px 12px;
+ margin-left: 8px;
+ outline: none;
+ transition: none;
+ }
+ .dataTables_wrapper .dataTables_filter input:focus {
+ border-color: #2A4A30;
+ box-shadow: 0 0 0 1px #2A4A30;
+ }
+
+ .dataTables_wrapper .dataTables_info {
+ padding: 1rem 1.5rem;
+ color: #666666;
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .dataTables_paginate {
+ padding: 1rem 1.5rem;
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .paginate_button {
+ color: #666666 !important;
+ padding: 4px 10px !important;
+ margin: 0 2px;
+ border-radius: 6px;
+ border: 1px solid transparent !important;
+ cursor: pointer;
+ transition: none;
+ }
+ .dataTables_wrapper .paginate_button:hover {
+ background: rgba(0,0,0,0.05) !important;
+ color: #111111 !important;
+ border: 1px solid transparent !important;
+ }
+
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
+ color: #FFFFFF !important;
+ background: #2A4A30 !important;
+ border: 1px solid #2A4A30 !important;
+ font-weight: 500;
+ }
+</style>
+
+<script>
+ $(document).ready(function () {
+ $('#challengesTable').DataTable({
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
+ });
+
+ // Activity Chart
+ const activityCtx = document.getElementById('challengeActivityChart').getContext('2d');
+ new Chart(activityCtx, {
+ type: 'bar',
+ data: {
+ labels: {{ completion_labels | tojson | safe }},
+ datasets: [{
+ label: 'Completions',
+ data: {{ completion_values | tojson | safe }},
+ backgroundColor: '#FFFFFF',
+ borderRadius: 4,
+ barThickness: 16
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ scales: {
+ y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'rgba(255,255,255,0.6)', font: {family: "'General Sans', sans-serif"} } },
+ x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.6)', font: {family: "'General Sans', sans-serif"} } }
+ }
+ }
+ });
+
+ // Status Chart
+ const statusCtx = document.getElementById('challengeStatusChart').getContext('2d');
+ new Chart(statusCtx, {
+ type: 'doughnut',
+ data: {
+ labels: {{ category_labels | tojson | safe }},
+ datasets: [{
+ data: {{ category_values | tojson | safe }},
+ backgroundColor: ['#FFFFFF', 'rgba(255,255,255,0.4)', 'rgba(255,255,255,0.1)', 'rgba(255,255,255,0.05)'],
+ borderWidth: 0
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ cutout: '75%'
+ }
+ });
+ });
+</script>
+{% endblock %}

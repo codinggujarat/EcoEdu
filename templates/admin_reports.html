@@ -1,0 +1,77 @@
+{% extends "adminbase.html" %}
+
+{% block title %}Reports | EduEco Admin{% endblock %}
+
+{% block content %}
+<div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight-heading text-gray-900 mb-1">System Reports</h1>
+        <p class="text-sm text-gray-500">Generate and export platform data.</p>
+    </div>
+    <div class="flex items-center gap-3">
+        <form method="POST" action="{{ url_for('admin_generate_report') }}" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn-primary">
+                <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i> Generate New Report
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="premium-card bg-white flex flex-col">
+    <!-- Data Table -->
+    <div class="overflow-x-auto">
+        <table class="premium-table">
+            <thead>
+                <tr>
+                    <th>Report Name</th>
+                    <th>Date Generated</th>
+                    <th>Format</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr class="group">
+                    <td>
+                        <div class="font-medium text-gray-900">{{ report.name }}</div>
+                    </td>
+                    <td>
+                        <div class="text-sm text-gray-600">{{ report.date }}</div>
+                    </td>
+                    <td>
+                        <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-700 uppercase tracking-wide">
+                            {{ report.type }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-green-700 border border-green-200 uppercase tracking-wide">
+                            {{ report.status }}
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        {% if report.status == 'Ready' %}
+                        <button class="btn-secondary ml-auto">
+                            Download
+                        </button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not reports %}
+                <tr>
+                    <td colspan="5" class="p-12 text-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-3">
+                            <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-900 mb-1">No reports generated</h3>
+                        <p class="text-xs text-gray-500">Click generate to create your first system report.</p>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
