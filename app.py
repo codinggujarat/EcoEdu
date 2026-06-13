@@ -1913,74 +1913,73 @@ def handle_exception(e):
     traceback.print_exc()
     return f"Internal Server Error details: {str(e)}", 500
 
-if __name__ == '__main__':
-    # Simple migration helper for SQLite
-    with app.app_context():
-        # Create tables if they don't exist
-        db.create_all()
+# Initialize Certificate Service
+cert_service = CertificateService(os.path.join(app.root_path, "static"))
+
+# Run initialization for both Development and Production (Gunicorn)
+with app.app_context():
+    # Create all database tables
+    db.create_all()
+    print("Database Tables Created:", db.metadata.tables.keys())
+    
+    # Check and add new columns if they don't exist (SQLite migration helper)
+    try:
+        engine = db.engine
+        from sqlalchemy import inspect
+        inspector = inspect(engine)
         
-        # Check and add new columns if they don't exist (SQLite doesn't support generic ALTER TABLE DROP COLUMN, but ADD is fine)
-        # This is a hacky migration for the MVP
-        try:
-            engine = db.engine
-            from sqlalchemy import inspect
-            inspector = inspect(engine)
-            
-            # Update User table
+        # Update User table
+        if 'user' in inspector.get_table_names():
             columns = [c['name'] for c in inspector.get_columns('user')]
             if 'preferences' not in columns:
                 print("Migrating User table...")
                 with engine.connect() as con:
-                    con.execute('ALTER TABLE user ADD COLUMN preferences TEXT')
+                    con.execute(db.text('ALTER TABLE "user" ADD COLUMN preferences TEXT'))
             if 'challenges_completed' not in columns:
                 print("Migrating User table: Adding challenges_completed column...")
                 with engine.connect() as con:
-                    con.execute('ALTER TABLE user ADD COLUMN challenges_completed INTEGER DEFAULT 0')
-            
-            # Update Challenge table
+                    con.execute(db.text('ALTER TABLE "user" ADD COLUMN challenges_completed INTEGER DEFAULT 0'))
+        
+        # Update Challenge table
+        if 'challenge' in inspector.get_table_names():
             columns = [c['name'] for c in inspector.get_columns('challenge')]
             if 'difficulty_score' not in columns:
                 print("Migrating Challenge table...")
                 with engine.connect() as con:
-                    con.execute('ALTER TABLE challenge ADD COLUMN difficulty_score FLOAT DEFAULT 1.0')
-                    con.execute('ALTER TABLE challenge ADD COLUMN tags TEXT')
-            
-            # Update ChallengeCompletion table
+                    con.execute(db.text('ALTER TABLE challenge ADD COLUMN difficulty_score FLOAT DEFAULT 1.0'))
+                    con.execute(db.text('ALTER TABLE challenge ADD COLUMN tags TEXT'))
+        
+        # Update ChallengeCompletion table
+        if 'challenge_completion' in inspector.get_table_names():
             columns = [c['name'] for c in inspector.get_columns('challenge_completion')]
             if 'ai_confidence' not in columns:
                 print("Migrating ChallengeCompletion table...")
                 with engine.connect() as con:
-                    con.execute('ALTER TABLE challenge_completion ADD COLUMN ai_confidence FLOAT DEFAULT 0.0')
-                    con.execute('ALTER TABLE challenge_completion ADD COLUMN ai_verified BOOLEAN DEFAULT 0')
-            
-            # Update Achievement table
+                    con.execute(db.text('ALTER TABLE challenge_completion ADD COLUMN ai_confidence FLOAT DEFAULT 0.0'))
+                    con.execute(db.text('ALTER TABLE challenge_completion ADD COLUMN ai_verified BOOLEAN DEFAULT 0'))
+        
+        # Update Achievement table
+        if 'achievement' in inspector.get_table_names():
             columns = [c['name'] for c in inspector.get_columns('achievement')]
             if 'challenges_required' not in columns:
                 print("Migrating Achievement table: Adding challenges_required column...")
                 with engine.connect() as con:
-                    con.execute('ALTER TABLE achievement ADD COLUMN challenges_required INTEGER DEFAULT 0')
-                    
-        except Exception as e:
-            print(f"Migration warning: {e}")
+                    con.execute(db.text('ALTER TABLE achievement ADD COLUMN challenges_required INTEGER DEFAULT 0'))
+                
+    except Exception as e:
+        print(f"Migration warning: {e}")
 
-    # AI Service Initialization
-    with app.app_context():
-        # Initialize AI Service
-        try:
-            if Challenge.query.first():
-                print("initializing AI service...")
-                ai_service['recommendations'].train(Challenge.query.all())
-                print("AI Service Initialized.")
-        except Exception as e:
-            print(f"AI Init Error (Non-fatal): {e}")
+    # Initialize AI Service
+    try:
+        if Challenge.query.first():
+            print("initializing AI service...")
+            ai_service['recommendations'].train(Challenge.query.all())
+            print("AI Service Initialized.")
+    except Exception as e:
+        print(f"AI Init Error (Non-fatal): {e}")
 
-    # Initialize Certificate Service
-    cert_service = CertificateService(os.path.join(app.root_path, "static"))
-    with app.app_context():
-        # Create all database tables
-        db.create_all()
-        
-        # Add default admin if not exists
+    # Add default admin if not exists
+    try:
         if not User.query.filter_by(role='admin').first():
             admin = User(
                 email='harekrishna291104@gmail.com',
@@ -1992,9 +1991,12 @@ if __name__ == '__main__':
             db.session.commit()
             print("✅ Default admin created: harekrishna291104@gmail.com / admin123")
         else:
-                    # Add sample eco tips if none exist
+            # Add sample eco tips if none exist
             add_sample_tips()
             print("✅ Sample eco tips added (if empty)")
             print("✅ Admin already exists.")
-    
+    except Exception as e:
+        print(f"Admin seeding warning: {e}")
+
+if __name__ == '__main__':
     app.run(debug=True)
