@@ -79,7 +79,13 @@ limiter = Limiter(
 # User loader for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    try:
+        return User.query.get(int(user_id))
+    except Exception as e:
+        print(f"ERROR: User loader failed for user_id={user_id}: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 # Forms with CSRF protection
 class RegistrationForm(FlaskForm):
@@ -489,17 +495,34 @@ def login():
     form = LoginForm()
     
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        
-        if user and check_password_hash(user.password_hash, form.password.data):
-            if not user.is_verified:
-                flash('Please verify your email first', 'error')
-                return redirect(url_for('verify_otp', email=form.email.data))
+        try:
+            print(f"DEBUG: Login attempt for email: {form.email.data}")
+            # Verify DB connection works by executing the query
+            user = User.query.filter_by(email=form.email.data).first()
             
-            login_user(user)
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Invalid email or password', 'error')
+            if user:
+                print("DEBUG: User found. Checking password hash...")
+                if check_password_hash(user.password_hash, form.password.data):
+                    print(f"DEBUG: Password match. is_verified={user.is_verified}")
+                    if not user.is_verified:
+                        flash('Please verify your email first', 'error')
+                        return redirect(url_for('verify_otp', email=form.email.data))
+                    
+                    print("DEBUG: Calling login_user...")
+                    login_user(user)
+                    print("DEBUG: login_user completed successfully.")
+                    return redirect(url_for('dashboard'))
+                else:
+                    print("DEBUG: Invalid password.")
+                    flash('Invalid email or password', 'error')
+            else:
+                print("DEBUG: User not found in DB.")
+                flash('Invalid email or password', 'error')
+        except Exception as e:
+            print(f"ERROR: Login route crashed: {e}")
+            import traceback
+            traceback.print_exc()
+            flash('An internal server error occurred while trying to log you in. Please try again later.', 'error')
     
     return render_template('login.html', form=form)
 
