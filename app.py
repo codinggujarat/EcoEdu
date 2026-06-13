@@ -76,7 +76,10 @@ csrf = CSRFProtect(app)
 # User loader for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    try:
+        return User.query.get(int(user_id))
+    except (ValueError, TypeError):
+        return None
 
 # Forms with CSRF protection
 class RegistrationForm(FlaskForm):
@@ -1903,6 +1906,13 @@ def download_certificate(cert_id):
 #  -------------------
 # APP INITIALIZATION
 # -------------------
+import traceback
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    traceback.print_exc()
+    return f"Internal Server Error details: {str(e)}", 500
+
 if __name__ == '__main__':
     # Simple migration helper for SQLite
     with app.app_context():
