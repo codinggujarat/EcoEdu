@@ -25,8 +25,8 @@
         }
 
         body {
-            background-color: #F7F7F2;
-            color: #1B1B1B;
+            background-color: #181D00;
+            color: #FFFFFF;
             font-family: 'Inter', 'General Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
@@ -38,7 +38,7 @@
             font-weight: 500;
             line-height: 1.1;
             letter-spacing: -0.04em;
-            color: #1B1B1B;
+            color: #FFFFFF;
         }
         @media (min-width: 768px) {
             .edit-h1 { font-size: 56px; line-height: 1.05; }
@@ -52,7 +52,7 @@
             font-weight: 500;
             line-height: 1.2;
             letter-spacing: -0.02em;
-            color: #1B1B1B;
+            color: #FFFFFF;
         }
         @media (min-width: 768px) {
             .edit-h2 { font-size: 36px; line-height: 1.1; }
@@ -64,7 +64,7 @@
         .edit-p {
             font-size: 15px;
             line-height: 1.5;
-            color: #707070;
+            color: rgba(255,255,255,0.75);
         }
         @media (min-width: 768px) {
             .edit-p { font-size: 16px; line-height: 1.55; }
@@ -91,7 +91,7 @@
         }
 
         .edit-bg-alt {
-            background-color: #EAEAE5;
+            background-color: #181D00;
         }
 
         /* ── Buttons ── */
@@ -128,8 +128,8 @@
             align-items: center;
             justify-content: center;
             background-color: transparent;
-            color: #1B1B1B;
-            border: 1px solid rgba(24, 29, 0, 0.2);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             height: 50px;
             padding: 0 24px;
             border-radius: 999px;
@@ -192,7 +192,7 @@
 
         /* ── Cards ── */
         .edit-card {
-            background: #F7F7F2;
+            background: #F7F7F2; color: #1B1B1B;
             border: 1px solid rgba(24, 29, 0, 0.10);
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
@@ -201,9 +201,9 @@
             transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             transform-style: preserve-3d;
             cursor: none;
-        }
+         color: #1B1B1B; }
         @media (min-width: 768px) {
-            .edit-card { border-radius: 28px; padding: 48px; }
+            .edit-card { border-radius: 28px; padding: 48px;  color: #1B1B1B; }
         }
 
         /* ── Image container ── */
@@ -526,7 +526,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
             will-change: transform, box-shadow;
             cursor: none;
-        }
+         color: #1B1B1B; }
 
         .badge-card {
             background: #F7F7F2;
@@ -539,7 +539,7 @@
             text-align: center;
             will-change: transform, box-shadow;
             cursor: none;
-        }
+         color: #1B1B1B; }
 
         /* Grid helpers */
         .grid-2 {
@@ -595,7 +595,7 @@
             will-change: transform, box-shadow;
             cursor: none;
             position: relative;
-        }
+         color: #1B1B1B; }
 
         /* Card gradient overlay on hover */
         .feat-card::after {
@@ -980,11 +980,11 @@ img { max-width: 100%; height: auto; object-fit: cover; }
 .lb-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
 @media (min-width: 1024px) { .lb-grid { grid-template-columns: 1fr 1fr; } }
 
-.lb-card { flex-direction: column; text-align: center; gap: 16px; padding: 24px; }
-@media (min-width: 768px) { .lb-card { flex-direction: row; text-align: left; gap: 24px; } }
+.lb-card { flex-direction: column; text-align: center; gap: 16px; padding: 24px;  color: #1B1B1B; }
+@media (min-width: 768px) { .lb-card { flex-direction: row; text-align: left; gap: 24px;  color: #1B1B1B; } }
 
-.badge-card { padding: 24px; }
-@media (min-width: 768px) { .badge-card { padding: 32px; } }
+.badge-card { padding: 24px;  color: #1B1B1B; }
+@media (min-width: 768px) { .badge-card { padding: 32px;  color: #1B1B1B; } }
 
 .badge-grid { grid-template-columns: 1fr 1fr; }
 @media (min-width: 768px) { .badge-grid { grid-template-columns: repeat(4, 1fr); } }
