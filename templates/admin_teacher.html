@@ -155,13 +155,13 @@
                             <span class="flex items-center gap-3 text-white/80 font-medium">
                                 <span class="w-2.5 h-2.5 rounded-full bg-white"></span> Active
                             </span>
-                            <span class="font-bold text-white">80%</span>
+                            <span class="font-bold text-white">{{ active_pct }}%</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="flex items-center gap-3 text-white/80 font-medium">
-                                <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span> Syncing
+                                <span class="w-2.5 h-2.5 rounded-full bg-white/20"></span> Offline
                             </span>
-                            <span class="font-bold text-white">15%</span>
+                            <span class="font-bold text-white">{{ 100 - active_pct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -250,7 +250,7 @@
  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
  datasets: [{
  label: 'Sessions',
- data: [12, 19, 15, 25, 22, 10, 8],
+ data: {{ activity_by_day | tojson | safe }},
  backgroundColor: '#111111',
  borderRadius: 4,
  barThickness: 16
@@ -274,7 +274,7 @@
  data: {
  labels: ['Active', 'Syncing', 'Offline'],
  datasets: [{
- data: [80, 15, 5],
+ data: [{{ active_teachers }}, {{ syncing_teachers }}, {{ offline_teachers }}],
  backgroundColor: ['#FFFFFF', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.05)'],
  borderWidth: 0
  }]

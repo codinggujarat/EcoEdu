@@ -534,8 +534,33 @@ def admin_teachers():
 
     # Fetch all users with role 'teacher'
     teachers = User.query.filter_by(role='teacher').all()
+    
+    # Real-time Deployment Status
+    active_teachers = sum(1 for t in teachers if t.is_verified)
+    offline_teachers = len(teachers) - active_teachers
+    syncing_teachers = 0
+    
+    total = len(teachers) or 1
+    active_pct = round((active_teachers / total) * 100)
+    
+    # Real-time Activity Metrics (Platform activity mapped to days of week)
+    from datetime import datetime, timedelta
+    today = datetime.utcnow()
+    seven_days_ago = today - timedelta(days=7)
+    recent_activity = ChallengeCompletion.query.filter(ChallengeCompletion.completed_at >= seven_days_ago).all()
+    
+    activity_by_day = [0] * 7 # Mon (0) to Sun (6)
+    for act in recent_activity:
+        if act.completed_at:
+            activity_by_day[act.completed_at.weekday()] += 1
 
-    return render_template('admin_teacher.html', teachers=teachers)
+    return render_template('admin_teacher.html', 
+                           teachers=teachers,
+                           active_teachers=active_teachers,
+                           offline_teachers=offline_teachers,
+                           syncing_teachers=syncing_teachers,
+                           active_pct=active_pct,
+                           activity_by_day=activity_by_day)
 
 @app.route('/admin/students')
 @login_required
