@@ -48,7 +48,10 @@ app = Flask(__name__)
 
 # Configuration
 app.config['SECRET_KEY'] = os.environ.get('SESSION_SECRET', 'dev-secret-key-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///eco_education.db')
+db_url = os.environ.get('DATABASE_URL', 'sqlite:///eco_education.db')
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Mail configuration
@@ -79,13 +82,7 @@ limiter = Limiter(
 # User loader for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
-    try:
-        return User.query.get(int(user_id))
-    except Exception as e:
-        print(f"ERROR: User loader failed for user_id={user_id}: {e}")
-        import traceback
-        traceback.print_exc()
-        return None
+    return User.query.get(int(user_id))
 
 # Forms with CSRF protection
 class RegistrationForm(FlaskForm):
@@ -495,34 +492,28 @@ def login():
     form = LoginForm()
     
     if form.validate_on_submit():
-        try:
-            print(f"DEBUG: Login attempt for email: {form.email.data}")
-            # Verify DB connection works by executing the query
-            user = User.query.filter_by(email=form.email.data).first()
-            
-            if user:
-                print("DEBUG: User found. Checking password hash...")
-                if check_password_hash(user.password_hash, form.password.data):
-                    print(f"DEBUG: Password match. is_verified={user.is_verified}")
-                    if not user.is_verified:
-                        flash('Please verify your email first', 'error')
-                        return redirect(url_for('verify_otp', email=form.email.data))
-                    
-                    print("DEBUG: Calling login_user...")
-                    login_user(user)
-                    print("DEBUG: login_user completed successfully.")
-                    return redirect(url_for('dashboard'))
-                else:
-                    print("DEBUG: Invalid password.")
-                    flash('Invalid email or password', 'error')
+        print(f"DEBUG: Login attempt for email: {form.email.data}")
+        # Execute query; if SQLAlchemy fails (e.g. postgres:// dialect missing), it will bubble up correctly.
+        user = User.query.filter_by(email=form.email.data).first()
+        
+        if user:
+            print("DEBUG: User found. Checking password hash...")
+            if check_password_hash(user.password_hash, form.password.data):
+                print(f"DEBUG: Password match. is_verified={user.is_verified}")
+                if not user.is_verified:
+                    flash('Please verify your email first', 'error')
+                    return redirect(url_for('verify_otp', email=form.email.data))
+                
+                print("DEBUG: Calling login_user...")
+                login_user(user)
+                print("DEBUG: login_user completed successfully.")
+                return redirect(url_for('dashboard'))
             else:
-                print("DEBUG: User not found in DB.")
+                print("DEBUG: Invalid password.")
                 flash('Invalid email or password', 'error')
-        except Exception as e:
-            print(f"ERROR: Login route crashed: {e}")
-            import traceback
-            traceback.print_exc()
-            flash('An internal server error occurred while trying to log you in. Please try again later.', 'error')
+        else:
+            print("DEBUG: User not found in DB.")
+            flash('Invalid email or password', 'error')
     
     return render_template('login.html', form=form)
 
