@@ -6,52 +6,52 @@
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-[#1B1B1B] mb-1">Level Management</h1>
- <p class="text-sm text-[#707070] font-medium">Define student progression and milestones.</p>
+ <h1 class="text-2xl font-semibold text-admin-text mb-1">Level Management</h1>
+ <p class="text-sm text-admin-textMuted font-medium">Define student progression and milestones.</p>
  </div>
- <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
- <span class="text-xs text-[#707070] font-medium">
- <span class="text-[#1B1B1B] font-bold">{{ levels|length }}</span> Active Levels
+ <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
+ <span class="text-xs text-admin-textMuted font-medium">
+ <span class="text-admin-text font-bold">{{ levels|length }}</span> Active Levels
  </span>
  </div>
  </div>
 
  <!-- Create Form -->
  <div class="mb-12">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Create New Level</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Create New Level</h3>
 
  <form method="POST" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
  {{ form.csrf_token }}
 
  <div class="space-y-2">
- <label class="block text-xs font-bold text-[#707070] uppercase tracking-wider">Level Number</label>
- {{ form.level_number(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
- outline-none transition-all text-sm", placeholder="e.g. 6") }}
+ <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level Number</label>
+ {{ form.level_number(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
+ outline-none transition-none text-sm", placeholder="e.g. 6") }}
  </div>
 
  <div class="space-y-2">
- <label class="block text-xs font-bold text-[#707070] uppercase tracking-wider">Level Name</label>
- {{ form.name(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3 text-[#1B1B1B]
+ <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level Name</label>
+ {{ form.name(class="w-full bg-white border border-admin-border rounded px-4 py-3 text-admin-text
  placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-all text-sm", placeholder="e.g. Expert") }}
+ transition-none text-sm", placeholder="e.g. Expert") }}
  </div>
 
  <div class="space-y-2">
- <label class="block text-xs font-bold text-[#707070] uppercase tracking-wider">XP Required</label>
- {{ form.xp_required(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
- outline-none transition-all text-sm", placeholder="e.g. 500") }}
+ <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">XP Required</label>
+ {{ form.xp_required(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
+ outline-none transition-none text-sm", placeholder="e.g. 500") }}
  </div>
 
  <button type="submit"
- class="h-[46px] px-6 bg-brand-600 hover:bg-brand-500 text-[#1B1B1B] text-sm font-medium rounded transition-colors flex items-center justify-center gap-2">
+ class="h-[46px] px-6 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded transition-none flex items-center justify-center gap-2">
  <i data-lucide="plus" class="w-5 h-5"></i> Add Level
  </button>
  </form>
 
- <form action="{{ url_for('generate_levels') }}" method="POST" class="mt-6 pt-6 border-t border-[#2A2E35]">
+ <form action="{{ url_for('generate_levels') }}" method="POST" class="mt-6 pt-6 border-t border-admin-border">
  {{ form.csrf_token }}
  <button type="submit"
  onclick="return confirm('Generate standard levels? This will add multiple levels.');"
@@ -64,29 +64,29 @@
 
  <!-- Levels Grid -->
  <div class="space-y-4">
- <h2 class="text-lg font-semibold text-[#1B1B1B] px-1">Progression Path</h2>
+ <h2 class="text-lg font-semibold text-admin-text px-1">Progression Path</h2>
 
  {% if levels %}
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
  {% for level in levels %}
  <div
- class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 group hover:border-brand-500/50 transition-colors relative">
+ class="admin-card border border-admin-border rounded-lg p-6 group hover:border-brand-500/50 transition-none relative">
  <div class="flex justify-between items-start mb-4">
  <div
- class="w-10 h-10 rounded bg-[#FFFFFF] border border-[#2A2E35] text-[#1B1B1B] flex items-center justify-center font-bold text-lg">
+ class="w-10 h-10 rounded bg-white border border-admin-border text-admin-text flex items-center justify-center font-bold text-lg">
  {{ level.level_number }}
  </div>
  <form action="{{ url_for('delete_level', level_id=level.id) }}" method="POST">
  <button type="submit" onclick="return confirm('Delete this level?');"
- class="text-[#707070] hover:text-red-500 transition-colors">
+ class="text-admin-textMuted hover:text-red-500 transition-none">
  <i data-lucide="trash-can" class="w-5 h-5"></i>
  </button>
  </form>
  </div>
 
- <h3 class="text-base font-bold text-[#1B1B1B] mb-1 group-hover:text-brand-500 transition-colors">{{
+ <h3 class="text-base font-bold text-admin-text mb-1 group-hover:text-brand-500 transition-none">{{
  level.name }}</h3>
- <div class="flex items-center gap-2 text-xs text-[#707070]">
+ <div class="flex items-center gap-2 text-xs text-admin-textMuted">
  <i data-lucide="bolt" class="text-brand-500 w-5 h-5"></i>
  <span>{{ level.xp_required }} XP Required</span>
  </div>
@@ -94,12 +94,12 @@
  {% endfor %}
  </div>
  {% else %}
- <div class="text-center py-20 bg-[#171A1F] border border-[#2A2E35] rounded-lg">
- <div class="w-16 h-16 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-4">
- <i data-lucide="layer-group" class="text-[#707070] text-2xl w-5 h-5"></i>
+ <div class="text-center py-20 admin-card border border-admin-border rounded-lg">
+ <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+ <i data-lucide="layer-group" class="text-admin-textMuted text-2xl w-5 h-5"></i>
  </div>
- <h3 class="text-[#1B1B1B] font-medium">No Levels Defined</h3>
- <p class="text-[#707070] text-sm mt-1">Create a new level to start the progression path.</p>
+ <h3 class="text-admin-text font-medium">No Levels Defined</h3>
+ <p class="text-admin-textMuted text-sm mt-1">Create a new level to start the progression path.</p>
  </div>
  {% endif %}
  </div>

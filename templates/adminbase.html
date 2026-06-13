@@ -23,13 +23,14 @@
  sans: ['General Sans', 'sans-serif'],
  },
  colors: {
- dark: {
- bg: '#121212',
- surface: '#171A1F',
- border: '#2A2E35',
- },
- brand: {
- DEFAULT: '#181D00',
+ admin: {
+ sidebar: '#181D00',
+ surface: '#FFFFFF',
+ card: '#F7F7F2',
+ text: '#181D00',
+ textMuted: 'rgba(24,29,0,0.6)',
+ border: '#E5E7EB',
+ hover: '#234A2B',
  }
  }
  }
@@ -38,10 +39,11 @@
  </script>
  <style>
  body {
- background-color: #121212;
- color: #E6E8EB;
+ background-color: #FFFFFF;
+ color: #181D00;
  font-family: 'General Sans', sans-serif;
  -webkit-font-smoothing: antialiased;
+ margin: 0;
  }
  * { font-family: 'General Sans', sans-serif; }
 
@@ -52,16 +54,16 @@
  }
 
  ::-webkit-scrollbar-track {
- background: #121212;
+ background: transparent;
  }
 
  ::-webkit-scrollbar-thumb {
- background: #2A2E35;
+ background: #D1D5DB;
  border-radius: 3px;
  }
 
  ::-webkit-scrollbar-thumb:hover {
- background: #52525B;
+ background: #9CA3AF;
  }
 
  .sidebar-link {
@@ -72,40 +74,56 @@
  border-radius: 8px;
  font-size: 0.875rem;
  font-weight: 500;
- color: #707070;
- transition: all 0.2s;
+ color: rgba(255, 255, 255, 0.7);
+ transition: none; /* ZERO animations */
  }
 
  .sidebar-link:hover {
- background-color: #2A2E35;
- color: #E6E8EB;
+ background-color: rgba(255, 255, 255, 0.05);
+ color: #FFFFFF;
  }
 
  .sidebar-link.active {
- background-color: rgba(16, 185, 129, 0.1);
+ background-color: rgba(255, 255, 255, 0.1);
+ color: #FFFFFF;
+ border: 1px solid rgba(255, 255, 255, 0.05);
+ }
+ 
+ /* Admin Card Styles for Content Area */
+ .admin-card {
+ background-color: #F7F7F2;
+ border: 1px solid rgba(24, 29, 0, 0.08);
+ border-radius: 12px;
+ padding: 24px;
+ box-shadow: 0 1px 2px rgba(24, 29, 0, 0.04);
+ transition: none; /* ZERO animations */
+ }
+ .admin-header {
+ font-size: 24px;
+ font-weight: 600;
  color: #181D00;
- border: 1px solid rgba(16, 185, 129, 0.2);
+ letter-spacing: -0.02em;
+ margin-bottom: 24px;
  }
  </style>
 </head>
 
-<body class="antialiased h-screen flex overflow-hidden" x-data="{ sidebarOpen: false }">
+<body class="antialiased h-screen flex overflow-hidden bg-white" x-data="{ sidebarOpen: false }">
 
  <!-- Sidebar (Desktop) -->
- <aside class="hidden lg:flex w-64 bg-[#171A1F] border-r border-[#2A2E35] flex-col z-20">
+ <aside class="hidden lg:flex w-64 bg-admin-sidebar border-r border-white/5 flex-col z-20">
  <!-- Logo -->
- <div class="h-16 flex items-center px-6 border-b border-[#2A2E35]">
+ <div class="h-16 flex items-center px-6 border-b border-white/10">
         <div class="flex items-center gap-2">
             <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" class="w-8 h-8 rounded-full object-cover">
-            <span class="font-bold text-lg text-[#1B1B1B] tracking-tight">EduEco <span
- class="text-xs font-normal text-[#707070] ml-1">Admin</span></span>
+            <span class="font-bold text-lg text-white tracking-tight">EduEco <span class="text-xs font-normal text-white/50 ml-1">Admin</span></span>
  </div>
  </div>
 
  <!-- Navigation -->
  <nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
  <div class="px-3 mb-2">
- <span class="text-[10px] font-bold text-[#707070] uppercase tracking-wider">Main</span>
+ <span class="text-[10px] font-bold text-white/50 uppercase tracking-wider">Main</span>
  </div>
 
  <a href="{{ url_for('admin_dashboard') }}"
@@ -115,7 +133,7 @@
  </a>
 
  <div class="px-3 mb-2 mt-6">
- <span class="text-[10px] font-bold text-[#707070] uppercase tracking-wider">Content</span>
+ <span class="text-[10px] font-bold text-white/50 uppercase tracking-wider">Content</span>
  </div>
 
  <a href="{{ url_for('admin_add_challenge') }}"
@@ -145,7 +163,7 @@
  </a>
 
  <div class="px-3 mb-2 mt-6">
- <span class="text-[10px] font-bold text-[#707070] uppercase tracking-wider">Directory</span>
+ <span class="text-[10px] font-bold text-white/50 uppercase tracking-wider">Directory</span>
  </div>
 
  <a href="{{ url_for('admin_students') }}"
@@ -167,9 +185,9 @@
  </nav>
 
  <!-- User Profile -->
- <div class="p-4 border-t border-[#2A2E35]">
+ <div class="p-4 border-t border-white/10">
  <a href="{{ url_for('admin_logout') }}"
- class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[#2A2E35] text-[#707070] hover:text-red-400 transition-colors">
+ class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 text-white/70 hover:text-red-400 transition-none">
  <i data-lucide="log-out" class="w-5 text-center"></i>
  <span class="text-sm font-medium">Log out</span>
  </a>
@@ -178,30 +196,28 @@
 
  <!-- Mobile Header -->
  <div
- class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#171A1F] border-b border-[#2A2E35] flex items-center justify-between px-4 z-30">
+ class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-admin-sidebar border-b border-white/10 flex items-center justify-between px-4 z-30">
         <div class="flex items-center gap-2">
             <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" class="w-8 h-8 rounded-full object-cover">
-            <span class="font-bold text-[#1B1B1B]">EduEco Admin</span>
+            <span class="font-bold text-white">EduEco Admin</span>
  </div>
- <button @click="sidebarOpen = !sidebarOpen" class="text-[#707070] hover:text-[#1B1B1B]">
+ <button @click="sidebarOpen = !sidebarOpen" class="text-white/70 hover:text-white transition-none">
  <i data-lucide="menu" class="w-5 h-5"></i>
  </button>
  </div>
 
  <!-- Mobile Sidebar Overlay -->
- <div x-show="sidebarOpen" class="fixed inset-0 bg-black/50 z-40 lg:hidden" @click="sidebarOpen = false"
+ <div x-show="sidebarOpen" class="fixed inset-0 bg-admin-sidebar/80 backdrop-blur-sm z-40 lg:hidden" @click="sidebarOpen = false"
  style="display: none;"></div>
 
  <!-- Mobile Sidebar -->
  <div x-show="sidebarOpen"
- class="fixed inset-y-0 left-0 w-64 bg-[#171A1F] z-50 lg:hidden flex flex-col border-r border-[#2A2E35]"
- x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full"
- x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-200"
- x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" style="display: none;">
+ class="fixed inset-y-0 left-0 w-64 bg-admin-sidebar z-50 lg:hidden flex flex-col border-r border-white/10 transition-none"
+ style="display: none;">
 
- <div class="h-16 flex items-center px-6 border-b border-[#2A2E35]">
- <span class="font-bold text-lg text-[#1B1B1B]">Menu</span>
- <button @click="sidebarOpen = false" class="ml-auto text-[#707070]">
+ <div class="h-16 flex items-center px-6 border-b border-white/10">
+ <span class="font-bold text-lg text-white">Menu</span>
+ <button @click="sidebarOpen = false" class="ml-auto text-white/70 transition-none">
  <i data-lucide="x" class="w-5 h-5"></i>
  </button>
  </div>
@@ -214,14 +230,19 @@
  </div>
 
  <!-- Main Content -->
- <main class="flex-1 flex flex-col h-screen overflow-hidden bg-[#FFFFFF] pt-16 lg:pt-0">
- <div class="flex-1 overflow-auto p-6 md:p-8">
+ <main class="flex-1 flex flex-col h-screen overflow-hidden bg-white pt-16 lg:pt-0">
+ <div class="flex-1 overflow-auto p-6 md:p-8 bg-white">
  {% block content %}{% endblock %}
  </div>
  </main>
 
  <!-- Alpine.js -->
  <script src="//unpkg.com/alpinejs" defer></script>
+ <!-- Lucide Icons -->
+ <script src="https://unpkg.com/lucide@latest"></script>
+ <script>
+   lucide.createIcons();
+ </script>
 </body>
 
 </html>

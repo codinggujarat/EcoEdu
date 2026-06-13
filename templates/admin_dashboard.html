@@ -1,4 +1,4 @@
-{% extends"adminbase.html" %}
+{% extends "adminbase.html" %}
 
 {% block title %}Dashboard | EduEco Admin{% endblock %}
 
@@ -6,59 +6,59 @@
 <div class="max-w-7xl mx-auto">
  <!-- Header -->
  <div class="mb-8">
- <h1 class="text-2xl font-semibold text-[#1B1B1B] mb-1">Dashboard Overview</h1>
- <p class="text-sm text-[#707070] font-medium">Platform health and key metrics.</p>
+ <h1 class="text-2xl font-semibold text-admin-text mb-1">Dashboard Overview</h1>
+ <p class="text-sm text-admin-textMuted font-medium">Platform health and key metrics.</p>
  </div>
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
  <!-- Students -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Students</span>
- <i data-lucide="users" class="text-gray-600 w-5 h-5"></i>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Students</span>
+ <i data-lucide="users" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ students|length }}</span>
- <span class="text-xs text-brand-500 font-medium flex items-center gap-1">
- <i data-lucide="arrow-up" class="w-5 h-5"></i> 12.5%
+ <span class="text-3xl font-semibold text-admin-text">{{ students|length }}</span>
+ <span class="text-xs text-green-700 font-medium flex items-center gap-1">
+ <i data-lucide="arrow-up" class="w-4 h-4"></i> Active
  </span>
  </div>
  </div>
 
  <!-- Teachers -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Teachers</span>
- <i data-lucide="chalkboard-teacher" class="text-gray-600 w-5 h-5"></i>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Teachers</span>
+ <i data-lucide="chalkboard-teacher" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ teachers|length }}</span>
- <span class="text-xs text-blue-500 font-medium">Active</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ teachers|length }}</span>
+ <span class="text-xs text-blue-700 font-medium">Verified</span>
  </div>
  </div>
 
  <!-- Challenges -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Challenges</span>
- <i data-lucide="flag" class="text-gray-600 w-5 h-5"></i>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Challenges</span>
+ <i data-lucide="flag" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ challenges|length }}</span>
- <span class="text-xs text-[#707070] font-medium">Total</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ challenges|length }}</span>
+ <span class="text-xs text-admin-textMuted font-medium">Total</span>
  </div>
  </div>
 
  <!-- Achievements -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Badges</span>
- <i data-lucide="award" class="text-gray-600 w-5 h-5"></i>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Badges</span>
+ <i data-lucide="award" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ achievements|length }}</span>
- <span class="text-xs text-yellow-500 font-medium">Available</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ achievements|length }}</span>
+ <span class="text-xs text-yellow-700 font-medium">Available</span>
  </div>
  </div>
  </div>
@@ -66,80 +66,75 @@
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
  <!-- Quick Actions -->
  <div class="lg:col-span-2">
- <h2 class="text-lg font-semibold text-[#1B1B1B] mb-4">Quick Actions</h2>
+ <h2 class="text-lg font-semibold text-admin-text mb-4">Quick Actions</h2>
  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
  <a href="{{ url_for('admin_add_challenge') }}"
- class="bg-[#171A1F] border border-[#2A2E35] hover:border-gray-600 rounded-lg p-6 flex flex-col items-center justify-center gap-3 transition-colors group">
- <div
- class="w-10 h-10 bg-[#2A2E35] rounded-full flex items-center justify-center text-[#707070] group-hover:text-brand-500 transition-colors">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="plus" class="w-5 h-5"></i>
  </div>
- <span class="text-xs font-medium text-[#707070]">New Challenge</span>
+ <span class="text-xs font-medium text-admin-text">New Challenge</span>
  </a>
 
  <a href="{{ url_for('admin_random_challenge') }}"
- class="bg-[#171A1F] border border-[#2A2E35] hover:border-gray-600 rounded-lg p-6 flex flex-col items-center justify-center gap-3 transition-colors group">
- <div
- class="w-10 h-10 bg-[#2A2E35] rounded-full flex items-center justify-center text-[#707070] group-hover:text-purple-500 transition-colors">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="magic" class="w-5 h-5"></i>
  </div>
- <span class="text-xs font-medium text-[#707070]">Auto Generator</span>
+ <span class="text-xs font-medium text-admin-text">Auto Generator</span>
  </a>
 
  <a href="{{ url_for('admin_achievements') }}"
- class="bg-[#171A1F] border border-[#2A2E35] hover:border-gray-600 rounded-lg p-6 flex flex-col items-center justify-center gap-3 transition-colors group">
- <div
- class="w-10 h-10 bg-[#2A2E35] rounded-full flex items-center justify-center text-[#707070] group-hover:text-yellow-500 transition-colors">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="award" class="w-5 h-5"></i>
  </div>
- <span class="text-xs font-medium text-[#707070]">Achievements</span>
+ <span class="text-xs font-medium text-admin-text">Achievements</span>
  </a>
 
  <a href="{{ url_for('admin_eco_tips') }}"
- class="bg-[#171A1F] border border-[#2A2E35] hover:border-gray-600 rounded-lg p-6 flex flex-col items-center justify-center gap-3 transition-colors group">
- <div
- class="w-10 h-10 bg-[#2A2E35] rounded-full flex items-center justify-center text-[#707070] group-hover:text-blue-500 transition-colors">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="lightbulb" class="w-5 h-5"></i>
  </div>
- <span class="text-xs font-medium text-[#707070]">Eco Tips</span>
+ <span class="text-xs font-medium text-admin-text">Eco Tips</span>
  </a>
  </div>
  </div>
 
  <!-- System Health -->
  <div class="lg:col-span-1">
- <h2 class="text-lg font-semibold text-[#1B1B1B] mb-4">System Status</h2>
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 h-full">
+ <h2 class="text-lg font-semibold text-admin-text mb-4">System Status</h2>
+ <div class="admin-card p-6 h-full flex flex-col justify-center">
  <div class="space-y-6">
  <div>
- <div class="flex justify-between text-xs font-medium text-[#707070] mb-2">
+ <div class="flex justify-between text-xs font-medium text-admin-textMuted mb-2">
  <span>User Retention</span>
- <span class="text-brand-500">89%</span>
+ <span class="text-admin-hover">89%</span>
  </div>
- <div class="w-full bg-[#FFFFFF] rounded-full h-1.5">
- <div class="bg-brand-500 h-1.5 rounded-full" style="width: 89%"></div>
+ <div class="w-full bg-white border border-admin-border rounded-full h-1.5">
+ <div class="bg-admin-hover h-1.5 rounded-full" style="width: 89%"></div>
  </div>
  </div>
 
  <div>
- <div class="flex justify-between text-xs font-medium text-[#707070] mb-2">
+ <div class="flex justify-between text-xs font-medium text-admin-textMuted mb-2">
  <span>Challenge Completion</span>
- <span class="text-blue-500">72%</span>
+ <span class="text-blue-600">72%</span>
  </div>
- <div class="w-full bg-[#FFFFFF] rounded-full h-1.5">
- <div class="bg-blue-500 h-1.5 rounded-full" style="width: 72%"></div>
+ <div class="w-full bg-white border border-admin-border rounded-full h-1.5">
+ <div class="bg-blue-600 h-1.5 rounded-full" style="width: 72%"></div>
  </div>
  </div>
 
- <div class="pt-4 mt-4 border-t border-[#2A2E35]">
+ <div class="pt-4 mt-4 border-t border-admin-border">
  <div class="flex items-center gap-3">
  <div class="flex-1">
- <div class="text-xs text-[#707070] font-medium uppercase tracking-wide">Health Index
+ <div class="text-xs text-admin-textMuted font-medium uppercase tracking-wide">Health Index
  </div>
- <div class="text-2xl font-bold text-[#1B1B1B]">9.8</div>
+ <div class="text-2xl font-bold text-admin-text">9.8</div>
  </div>
- <span
- class="px-2 py-1 bg-brand-500/10 text-brand-500 text-xs font-bold rounded">Optimal</span>
+ <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded border border-green-200">Optimal</span>
  </div>
  </div>
  </div>
@@ -148,54 +143,50 @@
  </div>
 
  <!-- Challenges Table -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
- <div class="p-6 border-b border-[#2A2E35] flex items-center justify-between">
- <h2 class="text-lg font-semibold text-[#1B1B1B]">Recent Challenges</h2>
- <span class="text-xs text-[#707070]">{{ challenges|length }} Total</span>
+ <div class="admin-card p-0 overflow-hidden">
+ <div class="p-6 border-b border-admin-border flex items-center justify-between">
+ <h2 class="text-lg font-semibold text-admin-text">Recent Challenges</h2>
+ <span class="text-xs text-admin-textMuted">{{ challenges|length }} Total</span>
  </div>
  <div class="overflow-x-auto">
  <table id="challengesTable" class="w-full text-left">
- <thead class="bg-[#2A2E35]/50">
+ <thead class="bg-white border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Title</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Category</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Reward</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Difficulty</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider text-right">Status</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Title</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Category</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Reward</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Difficulty</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Status</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-[#2A2E35]">
+ <tbody class="divide-y divide-admin-border bg-[#F7F7F2]">
  {% for challenge in challenges %}
- <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+ <tr class="hover:bg-white transition-none">
  <td class="p-4">
- <div class="text-sm font-medium text-[#1B1B1B]">{{ challenge.title }}</div>
- <div class="text-[10px] text-[#707070] font-mono mt-0.5">ID: {{ loop.index }}</div>
+ <div class="text-sm font-semibold text-admin-text">{{ challenge.title }}</div>
+ <div class="text-[10px] text-admin-textMuted font-mono mt-0.5">ID: {{ loop.index }}</div>
  </td>
  <td class="p-4">
- <span class="text-xs text-[#707070] bg-[#2A2E35] px-2 py-0.5 rounded">{{ challenge.category
- }}</span>
+ <span class="text-xs text-admin-text bg-white border border-admin-border px-2 py-0.5 rounded shadow-sm">{{ challenge.category }}</span>
  </td>
- <td class="p-4 text-sm text-[#707070]">
- <i data-lucide="bolt" class="text-brand-500 mr-1 w-5 h-5"></i> {{ challenge.points }}
+ <td class="p-4 text-sm text-admin-textMuted font-medium">
+ <span class="flex items-center gap-1"><i data-lucide="bolt" class="text-admin-hover w-4 h-4"></i> {{ challenge.points }}</span>
  </td>
  <td class="p-4">
  {% set difficulty_colors = {
- 'Easy': 'text-emerald-400',
- 'Medium': 'text-yellow-400',
- 'Hard': 'text-red-400'
+ 'Easy': 'text-green-700 bg-green-50 border-green-200',
+ 'Medium': 'text-yellow-700 bg-yellow-50 border-yellow-200',
+ 'Hard': 'text-red-700 bg-red-50 border-red-200'
  } %}
- <span
- class="text-xs font-medium {{ difficulty_colors.get(challenge.difficulty, 'text-[#707070]') }}">
+ <span class="text-xs font-semibold px-2 py-0.5 rounded border {{ difficulty_colors.get(challenge.difficulty, 'text-admin-textMuted border-admin-border bg-white') }}">
  {{ challenge.difficulty }}
  </span>
  </td>
  <td class="p-4 text-right">
  {% if challenge.verification_required %}
- <span
- class="text-[10px] font-bold text-blue-400 border border-blue-400/20 px-2 py-0.5 rounded">Verified</span>
+ <span class="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded shadow-sm">Verified</span>
  {% else %}
- <span
- class="text-[10px] font-bold text-[#707070] border border-gray-600/20 px-2 py-0.5 rounded">Auto</span>
+ <span class="text-[10px] font-bold text-admin-textMuted bg-white border border-admin-border px-2 py-0.5 rounded shadow-sm">Auto</span>
  {% endif %}
  </td>
  </tr>
@@ -209,54 +200,68 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <style>
- /* DataTables Minimalist Override */
+ /* Professional DataTables Override */
  .dataTables_wrapper .dataTables_length,
  .dataTables_wrapper .dataTables_filter {
  padding: 1rem 1.5rem;
- color: #707070;
- font-size: 0.75rem;
+ color: #181D00;
+ font-size: 0.875rem;
+ font-weight: 500;
  }
 
  .dataTables_wrapper .dataTables_filter input {
- background: #121212;
- border: 1px solid #2A2E35;
- border-radius: 4px;
- color: #E6E8EB;
- padding: 4px 8px;
+ background: #FFFFFF;
+ border: 1px solid rgba(24, 29, 0, 0.15);
+ border-radius: 6px;
+ color: #181D00;
+ padding: 6px 12px;
  margin-left: 8px;
+ outline: none;
+ }
+ .dataTables_wrapper .dataTables_filter input:focus {
+ border-color: #181D00;
  }
 
  .dataTables_wrapper .dataTables_info {
  padding: 1rem 1.5rem;
- color: #71717A;
- font-size: 0.75rem;
+ color: rgba(24,29,0,0.6);
+ font-size: 0.875rem;
  }
 
  .dataTables_wrapper .dataTables_paginate {
  padding: 1rem 1.5rem;
- font-size: 0.75rem;
+ font-size: 0.875rem;
  }
 
  .dataTables_wrapper .paginate_button {
- color: #A1A1AA !important;
- padding: 2px 8px !important;
+ color: rgba(24,29,0,0.6) !important;
+ padding: 4px 10px !important;
+ margin: 0 2px;
+ border-radius: 6px;
+ border: 1px solid transparent !important;
+ cursor: pointer;
+ }
+ .dataTables_wrapper .paginate_button:hover {
+ background: rgba(24,29,0,0.05) !important;
+ color: #181D00 !important;
+ border: 1px solid transparent !important;
  }
 
- .dataTables_wrapper .paginate_button.current {
- color: #E6E8EB !important;
- background: #2A2E35 !important;
- border: none !important;
- border-radius: 4px;
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
+ color: #FFFFFF !important;
+ background: #181D00 !important;
+ border: 1px solid #181D00 !important;
+ font-weight: 500;
  }
 </style>
 <script>
  $(document).ready(function () {
  $('#challengesTable').DataTable({
-"pageLength": 10,
-"lengthChange": false,
-"language": {
-"search":"Search:",
-"paginate": {"previous":"<","next":">" }
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {
+ "search":"Search:",
+ "paginate": {"previous":"<","next":">" }
  }
  });
  });

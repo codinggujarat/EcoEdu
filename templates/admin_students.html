@@ -7,60 +7,60 @@
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-[#1B1B1B] mb-1">Student Management</h1>
- <p class="text-sm text-[#707070] font-medium">Directory of all registered students.</p>
+ <h1 class="text-2xl font-semibold text-admin-text mb-1">Student Management</h1>
+ <p class="text-sm text-admin-textMuted font-medium">Directory of all registered students.</p>
  </div>
- <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
- <span class="text-xs text-[#707070] font-medium">
- <span class="text-[#1B1B1B] font-bold">{{ students|length }}</span> Total Students
+ <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
+ <span class="text-xs text-admin-textMuted font-medium">
+ <span class="text-admin-text font-bold">{{ students|length }}</span> Total Students
  </span>
  </div>
  </div>
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Total Enrolled</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total Enrolled</span>
  <i data-lucide="user-graduate" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ students|length }}</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ students|length }}</span>
  <span class="text-xs text-brand-500 font-medium flex items-center gap-1">
  <i data-lucide="arrow-up" class="w-5 h-5"></i> 15%
  </span>
  </div>
  </div>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Active Users</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Active Users</span>
  <i data-lucide="signal" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ (students|length * 0.85) | round | int }}</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ (students|length * 0.85) | round | int }}</span>
  <span class="text-xs text-blue-500 font-medium">Online</span>
  </div>
  </div>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Tasks Done</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Tasks Done</span>
  <i data-lucide="check-circle" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ (students|length * 2.3) | round | int }}</span>
- <span class="text-xs text-[#707070] font-medium">Total</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ (students|length * 2.3) | round | int }}</span>
+ <span class="text-xs text-admin-textMuted font-medium">Total</span>
  </div>
  </div>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">New This Month</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">New This Month</span>
  <i data-lucide="user-plus" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ (students|length * 0.12) | round | int }}</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ (students|length * 0.12) | round | int }}</span>
  <span class="text-xs text-brand-500 font-medium">Growing</span>
  </div>
  </div>
@@ -69,88 +69,88 @@
  <!-- Main Content -->
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
  <!-- Activity Chart -->
- <div class="lg:col-span-2 bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Engagement Analytics</h3>
+ <div class="lg:col-span-2 admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Engagement Analytics</h3>
  <div class="h-64">
  <canvas id="studentActivityChart"></canvas>
  </div>
  </div>
 
  <!-- Grade Distribution -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Performance Tier</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Performance Tier</h3>
  <div class="h-48 relative mb-6">
  <canvas id="studentPerformanceChart"></canvas>
  </div>
  <div class="space-y-3">
  <div class="flex justify-between items-center text-sm">
- <span class="flex items-center gap-2 text-[#707070]">
+ <span class="flex items-center gap-2 text-admin-textMuted">
  <span class="w-2 h-2 rounded-full bg-brand-500"></span> Top Tier
  </span>
- <span class="font-medium text-[#1B1B1B]">55%</span>
+ <span class="font-medium text-admin-text">55%</span>
  </div>
  <div class="flex justify-between items-center text-sm">
- <span class="flex items-center gap-2 text-[#707070]">
+ <span class="flex items-center gap-2 text-admin-textMuted">
  <span class="w-2 h-2 rounded-full bg-blue-500"></span> Mid Tier
  </span>
- <span class="font-medium text-[#1B1B1B]">35%</span>
+ <span class="font-medium text-admin-text">35%</span>
  </div>
  </div>
  </div>
  </div>
 
  <!-- Student Table -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
- <div class="p-6 border-b border-[#2A2E35] flex items-center justify-between">
- <h2 class="text-lg font-semibold text-[#1B1B1B]">Student Directory</h2>
+ <div class="admin-card border border-admin-border rounded-lg overflow-hidden">
+ <div class="p-6 border-b border-admin-border flex items-center justify-between">
+ <h2 class="text-lg font-semibold text-admin-text">Student Directory</h2>
  <button
- class="px-4 py-2 bg-[#2A2E35] hover:bg-[#323842] text-[#1B1B1B] text-xs font-medium rounded border border-gray-600 transition-colors">
+ class="px-4 py-2 bg-white hover:bg-[#323842] text-admin-text text-xs font-medium rounded border border-gray-600 transition-none">
  <i data-lucide="download" class="mr-1 w-5 h-5"></i> Export CSV
  </button>
  </div>
  <div class="overflow-x-auto">
  <table id="studentsTable" class="w-full text-left">
- <thead class="bg-[#2A2E35]/50">
+ <thead class="bg-white border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Name</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Email</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Progress</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider text-right">Actions</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Progress</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-[#2A2E35]">
+ <tbody class="divide-y divide-admin-border bg-[#F7F7F2]">
  {% for student in students %}
- <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+ <tr class="hover:bg-white/30 transition-none">
  <td class="p-4">
  <div class="flex items-center gap-3">
  <div
- class="w-8 h-8 rounded bg-[#FFFFFF] border border-[#2A2E35] flex items-center justify-center text-[#707070] font-bold text-xs">
+ class="w-8 h-8 rounded bg-white border border-admin-border flex items-center justify-center text-admin-textMuted font-bold text-xs">
  {{ student.name[0].upper() if student.name else 'S' }}
  </div>
- <div class="text-sm font-medium text-[#1B1B1B]">{{ student.name }}</div>
+ <div class="text-sm font-medium text-admin-text">{{ student.name }}</div>
  </div>
  </td>
  <td class="p-4">
- <span class="text-sm text-[#707070]">{{ student.email }}</span>
+ <span class="text-sm text-admin-textMuted">{{ student.email }}</span>
  </td>
  <td class="p-4">
  <div class="flex items-center gap-3 text-xs">
  <span class="text-brand-500 font-medium">{{ (loop.index * 50 + 120) }} XP</span>
  <span class="text-gray-600">|</span>
- <span class="text-[#707070] capitalize">{{ student.role }}</span>
+ <span class="text-admin-textMuted capitalize">{{ student.role }}</span>
  </div>
  </td>
  <td class="p-4 text-right">
  <div class="flex justify-end gap-2">
  <button
- class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-blue-900/30 text-blue-500 hover:text-blue-400 flex items-center justify-center transition-colors">
+ class="w-8 h-8 rounded bg-white hover:bg-blue-900/30 text-blue-500 hover:text-blue-400 flex items-center justify-center transition-none">
  <i data-lucide="eye" class="w-5 h-5"></i>
  </button>
  <form action="{{ url_for('admin_delete_user', user_id=student.id) }}" method="POST"
  class="inline">
  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
  <button type="submit"
- class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-colors"
+ class="w-8 h-8 rounded bg-white hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-none"
  onclick="return confirm('Delete this user?')">
  <i data-lucide="trash-2" class="w-5 h-5"></i>
  </button>
@@ -170,40 +170,58 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
- /* Minimalist DataTables */
+ /* Professional DataTables Override */
  .dataTables_wrapper .dataTables_length,
  .dataTables_wrapper .dataTables_filter {
  padding: 1rem 1.5rem;
- color: #707070;
- font-size: 0.75rem;
+ color: #181D00;
+ font-size: 0.875rem;
+ font-weight: 500;
  }
 
  .dataTables_wrapper .dataTables_filter input {
- background: #121212;
- border: 1px solid #2A2E35;
- border-radius: 4px;
- color: #E6E8EB;
- padding: 4px 8px;
+ background: #FFFFFF;
+ border: 1px solid rgba(24, 29, 0, 0.15);
+ border-radius: 6px;
+ color: #181D00;
+ padding: 6px 12px;
  margin-left: 8px;
+ outline: none;
+ }
+ .dataTables_wrapper .dataTables_filter input:focus {
+ border-color: #181D00;
  }
 
  .dataTables_wrapper .dataTables_info {
  padding: 1rem 1.5rem;
- color: #71717A;
- font-size: 0.75rem;
+ color: rgba(24,29,0,0.6);
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .dataTables_paginate {
+ padding: 1rem 1.5rem;
+ font-size: 0.875rem;
  }
 
  .dataTables_wrapper .paginate_button {
- color: #A1A1AA !important;
- padding: 2px 8px !important;
- font-size: 0.75rem;
+ color: rgba(24,29,0,0.6) !important;
+ padding: 4px 10px !important;
+ margin: 0 2px;
+ border-radius: 6px;
+ border: 1px solid transparent !important;
+ cursor: pointer;
+ }
+ .dataTables_wrapper .paginate_button:hover {
+ background: rgba(24,29,0,0.05) !important;
+ color: #181D00 !important;
+ border: 1px solid transparent !important;
  }
 
- .dataTables_wrapper .paginate_button.current {
- color: #E6E8EB !important;
- background: #2A2E35 !important;
- border: none !important;
- border-radius: 4px;
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
+ color: #FFFFFF !important;
+ background: #181D00 !important;
+ border: 1px solid #181D00 !important;
+ font-weight: 500;
  }
 </style>
 
@@ -235,8 +253,8 @@
  maintainAspectRatio: false,
  plugins: { legend: { display: false } },
  scales: {
- y: { grid: { color: '#2A2E35' }, ticks: { color: '#A1A1AA' } },
- x: { grid: { display: false }, ticks: { color: '#A1A1AA' } }
+ y: { grid: { color: 'rgba(24,29,0,0.1)' }, ticks: { color: 'rgba(24,29,0,0.6)' } },
+ x: { grid: { display: false }, ticks: { color: 'rgba(24,29,0,0.6)' } }
  }
  }
  });

@@ -6,11 +6,11 @@
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-[#1B1B1B] mb-1">Create Challenge</h1>
- <p class="text-sm text-[#707070] font-medium">Add a new environmental mission to the platform.</p>
+ <h1 class="text-2xl font-semibold text-admin-text mb-1">Create Challenge</h1>
+ <p class="text-sm text-admin-textMuted font-medium">Add a new environmental mission to the platform.</p>
  </div>
  <a href="{{ url_for('admin_dashboard') }}"
- class="px-4 py-2 bg-[#171A1F] border border-[#2A2E35] text-[#707070] text-xs font-medium rounded hover:text-[#1B1B1B] transition-colors flex items-center gap-2">
+ class="px-4 py-2 admin-card border border-admin-border text-admin-textMuted text-xs font-medium rounded hover:text-admin-text transition-none flex items-center gap-2">
  <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Dashboard
  </a>
  </div>
@@ -22,54 +22,54 @@
  {{ form.hidden_tag() }}
 
  <!-- details -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Challenge Details</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Challenge Details</h3>
  <div class="space-y-6">
  <!-- Title -->
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Title</label>
- {{ form.title(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm", placeholder="e.g. Zero-Waste
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Title</label>
+ {{ form.title(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm", placeholder="e.g. Zero-Waste
  Initiative") }}
  </div>
 
  <!-- Category -->
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Category</label>
- {{ form.category(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-all text-sm appearance-none cursor-pointer") }}
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Category</label>
+ {{ form.category(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
+ transition-none text-sm appearance-none cursor-pointer") }}
  </div>
 
  <!-- Description -->
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Description</label>
- {{ form.description(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm min-h-[120px]",
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Description</label>
+ {{ form.description(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm min-h-[120px]",
  placeholder="Describe the mission objectives...") }}
  </div>
  </div>
  </div>
 
  <!-- Rewards -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Rewards & Difficulty</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Rewards & Difficulty</h3>
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <!-- Points -->
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Points</label>
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Points</label>
  <div class="relative">
  <span
  class="absolute left-4 top-1/2 -translate-y-1/2 text-brand-500 text-xs font-bold">PTS</span>
- {{ form.points(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded pl-12 pr-4
- py-3 text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm", placeholder="100",
+ {{ form.points(class="w-full bg-white border border-admin-border rounded pl-12 pr-4
+ py-3 text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm", placeholder="100",
  type="number") }}
  </div>
  </div>
@@ -77,24 +77,24 @@
  <!-- Difficulty -->
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Difficulty</label>
- {{ form.difficulty(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-all text-sm appearance-none cursor-pointer") }}
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Difficulty</label>
+ {{ form.difficulty(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
+ transition-none text-sm appearance-none cursor-pointer") }}
  </div>
  </div>
  </div>
 
  <!-- Verification -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 flex items-center justify-between">
+ <div class="admin-card border border-admin-border rounded-lg p-6 flex items-center justify-between">
  <div>
- <h3 class="text-sm font-semibold text-[#1B1B1B]">Require Verification</h3>
- <p class="text-xs text-[#707070] mt-1">Admin approval needed for completion</p>
+ <h3 class="text-sm font-semibold text-admin-text">Require Verification</h3>
+ <p class="text-xs text-admin-textMuted mt-1">Admin approval needed for completion</p>
  </div>
  <label class="relative inline-flex items-center cursor-pointer">
  {{ form.verification_required(class="sr-only peer") }}
  <div
- class="w-11 h-6 bg-[#FFFFFF] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-500 after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-600">
+ class="w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-500 after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-none peer-checked:bg-brand-600">
  </div>
  </label>
  </div>
@@ -102,11 +102,11 @@
  <!-- Actions -->
  <div class="flex items-center gap-4">
  <button type="submit"
- class="flex-1 px-6 py-3 bg-brand-600 hover:bg-brand-500 text-[#1B1B1B] text-sm font-medium rounded transition-colors">
+ class="flex-1 px-6 py-3 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded transition-none">
  Create Challenge
  </button>
  <button type="button" onclick="resetForm()"
- class="px-6 py-3 bg-[#2A2E35] hover:bg-[#323842] text-[#707070] text-sm font-medium rounded border border-gray-600 transition-colors">
+ class="px-6 py-3 bg-white hover:bg-[#323842] text-admin-textMuted text-sm font-medium rounded border border-gray-600 transition-none">
  Reset
  </button>
  </div>
@@ -115,22 +115,22 @@
 
  <!-- Preview -->
  <div class="lg:col-span-1 space-y-6">
- <h3 class="text-xs font-bold text-[#707070] uppercase tracking-wider">Live Preview</h3>
+ <h3 class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Live Preview</h3>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex justify-between items-start mb-4">
  <span
- class="px-2 py-1 bg-[#2A2E35] text-[#707070] text-[10px] font-bold uppercase rounded border border-gray-700"
+ class="px-2 py-1 bg-white text-admin-textMuted text-[10px] font-bold uppercase rounded border border-gray-700"
  id="preview-category">Category</span>
  <span class="text-xs font-bold text-brand-500" id="preview-points">100 PTS</span>
  </div>
 
- <h4 class="text-lg font-semibold text-[#1B1B1B] mb-2" id="preview-title">Challenge Title</h4>
- <p class="text-sm text-[#707070] leading-relaxed mb-6" id="preview-description">Challenge description
+ <h4 class="text-lg font-semibold text-admin-text mb-2" id="preview-title">Challenge Title</h4>
+ <p class="text-sm text-admin-textMuted leading-relaxed mb-6" id="preview-description">Challenge description
  will appear here...</p>
 
- <div class="flex items-center justify-between pt-4 border-t border-[#2A2E35]">
- <span class="text-xs font-medium text-[#707070]" id="preview-difficulty">Easy</span>
+ <div class="flex items-center justify-between pt-4 border-t border-admin-border">
+ <span class="text-xs font-medium text-admin-textMuted" id="preview-difficulty">Easy</span>
  <span class="text-[10px] font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded"
  id="preview-verification">Auto-Verify</span>
  </div>
@@ -183,7 +183,7 @@
  previewVerification.className = 'text-[10px] font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded';
  } else {
  previewVerification.textContent = 'Auto-Verify';
- previewVerification.className = 'text-[10px] font-bold text-[#707070] bg-[#2A2E35] px-2 py-1 rounded';
+ previewVerification.className = 'text-[10px] font-bold text-admin-textMuted bg-white px-2 py-1 rounded';
  }
  }
 

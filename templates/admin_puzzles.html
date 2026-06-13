@@ -6,12 +6,12 @@
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-[#1B1B1B] mb-1">Puzzles</h1>
- <p class="text-sm text-[#707070] font-medium">Manage logic puzzles and riddles.</p>
+ <h1 class="text-2xl font-semibold text-admin-text mb-1">Puzzles</h1>
+ <p class="text-sm text-admin-textMuted font-medium">Manage logic puzzles and riddles.</p>
  </div>
- <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
- <span class="text-xs text-[#707070] font-medium">
- <span class="text-[#1B1B1B] font-bold">{{ puzzles|length }}</span> Active Puzzles
+ <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
+ <span class="text-xs text-admin-textMuted font-medium">
+ <span class="text-admin-text font-bold">{{ puzzles|length }}</span> Active Puzzles
  </span>
  </div>
  </div>
@@ -19,8 +19,8 @@
  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
  <!-- Create Form -->
  <div class="lg:col-span-4 space-y-6">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 sticky top-8">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Create Puzzle</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6 sticky top-8">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Create Puzzle</h3>
 
  <form method="POST" class="space-y-6">
  {{ form.hidden_tag() }}
@@ -28,73 +28,73 @@
  <div class="space-y-4">
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Title</label>
- {{ form.title(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm", placeholder="Puzzle Title") }}
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Title</label>
+ {{ form.title(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm", placeholder="Puzzle Title") }}
  </div>
 
  <div class="grid grid-cols-2 gap-4">
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Difficulty</label>
- {{ form.difficulty(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-all text-sm appearance-none cursor-pointer") }}
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Difficulty</label>
+ {{ form.difficulty(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
+ transition-none text-sm appearance-none cursor-pointer") }}
  </div>
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Points</label>
- {{ form.points(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm", placeholder="50") }}
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Points</label>
+ {{ form.points(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm", placeholder="50") }}
  </div>
  </div>
 
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Question</label>
- {{ form.question(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
- text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm min-h-[100px]",
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Question</label>
+ {{ form.question(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm min-h-[100px]",
  placeholder="Enter riddle or question...") }}
  </div>
 
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Options</label>
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Options</label>
  <div class="space-y-3">
- {{ form.option_a(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-3 py-2
- text-[#1B1B1B] text-xs focus:border-brand-500 outline-none", placeholder="Option A") }}
- {{ form.option_b(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-3 py-2
- text-[#1B1B1B] text-xs focus:border-brand-500 outline-none", placeholder="Option B") }}
- {{ form.option_c(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-3 py-2
- text-[#1B1B1B] text-xs focus:border-brand-500 outline-none", placeholder="Option C") }}
- {{ form.option_d(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-3 py-2
- text-[#1B1B1B] text-xs focus:border-brand-500 outline-none", placeholder="Option D") }}
+ {{ form.option_a(class="w-full bg-white border border-admin-border rounded px-3 py-2
+ text-admin-text text-xs focus:border-brand-500 outline-none", placeholder="Option A") }}
+ {{ form.option_b(class="w-full bg-white border border-admin-border rounded px-3 py-2
+ text-admin-text text-xs focus:border-brand-500 outline-none", placeholder="Option B") }}
+ {{ form.option_c(class="w-full bg-white border border-admin-border rounded px-3 py-2
+ text-admin-text text-xs focus:border-brand-500 outline-none", placeholder="Option C") }}
+ {{ form.option_d(class="w-full bg-white border border-admin-border rounded px-3 py-2
+ text-admin-text text-xs focus:border-brand-500 outline-none", placeholder="Option D") }}
  </div>
  </div>
 
  <div>
- <label class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Correct
+ <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Correct
  Answer</label>
- {{ form.correct_option(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded px-4 py-3
+ {{ form.correct_option(class="w-full bg-white border border-admin-border rounded px-4 py-3
  text-emerald-400 font-medium focus:border-brand-500 focus:ring-1 focus:ring-brand-500
- outline-none transition-all text-sm appearance-none cursor-pointer") }}
+ outline-none transition-none text-sm appearance-none cursor-pointer") }}
  </div>
  </div>
 
  <button type="submit"
- class="w-full px-6 py-3 bg-brand-600 hover:bg-brand-500 text-[#1B1B1B] text-sm font-medium rounded transition-colors mt-2">
+ class="w-full px-6 py-3 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded transition-none mt-2">
  Create Puzzle
  </button>
  </form>
 
  <form action="{{ url_for('auto_generate_puzzle') }}" method="POST"
- class="mt-6 pt-6 border-t border-[#2A2E35]">
+ class="mt-6 pt-6 border-t border-admin-border">
  {{ form.csrf_token }}
  <button type="submit" onclick="return confirm('Generate AI puzzle?');"
- class="w-full px-6 py-3 bg-[#2A2E35] hover:bg-[#323842] text-[#707070] text-sm font-medium rounded border border-gray-600 transition-colors flex items-center justify-center gap-2">
+ class="w-full px-6 py-3 bg-white hover:bg-[#323842] text-admin-textMuted text-sm font-medium rounded border border-gray-600 transition-none flex items-center justify-center gap-2">
  <i data-lucide="magic" class="text-purple-400 w-5 h-5"></i> Auto-Generate with AI
  </button>
  </form>
@@ -103,19 +103,19 @@
 
  <!-- Puzzle List -->
  <div class="lg:col-span-8 space-y-6">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">Puzzle Library</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">Puzzle Library</h3>
 
  {% if puzzles %}
  <div class="grid grid-cols-1 gap-4">
  {% for puzzle in puzzles %}
  <div
- class="bg-[#FFFFFF] border border-[#2A2E35] rounded-lg p-5 group hover:border-brand-500/30 transition-all relative">
+ class="bg-white border border-admin-border rounded-lg p-5 group hover:border-brand-500/30 transition-none relative">
  <div class="absolute top-5 right-5">
  <form action="{{ url_for('delete_puzzle', puzzle_id=puzzle.id) }}" method="POST">
  {{ form.csrf_token }}
  <button type="submit" onclick="return confirm('Delete this puzzle?');"
- class="text-gray-600 hover:text-red-500 transition-colors">
+ class="text-gray-600 hover:text-red-500 transition-none">
  <i data-lucide="trash-can" class="w-5 h-5"></i>
  </button>
  </form>
@@ -123,20 +123,20 @@
 
  <div class="flex items-center gap-3 mb-3">
  <span
- class="px-2 py-0.5 bg-[#2A2E35] border border-gray-700 text-[#707070] text-[10px] font-bold uppercase rounded">
+ class="px-2 py-0.5 bg-white border border-gray-700 text-admin-textMuted text-[10px] font-bold uppercase rounded">
  {{ puzzle.difficulty }}
  </span>
  <span
- class="px-2 py-0.5 bg-[#171A1F] text-brand-500 text-[10px] font-bold uppercase rounded flex items-center gap-1">
+ class="px-2 py-0.5 admin-card text-brand-500 text-[10px] font-bold uppercase rounded flex items-center gap-1">
  <i data-lucide="bolt" class="w-5 h-5"></i> {{ puzzle.points }} XP
  </span>
  </div>
 
- <h4 class="text-base font-semibold text-[#1B1B1B] mb-2 pr-8">{{ puzzle.title }}</h4>
- <p class="text-sm text-[#707070] mb-4 line-clamp-2">{{ puzzle.question }}</p>
+ <h4 class="text-base font-semibold text-admin-text mb-2 pr-8">{{ puzzle.title }}</h4>
+ <p class="text-sm text-admin-textMuted mb-4 line-clamp-2">{{ puzzle.question }}</p>
 
  <div class="flex items-center gap-2 text-xs">
- <span class="text-[#707070] font-medium">Solution:</span>
+ <span class="text-admin-textMuted font-medium">Solution:</span>
  <span class="text-brand-500 font-bold bg-brand-500/10 px-2 py-0.5 rounded">{{
  puzzle.correct_option }}</span>
  </div>
@@ -145,10 +145,10 @@
  </div>
  {% else %}
  <div class="text-center py-12">
- <div class="w-12 h-12 bg-[#2A2E35] rounded-full flex items-center justify-center mx-auto mb-3">
- <i data-lucide="puzzle" class="text-[#707070] w-5 h-5"></i>
+ <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3">
+ <i data-lucide="puzzle" class="text-admin-textMuted w-5 h-5"></i>
  </div>
- <p class="text-[#707070] text-sm">No puzzles found.</p>
+ <p class="text-admin-textMuted text-sm">No puzzles found.</p>
  </div>
  {% endif %}
  </div>

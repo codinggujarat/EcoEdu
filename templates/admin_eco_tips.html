@@ -6,60 +6,60 @@
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-[#1B1B1B] mb-1">Eco Tips</h1>
- <p class="text-sm text-[#707070] font-medium">Manage daily environmental tips and content.</p>
+ <h1 class="text-2xl font-semibold text-admin-text mb-1">Eco Tips</h1>
+ <p class="text-sm text-admin-textMuted font-medium">Manage daily environmental tips and content.</p>
  </div>
- <div class="px-3 py-1 bg-[#171A1F] border border-[#2A2E35] rounded-full">
- <span class="text-xs text-[#707070] font-medium">
- <span class="text-[#1B1B1B] font-bold">{{ tips|length }}</span> Active Tips
+ <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
+ <span class="text-xs text-admin-textMuted font-medium">
+ <span class="text-admin-text font-bold">{{ tips|length }}</span> Active Tips
  </span>
  </div>
  </div>
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Total</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total</span>
  <i data-lucide="database" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ tips|length }}</span>
+ <span class="text-3xl font-semibold text-admin-text">{{ tips|length }}</span>
  <span class="text-xs text-brand-500 font-medium">Published</span>
  </div>
  </div>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Daily</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Daily</span>
  <i data-lucide="sun" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ tips|selectattr('frequency', 'equalto',
+ <span class="text-3xl font-semibold text-admin-text">{{ tips|selectattr('frequency', 'equalto',
  'daily')|list|length }}</span>
  <span class="text-xs text-blue-500 font-medium">Rotating</span>
  </div>
  </div>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Weekly</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Weekly</span>
  <i data-lucide="calendar-week" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ tips|selectattr('frequency', 'equalto',
+ <span class="text-3xl font-semibold text-admin-text">{{ tips|selectattr('frequency', 'equalto',
  'weekly')|list|length }}</span>
  <span class="text-xs text-yellow-500 font-medium">Scheduled</span>
  </div>
  </div>
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
+ <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-[#707070] uppercase tracking-wider">Monthly</span>
+ <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Monthly</span>
  <i data-lucide="calendar-alt" class="text-gray-600 w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-[#1B1B1B]">{{ tips|selectattr('frequency', 'equalto',
+ <span class="text-3xl font-semibold text-admin-text">{{ tips|selectattr('frequency', 'equalto',
  'monthly')|list|length }}</span>
  <span class="text-xs text-purple-500 font-medium">Long-term</span>
  </div>
@@ -69,37 +69,37 @@
  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
  <!-- Form -->
  <div class="lg:col-span-4 space-y-8">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6 sticky top-8">
- <h3 class="text-lg font-semibold text-[#1B1B1B] mb-6">{{"Edit Tip" if edit else"Add New Tip" }}</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6 sticky top-8">
+ <h3 class="text-lg font-semibold text-admin-text mb-6">{{"Edit Tip" if edit else"Add New Tip" }}</h3>
 
  <form method="POST" class="space-y-6">
  {{ form.hidden_tag() }}
 
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Content</label>
- {{ form.tip(value=tip.tip if edit else"", class="w-full bg-[#FFFFFF] border border-[#2A2E35]
- rounded px-4 py-3 text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm min-h-[150px]", placeholder="Enter
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Content</label>
+ {{ form.tip(value=tip.tip if edit else"", class="w-full bg-white border border-admin-border
+ rounded px-4 py-3 text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm min-h-[150px]", placeholder="Enter
  tip content here...") }}
  </div>
 
  <div>
  <label
- class="block text-xs font-bold text-[#707070] uppercase tracking-wider mb-2">Frequency</label>
- {{ form.frequency(value=tip.frequency if edit else"", class="w-full bg-[#FFFFFF] border
- border-[#2A2E35] rounded px-4 py-3 text-[#1B1B1B] focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-all text-sm appearance-none cursor-pointer") }}
+ class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Frequency</label>
+ {{ form.frequency(value=tip.frequency if edit else"", class="w-full bg-white border
+ border-admin-border rounded px-4 py-3 text-admin-text focus:border-brand-500 focus:ring-1
+ focus:ring-brand-500 outline-none transition-none text-sm appearance-none cursor-pointer") }}
  </div>
 
  <div class="flex flex-col gap-3 pt-2">
  <button type="submit"
- class="w-full px-6 py-3 bg-brand-600 hover:bg-brand-500 text-[#1B1B1B] text-sm font-medium rounded transition-colors">
+ class="w-full px-6 py-3 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded transition-none">
  {{"Update Tip" if edit else"Publish Tip" }}
  </button>
  {% if edit %}
  <a href="{{ url_for('admin_eco_tips') }}"
- class="w-full px-6 py-3 bg-[#2A2E35] hover:bg-[#323842] text-[#707070] text-center text-sm font-medium rounded border border-gray-600 transition-colors">
+ class="w-full px-6 py-3 bg-white hover:bg-[#323842] text-admin-textMuted text-center text-sm font-medium rounded border border-gray-600 transition-none">
  Cancel Edit
  </a>
  {% endif %}
@@ -111,30 +111,30 @@
  <!-- Lists & Charts -->
  <div class="lg:col-span-8 space-y-8">
  <!-- Table -->
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg overflow-hidden">
- <div class="p-6 border-b border-[#2A2E35]">
- <h2 class="text-lg font-semibold text-[#1B1B1B]">Content Library</h2>
+ <div class="admin-card border border-admin-border rounded-lg overflow-hidden">
+ <div class="p-6 border-b border-admin-border">
+ <h2 class="text-lg font-semibold text-admin-text">Content Library</h2>
  </div>
  <div class="overflow-x-auto">
  <table id="ecoTipsTable" class="w-full text-left">
- <thead class="bg-[#2A2E35]/50">
+ <thead class="bg-white border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Details</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider">Frequency</th>
- <th class="p-4 text-xs font-bold text-[#707070] uppercase tracking-wider text-right">
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Details</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Frequency</th>
+ <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">
  Actions</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-[#2A2E35]">
+ <tbody class="divide-y divide-admin-border bg-[#F7F7F2]">
  {% for tip in tips %}
- <tr class="hover:bg-[#2A2E35]/30 transition-colors">
+ <tr class="hover:bg-white/30 transition-none">
  <td class="p-4">
  <div class="flex items-start gap-3">
  <div
- class="mt-1 w-6 h-6 rounded bg-[#FFFFFF] border border-[#2A2E35] flex items-center justify-center text-brand-500 flex-shrink-0">
+ class="mt-1 w-6 h-6 rounded bg-white border border-admin-border flex items-center justify-center text-brand-500 flex-shrink-0">
  <i data-lucide="leaf" class="w-5 h-5"></i>
  </div>
- <p class="text-sm text-[#707070]">{{ tip.tip }}</p>
+ <p class="text-sm text-admin-textMuted">{{ tip.tip }}</p>
  </div>
  </td>
  <td class="p-4">
@@ -148,14 +148,14 @@
  <td class="p-4 text-right">
  <div class="flex justify-end gap-2">
  <a href="{{ url_for('admin_edit_eco_tip', tip_id=tip.id) }}"
- class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-blue-900/30 text-[#707070] hover:text-blue-400 flex items-center justify-center transition-colors">
+ class="w-8 h-8 rounded bg-white hover:bg-blue-900/30 text-admin-textMuted hover:text-blue-400 flex items-center justify-center transition-none">
  <i data-lucide="pen" class="w-5 h-5"></i>
  </a>
  <form action="{{ url_for('admin_delete_eco_tip', tip_id=tip.id) }}"
  method="POST" class="inline">
  {{ form.csrf_token }}
  <button type="submit" onclick="return confirm('Delete this tip?');"
- class="w-8 h-8 rounded bg-[#2A2E35] hover:bg-red-900/30 text-[#707070] hover:text-red-400 flex items-center justify-center transition-colors">
+ class="w-8 h-8 rounded bg-white hover:bg-red-900/30 text-admin-textMuted hover:text-red-400 flex items-center justify-center transition-none">
  <i data-lucide="trash-2" class="w-5 h-5"></i>
  </button>
  </form>
@@ -170,14 +170,14 @@
 
  <!-- Charts -->
  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-sm font-semibold text-[#1B1B1B] mb-4">Frequency Distribution</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-sm font-semibold text-admin-text mb-4">Frequency Distribution</h3>
  <div class="h-48">
  <canvas id="frequencyChart"></canvas>
  </div>
  </div>
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-lg p-6">
- <h3 class="text-sm font-semibold text-[#1B1B1B] mb-4">Content Balance</h3>
+ <div class="admin-card border border-admin-border rounded-lg p-6">
+ <h3 class="text-sm font-semibold text-admin-text mb-4">Content Balance</h3>
  <div class="h-48 relative">
  <canvas id="frequencyDoughnut"></canvas>
  </div>
@@ -192,40 +192,58 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
- /* Minimalist DataTables */
+ /* Professional DataTables Override */
  .dataTables_wrapper .dataTables_length,
  .dataTables_wrapper .dataTables_filter {
- margin-bottom: 1rem;
- color: #707070;
- font-size: 0.75rem;
+ padding: 1rem 1.5rem;
+ color: #181D00;
+ font-size: 0.875rem;
+ font-weight: 500;
  }
 
  .dataTables_wrapper .dataTables_filter input {
- background: #121212;
- border: 1px solid #2A2E35;
- border-radius: 4px;
- color: #E6E8EB;
- padding: 4px 8px;
+ background: #FFFFFF;
+ border: 1px solid rgba(24, 29, 0, 0.15);
+ border-radius: 6px;
+ color: #181D00;
+ padding: 6px 12px;
  margin-left: 8px;
+ outline: none;
+ }
+ .dataTables_wrapper .dataTables_filter input:focus {
+ border-color: #181D00;
  }
 
  .dataTables_wrapper .dataTables_info {
- padding: 1rem 0;
- color: #71717A;
- font-size: 0.75rem;
+ padding: 1rem 1.5rem;
+ color: rgba(24,29,0,0.6);
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .dataTables_paginate {
+ padding: 1rem 1.5rem;
+ font-size: 0.875rem;
  }
 
  .dataTables_wrapper .paginate_button {
- color: #A1A1AA !important;
- padding: 2px 8px !important;
- font-size: 0.75rem;
+ color: rgba(24,29,0,0.6) !important;
+ padding: 4px 10px !important;
+ margin: 0 2px;
+ border-radius: 6px;
+ border: 1px solid transparent !important;
+ cursor: pointer;
+ }
+ .dataTables_wrapper .paginate_button:hover {
+ background: rgba(24,29,0,0.05) !important;
+ color: #181D00 !important;
+ border: 1px solid transparent !important;
  }
 
- .dataTables_wrapper .paginate_button.current {
- color: #E6E8EB !important;
- background: #2A2E35 !important;
- border: none !important;
- border-radius: 4px;
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
+ color: #FFFFFF !important;
+ background: #181D00 !important;
+ border: 1px solid #181D00 !important;
+ font-weight: 500;
  }
 </style>
 
@@ -258,8 +276,8 @@
  maintainAspectRatio: false,
  plugins: { legend: { display: false } },
  scales: {
- y: { grid: { color: '#2A2E35' }, ticks: { color: '#A1A1AA' } },
- x: { grid: { display: false }, ticks: { color: '#A1A1AA' } }
+ y: { grid: { color: 'rgba(24,29,0,0.1)' }, ticks: { color: 'rgba(24,29,0,0.6)' } },
+ x: { grid: { display: false }, ticks: { color: 'rgba(24,29,0,0.6)' } }
  }
  }
  });
