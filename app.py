@@ -1906,7 +1906,14 @@ def download_certificate(cert_id):
 #  -------------------
 # APP INITIALIZATION
 # -------------------
+from flask_wtf.csrf import CSRFError
 import traceback
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    flash("Your session expired. Please refresh the page and try again.", "error")
+    # Redirect back to the page the user was on
+    return redirect(request.url)
 
 @app.errorhandler(Exception)
 def handle_exception(e):

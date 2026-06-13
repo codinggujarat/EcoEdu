@@ -77,6 +77,8 @@ body { background-color: #181D00 !important; font-family: 'General Sans', sans-s
             {% endwith %}
             
             <form method="POST" id="otp-form">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="email" value="{{ email }}">
                 <input type="hidden" name="otp" id="final-otp">
                 
                 <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px;">
@@ -96,6 +98,7 @@ body { background-color: #181D00 !important; font-family: 'General Sans', sans-s
             <div style="text-align: center; margin-top: 24px;">
                 <p style="font-size: 15px; color: #707070; margin-bottom: 8px;">Didn't receive the code?</p>
                 <form action="{{ url_for('forgot_password') }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="email" value="{{ session.get('reset_email', '') }}">
                     <button type="submit" style="background: none; border: none; color: #181D00; font-weight: 500; font-size: 15px; cursor: pointer; padding: 0;">
                         Resend Code <span id="countdown" style="color: #707070; margin-left: 4px;">(60s)</span>
