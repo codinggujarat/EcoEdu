@@ -1,115 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}Admin Login | EduEco{% endblock %}
+{% block content %}
+<style>
+body > nav { display: none !important; }
+main { padding: 0 !important; margin: 0 !important; }
+body { background-color: #181D00 !important; font-family: 'General Sans', sans-serif !important; color: #1B1B1B !important; margin: 0; }
+@media (min-width: 1024px) { body { height: 100vh; overflow: hidden; } }
+.edit-split-layout { display: flex; flex-direction: column; min-height: 100vh; width: 100%; }
+@media (min-width: 1024px) { 
+    .edit-split-layout { display: grid; grid-template-columns: 55% 45%; } 
+}
+.edit-split-left { display: none; background-color: #EAEAE5; position: relative; overflow: hidden; height: 100vh; }
+@media (min-width: 1024px) { .edit-split-left { display: block; } }
+.edit-split-right { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; padding-top: 100px; position: relative; overflow-y: auto; }
+@media (min-width: 1024px) { .edit-split-right { padding: 40px; overflow-y: hidden; min-height: 100vh; } }
+.edit-auth-card { background: #F7F7F2; border-radius: 20px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid rgba(24,29,0,0.08); }
+@media (min-width: 768px) { .edit-auth-card { padding: 40px; border-radius: 24px; } }
+.edit-input { width: 100%; height: 50px; border: 1px solid rgba(24,29,0,0.08); border-radius: 14px; padding: 0 16px 0 48px; font-size: 16px; color: #181D00; transition: all 0.2s ease; background: #F7F7F2; }
+@media (min-width: 768px) { .edit-input { height: 52px; } }
+.edit-input:focus { border-color: #181D00; outline: none; box-shadow: 0 0 0 1px #181D00; }
+.edit-input::placeholder { color: rgba(24,29,0,0.75); }
+.edit-input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #2A4A30; transition: color 0.2s ease; width: 18px; height: 18px; }
+.edit-input:focus + .edit-input-icon, .edit-input-icon-wrapper:focus-within .edit-input-icon { color: #2A4A30; }
+.edit-btn { width: 100%; height: 50px; border-radius: 999px; background: #181D00; color: #FFFFFF; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; border: none; cursor: pointer; margin-top: 16px; }
+@media (min-width: 768px) { .edit-btn { height: 52px; font-size: 16px; margin-top: 18px; } }
+.edit-btn:hover { background: #234A2B; transform: translateY(-2px); }
+.edit-h1 { font-size: 28px; font-weight: 600; color: #181D00; letter-spacing: -0.02em; margin-bottom: 8px; }
+@media (min-width: 768px) { .edit-h1 { font-size: 36px; margin-bottom: 12px; } }
+.edit-p { font-size: 15px; color: rgba(24,29,0,0.75); margin-bottom: 24px; }
+@media (min-width: 768px) { .edit-p { font-size: 16px; margin-bottom: 28px; } }
+.edit-label { display: block; font-size: 15px; font-weight: 500; color: #181D00; margin-bottom: 8px; }
+.edit-error { color: #EF4444; font-size: 13px; margin-top: 6px; }
+.edit-link { color: #707070; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 0.2s ease; }
+.edit-link:hover { color: #181D00; }
+.field-wrapper { margin-bottom: 18px; }
+</style>
 
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Admin Login | EduEco</title>
- <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}">
- <!-- Google Fonts -->
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
- <!-- Font Awesome -->
- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
- <!-- Tailwind CSS -->
- <script src="https://cdn.tailwindcss.com"></script>
- <script>
- tailwind.config = {
- theme: {
- extend: {
- fontFamily: {
- sans: ['Inter', 'sans-serif'],
- },
- colors: {
- dark: {
- bg: '#121212',
- surface: '#171A1F',
- border: '#2A2E35',
- }
- }
- }
- }
- }
- </script>
-</head>
+<style>
+.mobile-nav-logo { position: absolute; top: 16px; left: 24px; z-index: 50; }
+@media (min-width: 768px) { .mobile-nav-logo { top: 24px; left: 40px; } }
+</style>
+<div class="mobile-nav-logo">
+    <a href="/" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+        <span style="font-weight: 500; font-size: 20px; color: #FFFFFF; letter-spacing: -0.02em;">EduEco <span style="font-size: 14px; opacity: 0.8; font-weight: 400; margin-left: 2px;">Admin</span></span>
+    </a>
+</div>
 
-<body class="bg-[#FFFFFF] text-[#E6E8EB] min-h-screen flex items-center justify-center p-4">
+<div class="edit-split-layout">
+    
+<div class="edit-split-left">
+    <div style="position: absolute; inset: 0; width: 100%; height: 100%; background-image: url('{{ url_for("static", filename="img/hero-eco-education.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.9;"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(24, 29, 0,0.4), transparent);"></div>
+    <div style="position: absolute; left: 70px; bottom: 70px; z-index: 10; max-width: 500px;">
+        <h2 style="font-size: 48px; font-weight: 500; color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;">Manage the future of environmental education.</h2>
+        <p style="font-size: 20px; color: rgba(255,255,255,0.8); margin: 0;">Secure access to the administrative portal.</p>
+    </div>
+</div>
 
- <div class="w-full max-w-md">
- <!-- Brand -->
- <div class="flex items-center justify-center gap-3 mb-8">
-    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" class="w-10 h-10 rounded-full object-cover shadow-emerald-900/20">
- <span class="text-2xl font-bold tracking-tight text-[#1B1B1B]">EduEco <span
- class="text-[#707070] font-normal">Admin</span></span>
- </div>
+    <div class="edit-split-right">
+        <div class="edit-auth-card">
+            <h1 class="edit-h1">Admin Portal</h1>
+            <p class="edit-p">Please enter your credentials to sign in.</p>
+            
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div style="background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #EF4444; padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-bottom: 24px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="alert-circle" style="width: 18px; height: 18px;"></i>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
- <div class="bg-[#171A1F] border border-[#2A2E35] rounded-xl p-8">
- <h2 class="text-xl font-semibold text-center mb-2">Welcome back</h2>
- <p class="text-sm text-[#707070] text-center mb-8">Please enter your credentials to access the portal.</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                
+                <div class="field-wrapper">
+                    <label class="edit-label">Email Address</label>
+                    <div class="edit-input-icon-wrapper" style="position: relative;">
+                        {{ form.email(class="edit-input", placeholder="admin@ecoedu.com") }}
+                        <i data-lucide="mail" class="edit-input-icon"></i>
+                    </div>
+                    {% for error in form.email.errors %}<div class="edit-error">{{ error }}</div>{% endfor %}
+                </div>
 
- <!-- Flash Messages -->
- {% with messages = get_flashed_messages(with_categories=true) %}
- {% if messages %}
- {% for category, message in messages %}
- <div
- class="bg-red-900/20 border border-red-900/30 text-red-400 px-4 py-3 rounded-lg text-sm mb-6 flex items-center gap-2">
- <i data-lucide="circle-exclamation" class="w-5 h-5"></i>
- {{ message }}
- </div>
- {% endfor %}
- {% endif %}
- {% endwith %}
+                <div class="field-wrapper">
+                    <label class="edit-label">Password</label>
+                    <div class="edit-input-icon-wrapper" style="position: relative;">
+                        {{ form.password(class="edit-input", placeholder="••••••••") }}
+                        <i data-lucide="lock" class="edit-input-icon"></i>
+                    </div>
+                    {% for error in form.password.errors %}<div class="edit-error">{{ error }}</div>{% endfor %}
+                </div>
 
- <form method="POST" class="space-y-5">
- {{ form.hidden_tag() }}
-
- <div class="space-y-1.5">
- <label class="block text-xs font-medium text-[#707070]">Email Address</label>
- <div class="relative">
- <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
- <i data-lucide="mail" class="text-gray-600 w-5 h-5"></i>
- </div>
- {{ form.email(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded-lg py-2.5 pl-10 pr-4
- text-sm text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-colors", placeholder="admin@ecoedu.com") }}
- </div>
- </div>
-
- <div class="space-y-1.5">
- <label class="block text-xs font-medium text-[#707070]">Password</label>
- <div class="relative">
- <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
- <i data-lucide="lock" class="text-gray-600 w-5 h-5"></i>
- </div>
- {{ form.password(class="w-full bg-[#FFFFFF] border border-[#2A2E35] rounded-lg py-2.5 pl-10 pr-4
- text-sm text-[#1B1B1B] placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-colors", placeholder="••••••••") }}
- </div>
- </div>
-
- <button type="submit"
- class="w-full bg-brand-600 hover:bg-brand-500 text-[#1B1B1B] font-medium py-2.5 rounded-lg shadow-emerald-900/20 transition-all text-sm flex items-center justify-center gap-2 mt-2">
- <span>Sign In</span>
- <i data-lucide="arrow-right" class="w-5 h-5"></i>
- </button>
- </form>
-
- <div class="mt-8 pt-6 border-t border-[#2A2E35]">
- <div class="text-center">
- <a href="{{ url_for('index') }}"
- class="text-xs text-[#707070] hover:text-[#707070] transition-colors flex items-center justify-center gap-2">
- <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Home
- </a>
- </div>
- </div>
- </div>
-
- <div class="text-center mt-6 text-xs text-gray-600">
- &copy; 2024 EduEco Platform. Protected System.
- </div>
- </div>
-
-</body>
-
-</html>
+                <button type="submit" class="edit-btn">
+                    Access Portal
+                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+                </button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 24px;">
+                <a href="{{ url_for('index') }}" style="color: #707070; font-size: 15px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                    <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
