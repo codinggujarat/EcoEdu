@@ -3,198 +3,265 @@
 {% block title %}Dashboard | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto">
- <!-- Header -->
- <div class="mb-8">
- <h1 class="text-2xl font-semibold text-admin-text mb-1">Dashboard Overview</h1>
- <p class="text-sm text-admin-textMuted font-medium">Platform health and key metrics.</p>
- </div>
+<div class="max-w-[1400px] mx-auto pb-10">
+    <!-- Header Area -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Good morning, Admin!</h1>
+            <p class="text-[15px] text-admin-textMuted">Here is what's happening across EduEco today.</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="px-4 py-2 bg-admin-card border border-admin-border rounded-[12px] shadow-sm flex items-center gap-2">
+                <i data-lucide="calendar" class="w-4 h-4 text-admin-textMuted"></i>
+                <span class="text-sm font-medium text-admin-text">Today</span>
+            </div>
+        </div>
+    </div>
 
- <!-- Stats Grid -->
- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <!-- Students -->
- <div class="admin-card p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Students</span>
- <i data-lucide="users" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ students|length }}</span>
- <span class="text-xs text-green-700 font-medium flex items-center gap-1">
- <i data-lucide="arrow-up" class="w-4 h-4"></i> Active
- </span>
- </div>
- </div>
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- 4 Top Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Students -->
+                <div class="admin-card !p-5 relative overflow-hidden group">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="users" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                        <i data-lucide="more-vertical" class="text-admin-textMuted w-4 h-4"></i>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ students|length }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Total Students</span>
+                        <span class="text-[10px] font-bold text-[#2A4A30] bg-[#F4F4EF] px-1.5 py-0.5 rounded border border-admin-border">+ Active</span>
+                    </div>
+                </div>
 
- <!-- Teachers -->
- <div class="admin-card p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Teachers</span>
- <i data-lucide="chalkboard-teacher" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ teachers|length }}</span>
- <span class="text-xs text-blue-700 font-medium">Verified</span>
- </div>
- </div>
+                <!-- Teachers -->
+                <div class="admin-card !p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="presentation" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                        <i data-lucide="more-vertical" class="text-admin-textMuted w-4 h-4"></i>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ teachers|length }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Faculty</span>
+                        <span class="text-[10px] font-bold text-[#111111] bg-[#FAFAF8] px-1.5 py-0.5 rounded border border-admin-border">Verified</span>
+                    </div>
+                </div>
 
- <!-- Challenges -->
- <div class="admin-card p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Challenges</span>
- <i data-lucide="flag" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ challenges|length }}</span>
- <span class="text-xs text-admin-textMuted font-medium">Total</span>
- </div>
- </div>
+                <!-- Challenges -->
+                <div class="admin-card !p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="flag" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                        <i data-lucide="more-vertical" class="text-admin-textMuted w-4 h-4"></i>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ challenges|length }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Challenges</span>
+                        <span class="text-[10px] font-bold text-[#111111] bg-admin-surface px-1.5 py-0.5 rounded border border-admin-border">Live</span>
+                    </div>
+                </div>
 
- <!-- Achievements -->
- <div class="admin-card p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Badges</span>
- <i data-lucide="award" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ achievements|length }}</span>
- <span class="text-xs text-yellow-700 font-medium">Available</span>
- </div>
- </div>
- </div>
+                <!-- Achievements -->
+                <div class="admin-card !p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="award" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                        <i data-lucide="more-vertical" class="text-admin-textMuted w-4 h-4"></i>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ achievements|length }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Badges</span>
+                        <span class="text-[10px] font-bold text-[#111111] bg-admin-tableAlt px-1.5 py-0.5 rounded border border-admin-border">Available</span>
+                    </div>
+                </div>
+            </div>
 
- <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
- <!-- Quick Actions -->
- <div class="lg:col-span-2">
- <h2 class="text-lg font-semibold text-admin-text mb-4">Quick Actions</h2>
- <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
- <a href="{{ url_for('admin_add_challenge') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
- <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
- <i data-lucide="plus" class="w-5 h-5"></i>
- </div>
- <span class="text-xs font-medium text-admin-text">New Challenge</span>
- </a>
+            <!-- Recent Challenges Data Table -->
+            <div class="admin-card !p-0 overflow-hidden flex flex-col">
+                <!-- Card Header -->
+                <div class="p-6 border-b border-admin-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-admin-text">Recent Challenges</h2>
+                        <p class="text-xs text-admin-textMuted mt-1">Latest modules added to the curriculum.</p>
+                    </div>
+                    <a href="{{ url_for('admin_add_challenge') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#111111] text-white text-sm font-medium rounded-lg hover:bg-[#2A4A30] transition-none border border-transparent shadow-sm">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Create New
+                    </a>
+                </div>
+                
+                <!-- Table Content -->
+                <div class="overflow-x-auto p-4 pt-0">
+                    <table id="challengesTable" class="w-full text-left mt-2">
+                        <thead class="bg-admin-surface border border-admin-border rounded-lg">
+                            <tr>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider rounded-tl-lg">Challenge Name</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Category</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Points</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Level</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right rounded-tr-lg">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-admin-card">
+                            {% for challenge in challenges %}
+                            <tr class="hover:bg-admin-surface transition-none">
+                                <td class="p-3">
+                                    <div class="text-sm font-semibold text-admin-text">{{ challenge.title }}</div>
+                                </td>
+                                <td class="p-3">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-admin-surface border border-admin-border text-admin-text">
+                                        {{ challenge.category }}
+                                    </span>
+                                </td>
+                                <td class="p-3">
+                                    <div class="flex items-center gap-1.5 text-sm font-medium text-admin-text">
+                                        <i data-lucide="zap" class="w-3.5 h-3.5 text-admin-hover"></i>
+                                        {{ challenge.points }}
+                                    </div>
+                                </td>
+                                <td class="p-3">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold border border-admin-border bg-admin-surface text-admin-text">
+                                        {{ challenge.difficulty }}
+                                    </span>
+                                </td>
+                                <td class="p-3 text-right">
+                                    {% if challenge.verification_required %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold text-[#111111] bg-[#FAFAF8] border border-admin-border">
+                                            Verified
+                                        </span>
+                                    {% else %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold text-admin-textMuted bg-admin-surface border border-admin-border">
+                                            Auto
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
 
- <a href="{{ url_for('admin_random_challenge') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
- <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
- <i data-lucide="magic" class="w-5 h-5"></i>
- </div>
- <span class="text-xs font-medium text-admin-text">Auto Generator</span>
- </a>
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- System Status Widget (Mindscope/Dappr inspired tall card) -->
+            <!-- Using a completely dark card to create that visual pop seen in Mindscope -->
+            <div class="admin-card !bg-[#111111] !border-[#222222] !text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">System Status</h3>
+                            <p class="text-xs text-white/60 mt-1">Platform health metrics</p>
+                        </div>
+                        <div class="w-2 h-2 bg-[#2A4A30] rounded-full ring-2 ring-[#2A4A30]/30"></div>
+                    </div>
 
- <a href="{{ url_for('admin_achievements') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
- <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
- <i data-lucide="award" class="w-5 h-5"></i>
- </div>
- <span class="text-xs font-medium text-admin-text">Achievements</span>
- </a>
+                    <div class="space-y-6">
+                        <!-- Progress 1 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-medium text-white/70 mb-2">
+                                <span>User Retention</span>
+                                <span class="text-white">89%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-white h-1.5 rounded-full" style="width: 89%"></div>
+                            </div>
+                        </div>
 
- <a href="{{ url_for('admin_eco_tips') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
- <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
- <i data-lucide="lightbulb" class="w-5 h-5"></i>
- </div>
- <span class="text-xs font-medium text-admin-text">Eco Tips</span>
- </a>
- </div>
- </div>
+                        <!-- Progress 2 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-medium text-white/70 mb-2">
+                                <span>Challenge Completion</span>
+                                <span class="text-white">72%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-[#2A4A30] h-1.5 rounded-full border border-white/20" style="width: 72%"></div>
+                            </div>
+                        </div>
 
- <!-- System Health -->
- <div class="lg:col-span-1">
- <h2 class="text-lg font-semibold text-admin-text mb-4">System Status</h2>
- <div class="admin-card p-6 h-full flex flex-col justify-center">
- <div class="space-y-6">
- <div>
- <div class="flex justify-between text-xs font-medium text-admin-textMuted mb-2">
- <span>User Retention</span>
- <span class="text-admin-hover">89%</span>
- </div>
- <div class="w-full bg-admin-surface border border-admin-border rounded-full h-1.5">
- <div class="bg-admin-hover h-1.5 rounded-full" style="width: 89%"></div>
- </div>
- </div>
+                        <!-- Health Score Box -->
+                        <div class="mt-8 bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between">
+                            <div>
+                                <span class="block text-[11px] text-white/60 uppercase tracking-wider font-bold mb-1">Overall Health</span>
+                                <span class="block text-2xl font-bold text-white">9.8</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i data-lucide="activity" class="text-white w-5 h-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
- <div>
- <div class="flex justify-between text-xs font-medium text-admin-textMuted mb-2">
- <span>Challenge Completion</span>
- <span class="text-blue-600">72%</span>
- </div>
- <div class="w-full bg-admin-surface border border-admin-border rounded-full h-1.5">
- <div class="bg-blue-600 h-1.5 rounded-full" style="width: 72%"></div>
- </div>
- </div>
+            <!-- Quick Actions List (Dappr "To-do list" style) -->
+            <div class="admin-card">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-admin-text">Quick Actions</h3>
+                    <i data-lucide="zap" class="text-admin-textMuted w-4 h-4"></i>
+                </div>
 
- <div class="pt-4 mt-4 border-t border-admin-border">
- <div class="flex items-center gap-3">
- <div class="flex-1">
- <div class="text-xs text-admin-textMuted font-medium uppercase tracking-wide">Health Index
- </div>
- <div class="text-2xl font-bold text-admin-text">9.8</div>
- </div>
- <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded border border-green-200">Optimal</span>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
+                <div class="space-y-3">
+                    <a href="{{ url_for('admin_add_challenge') }}" class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-admin-border hover:bg-admin-tableAlt transition-none group cursor-pointer">
+                        <div class="w-10 h-10 rounded-lg bg-admin-surface border border-admin-border flex items-center justify-center group-hover:bg-white transition-none">
+                            <i data-lucide="plus-circle" class="w-5 h-5 text-admin-text"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-admin-text">Create Challenge</h4>
+                            <p class="text-[11px] text-admin-textMuted mt-0.5">Manually add a new task.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-admin-textFaded group-hover:text-admin-text transition-none"></i>
+                    </a>
 
- <!-- Challenges Table -->
- <div class="admin-card p-0 overflow-hidden">
- <div class="p-6 border-b border-admin-border flex items-center justify-between">
- <h2 class="text-lg font-semibold text-admin-text">Recent Challenges</h2>
- <span class="text-xs text-admin-textMuted">{{ challenges|length }} Total</span>
- </div>
- <div class="overflow-x-auto">
- <table id="challengesTable" class="w-full text-left">
- <thead class="bg-admin-surface border-b border-admin-border">
- <tr>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Title</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Category</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Reward</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Difficulty</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Status</th>
- </tr>
- </thead>
- <tbody class="divide-y divide-admin-border bg-admin-tableAlt">
- {% for challenge in challenges %}
- <tr class="hover:bg-admin-surface transition-none">
- <td class="p-4">
- <div class="text-sm font-semibold text-admin-text">{{ challenge.title }}</div>
- <div class="text-[10px] text-admin-textMuted font-mono mt-0.5">ID: {{ loop.index }}</div>
- </td>
- <td class="p-4">
- <span class="text-xs text-admin-text bg-admin-surface border border-admin-border px-2 py-0.5 rounded shadow-sm">{{ challenge.category }}</span>
- </td>
- <td class="p-4 text-sm text-admin-textMuted font-medium">
- <span class="flex items-center gap-1"><i data-lucide="bolt" class="text-admin-hover w-4 h-4"></i> {{ challenge.points }}</span>
- </td>
- <td class="p-4">
- {% set difficulty_colors = {
- 'Easy': 'text-green-700 bg-green-50 border-green-200',
- 'Medium': 'text-yellow-700 bg-yellow-50 border-yellow-200',
- 'Hard': 'text-red-700 bg-red-50 border-red-200'
- } %}
- <span class="text-xs font-semibold px-2 py-0.5 rounded border {{ difficulty_colors.get(challenge.difficulty, 'text-admin-textMuted border-admin-border bg-admin-surface') }}">
- {{ challenge.difficulty }}
- </span>
- </td>
- <td class="p-4 text-right">
- {% if challenge.verification_required %}
- <span class="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded shadow-sm">Verified</span>
- {% else %}
- <span class="text-[10px] font-bold text-admin-textMuted bg-admin-surface border border-admin-border px-2 py-0.5 rounded shadow-sm">Auto</span>
- {% endif %}
- </td>
- </tr>
- {% endfor %}
- </tbody>
- </table>
- </div>
- </div>
+                    <a href="{{ url_for('admin_random_challenge') }}" class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-admin-border hover:bg-admin-tableAlt transition-none group cursor-pointer">
+                        <div class="w-10 h-10 rounded-lg bg-admin-surface border border-admin-border flex items-center justify-center group-hover:bg-white transition-none">
+                            <i data-lucide="wand-2" class="w-5 h-5 text-admin-text"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-admin-text">Auto Generator</h4>
+                            <p class="text-[11px] text-admin-textMuted mt-0.5">Generate tasks with AI.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-admin-textFaded group-hover:text-admin-text transition-none"></i>
+                    </a>
+
+                    <a href="{{ url_for('admin_achievements') }}" class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-admin-border hover:bg-admin-tableAlt transition-none group cursor-pointer">
+                        <div class="w-10 h-10 rounded-lg bg-admin-surface border border-admin-border flex items-center justify-center group-hover:bg-white transition-none">
+                            <i data-lucide="award" class="w-5 h-5 text-admin-text"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-admin-text">Achievements</h4>
+                            <p class="text-[11px] text-admin-textMuted mt-0.5">Manage reward badges.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-admin-textFaded group-hover:text-admin-text transition-none"></i>
+                    </a>
+
+                    <a href="{{ url_for('admin_eco_tips') }}" class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-admin-border hover:bg-admin-tableAlt transition-none group cursor-pointer">
+                        <div class="w-10 h-10 rounded-lg bg-admin-surface border border-admin-border flex items-center justify-center group-hover:bg-white transition-none">
+                            <i data-lucide="lightbulb" class="w-5 h-5 text-admin-text"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-admin-text">Eco Tips</h4>
+                            <p class="text-[11px] text-admin-textMuted mt-0.5">Manage daily sustainability.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-admin-textFaded group-hover:text-admin-text transition-none"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
