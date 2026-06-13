@@ -192,7 +192,7 @@
 
         /* ── Cards ── */
         .edit-card {
-            background: #F7F7F2; color: #1B1B1B;
+            background: #F7F7F2; color: #FFFFFF;
             border: 1px solid rgba(24, 29, 0, 0.10);
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
@@ -201,9 +201,9 @@
             transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             transform-style: preserve-3d;
             cursor: none;
-         color: #1B1B1B; }
+         color: #FFFFFF; }
         @media (min-width: 768px) {
-            .edit-card { border-radius: 28px; padding: 48px;  color: #1B1B1B; }
+            .edit-card { border-radius: 28px; padding: 48px;  color: #FFFFFF; }
         }
 
         /* ── Image container ── */
@@ -273,7 +273,7 @@
         }
 
         .nav-link {
-            color: #707070;
+            color: rgba(255,255,255,0.85);
             font-size: 16px;
             font-weight: 500;
             text-decoration: none;
@@ -298,7 +298,7 @@
         }
 
         .nav-link:hover {
-            color: #1B1B1B;
+            color: #FFFFFF;
         }
 
         /* Word-split for headings */
@@ -419,7 +419,7 @@
             cursor: none;
             font-size: clamp(18px, 2vw, 24px);
             font-weight: 500;
-            color: #1B1B1B;
+            color: #FFFFFF;
             padding: 8px 0;
             user-select: none;
         }
@@ -427,7 +427,7 @@
         .faq-icon {
             width: 28px;
             height: 28px;
-            color: #707070;
+            color: rgba(255,255,255,0.85);
             flex-shrink: 0;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -437,7 +437,7 @@
         }
 
         .faq-answer {
-            color: #707070;
+            color: rgba(255,255,255,0.85);
             font-size: 18px;
             line-height: 1.7;
             max-height: 0;
@@ -526,7 +526,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
             will-change: transform, box-shadow;
             cursor: none;
-         color: #1B1B1B; }
+         color: #FFFFFF; }
 
         .badge-card {
             background: #F7F7F2;
@@ -539,7 +539,7 @@
             text-align: center;
             will-change: transform, box-shadow;
             cursor: none;
-         color: #1B1B1B; }
+         color: #FFFFFF; }
 
         /* Grid helpers */
         .grid-2 {
@@ -595,7 +595,7 @@
             will-change: transform, box-shadow;
             cursor: none;
             position: relative;
-         color: #1B1B1B; }
+         color: #FFFFFF; }
 
         /* Card gradient overlay on hover */
         .feat-card::after {
@@ -640,12 +640,12 @@
         .feat-card-body h3 {
             font-size: 22px;
             font-weight: 500;
-            color: #1B1B1B;
+            color: #FFFFFF;
             margin-bottom: 12px;
         }
 
         .feat-card-body p {
-            color: #707070;
+            color: rgba(255,255,255,0.85);
             line-height: 1.65;
             font-size: 16px;
         }
@@ -816,7 +816,7 @@
             font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #707070;
+            color: rgba(255,255,255,0.85);
         }
 
         .scroll-line {
@@ -915,7 +915,7 @@
 
         /* ── Active nav link ── */
         .nav-link.active {
-            color: #1B1B1B;
+            color: #FFFFFF;
         }
 
         /* ── Cursor: hide system cursor ── */
@@ -940,7 +940,22 @@
             margin: 0;
         }
     @media (min-width: 1024px) { .feature-grid { grid-template-columns: 1fr 1fr !important; gap: 120px !important; } }
-</style>
+
+        /* SAFETY OVERRIDE: Ensure text inside off-white cards remains readable */
+        .edit-card, .lb-card, .badge-card {
+            color: #111827 !important;
+        }
+        .edit-card *, .lb-card *, .badge-card * {
+            color: #111827 !important;
+        }
+        .edit-card .stat-number, .edit-card h3, .edit-card span, .edit-card div {
+            color: #111827 !important;
+        }
+        .lb-card span, .lb-card div, .badge-card span, .badge-card div {
+            color: #111827 !important;
+        }
+    
+    </style>
 <style>
 /* Global Mobile Fixes */
 img { max-width: 100%; height: auto; object-fit: cover; }
@@ -961,7 +976,22 @@ img { max-width: 100%; height: auto; object-fit: cover; }
 @media (min-width: 1024px) { .hero-text-col { max-width: 580px; text-align: left; } }
 .stat-card-padding { padding: 24px !important; }
 @media (min-width: 768px) { .stat-card-padding { padding: 40px !important; } }
-</style>
+
+        /* SAFETY OVERRIDE: Ensure text inside off-white cards remains readable */
+        .edit-card, .lb-card, .badge-card {
+            color: #111827 !important;
+        }
+        .edit-card *, .lb-card *, .badge-card * {
+            color: #111827 !important;
+        }
+        .edit-card .stat-number, .edit-card h3, .edit-card span, .edit-card div {
+            color: #111827 !important;
+        }
+        .lb-card span, .lb-card div, .badge-card span, .badge-card div {
+            color: #111827 !important;
+        }
+    
+    </style>
 
 <style>
 /* More Mobile Layout Fixes */
@@ -980,15 +1010,30 @@ img { max-width: 100%; height: auto; object-fit: cover; }
 .lb-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
 @media (min-width: 1024px) { .lb-grid { grid-template-columns: 1fr 1fr; } }
 
-.lb-card { flex-direction: column; text-align: center; gap: 16px; padding: 24px;  color: #1B1B1B; }
-@media (min-width: 768px) { .lb-card { flex-direction: row; text-align: left; gap: 24px;  color: #1B1B1B; } }
+.lb-card { flex-direction: column; text-align: center; gap: 16px; padding: 24px;  color: #FFFFFF; }
+@media (min-width: 768px) { .lb-card { flex-direction: row; text-align: left; gap: 24px;  color: #FFFFFF; } }
 
-.badge-card { padding: 24px;  color: #1B1B1B; }
-@media (min-width: 768px) { .badge-card { padding: 32px;  color: #1B1B1B; } }
+.badge-card { padding: 24px;  color: #FFFFFF; }
+@media (min-width: 768px) { .badge-card { padding: 32px;  color: #FFFFFF; } }
 
 .badge-grid { grid-template-columns: 1fr 1fr; }
 @media (min-width: 768px) { .badge-grid { grid-template-columns: repeat(4, 1fr); } }
-</style>
+
+        /* SAFETY OVERRIDE: Ensure text inside off-white cards remains readable */
+        .edit-card, .lb-card, .badge-card {
+            color: #111827 !important;
+        }
+        .edit-card *, .lb-card *, .badge-card * {
+            color: #111827 !important;
+        }
+        .edit-card .stat-number, .edit-card h3, .edit-card span, .edit-card div {
+            color: #111827 !important;
+        }
+        .lb-card span, .lb-card div, .badge-card span, .badge-card div {
+            color: #111827 !important;
+        }
+    
+    </style>
 </head>
 
 
@@ -1015,7 +1060,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
         <div style="display:flex;align-items:center;gap:12px;" class="nav-logo">
             <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo"
                 style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
-            <span style="font-weight:500;font-size:24px;letter-spacing:-0.02em;color:#1B1B1B;">EduEco</span>
+            <span style="font-weight:500;font-size:24px;letter-spacing:-0.02em;color:#FFFFFF;">EduEco</span>
         </div>
 
         <div class="nav-links">
@@ -1119,7 +1164,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                     style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="12" data-suffix="k+">0</span>
                     <span
-                        style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Active
+                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Active
                         Students</span>
                 </div>
 
@@ -1127,7 +1172,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                     style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="450" data-suffix="+">0</span>
                     <span
-                        style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Verified
+                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Verified
                         Teachers</span>
                 </div>
 
@@ -1135,7 +1180,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                     style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="85" data-suffix="">0</span>
                     <span
-                        style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Partner
+                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Partner
                         Schools</span>
                 </div>
 
@@ -1143,7 +1188,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                     style="display:flex;flex-direction:column;align-items:flex-start;">
                     <span class="stat-number" data-target="1.2" data-suffix="M">0</span>
                     <span
-                        style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Points
+                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Points
                         Awarded</span>
                 </div>
 
@@ -1245,7 +1290,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                 <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">01</div>
                     <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
+                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
                             class="reveal-text">Join</h3>
                         <p class="edit-p reveal-text">Students create accounts and connect securely to their teacher's
                             classroom portal to begin their journey.</p>
@@ -1255,7 +1300,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                 <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">02</div>
                     <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
+                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
                             class="reveal-text">Complete Challenges</h3>
                         <p class="edit-p reveal-text">Submit photo evidence and reflections for real-world environmental
                             actions directly from any device.</p>
@@ -1265,7 +1310,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                 <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">03</div>
                     <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
+                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
                             class="reveal-text">Earn Points</h3>
                         <p class="edit-p reveal-text">Teachers review submissions. Approved actions instantly award XP
                             to the student's profile, fueling motivation.</p>
@@ -1275,7 +1320,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                 <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">04</div>
                     <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
+                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
                             class="reveal-text">Unlock Achievements</h3>
                         <p class="edit-p reveal-text">Stack milestones and showcase digital badges on your public
                             profile as a testament to your commitment.</p>
@@ -1285,7 +1330,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                 <div class="step-row" class="step-row-flex">
                     <div class="step-num reveal-stepnum">05</div>
                     <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#1B1B1B;margin-bottom:16px;"
+                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
                             class="reveal-text">Receive Certificates</h3>
                         <p class="edit-p reveal-text">Graduate to new levels and download official, verifiable
                             certificates perfect for academic portfolios.</p>
@@ -1308,40 +1353,40 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                 <div style="display:flex;flex-direction:column;gap:24px;">
 
                     <div class="lb-card reveal-card" data-rank="1">
-                        <span style="font-size:22px;font-weight:500;color:#707070;width:28px;">1</span>
+                        <span style="font-size:22px;font-weight:500;color:rgba(255,255,255,0.85);width:28px;">1</span>
                         <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;">
                             <img src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=2A4A30&color=fff"
                                 style="width:100%;height:100%;object-fit:cover;">
                         </div>
                         <div style="flex:1;">
-                            <div style="font-size:18px;font-weight:500;color:#1B1B1B;">Sarah Jenkins</div>
-                            <div style="color:#707070;font-size:14px;margin-top:2px;">Level 12</div>
+                            <div style="font-size:18px;font-weight:500;color:#FFFFFF;">Sarah Jenkins</div>
+                            <div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:2px;">Level 12</div>
                         </div>
                         <span style="font-size:16px;font-weight:500;color:#181D00;">1,240 XP</span>
                     </div>
 
                     <div class="lb-card reveal-card" data-rank="2">
-                        <span style="font-size:22px;font-weight:500;color:#707070;width:28px;">2</span>
+                        <span style="font-size:22px;font-weight:500;color:rgba(255,255,255,0.85);width:28px;">2</span>
                         <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;">
                             <img src="https://ui-avatars.com/api/?name=Michael+Chen&background=2A4A30&color=fff"
                                 style="width:100%;height:100%;object-fit:cover;">
                         </div>
                         <div style="flex:1;">
-                            <div style="font-size:18px;font-weight:500;color:#1B1B1B;">Michael Chen</div>
-                            <div style="color:#707070;font-size:14px;margin-top:2px;">Level 11</div>
+                            <div style="font-size:18px;font-weight:500;color:#FFFFFF;">Michael Chen</div>
+                            <div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:2px;">Level 11</div>
                         </div>
                         <span style="font-size:16px;font-weight:500;color:#181D00;">1,100 XP</span>
                     </div>
 
                     <div class="lb-card reveal-card" data-rank="3">
-                        <span style="font-size:22px;font-weight:500;color:#707070;width:28px;">3</span>
+                        <span style="font-size:22px;font-weight:500;color:rgba(255,255,255,0.85);width:28px;">3</span>
                         <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;">
                             <img src="https://ui-avatars.com/api/?name=Aisha+Patel&background=2A4A30&color=fff"
                                 style="width:100%;height:100%;object-fit:cover;">
                         </div>
                         <div style="flex:1;">
-                            <div style="font-size:18px;font-weight:500;color:#1B1B1B;">Aisha Patel</div>
-                            <div style="color:#707070;font-size:14px;margin-top:2px;">Level 10</div>
+                            <div style="font-size:18px;font-weight:500;color:#FFFFFF;">Aisha Patel</div>
+                            <div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:2px;">Level 10</div>
                         </div>
                         <span style="font-size:16px;font-weight:500;color:#181D00;">950 XP</span>
                     </div>
@@ -1362,7 +1407,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                                 <i data-lucide="sun" style="width:30px;height:30px;color:#181D00;"></i>
                             </div>
                         </div>
-                        <span style="font-weight:500;color:#1B1B1B;font-size:16px;">Solar Saver</span>
+                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Solar Saver</span>
                     </div>
 
                     <div class="badge-card tilt-card reveal-card">
@@ -1373,7 +1418,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                                 <i data-lucide="droplet" style="width:30px;height:30px;color:#181D00;"></i>
                             </div>
                         </div>
-                        <span style="font-weight:500;color:#1B1B1B;font-size:16px;">Water Hero</span>
+                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Water Hero</span>
                     </div>
 
                     <div class="badge-card tilt-card reveal-card">
@@ -1384,7 +1429,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                                 <i data-lucide="recycle" style="width:30px;height:30px;color:#181D00;"></i>
                             </div>
                         </div>
-                        <span style="font-weight:500;color:#1B1B1B;font-size:16px;">Zero Waste</span>
+                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Zero Waste</span>
                     </div>
 
                     <div class="badge-card tilt-card reveal-card">
@@ -1395,7 +1440,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                                 <i data-lucide="zap" style="width:30px;height:30px;color:#181D00;"></i>
                             </div>
                         </div>
-                        <span style="font-weight:500;color:#1B1B1B;font-size:16px;">Energy Master</span>
+                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Energy Master</span>
                     </div>
 
                 </div>
@@ -1417,14 +1462,14 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                     style="display:flex;flex-direction:column;align-items:center;">
                     <span class="quote-mark">"</span>
                     <p
-                        style="font-size:clamp(22px,3.5vw,40px);font-weight:500;color:#1B1B1B;line-height:1.35;margin-bottom:48px;">
+                        style="font-size:clamp(22px,3.5vw,40px);font-weight:500;color:#FFFFFF;line-height:1.35;margin-bottom:48px;">
                         EcoEdu completely transformed how my students interact with environmental science. The
                         gamification makes real-world impact addictive in the best way possible.
                     </p>
                     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-                        <span style="font-size:17px;font-weight:500;color:#1B1B1B;">Ms. Rodriguez</span>
+                        <span style="font-size:17px;font-weight:500;color:#FFFFFF;">Ms. Rodriguez</span>
                         <span
-                            style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">Science
+                            style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Science
                             Teacher</span>
                     </div>
                 </div>
@@ -1435,14 +1480,14 @@ img { max-width: 100%; height: auto; object-fit: cover; }
                     style="display:flex;flex-direction:column;align-items:center;">
                     <span class="quote-mark">"</span>
                     <p
-                        style="font-size:clamp(22px,3.5vw,40px);font-weight:500;color:#1B1B1B;line-height:1.35;margin-bottom:48px;">
+                        style="font-size:clamp(22px,3.5vw,40px);font-weight:500;color:#FFFFFF;line-height:1.35;margin-bottom:48px;">
                         I never thought picking up trash at the local park would put me at the top of a leaderboard.
                         I've unlocked 12 badges and I'm aiming for Level 20!
                     </p>
                     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-                        <span style="font-size:17px;font-weight:500;color:#1B1B1B;">Jason T.</span>
+                        <span style="font-size:17px;font-weight:500;color:#FFFFFF;">Jason T.</span>
                         <span
-                            style="font-size:11px;font-weight:500;color:#707070;text-transform:uppercase;letter-spacing:0.12em;">High
+                            style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">High
                             School Junior</span>
                     </div>
                 </div>
