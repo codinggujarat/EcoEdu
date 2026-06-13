@@ -10,21 +10,21 @@ body { background-color: #181D00 !important; font-family: 'General Sans', sans-s
 @media (min-width: 1024px) { 
     .edit-split-layout { display: grid; grid-template-columns: 55% 45%; } 
 }
-.edit-split-left { display: none; background-color: #F3F2EC; position: relative; overflow: hidden; height: 100vh; }
+.edit-split-left { display: none; background-color: #EAEAE5; position: relative; overflow: hidden; height: 100vh; }
 @media (min-width: 1024px) { .edit-split-left { display: block; } }
 .edit-split-right { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; padding-top: 100px; position: relative; overflow-y: auto; }
 @media (min-width: 1024px) { .edit-split-right { padding: 40px; overflow-y: hidden; min-height: 100vh; } }
-.edit-auth-card { background: #FFFFFF; border-radius: 20px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(42,74,48,0.05); }
+.edit-auth-card { background: #F7F7F2; border-radius: 20px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(24, 29, 0,0.05); }
 @media (min-width: 768px) { .edit-auth-card { padding: 40px; border-radius: 24px; } }
-.edit-input { width: 100%; height: 50px; border: 1px solid rgba(42,74,48,0.10); border-radius: 14px; padding: 0 16px 0 48px; font-size: 16px; color: #1B1B1B; transition: all 0.2s ease; background: #FFFFFF; }
+.edit-input { width: 100%; height: 50px; border: 1px solid rgba(24, 29, 0,0.10); border-radius: 14px; padding: 0 16px 0 48px; font-size: 16px; color: #1B1B1B; transition: all 0.2s ease; background: #F7F7F2; }
 @media (min-width: 768px) { .edit-input { height: 52px; } }
-.edit-input:focus { border-color: #2A4A30; outline: none; box-shadow: 0 0 0 1px #2A4A30; }
+.edit-input:focus { border-color: #181D00; outline: none; box-shadow: 0 0 0 1px #181D00; }
 .edit-input::placeholder { color: #A1A1AA; }
 .edit-input-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #707070; transition: color 0.2s ease; width: 18px; height: 18px; }
-.edit-input:focus + .edit-input-icon, .edit-input-icon-wrapper:focus-within .edit-input-icon { color: #2A4A30; }
-.edit-btn { width: 100%; height: 50px; border-radius: 999px; background: #2A4A30; color: #FFFFFF; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; border: none; cursor: pointer; margin-top: 16px; }
+.edit-input:focus + .edit-input-icon, .edit-input-icon-wrapper:focus-within .edit-input-icon { color: #181D00; }
+.edit-btn { width: 100%; height: 50px; border-radius: 999px; background: #181D00; color: #FFFFFF; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; border: none; cursor: pointer; margin-top: 16px; }
 @media (min-width: 768px) { .edit-btn { height: 52px; font-size: 16px; margin-top: 18px; } }
-.edit-btn:hover { background: #355D3D; transform: translateY(-2px); }
+.edit-btn:hover { background: #234A2B; transform: translateY(-2px); }
 .edit-h1 { font-size: 28px; font-weight: 600; color: #1B1B1B; letter-spacing: -0.02em; margin-bottom: 8px; }
 @media (min-width: 768px) { .edit-h1 { font-size: 36px; margin-bottom: 12px; } }
 .edit-p { font-size: 15px; color: #707070; margin-bottom: 24px; }
@@ -32,9 +32,9 @@ body { background-color: #181D00 !important; font-family: 'General Sans', sans-s
 .edit-label { display: block; font-size: 15px; font-weight: 500; color: #1B1B1B; margin-bottom: 8px; }
 .edit-error { color: #EF4444; font-size: 13px; margin-top: 6px; }
 .edit-link { color: #707070; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 0.2s ease; }
-.edit-link:hover { color: #2A4A30; }
-.otp-input { width: 60px; height: 60px; border: 1px solid rgba(42,74,48,0.10); border-radius: 16px; text-align: center; font-size: 24px; font-weight: 600; color: #1B1B1B; transition: all 0.2s; }
-.otp-input:focus { border-color: #2A4A30; outline: none; box-shadow: 0 0 0 1px #2A4A30; }
+.edit-link:hover { color: #181D00; }
+.otp-input { width: 60px; height: 60px; border: 1px solid rgba(24, 29, 0,0.10); border-radius: 16px; text-align: center; font-size: 24px; font-weight: 600; color: #1B1B1B; transition: all 0.2s; }
+.otp-input:focus { border-color: #181D00; outline: none; box-shadow: 0 0 0 1px #181D00; }
 .field-wrapper { margin-bottom: 18px; }
 </style>
 
@@ -53,7 +53,7 @@ body { background-color: #181D00 !important; font-family: 'General Sans', sans-s
     
 <div class="edit-split-left">
     <div style="position: absolute; inset: 0; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1200&auto=format&fit=crop'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.9;"></div>
-    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(42,74,48,0.4), transparent);"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(24, 29, 0,0.4), transparent);"></div>
     <div style="position: absolute; left: 70px; bottom: 70px; z-index: 10; max-width: 500px;">
         <h2 style="font-size: 48px; font-weight: 500; color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;">The future of environmental education.</h2>
         <p style="font-size: 20px; color: rgba(255,255,255,0.8); margin: 0;">Join thousands of schools making a measurable impact.</p>
@@ -137,7 +137,7 @@ body { background-color: #181D00 !important; font-family: 'General Sans', sans-s
             
             <div style="text-align: center; margin-top: 18px;">
                 <span style="color: #707070; font-size: 15px;">Already have an account?</span>
-                <a href="{{ url_for('login') }}" style="color: #2A4A30; font-weight: 500; text-decoration: none; margin-left: 4px;">Sign in</a>
+                <a href="{{ url_for('login') }}" style="color: #181D00; font-weight: 500; text-decoration: none; margin-left: 4px;">Sign in</a>
             </div>
         </div>
     </div>

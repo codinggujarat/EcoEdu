@@ -5,11 +5,11 @@
 <style>
 /* Premium SaaS Global Variables & Classes */
 :root {
-    --eco-dark-green: #1F4D36;
-    --eco-primary-green: #2E6A43;
+    --eco-dark-green: #234A2B;
+    --eco-primary-green: #2A4A30;
     --eco-accent-green: #4CAF50;
     --eco-light-green: #EAF4EC;
-    --eco-bg: #F7F8F5;
+    --eco-bg: #F7F7F2;
 }
 body { background: var(--eco-bg) !important; }
 
@@ -65,7 +65,7 @@ body { background: var(--eco-bg) !important; }
 
 /* Premium Card */
 .premium-card {
-    background: #FFFFFF;
+    background: #F7F7F2;
     border-radius: 24px;
     border: 1px solid rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
@@ -86,22 +86,22 @@ body { background: var(--eco-bg) !important; }
 }
 .premium-card:hover, .td-card:hover, .user-card:hover, .verification-card:hover {
     transform: scale(1.02) translateY(-5px);
-    box-shadow: 0 20px 40px rgba(42,74,48,0.1) !important;
+    box-shadow: 0 20px 40px rgba(24, 29, 0,0.1) !important;
 }
 .db-stat:hover, .td-stat:hover {
     transform: scale(1.02) translateY(-5px);
-    box-shadow: 0 15px 30px rgba(42,74,48,0.1) !important;
+    box-shadow: 0 15px 30px rgba(24, 29, 0,0.1) !important;
 }
 .journey-card:hover, .leaderboard-row:hover {
     transform: scale(1.02) translateY(-3px);
-    box-shadow: 0 10px 25px rgba(42,74,48,0.08) !important;
+    box-shadow: 0 10px 25px rgba(24, 29, 0,0.08) !important;
 }
 .carousel-item {
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
 }
 .carousel-item:hover {
     transform: scale(1.05) rotate(3deg);
-    box-shadow: 0 15px 30px rgba(42,74,48,0.15) !important;
+    box-shadow: 0 15px 30px rgba(24, 29, 0,0.15) !important;
 }
 /* Button Interactions */
 a.premium-btn, button.premium-btn, .premium-card a[href], .td-card a[href], button[type="submit"], .pf-btn-primary, .pf-btn-secondary, .pf-btn-danger, .tv-action-btn, .tp-btn {
@@ -110,7 +110,7 @@ a.premium-btn, button.premium-btn, .premium-card a[href], .td-card a[href], butt
 }
 a.premium-btn:hover, button.premium-btn:hover, .premium-card a[href]:hover, .td-card a[href]:hover, button[type="submit"]:hover, .pf-btn-primary:hover, .pf-btn-secondary:hover, .pf-btn-danger:hover, .tv-action-btn:hover, .tp-btn:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 20px rgba(42,74,48,0.2) !important;
+    box-shadow: 0 0 20px rgba(24, 29, 0,0.2) !important;
 }
 a.premium-btn:active, button.premium-btn:active, .premium-card a[href]:active, .td-card a[href]:active, button[type="submit"]:active, .pf-btn-primary:active, .pf-btn-secondary:active, .pf-btn-danger:active, .tv-action-btn:active, .tp-btn:active {
     transform: scale(0.97);
@@ -136,7 +136,7 @@ html.is-animating .transition-fade {
 }
 </style>
 
-<div class="flex" style="background: #F7F8F5; min-height: 100vh;">
+<div class="flex" style="background: #F7F7F2; min-height: 100vh;">
     {% if current_user.role == 'teacher' %}
         {% include "teacher_dashboard_sidebar.html" %}
     {% elif current_user.role == 'admin' %}
@@ -147,7 +147,7 @@ html.is-animating .transition-fade {
 
     <main class="lg:ml-[320px] flex-1 min-w-0 overflow-x-hidden flex flex-col pb-24 lg:pb-0 pt-[64px] lg:pt-0">
         <!-- Mobile Top Header (Hidden on Desktop) -->
-        <header class="lg:hidden fixed top-0 left-0 right-0 h-[64px] border-b border-[#2A4A30]/10 bg-[#FAF9F6] flex items-center justify-between px-6 z-[100]">
+        <header class="lg:hidden fixed top-0 left-0 right-0 h-[64px] border-b border-[#181D00]/10 bg-[#F7F7F2] flex items-center justify-between px-6 z-[100]">
             <a href="{{ url_for('dashboard') }}" class="flex items-center gap-3 text-decoration-none">
                 <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" class="w-8 h-8 rounded-full object-cover">
                 <span class="font-medium text-xl tracking-tight text-[#1B1B1B]">EduEco</span>
@@ -184,7 +184,7 @@ function initGSAPAnimations() {
         ScrollTrigger.refresh();
 
         // 1. Hero Load Animation + Parallax
-        const heroSection = document.querySelector('[style*="background: #173D25"]') || document.querySelector('.hero-section');
+        const heroSection = document.querySelector('[style*="background: #181D00"]') || document.querySelector('.hero-section');
         if (heroSection) {
             gsap.fromTo(heroSection, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" });
             gsap.to(heroSection, { y: 10, ease: "none", scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: true } });

@@ -10,10 +10,10 @@
 {% block dashboard_content %}
 <style>
 /* ── Challenges Page — Homepage Editorial Layout ── */
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
-.ch-section        { background: #FFFFFF; padding: 48px 24px; width: 100%; }
-.ch-section-alt    { background: #F3F2EC; padding: 48px 24px; width: 100%; }
+.ch-section        { background: #F7F7F2; padding: 48px 24px; width: 100%; }
+.ch-section-alt    { background: #EAEAE5; padding: 48px 24px; width: 100%; }
 .ch-inner          { max-width: 1280px; margin: 0 auto; }
 
 .ch-h2 {
@@ -24,56 +24,56 @@ body { background: #FAF9F6 !important; }
 
 /* Stat cards — homepage style (no border-radius pill) */
 .ch-stat {
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 24px; padding: 28px 24px; flex: 1;
 }
-.ch-stat-val { font-size: 40px; font-weight: 500; color: #2A4A30; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+.ch-stat-val { font-size: 40px; font-weight: 500; color: #181D00; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
 .ch-stat-label { font-size: 12px; font-weight: 600; color: #707070; text-transform: uppercase; letter-spacing: 0.1em; }
 
 /* Challenge card — homepage edit-card style */
 .ch-card {
     min-width: 0; box-sizing: border-box;
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 36px;
     display: flex; flex-direction: column;
     transition: border-color .2s ease, transform .2s ease;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
 }
-.ch-card:hover { border-color: rgba(42,74,48,.35); transform: translateY(-4px); }
+.ch-card:hover { border-color: rgba(24, 29, 0,.35); transform: translateY(-4px); }
 
 /* Filter pills */
 .ch-pill {
     display: inline-flex; align-items: center; justify-content: center;
     height: 44px; padding: 0 20px; border-radius: 999px; font-size: 14px;
-    font-weight: 500; color: #707070; background: #FFFFFF;
-    border: 1px solid rgba(42,74,48,.12); transition: all .2s ease;
+    font-weight: 500; color: #707070; background: #F7F7F2;
+    border: 1px solid rgba(24, 29, 0,.12); transition: all .2s ease;
     white-space: nowrap; cursor: pointer;
 }
-.ch-pill.active, .ch-pill:hover { background: #2A4A30; color: #FFFFFF; border-color: #2A4A30; }
+.ch-pill.active, .ch-pill:hover { background: #181D00; color: #FFFFFF; border-color: #181D00; }
 
 /* Btn */
 .ch-btn-primary {
     display: flex; align-items: center; justify-content: center;
-    width: 100%; height: 52px; background: #2A4A30; color: #FFFFFF;
+    width: 100%; height: 52px; background: #181D00; color: #FFFFFF;
     border-radius: 999px; font-size: 15px; font-weight: 600;
     transition: background .2s ease, transform .15s ease; text-decoration: none;
 }
-.ch-btn-primary:hover { background: #355D3D; transform: translateY(-1px); }
+.ch-btn-primary:hover { background: #234A2B; transform: translateY(-1px); }
 .ch-btn-done {
     display: flex; align-items: center; justify-content: center;
-    width: 100%; height: 52px; background: rgba(42,74,48,.08);
-    color: #2A4A30; border-radius: 999px; font-size: 15px;
-    font-weight: 600; border: 1px solid rgba(42,74,48,.12);
+    width: 100%; height: 52px; background: rgba(24, 29, 0,.08);
+    color: #181D00; border-radius: 999px; font-size: 15px;
+    font-weight: 600; border: 1px solid rgba(24, 29, 0,.12);
 }
 
 /* Search */
 .ch-search {
-    width: 100%; height: 56px; background: #FFFFFF;
-    border: 1px solid rgba(42,74,48,.12); border-radius: 999px;
+    width: 100%; height: 56px; background: #F7F7F2;
+    border: 1px solid rgba(24, 29, 0,.12); border-radius: 999px;
     padding: 0 20px 0 52px; font-size: 15px; color: #1B1B1B;
     outline: none; transition: border-color .2s ease;
 }
-.ch-search:focus { border-color: #2A4A30; }
+.ch-search:focus { border-color: #181D00; }
 .ch-search::placeholder { color: #A1A1AA; }
 
 @media (min-width: 768px) {
@@ -115,7 +115,7 @@ body { background: #FAF9F6 !important; }
             <div class="ch-stat-val">{{ completed_count }}</div>
             <div class="ch-stat-label">Completed</div>
         </div>
-        <div class="ch-stat" style="background:#2A4A30; border-color:#2A4A30;">
+        <div class="ch-stat" style="background:#181D00; border-color:#181D00;">
             <div class="ch-stat-val" style="color:#FFFFFF;">{{ pct }}%</div>
             <div class="ch-stat-label" style="color:rgba(255,255,255,.65);">Progress</div>
         </div>
@@ -138,32 +138,32 @@ body { background: #FAF9F6 !important; }
         <div class="ch-filter-container" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:4px; flex-wrap:wrap;">
             <label class="cursor-pointer">
                 <input type="radio" name="status" value="all" checked class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">All</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">All</span>
             </label>
             <label class="cursor-pointer">
                 <input type="radio" name="status" value="incomplete" class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">To Do</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">To Do</span>
             </label>
             <label class="cursor-pointer">
                 <input type="radio" name="status" value="completed" class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">Completed</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">Completed</span>
             </label>
-            <div style="width:1px; height:44px; background:rgba(42,74,48,.10); flex-shrink:0;"></div>
+            <div style="width:1px; height:44px; background:rgba(24, 29, 0,.10); flex-shrink:0;"></div>
             <label class="cursor-pointer">
                 <input type="radio" name="difficulty" value="all" checked class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">Any Level</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">Any Level</span>
             </label>
             <label class="cursor-pointer">
                 <input type="radio" name="difficulty" value="easy" class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">Easy</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">Easy</span>
             </label>
             <label class="cursor-pointer">
                 <input type="radio" name="difficulty" value="medium" class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">Medium</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">Medium</span>
             </label>
             <label class="cursor-pointer">
                 <input type="radio" name="difficulty" value="hard" class="peer sr-only">
-                <span class="ch-pill peer-checked:bg-[#2A4A30] peer-checked:text-white peer-checked:border-[#2A4A30]">Hard</span>
+                <span class="ch-pill peer-checked:bg-[#181D00] peer-checked:text-white peer-checked:border-[#181D00]">Hard</span>
             </label>
         </div>
     </div>
@@ -180,15 +180,15 @@ body { background: #FAF9F6 !important; }
 
             {# Icon + Status #}
             <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px;">
-                <div style="width:56px; height:56px; background:#F3F2EC; border:1px solid rgba(42,74,48,.10); border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0;">
+                <div style="width:56px; height:56px; background:#EAEAE5; border:1px solid rgba(24, 29, 0,.10); border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0;">
                     {{ challenge.badge_icon or '📜' }}
                 </div>
                 {% if is_completed %}
-                <div style="background:rgba(42,74,48,.12); color:#2A4A30; font-size:11px; font-weight:700; padding:6px 14px; border-radius:999px; border:1px solid rgba(42,74,48,.2); display:flex; align-items:center; gap:4px; text-transform:uppercase; letter-spacing:.5px; flex-shrink:0;">
+                <div style="background:rgba(24, 29, 0,.12); color:#181D00; font-size:11px; font-weight:700; padding:6px 14px; border-radius:999px; border:1px solid rgba(24, 29, 0,.2); display:flex; align-items:center; gap:4px; text-transform:uppercase; letter-spacing:.5px; flex-shrink:0;">
                     <i data-lucide="check" style="width:13px; height:13px;"></i> Done
                 </div>
                 {% else %}
-                {% set diff_color = '#2A4A30' if challenge.difficulty == 'Easy' else '#F59E0B' if challenge.difficulty == 'Medium' else '#EF4444' %}
+                {% set diff_color = '#181D00' if challenge.difficulty == 'Easy' else '#F59E0B' if challenge.difficulty == 'Medium' else '#EF4444' %}
                 <div style="font-size:11px; font-weight:700; color:{{ diff_color }}; background:{{ diff_color }}1A; padding:6px 14px; border-radius:999px; border:1px solid {{ diff_color }}33; text-transform:uppercase; letter-spacing:.5px;">{{ challenge.difficulty }}</div>
                 {% endif %}
             </div>
@@ -198,7 +198,7 @@ body { background: #FAF9F6 !important; }
             <p style="font-size:16px; color:#707070; line-height:1.6; margin-bottom:24px;">{{ challenge.description }}</p>
 
             {# Points badge #}
-            <div style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#2A4A30; background:rgba(42,74,48,.08); border:1px solid rgba(42,74,48,.12); padding:6px 16px; border-radius:999px; margin-bottom:24px;">
+            <div style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#181D00; background:rgba(24, 29, 0,.08); border:1px solid rgba(24, 29, 0,.12); padding:6px 16px; border-radius:999px; margin-bottom:24px;">
                 <i data-lucide="star" style="width:14px; height:14px; color:#EAB308;"></i>
                 {{ challenge.points }} pts
             </div>
@@ -214,15 +214,15 @@ body { background: #FAF9F6 !important; }
     </div>
 
     {# No results #}
-    <div id="noResults" class="hidden" style="padding:80px 24px; text-align:center; background:#F3F2EC; border-radius:28px; margin-top:32px;">
+    <div id="noResults" class="hidden" style="padding:80px 24px; text-align:center; background:#EAEAE5; border-radius:28px; margin-top:32px;">
         <i data-lucide="search-x" style="width:40px; height:40px; color:#707070; margin:0 auto 16px;"></i>
         <h3 style="font-size:24px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">No Challenges Found</h3>
         <p style="color:#707070; font-size:16px;">Try adjusting your search or filter.</p>
     </div>
 
     {% else %}
-    <div style="padding:80px 24px; text-align:center; background:#F3F2EC; border-radius:28px;">
-        <i data-lucide="target" style="width:40px; height:40px; color:#2A4A30; margin:0 auto 16px;"></i>
+    <div style="padding:80px 24px; text-align:center; background:#EAEAE5; border-radius:28px;">
+        <i data-lucide="target" style="width:40px; height:40px; color:#181D00; margin:0 auto 16px;"></i>
         <h3 style="font-size:24px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">No Active Challenges</h3>
         <p style="color:#707070; font-size:16px;">Check back soon for new missions!</p>
     </div>

@@ -10,10 +10,10 @@
 {% block dashboard_content %}
 <style>
 /* ── Teacher Dashboard — Homepage Editorial Layout ── */
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
-.td-section     { background: #FFFFFF; padding: 56px 24px; width: 100%; box-sizing: border-box; }
-.td-section-alt { background: #F3F2EC; padding: 56px 24px; width: 100%; box-sizing: border-box; }
+.td-section     { background: #F7F7F2; padding: 56px 24px; width: 100%; box-sizing: border-box; }
+.td-section-alt { background: #EAEAE5; padding: 56px 24px; width: 100%; box-sizing: border-box; }
 
 .td-inner { max-width: 1280px; margin: 0 auto; }
 
@@ -23,19 +23,19 @@ body { background: #FAF9F6 !important; }
 /* Cards */
 .td-card {
     min-width: 0; box-sizing: border-box;
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 24px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
     transition: border-color .2s, transform .2s;
 }
-.td-card:hover { border-color: rgba(42,74,48,.3); }
+.td-card:hover { border-color: rgba(24, 29, 0,.3); }
 
 /* Stat cards */
 .td-stat {
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 24px; padding: 28px;
 }
-.td-stat-val   { font-size: 40px; font-weight: 500; color: #2A4A30; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+.td-stat-val   { font-size: 40px; font-weight: 500; color: #181D00; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
 .td-stat-label { font-size: 12px; font-weight: 600; color: #707070; text-transform: uppercase; letter-spacing: .1em; }
 
 @media (min-width: 768px) {
@@ -110,7 +110,7 @@ body { background: #FAF9F6 !important; }
     <p class="premium-section-desc">High-level statistics for your enrolled students.</p>
 
     <div class="td-stat-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:16px;">
-        <div class="td-stat" style="background:#2A4A30; border-color:#2A4A30;">
+        <div class="td-stat" style="background:#181D00; border-color:#181D00;">
             <div class="td-stat-val" style="color:#FFFFFF;">{{ pending_verifications }}</div>
             <div class="td-stat-label" style="color:rgba(255,255,255,.65);">Needs Review</div>
             <div style="margin-top:10px; font-size:13px; color:rgba(255,255,255,.8); font-weight:600;">Pending submissions</div>
@@ -123,7 +123,7 @@ body { background: #FAF9F6 !important; }
         <div class="td-stat">
             <div class="td-stat-val">{{ total_points_awarded }}</div>
             <div class="td-stat-label">Total Impact</div>
-            <div style="margin-top:10px; font-size:13px; color:#2A4A30; font-weight:600;">Overall Eco Points</div>
+            <div style="margin-top:10px; font-size:13px; color:#181D00; font-weight:600;">Overall Eco Points</div>
         </div>
     </div>
 </div>
@@ -141,15 +141,15 @@ body { background: #FAF9F6 !important; }
         <div class="premium-card" style="display:flex; flex-direction:column; max-width: 100%;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
                 <h3 style="font-size:20px; font-weight:500; color:#1B1B1B;">Recent Student Activity</h3>
-                <a href="{{ url_for('teacher_profiles') }}" style="color:#2A4A30; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; text-decoration:none;">View All</a>
+                <a href="{{ url_for('teacher_profiles') }}" style="color:#181D00; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; text-decoration:none;">View All</a>
             </div>
 
             {% if recent_activity %}
             <div style="display:flex; flex-direction:column; gap:16px;">
                 {% for item in recent_activity %}
-                <div style="background:#F3F2EC; border:1px solid rgba(42,74,48,.1); border-radius:20px; padding:20px; display:flex; justify-content:space-between; align-items:center; transition:.2s; flex-wrap:wrap; gap:16px;">
+                <div style="background:#EAEAE5; border:1px solid rgba(24, 29, 0,.1); border-radius:20px; padding:20px; display:flex; justify-content:space-between; align-items:center; transition:.2s; flex-wrap:wrap; gap:16px;">
                     <div style="display:flex; align-items:center; gap:16px; flex:1; min-width:200px;">
-                        <img src="{{ url_for('static', filename='uploads/' + (item.user.profile_pic or 'default.png')) }}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(42,74,48,.1); flex-shrink:0;">
+                        <img src="{{ url_for('static', filename='uploads/' + (item.user.profile_pic or 'default.png')) }}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(24, 29, 0,.1); flex-shrink:0;">
                         <div style="min-width:0; flex:1;">
                             <h4 style="font-size:16px; font-weight:500; color:#1B1B1B; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ item.user.name }}</h4>
                             <p style="font-size:14px; color:#707070; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Submitted: <span style="font-weight:500;">{{ item.challenge.title }}</span></p>
@@ -157,7 +157,7 @@ body { background: #FAF9F6 !important; }
                     </div>
                     <div style="flex-shrink:0;">
                         {% if item.verified %}
-                        <span style="background:rgba(42,74,48,.08); color:#2A4A30; font-size:12px; font-weight:700; padding:6px 16px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; display:inline-block;">Approved</span>
+                        <span style="background:rgba(24, 29, 0,.08); color:#181D00; font-size:12px; font-weight:700; padding:6px 16px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; display:inline-block;">Approved</span>
                         {% else %}
                         <a href="{{ url_for('teacher_verify_challenges') }}" style="background:rgba(245,158,11,.1); color:#D97706; font-size:12px; font-weight:700; padding:6px 16px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; text-decoration:none; display:inline-block;">Needs Review</a>
                         {% endif %}
@@ -166,7 +166,7 @@ body { background: #FAF9F6 !important; }
                 {% endfor %}
             </div>
             {% else %}
-            <div style="padding:64px 24px; text-align:center; background:#F3F2EC; border-radius:20px;">
+            <div style="padding:64px 24px; text-align:center; background:#EAEAE5; border-radius:20px;">
                 <i data-lucide="inbox" style="width:48px; height:48px; color:#A1A1AA; margin:0 auto 16px;"></i>
                 <p style="font-size:16px; color:#707070; font-weight:500;">No recent activity in your class.</p>
             </div>
@@ -178,9 +178,9 @@ body { background: #FAF9F6 !important; }
             <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">Impact Trends</h3>
             <p style="font-size:14px; color:#707070; margin-bottom:32px;">Global points earned over time.</p>
             
-            <div style="width:100%; min-height:200px; display:flex; align-items:flex-end; gap:8px; padding-bottom:12px; border-bottom:1px solid rgba(42,74,48,.1);">
+            <div style="width:100%; min-height:200px; display:flex; align-items:flex-end; gap:8px; padding-bottom:12px; border-bottom:1px solid rgba(24, 29, 0,.1);">
                 {% for t in impact_trends %}
-                <div title="{{ t.points }} points earned" style="flex:1; width:100%; background:{% if t.is_today %}#2A4A30{% else %}rgba(42,74,48,.15){% endif %}; height:{{ t.height|default('5') }}%; min-height:4px; border-radius:8px 8px 0 0; position:relative; transition:.3s; cursor:pointer;" onmouseover="this.style.background='#355D3D';" onmouseout="this.style.background='{% if t.is_today %}#2A4A30{% else %}rgba(42,74,48,.15){% endif %}';">
+                <div title="{{ t.points }} points earned" style="flex:1; width:100%; background:{% if t.is_today %}#181D00{% else %}rgba(24, 29, 0,.15){% endif %}; height:{{ t.height|default('5') }}%; min-height:4px; border-radius:8px 8px 0 0; position:relative; transition:.3s; cursor:pointer;" onmouseover="this.style.background='#234A2B';" onmouseout="this.style.background='{% if t.is_today %}#181D00{% else %}rgba(24, 29, 0,.15){% endif %}';">
                 </div>
                 {% endfor %}
                 {% if not impact_trends %}
@@ -190,7 +190,7 @@ body { background: #FAF9F6 !important; }
             {% if impact_trends %}
             <div style="display:flex; justify-content:space-between; margin-top:12px; font-size:11px; font-weight:700; color:#707070; text-transform:uppercase; letter-spacing:.05em;">
                 {% for t in impact_trends %}
-                <span style="{% if t.is_today %}color:#2A4A30;{% endif %}">{{ t.day }}</span>
+                <span style="{% if t.is_today %}color:#181D00;{% endif %}">{{ t.day }}</span>
                 {% endfor %}
             </div>
             {% endif %}

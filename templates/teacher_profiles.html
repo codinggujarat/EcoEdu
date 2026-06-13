@@ -10,9 +10,9 @@
 {% block dashboard_content %}
 <style>
 /* ── Student Directory — Homepage Editorial Layout ── */
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
-.tp-section     { background: #FFFFFF; padding: 56px 24px; width: 100%; box-sizing: border-box; min-height: 50vh; }
+.tp-section     { background: #F7F7F2; padding: 56px 24px; width: 100%; box-sizing: border-box; min-height: 50vh; }
 .tp-inner       { max-width: 1000px; margin: 0 auto; }
 
 .tp-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
@@ -20,12 +20,12 @@ body { background: #FAF9F6 !important; }
 
 /* Search Bar */
 .tp-search {
-    width: 100%; height: 56px; background: #F3F2EC;
-    border: 1px solid rgba(42,74,48,.12); border-radius: 999px;
+    width: 100%; height: 56px; background: #EAEAE5;
+    border: 1px solid rgba(24, 29, 0,.12); border-radius: 999px;
     padding: 0 20px 0 52px; font-size: 15px; color: #1B1B1B;
     outline: none; transition: border-color .2s ease, background .2s ease;
 }
-.tp-search:focus { border-color: #2A4A30; background: #FFFFFF; }
+.tp-search:focus { border-color: #181D00; background: #F7F7F2; }
 .tp-search::placeholder { color: #A1A1AA; }
 
 .premium-btn {
@@ -34,7 +34,7 @@ body { background: #FAF9F6 !important; }
     align-items: center;
     justify-content: center;
     padding: 0 32px;
-    background: #2A4A30;
+    background: #181D00;
     color: #FFFFFF;
     border-radius: 999px;
     font-weight: 500;
@@ -44,13 +44,13 @@ body { background: #FAF9F6 !important; }
     border: none;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 12px rgba(42,74,48,0.1);
+    box-shadow: 0 4px 12px rgba(24, 29, 0,0.1);
 }
 
 .premium-btn:hover {
-    background: #355D3D;
+    background: #234A2B;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(42,74,48,0.15);
+    box-shadow: 0 6px 16px rgba(24, 29, 0,0.15);
 }
 
 .premium-btn-secondary {
@@ -59,7 +59,7 @@ body { background: #FAF9F6 !important; }
     align-items: center;
     justify-content: center;
     padding: 0 24px;
-    background: #F3F2EC;
+    background: #EAEAE5;
     color: #707070;
     border-radius: 999px;
     font-weight: 500;
@@ -67,7 +67,7 @@ body { background: #FAF9F6 !important; }
     font-size: 15px;
     letter-spacing: 0.3px;
     text-decoration: none;
-    border: 1px solid rgba(42,74,48,0.08);
+    border: 1px solid rgba(24, 29, 0,0.08);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -82,23 +82,23 @@ body { background: #FAF9F6 !important; }
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
 }
 .tp-card {
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 20px; padding: 16px;
     display: flex; flex-direction: column; align-items: center; text-align: center;
     transition: border-color .2s, transform .2s; text-decoration: none; color: inherit;
 }
-.tp-card:hover { border-color: rgba(42,74,48,.3); transform: translateY(-4px); }
+.tp-card:hover { border-color: rgba(24, 29, 0,.3); transform: translateY(-4px); }
 
 .tp-avatar-wrap { position:relative; margin-bottom:12px; flex-shrink:0; }
-.tp-avatar { width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid rgba(42,74,48,.1); }
-.tp-lv-badge { position:absolute; bottom:-4px; right:-8px; background:#FFFFFF; border:1px solid rgba(42,74,48,.1); border-radius:999px; padding:2px 6px; font-size:10px; font-weight:700; color:#2A4A30; box-shadow:0 2px 4px rgba(0,0,0,.05); }
+.tp-avatar { width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid rgba(24, 29, 0,.1); }
+.tp-lv-badge { position:absolute; bottom:-4px; right:-8px; background:#F7F7F2; border:1px solid rgba(24, 29, 0,.1); border-radius:999px; padding:2px 6px; font-size:10px; font-weight:700; color:#181D00; box-shadow:0 2px 4px rgba(0,0,0,.05); }
 
 .tp-info-wrap { width:100%; min-width:0; }
 .tp-name { font-size:15px; font-weight:600; color:#1B1B1B; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .tp-school { font-size:11px; color:#707070; margin-bottom:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-.tp-xp-wrap { width:100%; background:rgba(42,74,48,.05); border-radius:12px; padding:8px; display:flex; justify-content:center; align-items:center; gap:4px; margin-top:auto; flex-shrink:0; }
-.tp-xp-val { font-size:14px; font-weight:700; color:#2A4A30; }
+.tp-xp-wrap { width:100%; background:rgba(24, 29, 0,.05); border-radius:12px; padding:8px; display:flex; justify-content:center; align-items:center; gap:4px; margin-top:auto; flex-shrink:0; }
+.tp-xp-val { font-size:14px; font-weight:700; color:#181D00; }
 .tp-xp-lbl { font-size:10px; font-weight:700; color:#707070; text-transform:uppercase; }
 
 /* Desktop overrides: List format */
@@ -116,17 +116,17 @@ body { background: #FAF9F6 !important; }
     .tp-name { font-size: 16px; margin-bottom: 4px; }
     .tp-school { font-size: 13px; margin-bottom: 0; }
     
-    .tp-xp-wrap { width: auto; margin-top: 0; padding: 10px 20px; background: rgba(42,74,48,.08); border: 1px solid rgba(42,74,48,.1); border-radius: 999px; }
+    .tp-xp-wrap { width: auto; margin-top: 0; padding: 10px 20px; background: rgba(24, 29, 0,.08); border: 1px solid rgba(24, 29, 0,.1); border-radius: 999px; }
     .tp-xp-val { font-size: 16px; }
 }
 
 .tp-btn {
-    height: 40px; background: #F3F2EC; color: #1B1B1B;
+    height: 40px; background: #EAEAE5; color: #1B1B1B;
     border-radius: 999px; padding: 0 20px; font-size: 13px; font-weight: 600;
-    border: 1px solid rgba(42,74,48,.1); cursor: pointer; transition: background .2s;
+    border: 1px solid rgba(24, 29, 0,.1); cursor: pointer; transition: background .2s;
     display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
 }
-.tp-btn:hover { background: rgba(42,74,48,.1); }
+.tp-btn:hover { background: rgba(24, 29, 0,.1); }
 
 @media (min-width: 768px) {
     .tp-section { padding: 56px 48px; }
@@ -231,7 +231,7 @@ body { background: #FAF9F6 !important; }
             {% endfor %}
         </div>
     {% else %}
-        <div style="padding:80px 24px; text-align:center; background:#F3F2EC; border-radius:28px;">
+        <div style="padding:80px 24px; text-align:center; background:#EAEAE5; border-radius:28px;">
             <i data-lucide="users" style="width:48px; height:48px; color:#A1A1AA; margin:0 auto 16px;"></i>
             <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">No students found</h3>
             <p style="font-size:15px; color:#707070;">Try adjusting your search query.</p>

@@ -1,12 +1,12 @@
 <!-- Mobile Toggle -->
-<button id="mobile-menu-toggle" class="lg:hidden fixed top-4 left-4 z-[90] w-10 h-10 flex items-center justify-center rounded-xl text-[#1B1B1B]" style="background:#FFFFFF; border:1px solid rgba(42,74,48,0.10);">
+<button id="mobile-menu-toggle" class="lg:hidden fixed top-4 left-4 z-[90] w-10 h-10 flex items-center justify-center rounded-xl text-[#1B1B1B]" style="background:#F7F7F2; border:1px solid rgba(24, 29, 0,0.10);">
     <i data-lucide="menu" class="w-5 h-5"></i>
 </button>
 <div id="mobile-sidebar-overlay" class="fixed inset-0 z-[80] hidden lg:hidden" style="background:rgba(10,10,10,0.85); backdrop-filter:blur(4px);"></div>
 
 <!-- FLUSH CUTOUT SIDEBAR -->
 <aside id="sidebar-container" class="hidden lg:flex flex-col fixed inset-y-0 left-0 z-[90] transition-transform duration-300" 
-       style="width: 320px; background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset -1px 0 0 rgba(0,0,0,0.1);">
+       style="width: 320px; background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset -1px 0 0 rgba(0,0,0,0.1);">
     
     <!-- Top Header -->
     <div style="display: flex; height: 140px; align-items: center; padding-top: 32px; flex-shrink: 0;">
@@ -160,7 +160,7 @@
     right: 0;
     width: calc(100% - 92px);
     height: 58px;
-    background: #FAF9F6;
+    background: #F7F7F2;
     border-radius: 40px 0 0 40px;
     z-index: 0;
     pointer-events: none;
@@ -178,11 +178,11 @@
 }
 #floating-pill::before {
     top: -40px;
-    background: radial-gradient(circle at top left, transparent 40px, #FAF9F6 40px);
+    background: radial-gradient(circle at top left, transparent 40px, #F7F7F2 40px);
 }
 #floating-pill::after {
     bottom: -40px;
-    background: radial-gradient(circle at bottom left, transparent 40px, #FAF9F6 40px);
+    background: radial-gradient(circle at bottom left, transparent 40px, #F7F7F2 40px);
 }
 
 #floating-indicator {
@@ -190,7 +190,7 @@
     left: 0;
     width: 4px;
     height: 36px;
-    background: #FFFFFF;
+    background: #F7F7F2;
     border-radius: 0 4px 4px 0;
     z-index: 10;
     pointer-events: none;
@@ -204,7 +204,7 @@
     z-index: 1;
 }
 .nav-row.active .text-part {
-    color: #2A4A30;
+    color: #181D00;
     font-weight: 600;
 }
 

@@ -10,17 +10,17 @@
 {% block dashboard_content %}
 <style>
 /* ── Leaderboard Page — Homepage Editorial Layout ── */
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
 /* Responsive Containers */
 .lb-wrapper { max-width: 900px; margin: 0 auto; width: 100%; padding: 0 24px; }
 
 /* Responsive User Card */
 .user-card {
-    background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%);
+    background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%);
     border-radius: 24px; padding: 32px;
     display: flex; align-items: center; justify-content: space-between; gap: 32px;
-    box-shadow: 0 12px 40px rgba(42,74,48,.2); color: white;
+    box-shadow: 0 12px 40px rgba(24, 29, 0,.2); color: white;
     margin-bottom: 16px;
 }
 .user-card-profile {
@@ -53,16 +53,16 @@ body { background: #FAF9F6 !important; }
 .podium-bar {
     width: 100%; border-radius: 20px 20px 0 0; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700;
 }
-.podium-col.rank-3 .podium-bar { height: 130px; background: rgba(42,74,48,.08); color: #2A4A30; }
-.podium-col.rank-2 .podium-bar { height: 170px; background: rgba(42,74,48,.12); color: #2A4A30; }
-.podium-col.rank-1 .podium-bar { height: 230px; background: linear-gradient(135deg, #173D25 0%, #4F8A5B 100%); color: white; box-shadow: 0 16px 40px rgba(42,74,48,.25); }
+.podium-col.rank-3 .podium-bar { height: 130px; background: rgba(24, 29, 0,.08); color: #181D00; }
+.podium-col.rank-2 .podium-bar { height: 170px; background: rgba(24, 29, 0,.12); color: #181D00; }
+.podium-col.rank-1 .podium-bar { height: 230px; background: linear-gradient(135deg, #181D00 0%, #2A4A30 100%); color: white; box-shadow: 0 16px 40px rgba(24, 29, 0,.25); }
 
 /* Responsive List */
 .list-row {
     display: flex; align-items: center; justify-content: space-between; padding: 24px 0;
     border-bottom: 1px solid rgba(0,0,0,.05); transition: background .2s; border-radius: 12px;
 }
-.list-row:hover { background: rgba(42,74,48,.02); padding-left: 16px; padding-right: 16px; }
+.list-row:hover { background: rgba(24, 29, 0,.02); padding-left: 16px; padding-right: 16px; }
 
 @media (max-width: 639px) {
     .lb-wrapper { padding: 0 16px; }
@@ -164,7 +164,7 @@ body { background: #FAF9F6 !important; }
                 </div>
             </div>
             <div>
-                <i data-lucide="crown" style="width:36px; height:36px; color:#2A4A30; fill:rgba(42,74,48,0.15);"></i>
+                <i data-lucide="crown" style="width:36px; height:36px; color:#181D00; fill:rgba(24, 29, 0,0.15);"></i>
             </div>
         </div>
         {% endfor %}

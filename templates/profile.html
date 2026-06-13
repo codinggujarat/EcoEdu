@@ -10,10 +10,10 @@
 {% block dashboard_content %}
 <style>
 /* ── Profile Page — Homepage Editorial Layout ── */
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
-.pf-section     { background: #FFFFFF; padding: 56px 24px; width: 100%; }
-.pf-section-alt { background: #F3F2EC; padding: 56px 24px; width: 100%; }
+.pf-section     { background: #F7F7F2; padding: 56px 24px; width: 100%; }
+.pf-section-alt { background: #EAEAE5; padding: 56px 24px; width: 100%; }
 .pf-inner       { max-width: 1100px; margin: 0 auto; }
 
 .pf-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
@@ -21,7 +21,7 @@ body { background: #FAF9F6 !important; }
 
 /* Card — homepage edit-card */
 .pf-card {
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 36px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
 }
@@ -29,30 +29,30 @@ body { background: #FAF9F6 !important; }
 /* Input */
 .pf-label { font-size: 13px; font-weight: 600; color: #707070; margin-bottom: 8px; display: block; }
 .pf-input {
-    width: 100%; height: 56px; background: #FAF9F6;
-    border: 1px solid rgba(42,74,48,.10); border-radius: 16px;
+    width: 100%; height: 56px; background: #F7F7F2;
+    border: 1px solid rgba(24, 29, 0,.10); border-radius: 16px;
     padding: 0 20px; font-size: 15px; font-weight: 500; color: #1B1B1B;
     outline: none; transition: border-color .2s;
 }
-.pf-input:focus { border-color: #2A4A30; }
-.pf-input:disabled { background: #F3F2EC; color: #707070; cursor: not-allowed; }
+.pf-input:focus { border-color: #181D00; }
+.pf-input:disabled { background: #EAEAE5; color: #707070; cursor: not-allowed; }
 
 /* Buttons */
 .pf-btn-primary {
-    height: 56px; background: #2A4A30; color: #FFFFFF;
+    height: 56px; background: #181D00; color: #FFFFFF;
     border-radius: 999px; padding: 0 32px; font-size: 15px; font-weight: 600;
     border: none; cursor: pointer; transition: background .2s, transform .15s;
     display: inline-flex; align-items: center; text-decoration: none;
 }
-.pf-btn-primary:hover { background: #355D3D; transform: translateY(-1px); }
+.pf-btn-primary:hover { background: #234A2B; transform: translateY(-1px); }
 
 .pf-btn-secondary {
     height: 56px; background: transparent; color: #1B1B1B;
     border-radius: 999px; padding: 0 28px; font-size: 15px; font-weight: 600;
-    border: 1px solid rgba(42,74,48,.15); cursor: pointer; transition: border-color .2s;
+    border: 1px solid rgba(24, 29, 0,.15); cursor: pointer; transition: border-color .2s;
     display: inline-flex; align-items: center; text-decoration: none;
 }
-.pf-btn-secondary:hover { border-color: rgba(42,74,48,.4); }
+.pf-btn-secondary:hover { border-color: rgba(24, 29, 0,.4); }
 
 .pf-btn-danger {
     height: 56px; background: transparent; color: #EF4444;
@@ -99,25 +99,25 @@ body { background: #FAF9F6 !important; }
 
         <div>
             <h3 style="font-size:26px; font-weight:500; color:#1B1B1B; margin-bottom:4px; letter-spacing:-0.01em;">{{ current_user.name }}</h3>
-            <span style="background:rgba(42,74,48,.12); color:#2A4A30; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; display:inline-block; margin-bottom:8px;">{{ current_user.role | capitalize }}</span>
+            <span style="background:rgba(24, 29, 0,.12); color:#181D00; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; display:inline-block; margin-bottom:8px;">{{ current_user.role | capitalize }}</span>
             <p style="font-size:15px; color:#707070;">{{ current_user.school or 'EduEco Academy' }}</p>
         </div>
 
         {# Level progress #}
         {% if current_user.role == 'student' %}
-        <div style="background:#FFFFFF; border:1px solid rgba(42,74,48,.10); border-radius:20px; padding:20px 24px; width:100%;">
+        <div style="background:#F7F7F2; border:1px solid rgba(24, 29, 0,.10); border-radius:20px; padding:20px 24px; width:100%;">
             <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:10px;">
                 <span style="color:#707070;">Level {{ current_user.level }}</span>
                 <span style="color:#1B1B1B;">{{ current_user.eco_points }} XP</span>
             </div>
-            <div style="width:100%; height:8px; background:rgba(42,74,48,.10); border-radius:999px; overflow:hidden;">
-                <div style="width:{{ (current_user.eco_points % 100) }}%; height:100%; background:#2A4A30; border-radius:999px; transition:width .5s;"></div>
+            <div style="width:100%; height:8px; background:rgba(24, 29, 0,.10); border-radius:999px; overflow:hidden;">
+                <div style="width:{{ (current_user.eco_points % 100) }}%; height:100%; background:#181D00; border-radius:999px; transition:width .5s;"></div>
             </div>
         </div>
         {% endif %}
 
         <button type="button" onclick="document.getElementById('profile_pic_input').click()"
-                style="height:48px; background:rgba(42,74,48,.08); border:1px solid rgba(42,74,48,.12); border-radius:999px; padding:0 28px; font-size:15px; font-weight:600; color:#1B1B1B; cursor:pointer; transition:.2s ease; width:100%;">
+                style="height:48px; background:rgba(24, 29, 0,.08); border:1px solid rgba(24, 29, 0,.12); border-radius:999px; padding:0 28px; font-size:15px; font-weight:600; color:#1B1B1B; cursor:pointer; transition:.2s ease; width:100%;">
             Change Photo
         </button>
     </div>

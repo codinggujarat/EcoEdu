@@ -10,9 +10,9 @@
 {% block dashboard_content %}
 <style>
 /* ── Complete Challenge Page — Homepage Editorial Layout ── */
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
-.cc-section { background: #FFFFFF; padding: 56px 24px; width: 100%; min-height: 50vh; }
+.cc-section { background: #F7F7F2; padding: 56px 24px; width: 100%; min-height: 50vh; }
 .cc-inner   { max-width: 1000px; margin: 0 auto; }
 
 .cc-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
@@ -21,45 +21,45 @@ body { background: #FAF9F6 !important; }
 /* Card */
 .cc-card {
     min-width: 0; box-sizing: border-box;
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 36px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02); margin-bottom: 24px;
 }
 
 /* Editor */
 .ql-container {
-    border: 1px solid rgba(42,74,48,.10) !important;
+    border: 1px solid rgba(24, 29, 0,.10) !important;
     border-radius: 0 0 16px 16px !important;
     font-family: inherit !important;
     font-size: 16px !important;
     min-height: 200px;
-    background: #FAF9F6;
+    background: #F7F7F2;
 }
 .ql-toolbar {
-    border: 1px solid rgba(42,74,48,.10) !important;
+    border: 1px solid rgba(24, 29, 0,.10) !important;
     border-bottom: none !important;
     border-radius: 16px 16px 0 0 !important;
-    background: #FFFFFF;
+    background: #F7F7F2;
 }
 .ql-editor { color: #1B1B1B; }
 .ql-editor::before { color: #A1A1AA !important; font-style: normal !important; }
 
 /* Buttons */
 .cc-btn-primary {
-    height: 56px; background: #2A4A30; color: #FFFFFF;
+    height: 56px; background: #181D00; color: #FFFFFF;
     border-radius: 999px; padding: 0 32px; font-size: 15px; font-weight: 600;
     border: none; cursor: pointer; transition: background .2s, transform .15s;
     display: inline-flex; align-items: center; justify-content: center; text-decoration: none; width: 100%;
 }
-.cc-btn-primary:hover { background: #355D3D; transform: translateY(-1px); }
+.cc-btn-primary:hover { background: #234A2B; transform: translateY(-1px); }
 
 .cc-btn-secondary {
     height: 56px; background: transparent; color: #1B1B1B;
     border-radius: 999px; padding: 0 28px; font-size: 15px; font-weight: 600;
-    border: 1px solid rgba(42,74,48,.15); cursor: pointer; transition: border-color .2s;
+    border: 1px solid rgba(24, 29, 0,.15); cursor: pointer; transition: border-color .2s;
     display: inline-flex; align-items: center; justify-content: center; text-decoration: none; width: 100%;
 }
-.cc-btn-secondary:hover { border-color: rgba(42,74,48,.4); }
+.cc-btn-secondary:hover { border-color: rgba(24, 29, 0,.4); }
 
 @media (min-width: 768px) {
     .cc-section { padding: 56px 48px; }
@@ -76,10 +76,10 @@ body { background: #FAF9F6 !important; }
     <div style="display:grid; grid-template-columns: 1fr; gap: 32px;">
         
         {# Challenge Details #}
-        <div class="cc-card" style="background:#F3F2EC;">
+        <div class="cc-card" style="background:#EAEAE5;">
             <div style="display:flex; align-items:flex-start; gap:20px; margin-bottom:16px;">
-                <div style="width:56px; height:56px; background:#FFFFFF; border:1px solid rgba(42,74,48,.1); border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                    <i data-lucide="leaf" style="width:24px; height:24px; color:#2A4A30;"></i>
+                <div style="width:56px; height:56px; background:#F7F7F2; border:1px solid rgba(24, 29, 0,.1); border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <i data-lucide="leaf" style="width:24px; height:24px; color:#181D00;"></i>
                 </div>
                 <div>
                     <h2 style="font-size:24px; font-weight:500; color:#1B1B1B; margin-bottom:8px; letter-spacing:-0.01em;">{{ challenge.title }}</h2>
@@ -87,19 +87,19 @@ body { background: #FAF9F6 !important; }
                 </div>
             </div>
 
-            <div style="display:flex; gap:16px; margin-top:24px; padding-top:24px; border-top:1px solid rgba(42,74,48,.1);">
-                <div style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#2A4A30; background:rgba(42,74,48,.08); padding:6px 16px; border-radius:999px;">
+            <div style="display:flex; gap:16px; margin-top:24px; padding-top:24px; border-top:1px solid rgba(24, 29, 0,.1);">
+                <div style="display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#181D00; background:rgba(24, 29, 0,.08); padding:6px 16px; border-radius:999px;">
                     <i data-lucide="star" style="width:16px; height:16px;"></i>
                     {{ challenge.points }} XP Reward
                 </div>
-                {% set diff_color = '#2A4A30' if challenge.difficulty == 'Easy' else '#F59E0B' if challenge.difficulty == 'Medium' else '#EF4444' %}
+                {% set diff_color = '#181D00' if challenge.difficulty == 'Easy' else '#F59E0B' if challenge.difficulty == 'Medium' else '#EF4444' %}
                 <div style="font-size:13px; font-weight:700; color:{{ diff_color }}; background:{{ diff_color }}1A; padding:6px 16px; border-radius:999px; text-transform:uppercase; display:inline-flex; align-items:center;">
                     {{ challenge.difficulty }}
                 </div>
             </div>
 
             {% if challenge.instructions %}
-            <div style="margin-top:24px; background:#FFFFFF; padding:24px; border-radius:20px; border:1px solid rgba(42,74,48,.1);">
+            <div style="margin-top:24px; background:#F7F7F2; padding:24px; border-radius:20px; border:1px solid rgba(24, 29, 0,.1);">
                 <h4 style="font-size:13px; font-weight:700; color:#1B1B1B; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px;">Instructions</h4>
                 <div style="font-size:15px; color:#707070; white-space:pre-wrap; line-height:1.6;">{{ challenge.instructions }}</div>
             </div>

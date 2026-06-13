@@ -1,6 +1,6 @@
 <!-- BOTTOM NAVIGATION BAR (MOBILE ONLY) -->
 <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-[100] flex items-end justify-between" 
-     style="background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); height: 72px; padding: 0 16px; box-shadow: 0 -10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);">
+     style="background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); height: 72px; padding: 0 16px; box-shadow: 0 -10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);">
     
     <div id="bottom-floating-pill"></div>
     
@@ -85,7 +85,7 @@
     top: 0;
     bottom: 0;
     width: 60px; /* Compact width */
-    background: #FAF9F6;
+    background: #F7F7F2;
     border-radius: 0 0 24px 24px; /* Tighter bottom curve */
     z-index: 5;
     transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Snappy smooth transition */
@@ -101,7 +101,7 @@
     left: -16px;
     width: 16px;
     height: 16px;
-    background: radial-gradient(circle at bottom left, transparent 16px, #FAF9F6 16px);
+    background: radial-gradient(circle at bottom left, transparent 16px, #F7F7F2 16px);
     pointer-events: none;
 }
 
@@ -112,16 +112,16 @@
     right: -16px;
     width: 16px;
     height: 16px;
-    background: radial-gradient(circle at bottom right, transparent 16px, #FAF9F6 16px);
+    background: radial-gradient(circle at bottom right, transparent 16px, #F7F7F2 16px);
     pointer-events: none;
 }
 
 /* Active State Styles */
 .bottom-nav-item.active {
-    color: #2A4A30;
+    color: #181D00;
     font-weight: 600;
 }
-.bottom-nav-item.active i { color: #2A4A30; }
+.bottom-nav-item.active i { color: #181D00; }
 .bottom-nav-item.active span { font-weight: 600; font-size: 11px; } /* Slightly larger when active */
 
 /* Avatar */

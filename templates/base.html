@@ -36,15 +36,15 @@
  card: '#121212',
  hover: '#1B1B1B',
  sidebar: '#0A0A0A',
- border: 'rgba(42,74,48,0.10)',
+ border: 'rgba(24, 29, 0,0.10)',
  },
  brand: {
- DEFAULT: '#2A4A30',
- 500: '#2A4A30',
- 600: '#355D3D',
- soft: 'rgba(42,74,48,0.10)',
+ DEFAULT: '#181D00',
+ 500: '#181D00',
+ 600: '#234A2B',
+ soft: 'rgba(24, 29, 0,0.10)',
  border: 'rgba(34,197,94,0.20)',
- active: 'rgba(42,74,48,0.20)',
+ active: 'rgba(24, 29, 0,0.20)',
  },
  text: {
  primary: '#1B1B1B',
@@ -53,7 +53,7 @@
  placeholder: '#A1A1AA',
  },
  status: {
- success: '#2A4A30',
+ success: '#181D00',
  warning: '#F59E0B',
  error: '#EF4444',
  }
@@ -72,14 +72,14 @@
     ECOEDU GLOBAL DESIGN TOKENS
     ====================================================== */
  :root {
-   --color-bg:           #FAF9F6;
+   --color-bg:           #F7F7F2;
    --color-surface:      #FFFFFF;
-   --color-secondary:    #F3F2EC;
-   --color-primary:      #2A4A30;
-   --color-primary-h:    #355D3D;
+   --color-secondary:    #EAEAE5;
+   --color-primary:      #181D00;
+   --color-primary-h:    #234A2B;
    --color-text:         #1B1B1B;
    --color-muted:        #707070;
-   --color-border:       rgba(42,74,48,.10);
+   --color-border:       rgba(24, 29, 0,.10);
    --shadow-card:        0 10px 40px rgba(0,0,0,.05);
    --radius-hero:        40px;
    --radius-card:        28px;
@@ -99,7 +99,7 @@
  .podium-card.rank-2 .podium-rank-badge { border-color:#94A3B8; color:#94A3B8; }
  .podium-card.rank-3 .podium-rank-badge { border-color:#B45309; color:#B45309; }
  /* XP Pill */
- .xp-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(42,74,48,.08); border:1px solid var(--color-border); border-radius:999px; padding:6px 16px; font-size:14px; font-weight:700; color:var(--color-primary); }
+ .xp-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(24, 29, 0,.08); border:1px solid var(--color-border); border-radius:999px; padding:6px 16px; font-size:14px; font-weight:700; color:var(--color-primary); }
  .xp-pill.accent { background:var(--color-primary); color:#FFFFFF; border-color:var(--color-primary); }
  /* Featured Achievement Banner */
  .featured-achievement { background:var(--color-secondary); border:1px solid var(--color-border); border-radius:28px; padding:40px; display:flex; align-items:center; gap:32px; margin-bottom:40px; flex-wrap:wrap; }
@@ -110,7 +110,7 @@
  .filter-pill.active { background:var(--color-primary); color:#FFFFFF; border-color:var(--color-primary); }
  body {
 
- background-color: #FAF9F6;
+ background-color: #F7F7F2;
  color: #1B1B1B;
  font-family: 'General Sans', sans-serif;
  -webkit-font-smoothing: antialiased;
@@ -137,9 +137,9 @@
 
  /* Custom Scrollbar */
  ::-webkit-scrollbar { width: 6px; height: 6px; }
- ::-webkit-scrollbar-track { background: #FAF9F6; }
- ::-webkit-scrollbar-thumb { background: rgba(42,74,48,0.15); border-radius: 4px; }
- ::-webkit-scrollbar-thumb:hover { background: rgba(42,74,48,0.25); }
+ ::-webkit-scrollbar-track { background: #F7F7F2; }
+ ::-webkit-scrollbar-thumb { background: rgba(24, 29, 0,0.15); border-radius: 4px; }
+ ::-webkit-scrollbar-thumb:hover { background: rgba(24, 29, 0,0.25); }
 
  /* ============ PREMIUM SAAS SECTION & CARD SYSTEM ============ */
  .premium-section {
@@ -154,7 +154,7 @@
  }
  
  .premium-card {
-     background: #FFFFFF;
+     background: #F7F7F2;
      border-radius: 24px;
      border: 1px solid rgba(0, 0, 0, 0.04);
      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
@@ -172,7 +172,7 @@
  .premium-section-title {
      font-size: 28px;
      font-weight: 600;
-     color: #1F4D36;
+     color: #234A2B;
      letter-spacing: -0.02em;
      margin-bottom: 8px;
      line-height: 1.2;
@@ -197,7 +197,7 @@
 
  /* ============ PREMIUM HERO — EDITORIAL GRID SYSTEM ============ */
  .premium-hero {
-   background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%);
+   background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%);
    border-radius: 0 0 24px 24px;
    margin: 0 16px 24px 16px;
    padding: 32px 24px;
@@ -316,8 +316,8 @@
    height: 54px;
    padding: 0 28px;
    border-radius: 999px;
-   background: #FFFFFF;
-   color: #2A4A30;
+   background: #F7F7F2;
+   color: #181D00;
    font-size: 15px;
    font-weight: 600;
    text-decoration: none;
@@ -333,18 +333,18 @@
    }
  }
  .hero-cta:hover {
-   background: #F3F2EC;
+   background: #EAEAE5;
    transform: translateY(-1px);
  }
 
  .premium-card:hover {
- border-color: rgba(42,74,48,0.10);
- background: #FFFFFF; box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+ border-color: rgba(24, 29, 0,0.10);
+ background: #F7F7F2; box-shadow: 0 12px 40px rgba(0,0,0,0.05);
  transform: translateY(-2px);
  }
 
  .btn-primary {
- background-color: #2A4A30;
+ background-color: #181D00;
  color: #1B1B1B;
  height: 56px;
  border-radius: 999px;
@@ -358,7 +358,7 @@
  }
 
  .btn-primary:hover {
- background-color: #355D3D;
+ background-color: #234A2B;
  transform: translateY(-1px);
  }
 
@@ -367,7 +367,7 @@
  color: #1B1B1B;
  height: 56px;
  border-radius: 999px;
- border: 1px solid rgba(42,74,48,0.10);
+ border: 1px solid rgba(24, 29, 0,0.10);
  padding: 0 28px;
  display: inline-flex;
  align-items: center;
@@ -378,16 +378,16 @@
  }
 
  .btn-secondary:hover {
- border-color: #2A4A30;
- color: #2A4A30;
+ border-color: #181D00;
+ color: #181D00;
  transform: translateY(-1px);
  }
 
  .premium-input {
  height: 42px;
  border-radius: 12px;
- background: #FFFFFF;
- border: 1px solid rgba(42,74,48,0.10);
+ background: #F7F7F2;
+ border: 1px solid rgba(24, 29, 0,0.10);
  padding: 0 14px;
  color: #1B1B1B;
  font-size: 14px;
@@ -398,7 +398,7 @@
  .premium-input:focus {
  outline: none;
  border-color: rgba(34,197,94,0.5);
- background: #F3F2EC;
+ background: #EAEAE5;
  }
 
  .premium-input::placeholder {
@@ -458,7 +458,7 @@
  .progress-bar-track {
  width: 100%;
  height: 6px;
- background: rgba(42,74,48,0.10);
+ background: rgba(24, 29, 0,0.10);
  border-radius: 999px;
  overflow: hidden;
  }
@@ -554,7 +554,7 @@
 
  <!-- Navigation -->
  {% if not current_user.is_authenticated %}
- <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-[#2A4A30]/10 transition-all duration-300">
+ <nav class="fixed top-0 left-0 right-0 z-50 bg-[#F7F7F2]/90 backdrop-blur-md border-b border-[#181D00]/10 transition-all duration-300">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div class="flex items-center justify-between h-[72px]">
  <!-- Logo -->
@@ -582,7 +582,7 @@
  {% endif %}
 
  <a href="{{ url_for('profile') }}"
- class="group flex items-center gap-3 pl-6 border-l border-[#2A4A30]/10 ml-2">
+ class="group flex items-center gap-3 pl-6 border-l border-[#181D00]/10 ml-2">
  <div class="hidden md:block text-right">
  <p class="text-sm font-semibold text-text-primary group-hover:text-brand-500 transition-colors">{{
  current_user.name }}</p>
@@ -590,7 +590,7 @@
  current_user.role | capitalize }}</p>
  </div>
  <div
- class="w-10 h-10 rounded-full bg-[#FFFFFF] border border-[#2A4A30]/10 group-hover:border-brand-500 transition-colors cursor-pointer">
+ class="w-10 h-10 rounded-full bg-[#FFFFFF] border border-[#181D00]/10 group-hover:border-brand-500 transition-colors cursor-pointer">
  <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
  onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
  alt="Profile" class="w-full h-full object-cover rounded-full">
@@ -621,7 +621,7 @@
  </div>
 
  <!-- Mobile Menu -->
- <div id="mobile-menu" class="hidden md:hidden border-t border-[#2A4A30]/10 bg-[#FAF9F6]">
+ <div id="mobile-menu" class="hidden md:hidden border-t border-[#181D00]/10 bg-[#F7F7F2]">
  <div class="px-4 pt-2 pb-6 space-y-1">
  {% if current_user.is_authenticated %}
  {% if current_user.role == 'admin' %}
@@ -662,7 +662,7 @@
  <div class="fixed top-24 right-6 z-50 flex flex-col gap-3 pointer-events-none">
  {% for category, message in messages %}
  <div
- class="pointer-events-auto bg-[#FFFFFF] border border-[#2A4A30]/10 shadow-premium rounded-2xl p-4 flex items-start gap-3 w-80 animate-slide-in">
+ class="pointer-events-auto bg-[#FFFFFF] border border-[#181D00]/10 shadow-premium rounded-2xl p-4 flex items-start gap-3 w-80 animate-slide-in">
  {% if category == 'success' %}
  <div class="w-8 h-8 rounded-full bg-status-success/10 flex items-center justify-center text-status-success shrink-0">
  <i data-lucide="check" class="w-5 h-5"></i>
@@ -719,7 +719,7 @@
   }
 
   .edit-dashboard-section-alt {
-      background-color: #F3F2EC;
+      background-color: #EAEAE5;
       padding: 48px 0;
       width: 100%;
   }

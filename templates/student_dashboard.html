@@ -17,11 +17,11 @@
    Full-width alternating bands, same as index.html
    ════════════════════════════════════════════════════════════ */
 
-body { background: #FAF9F6 !important; }
+body { background: #F7F7F2 !important; }
 
 /* Section bands — identical to homepage */
-.premium-section     { background: #FFFFFF; padding: 56px 24px; width: 100%; box-sizing: border-box; }
-.premium-section { background: #F3F2EC; padding: 56px 24px; width: 100%; box-sizing: border-box; }
+.premium-section     { background: #F7F7F2; padding: 56px 24px; width: 100%; box-sizing: border-box; }
+.premium-section { background: #EAEAE5; padding: 56px 24px; width: 100%; box-sizing: border-box; }
 
 /* Inner container — same max-width as homepage edit-section */
 .db-inner { max-width: 1280px; margin: 0 auto; }
@@ -36,19 +36,19 @@ body { background: #FAF9F6 !important; }
 /* Cards — same as homepage edit-card */
 .premium-card {
     min-width: 0; box-sizing: border-box;
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 24px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
     transition: border-color .2s, transform .2s;
 }
-.db-card:hover { border-color: rgba(42,74,48,.3); }
+.db-card:hover { border-color: rgba(24, 29, 0,.3); }
 
 /* Stat cards */
 .db-stat {
-    background: #FFFFFF; border: 1px solid rgba(42,74,48,.10);
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 24px; padding: 28px;
 }
-.db-stat-val   { font-size: 40px; font-weight: 500; color: #2A4A30; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+.db-stat-val   { font-size: 40px; font-weight: 500; color: #181D00; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
 .db-stat-label { font-size: 12px; font-weight: 600; color: #707070; text-transform: uppercase; letter-spacing: .1em; }
 
 /* Heatmap */
@@ -56,20 +56,20 @@ body { background: #FAF9F6 !important; }
 .heatmap-cell { width:13px; height:13px; border-radius:2px; background:#ebedf0; cursor:pointer; transition:.2s; position:relative; }
 .heatmap-cell:hover { transform:scale(1.4); z-index:50; box-shadow:0 0 12px rgba(74,222,128,.6); }
 .level-0{background:#ebedf0;} .level-1{background:#9be9a8;} .level-2{background:#40c463;} .level-3{background:#30a14e;} .level-4{background:#216e39;}
-.heatmap-tooltip { position:absolute; bottom:160%; left:50%; transform:translateX(-50%); background:#FFFFFF; color:#1B1B1B; padding:10px 14px; border-radius:8px; font-size:11px; white-space:nowrap; pointer-events:none; opacity:0; transition:.2s; z-index:100; border:1px solid rgba(42,74,48,.10); box-shadow:0 10px 25px -5px rgba(0,0,0,.05); visibility:hidden; }
+.heatmap-tooltip { position:absolute; bottom:160%; left:50%; transform:translateX(-50%); background:#F7F7F2; color:#1B1B1B; padding:10px 14px; border-radius:8px; font-size:11px; white-space:nowrap; pointer-events:none; opacity:0; transition:.2s; z-index:100; border:1px solid rgba(24, 29, 0,.10); box-shadow:0 10px 25px -5px rgba(0,0,0,.05); visibility:hidden; }
 .heatmap-cell:hover .heatmap-tooltip { opacity:1; visibility:visible; bottom:190%; }
 .heatmap-tooltip::after { content:''; position:absolute; top:100%; left:50%; margin-left:-6px; border-width:6px; border-style:solid; border-color:#FFFFFF transparent transparent transparent; }
 
 /* Achievement carousel */
-.carousel-item { min-width:220px; background:#FFFFFF; border:1px solid rgba(42,74,48,.10); border-radius:22px; padding:24px; display:flex; flex-direction:column; align-items:center; text-align:center; scroll-snap-align: start; }
+.carousel-item { min-width:220px; background:#F7F7F2; border:1px solid rgba(24, 29, 0,.10); border-radius:22px; padding:24px; display:flex; flex-direction:column; align-items:center; text-align:center; scroll-snap-align: start; }
 
 /* Level journey cards */
 .journey-card {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 24px; border-radius: 20px; border: 1px solid rgba(42,74,48,.10);
-    background: #FFFFFF; transition: .2s;
+    padding: 20px 24px; border-radius: 20px; border: 1px solid rgba(24, 29, 0,.10);
+    background: #F7F7F2; transition: .2s;
 }
-.journey-card.active { border-color: rgba(42,74,48,.35); background: rgba(42,74,48,.02); }
+.journey-card.active { border-color: rgba(24, 29, 0,.35); background: rgba(24, 29, 0,.02); }
 
 @media (min-width: 768px) {
     .db-section, .premium-section { padding: 56px 48px; }
@@ -155,14 +155,14 @@ body { background: #FAF9F6 !important; }
         <div class="db-stat">
             <div class="db-stat-val">{{ user.eco_points }}</div>
             <div class="db-stat-label">Eco Points</div>
-            <div class="db-stat-extra" style="margin-top:10px; font-size:13px; color:#2A4A30; font-weight:600;">↑ {{ (user.eco_points * 0.12)|round|int }} this week</div>
+            <div class="db-stat-extra" style="margin-top:10px; font-size:13px; color:#181D00; font-weight:600;">↑ {{ (user.eco_points * 0.12)|round|int }} this week</div>
         </div>
         <div class="db-stat">
             <div class="db-stat-val">{{ completed }}</div>
             <div class="db-stat-label">Challenges Done</div>
             <div class="db-stat-extra" style="margin-top:10px; font-size:13px; color:#707070; font-weight:600;">{{ pct }}% complete</div>
         </div>
-        <div class="db-stat" style="background:#2A4A30; border-color:#2A4A30;">
+        <div class="db-stat" style="background:#181D00; border-color:#181D00;">
             <div class="db-stat-val" style="color:#FFFFFF;">{{ user.achievements|length }}</div>
             <div class="db-stat-label" style="color:rgba(255,255,255,.65);">Badges Earned</div>
         </div>
@@ -185,7 +185,7 @@ body { background: #FAF9F6 !important; }
         <div class="premium-card" style="cursor:pointer;">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
                 <div style="display:flex; align-items:center; gap:16px;">
-                    <div style="width:52px; height:52px; background:#2A4A30; border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <div style="width:52px; height:52px; background:#181D00; border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                         <i data-lucide="flag" style="width:22px; height:22px; color:#FFFFFF;"></i>
                     </div>
                     <div>
@@ -194,16 +194,16 @@ body { background: #FAF9F6 !important; }
                     </div>
                 </div>
                 <div style="text-align:right;">
-                    <div style="font-size:36px; font-weight:500; color:#2A4A30; letter-spacing:-0.03em; line-height:1;">{{ pct }}%</div>
+                    <div style="font-size:36px; font-weight:500; color:#181D00; letter-spacing:-0.03em; line-height:1;">{{ pct }}%</div>
                     <div style="font-size:12px; color:#707070; font-weight:600; text-transform:uppercase; letter-spacing:.08em;">Complete</div>
                 </div>
             </div>
-            <div style="width:100%; height:8px; background:#F3F2EC; border-radius:999px; overflow:hidden; margin-bottom:16px;">
-                <div class="progress-bar-fill" data-target-width="{{ pct }}%" style="width:0%; height:100%; background:#2A4A30; border-radius:999px; max-width:100%;"></div>
+            <div style="width:100%; height:8px; background:#EAEAE5; border-radius:999px; overflow:hidden; margin-bottom:16px;">
+                <div class="progress-bar-fill" data-target-width="{{ pct }}%" style="width:0%; height:100%; background:#181D00; border-radius:999px; max-width:100%;"></div>
             </div>
             <div style="display:flex; align-items:center; justify-content:space-between;">
-                <span style="font-size:14px; color:#2A4A30; font-weight:600;">View All Challenges</span>
-                <i data-lucide="arrow-right" style="width:16px; height:16px; color:#2A4A30;"></i>
+                <span style="font-size:14px; color:#181D00; font-weight:600;">View All Challenges</span>
+                <i data-lucide="arrow-right" style="width:16px; height:16px; color:#181D00;"></i>
             </div>
         </div>
         </a>
@@ -214,7 +214,7 @@ body { background: #FAF9F6 !important; }
             <!-- Header & Controls -->
             <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
                 <div style="display:flex; align-items:center; gap:16px;">
-                    <div style="width:48px; height:48px; background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 12px rgba(42,74,48,.15), inset 0 1px 0 rgba(255,255,255,0.15);">
+                    <div style="width:48px; height:48px; background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 12px rgba(24, 29, 0,.15), inset 0 1px 0 rgba(255,255,255,0.15);">
                         <i data-lucide="calendar-days" style="width:22px; height:22px; color:white;"></i>
                     </div>
                     <div>
@@ -294,16 +294,16 @@ body { background: #FAF9F6 !important; }
         <div class="premium-card">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div style="width:40px; height:40px; background:rgba(42,74,48,.1); border-radius:12px; display:flex; align-items:center; justify-content:center;">
-                        <i data-lucide="medal" style="width:18px; height:18px; color:#2A4A30;"></i>
+                    <div style="width:40px; height:40px; background:rgba(24, 29, 0,.1); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="medal" style="width:18px; height:18px; color:#181D00;"></i>
                     </div>
                     <h3 style="font-size:18px; font-weight:500; color:#1B1B1B;">Recent Achievements</h3>
                 </div>
                 <div style="display:flex; gap:8px;">
-                    <button id="prev" style="width:36px; height:36px; border-radius:10px; border:1px solid rgba(42,74,48,.12); background:#FFFFFF; color:#707070; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;">
+                    <button id="prev" style="width:36px; height:36px; border-radius:10px; border:1px solid rgba(24, 29, 0,.12); background:#F7F7F2; color:#707070; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;">
                         <i data-lucide="chevron-left" style="width:18px; height:18px;"></i>
                     </button>
-                    <button id="next" style="width:36px; height:36px; border-radius:10px; border:1px solid rgba(42,74,48,.12); background:#FFFFFF; color:#707070; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;">
+                    <button id="next" style="width:36px; height:36px; border-radius:10px; border:1px solid rgba(24, 29, 0,.12); background:#F7F7F2; color:#707070; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;">
                         <i data-lucide="chevron-right" style="width:18px; height:18px;"></i>
                     </button>
                 </div>
@@ -340,12 +340,12 @@ body { background: #FAF9F6 !important; }
                         <h3 style="font-size:18px; font-weight:500; color:#1B1B1B;">{{ current_user.level_name }}</h3>
                         <p style="font-size:12px; color:#707070; text-transform:uppercase; letter-spacing:.08em; font-weight:600;">Level {{ current_user.level }}</p>
                     </div>
-                    <span style="background:rgba(42,74,48,.1); color:#2A4A30; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;">Active</span>
+                    <span style="background:rgba(24, 29, 0,.1); color:#181D00; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;">Active</span>
                 </div>
                 <div style="position:relative; width:160px; height:160px;">
                     <svg style="width:100%; height:100%; transform:rotate(-90deg);">
-                        <circle cx="50%" cy="50%" r="70" stroke="#F3F2EC" stroke-width="8" fill="transparent"/>
-                        <circle cx="50%" cy="50%" r="70" stroke="#2A4A30" stroke-width="8" fill="transparent"
+                        <circle cx="50%" cy="50%" r="70" stroke="#EAEAE5" stroke-width="8" fill="transparent"/>
+                        <circle cx="50%" cy="50%" r="70" stroke="#181D00" stroke-width="8" fill="transparent"
                             stroke-dasharray="439.8"
                             stroke-dashoffset="{{ 439.8 - (current_user.current_xp / current_user.next_level_xp * 439.8) }}"
                             stroke-linecap="round" style="transition:stroke-dashoffset 1s ease;"/>
@@ -356,11 +356,11 @@ body { background: #FAF9F6 !important; }
                     </div>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:12px; width:100%;">
-                    <div style="background:#F3F2EC; border-radius:16px; padding:16px; text-align:center;">
-                        <div style="font-size:18px; font-weight:500; color:#2A4A30;">{{ ((current_user.current_xp / current_user.next_level_xp) * 100)|round(1) }}%</div>
+                    <div style="background:#EAEAE5; border-radius:16px; padding:16px; text-align:center;">
+                        <div style="font-size:18px; font-weight:500; color:#181D00;">{{ ((current_user.current_xp / current_user.next_level_xp) * 100)|round(1) }}%</div>
                         <div style="font-size:11px; color:#707070; text-transform:uppercase; font-weight:600; letter-spacing:.08em;">Complete</div>
                     </div>
-                    <div style="background:#F3F2EC; border-radius:16px; padding:16px; text-align:center;">
+                    <div style="background:#EAEAE5; border-radius:16px; padding:16px; text-align:center;">
                         <div style="font-size:18px; font-weight:500; color:#1B1B1B;">{{ current_user.next_level_xp - current_user.current_xp }}</div>
                         <div style="font-size:11px; color:#707070; text-transform:uppercase; font-weight:600; letter-spacing:.08em;">XP Needed</div>
                     </div>
@@ -371,20 +371,20 @@ body { background: #FAF9F6 !important; }
             <div class="premium-card" style="display:flex; flex-direction:column;">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:40px; height:40px; background:rgba(42,74,48,.1); border-radius:12px; display:flex; align-items:center; justify-content:center;">
-                            <i data-lucide="lightbulb" style="width:18px; height:18px; color:#2A4A30;"></i>
+                        <div style="width:40px; height:40px; background:rgba(24, 29, 0,.1); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                            <i data-lucide="lightbulb" style="width:18px; height:18px; color:#181D00;"></i>
                         </div>
                         <div>
                             <h3 style="font-size:18px; font-weight:500; color:#1B1B1B;">Eco Tip</h3>
                             <p style="font-size:13px; color:#707070;">Daily wisdom</p>
                         </div>
                     </div>
-                    <span style="background:rgba(42,74,48,.1); color:#2A4A30; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase;">Today</span>
+                    <span style="background:rgba(24, 29, 0,.1); color:#181D00; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase;">Today</span>
                 </div>
-                <div style="flex:1; background:#F3F2EC; border-radius:20px; padding:24px; display:flex; flex-direction:column; justify-content:center;">
+                <div style="flex:1; background:#EAEAE5; border-radius:20px; padding:24px; display:flex; flex-direction:column; justify-content:center;">
                     {% if eco_tip %}
                     <p style="font-size:17px; color:#1B1B1B; line-height:1.7; font-style:italic; margin-bottom:16px;">"{{ eco_tip.tip or eco_tip.text }}"</p>
-                    <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#707070; text-transform:uppercase; letter-spacing:.08em; font-weight:600; border-top:1px solid rgba(42,74,48,.1); padding-top:16px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#707070; text-transform:uppercase; letter-spacing:.08em; font-weight:600; border-top:1px solid rgba(24, 29, 0,.1); padding-top:16px;">
                         <span>{{ eco_tip.frequency|capitalize }} Tip</span>
                         <span>#{{ eco_tip.id or 1 }}</span>
                     </div>
@@ -410,14 +410,14 @@ body { background: #FAF9F6 !important; }
         {% for challenge in recommendations %}
         <div class="premium-card" style="display:flex; flex-direction:column;">
             <div style="display:flex; justify-content:space-between; margin-bottom:16px;">
-                <span style="font-size:11px; font-weight:700; color:#707070; background:#F3F2EC; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; border:1px solid rgba(42,74,48,.1);">{{ challenge.difficulty }}</span>
-                <span style="font-size:12px; font-weight:700; color:#2A4A30; background:rgba(42,74,48,.08); padding:4px 12px; border-radius:999px; border:1px solid rgba(42,74,48,.12);">{{ challenge.difficulty_score or 1.0 }} ★</span>
+                <span style="font-size:11px; font-weight:700; color:#707070; background:#EAEAE5; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em; border:1px solid rgba(24, 29, 0,.1);">{{ challenge.difficulty }}</span>
+                <span style="font-size:12px; font-weight:700; color:#181D00; background:rgba(24, 29, 0,.08); padding:4px 12px; border-radius:999px; border:1px solid rgba(24, 29, 0,.12);">{{ challenge.difficulty_score or 1.0 }} ★</span>
             </div>
             <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:10px; letter-spacing:-0.01em; flex:1;">{{ challenge.title }}</h3>
             <p style="font-size:15px; color:#707070; line-height:1.6; margin-bottom:20px;">{{ challenge.description }}</p>
             <a href="{{ url_for('complete_challenge', challenge_id=challenge.id) }}"
                class="premium-btn"
-               style="display:flex; align-items:center; justify-content:center; width:100%; height:52px; background:#2A4A30; color:#FFFFFF; border-radius:999px; font-size:15px; font-weight:600; text-decoration:none;">
+               style="display:flex; align-items:center; justify-content:center; width:100%; height:52px; background:#181D00; color:#FFFFFF; border-radius:999px; font-size:15px; font-weight:600; text-decoration:none;">
                 Start Challenge
             </a>
         </div>
@@ -437,21 +437,21 @@ body { background: #FAF9F6 !important; }
     <div id="analytics-section" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:24px;">
         <div class="premium-card">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-                <i data-lucide="trending-up" style="width:18px; height:18px; color:#2A4A30;"></i>
+                <i data-lucide="trending-up" style="width:18px; height:18px; color:#181D00;"></i>
                 <h3 style="font-size:16px; font-weight:500; color:#1B1B1B;">Impact Trajectory</h3>
             </div>
             <div style="height:200px;"><canvas id="pointsGrowthChart"></canvas></div>
         </div>
         <div class="premium-card">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-                <i data-lucide="bar-chart-2" style="width:18px; height:18px; color:#2A4A30;"></i>
+                <i data-lucide="bar-chart-2" style="width:18px; height:18px; color:#181D00;"></i>
                 <h3 style="font-size:16px; font-weight:500; color:#1B1B1B;">Achievement Progress</h3>
             </div>
             <div style="height:200px;"><canvas id="achievementsChart"></canvas></div>
         </div>
         <div class="premium-card">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-                <i data-lucide="pie-chart" style="width:18px; height:18px; color:#2A4A30;"></i>
+                <i data-lucide="pie-chart" style="width:18px; height:18px; color:#181D00;"></i>
                 <h3 style="font-size:16px; font-weight:500; color:#1B1B1B;">Challenge Completion</h3>
             </div>
             <div style="height:200px;"><canvas id="challengesChart"></canvas></div>
@@ -473,7 +473,7 @@ body { background: #FAF9F6 !important; }
         {% for cert in user.certificates %}
         <div class="premium-card" style="position:relative; overflow:hidden;">
             <div style="position:absolute; top:0; right:0; padding:24px; opacity:.05;">
-                <i data-lucide="award" style="width:64px; height:64px; color:#2A4A30; transform:rotate(12deg);"></i>
+                <i data-lucide="award" style="width:64px; height:64px; color:#181D00; transform:rotate(12deg);"></i>
             </div>
             <div style="position:relative;">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
@@ -481,12 +481,12 @@ body { background: #FAF9F6 !important; }
                         <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:4px;">{{ cert.milestone }} Points Milestone</h3>
                         <p style="font-size:13px; color:#707070;">Issued: {{ cert.issued_at.strftime('%Y-%m-%d') }}</p>
                     </div>
-                    <span style="background:rgba(42,74,48,.12); color:#2A4A30; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;">Verified</span>
+                    <span style="background:rgba(24, 29, 0,.12); color:#181D00; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:.05em;">Verified</span>
                 </div>
                 <a href="{{ url_for('download_certificate', cert_id=cert.id) }}"
-                   style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; height:48px; background:#F3F2EC; border:1px solid rgba(42,74,48,.12); border-radius:999px; font-size:14px; font-weight:600; color:#1B1B1B; text-decoration:none; transition:.2s;"
-                   onmouseover="this.style.background='rgba(42,74,48,.1)';"
-                   onmouseout="this.style.background='#F3F2EC';">
+                   style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; height:48px; background:#EAEAE5; border:1px solid rgba(24, 29, 0,.12); border-radius:999px; font-size:14px; font-weight:600; color:#1B1B1B; text-decoration:none; transition:.2s;"
+                   onmouseover="this.style.background='rgba(24, 29, 0,.1)';"
+                   onmouseout="this.style.background='#EAEAE5';">
                     <i data-lucide="download" style="width:16px; height:16px;"></i> Download PDF
                 </a>
             </div>
@@ -494,11 +494,11 @@ body { background: #FAF9F6 !important; }
         {% endfor %}
     </div>
     {% else %}
-    <div style="background:#F3F2EC; border-radius:28px; padding:64px 32px; text-align:center;">
+    <div style="background:#EAEAE5; border-radius:28px; padding:64px 32px; text-align:center;">
         <div style="font-size:48px; margin-bottom:16px; opacity:.5;">📜</div>
         <h3 style="font-size:24px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">No Certificates Yet</h3>
         <p style="font-size:16px; color:#707070; max-width:400px; margin:0 auto;">Reach 1,000 eco-points to unlock your first verified certificate.</p>
-        <div style="margin-top:16px; font-size:15px; font-weight:600; color:#2A4A30;">Current: {{ user.eco_points }} / 1,000 XP</div>
+        <div style="margin-top:16px; font-size:15px; font-weight:600; color:#181D00;">Current: {{ user.eco_points }} / 1,000 XP</div>
     </div>
     {% endif %}
 </div>
@@ -520,28 +520,28 @@ body { background: #FAF9F6 !important; }
 
         <div class="journey-card {{ 'active' if is_current else '' }}" style="{{ 'opacity:.55;' if not is_current and not is_completed else '' }}">
             <div style="display:flex; align-items:center; gap:16px; flex:1; min-width:0;">
-                <div style="width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; {{ 'background:rgba(42,74,48,.15); color:#2A4A30;' if is_current else ('background:#F3F2EC; color:#707070;' if is_completed else 'background:#F3F2EC; color:#A1A1AA;') }}">
+                <div style="width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; {{ 'background:rgba(24, 29, 0,.15); color:#181D00;' if is_current else ('background:#EAEAE5; color:#707070;' if is_completed else 'background:#EAEAE5; color:#A1A1AA;') }}">
                     <i data-lucide="{{ 'zap' if is_current else ('check' if is_completed else 'lock') }}" style="width:18px; height:18px;"></i>
                 </div>
                 <div style="min-width:0;">
-                    <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px; {{ 'color:#2A4A30;' if is_current else 'color:#707070;' }}">Level {{ level.level }}</div>
+                    <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px; {{ 'color:#181D00;' if is_current else 'color:#707070;' }}">Level {{ level.level }}</div>
                     <div style="font-size:16px; font-weight:500; color:#1B1B1B; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ level.name }}</div>
                 </div>
             </div>
             <div style="position:relative; width:48px; height:48px; flex-shrink:0;">
                 {% if is_current %}
                 <svg style="width:100%; height:100%; transform:rotate(-90deg);">
-                    <circle cx="50%" cy="50%" r="20" stroke="#F3F2EC" stroke-width="4" fill="transparent"/>
-                    <circle cx="50%" cy="50%" r="20" stroke="#2A4A30" stroke-width="4" fill="transparent"
+                    <circle cx="50%" cy="50%" r="20" stroke="#EAEAE5" stroke-width="4" fill="transparent"/>
+                    <circle cx="50%" cy="50%" r="20" stroke="#181D00" stroke-width="4" fill="transparent"
                         stroke-dasharray="125.6"
                         stroke-dashoffset="{{ 125.6 * (1 - (level.current_xp / level.next_level_xp)) }}"
                         stroke-linecap="round"/>
                 </svg>
-                <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#2A4A30;">
+                <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#181D00;">
                     {{ ((level.current_xp / level.next_level_xp) * 100)|round|int }}%
                 </div>
                 {% elif is_completed %}
-                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#2A4A30; opacity:.5;">
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#181D00; opacity:.5;">
                     <i data-lucide="check-circle" style="width:24px; height:24px;"></i>
                 </div>
                 {% else %}
@@ -570,14 +570,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const commonOpts = {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { backgroundColor:'#FFFFFF', titleColor:'#1B1B1B', bodyColor:'#707070', borderColor:'rgba(42,74,48,.1)', borderWidth:1, padding:10 } },
-        scales: { y: { beginAtZero:true, grid: { color:'rgba(42,74,48,.08)' }, ticks: { color:'#707070' } }, x: { grid: { display:false }, ticks: { color:'#707070' } } }
+        plugins: { legend: { display: false }, tooltip: { backgroundColor:'#FFFFFF', titleColor:'#1B1B1B', bodyColor:'#707070', borderColor:'rgba(24, 29, 0,.1)', borderWidth:1, padding:10 } },
+        scales: { y: { beginAtZero:true, grid: { color:'rgba(24, 29, 0,.08)' }, ticks: { color:'#707070' } }, x: { grid: { display:false }, ticks: { color:'#707070' } } }
     };
 
     const R = (id, type, data, opts) => { const c = document.getElementById(id); if(c) new Chart(c, {type, data, options: opts}); };
-    R('pointsGrowthChart','line',{ labels:['Start','Now','Next Level'], datasets:[{ data:[0,userPoints,nextLevelXP], borderColor:'#2A4A30', backgroundColor:'rgba(42,74,48,.08)', fill:true, tension:.4, borderWidth:3, pointRadius:5, pointBackgroundColor:'#2A4A30', pointBorderColor:'#FFF', pointBorderWidth:2 }] }, commonOpts);
-    R('achievementsChart','bar',{ labels:['Earned','Pending'], datasets:[{ data:[achievementsCount, Math.max(5-achievementsCount,0)], backgroundColor:['#2A4A30','rgba(42,74,48,.2)'], borderRadius:10 }] }, commonOpts);
-    R('challengesChart','doughnut',{ labels:['Completed','Remaining'], datasets:[{ data:[completions, Math.max(totalCh-completions,0)], backgroundColor:['#2A4A30','rgba(42,74,48,.15)'], borderWidth:0, hoverOffset:8 }] }, { responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{ position:'bottom', labels:{ color:'#707070', font:{size:11}, padding:16, usePointStyle:true } }, tooltip:{ backgroundColor:'#FFFFFF', titleColor:'#1B1B1B', bodyColor:'#707070', borderColor:'rgba(42,74,48,.1)', borderWidth:1, padding:10 } } });
+    R('pointsGrowthChart','line',{ labels:['Start','Now','Next Level'], datasets:[{ data:[0,userPoints,nextLevelXP], borderColor:'#181D00', backgroundColor:'rgba(24, 29, 0,.08)', fill:true, tension:.4, borderWidth:3, pointRadius:5, pointBackgroundColor:'#181D00', pointBorderColor:'#FFF', pointBorderWidth:2 }] }, commonOpts);
+    R('achievementsChart','bar',{ labels:['Earned','Pending'], datasets:[{ data:[achievementsCount, Math.max(5-achievementsCount,0)], backgroundColor:['#181D00','rgba(24, 29, 0,.2)'], borderRadius:10 }] }, commonOpts);
+    R('challengesChart','doughnut',{ labels:['Completed','Remaining'], datasets:[{ data:[completions, Math.max(totalCh-completions,0)], backgroundColor:['#181D00','rgba(24, 29, 0,.15)'], borderWidth:0, hoverOffset:8 }] }, { responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{ position:'bottom', labels:{ color:'#707070', font:{size:11}, padding:16, usePointStyle:true } }, tooltip:{ backgroundColor:'#FFFFFF', titleColor:'#1B1B1B', bodyColor:'#707070', borderColor:'rgba(24, 29, 0,.1)', borderWidth:1, padding:10 } } });
 
     /* ── Achievement Carousel ── */
     const carousel = document.getElementById('carousel');
@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         let html = `
             <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 0;">
-                <div style="width:80px; height:80px; background:${ch > 0 ? 'linear-gradient(135deg, #173D25 0%, #1F4D36 30%, #2E6A43 65%, #4F8A5B 100%)' : '#F7F7F8'}; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:${ch > 0 ? '0 10px 20px rgba(42,74,48,.2)' : 'none'}; margin-bottom:24px;">
+                <div style="width:80px; height:80px; background:${ch > 0 ? 'linear-gradient(135deg, #181D00 0%, #234A2B 30%, #2A4A30 65%, #2A4A30 100%)' : '#F7F7F8'}; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:${ch > 0 ? '0 10px 20px rgba(24, 29, 0,.2)' : 'none'}; margin-bottom:24px;">
                     <i data-lucide="${ch > 0 ? 'zap' : 'moon'}" style="width:36px; height:36px; color:${ch > 0 ? 'white' : '#A1A1AA'};"></i>
                 </div>
                 <h4 style="font-size:32px; font-weight:700; color:#1B1B1B; margin-bottom:8px;">${pts} <span style="font-size:18px; color:#707070;">XP Earned</span></h4>
@@ -716,9 +716,9 @@ document.addEventListener('DOMContentLoaded', function () {
             
             html += `
                 <div style="display:flex; flex-direction:column; align-items:center; flex:1; gap:12px; cursor:pointer;" title="${day.points} XP">
-                    <div style="font-size:12px; font-weight:600; color:#2A4A30; opacity:${day.points > 0 ? 1 : 0}; transition:.2s;">${day.points}</div>
+                    <div style="font-size:12px; font-weight:600; color:#181D00; opacity:${day.points > 0 ? 1 : 0}; transition:.2s;">${day.points}</div>
                     <div style="width:100%; max-width:48px; height:180px; display:flex; align-items:flex-end; background:#F7F7F8; border-radius:12px; overflow:hidden;">
-                        <div style="width:100%; height:${h}%; background:${day.points > 0 ? 'linear-gradient(135deg, #173D25 0%, #4F8A5B 100%)' : '#F7F7F8'}; border-radius:12px; transition:all 0.5s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                        <div style="width:100%; height:${h}%; background:${day.points > 0 ? 'linear-gradient(135deg, #181D00 0%, #2A4A30 100%)' : '#F7F7F8'}; border-radius:12px; transition:all 0.5s cubic-bezier(0.4, 0, 0.2, 1);"></div>
                     </div>
                     <div style="font-size:13px; font-weight:600; color:${day.points > 0 ? '#1B1B1B' : '#A1A1AA'};">${day.dayName}</div>
                 </div>
@@ -749,7 +749,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             const active = ch > 0;
             html += `
-                <div style="padding:16px; border-radius:20px; background:${active ? 'linear-gradient(135deg, #173D25 0%, #1F4D36 20%, #2A4A30 100%)' : '#F7F7F8'}; display:flex; flex-direction:column; gap:8px; box-shadow:${active ? '0 4px 12px rgba(42,74,48,.15)' : 'none'}; border:1px solid ${active ? 'transparent' : 'rgba(0,0,0,.04)'}; transition:.2s; cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
+                <div style="padding:16px; border-radius:20px; background:${active ? 'linear-gradient(135deg, #181D00 0%, #234A2B 20%, #181D00 100%)' : '#F7F7F8'}; display:flex; flex-direction:column; gap:8px; box-shadow:${active ? '0 4px 12px rgba(24, 29, 0,.15)' : 'none'}; border:1px solid ${active ? 'transparent' : 'rgba(0,0,0,.04)'}; transition:.2s; cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
                     <div style="font-size:14px; font-weight:600; color:${active ? 'rgba(255,255,255,.8)' : '#A1A1AA'};">${monthNames[m]}</div>
                     <div>
                         <div style="font-size:20px; font-weight:700; color:${active ? 'white' : '#1B1B1B'};">${pts}</div>
@@ -818,7 +818,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let style = "width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; margin:0 auto; transition:all .2s; cursor:pointer;";
             
             if (hasActivity) {
-                style += " background:linear-gradient(135deg, #173D25 0%, #1F4D36 30%, #2E6A43 65%, #4F8A5B 100%); color:white; box-shadow:0 4px 12px rgba(42,74,48,.2);";
+                style += " background:linear-gradient(135deg, #181D00 0%, #234A2B 30%, #2A4A30 65%, #2A4A30 100%); color:white; box-shadow:0 4px 12px rgba(24, 29, 0,.2);";
             } else if (isToday) {
                 style += " background:#1B1B1B; color:white; box-shadow:0 4px 10px rgba(0,0,0,.15);";
             } else {
