@@ -49,15 +49,15 @@
                                     </div>
                                 </td>
                                 <td class="p-3">
-                                    <div class="text-sm font-semibold text-admin-text">{{ level.title }}</div>
+                                    <div class="text-sm font-semibold text-admin-text">{{ level.name }}</div>
                                 </td>
                                 <td class="p-3">
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-admin-surface border border-admin-border text-admin-text uppercase">
-                                        {{ level.min_xp }} XP
+                                        {{ level.xp_required }} XP
                                     </span>
                                 </td>
                                 <td class="p-3 text-right">
-                                    <form action="{{ url_for('admin_delete_level', level_id=level.id) }}" method="POST" class="inline">
+                                    <form action="{{ url_for('delete_level', level_id=level.id) }}" method="POST" class="inline">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                         <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 border border-transparent hover:border-red-200 text-red-600 flex items-center justify-center transition-none" onclick="return confirm('Delete this level tier?')">
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>

@@ -57,7 +57,7 @@
                                     </span>
                                 </td>
                                 <td class="p-3 text-right">
-                                    <form action="{{ url_for('admin_delete_puzzle', puzzle_id=puzzle.id) }}" method="POST" class="inline">
+                                    <form action="{{ url_for('delete_puzzle', puzzle_id=puzzle.id) }}" method="POST" class="inline">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                         <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 border border-transparent hover:border-red-200 text-red-600 flex items-center justify-center transition-none" onclick="return confirm('Delete this puzzle?')">
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>

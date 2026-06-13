@@ -45,7 +45,7 @@
                             <tr class="hover:bg-admin-surface transition-none">
                                 <td class="p-3 text-center">
                                     <div class="w-12 h-12 mx-auto rounded-xl bg-admin-surface border border-admin-border flex items-center justify-center text-2xl shadow-sm">
-                                        {{ achievement.icon }}
+                                        {{ achievement.badge_icon }}
                                     </div>
                                 </td>
                                 <td class="p-3">
@@ -53,15 +53,15 @@
                                     <div class="text-[12px] text-admin-textMuted mt-0.5">{{ achievement.description }}</div>
                                 </td>
                                 <td class="p-3">
-                                    <div class="text-[12px] text-admin-textMuted">Type: <span class="font-semibold text-admin-text">{{ achievement.criteria_type }}</span></div>
-                                    <div class="text-[12px] text-admin-textMuted mt-0.5">Value: <span class="font-semibold text-admin-text">{{ achievement.criteria_value }}</span></div>
+                                    <div class="text-[12px] text-admin-textMuted">Type: <span class="font-semibold text-admin-text">{% if achievement.challenges_required > 0 %}Challenges{% else %}Points{% endif %}</span></div>
+                                    <div class="text-[12px] text-admin-textMuted mt-0.5">Value: <span class="font-semibold text-admin-text">{% if achievement.challenges_required > 0 %}{{ achievement.challenges_required }}{% else %}{{ achievement.points_required }}{% endif %}</span></div>
                                 </td>
                                 <td class="p-3 text-right">
                                     <div class="flex justify-end gap-2">
                                         <button class="w-8 h-8 rounded-lg bg-admin-surface border border-transparent hover:border-admin-border hover:bg-admin-tableAlt text-admin-text flex items-center justify-center transition-none">
                                             <i data-lucide="edit-2" class="w-4 h-4"></i>
                                         </button>
-                                        <form action="{{ url_for('admin_delete_achievement', achievement_id=achievement.id) }}" method="POST" class="inline">
+                                        <form action="{{ url_for('delete_achievement', achievement_id=achievement.id) }}" method="POST" class="inline">
                                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                             <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 border border-transparent hover:border-red-200 text-red-600 flex items-center justify-center transition-none" onclick="return confirm('Delete achievement?')">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
