@@ -513,10 +513,19 @@
 
         .footer-links {
             display: flex;
-            gap: 64px;
+            flex-direction: column;
+            gap: 40px;
             font-size: 16px;
             font-weight: 500;
             color: rgba(255, 255, 255, 0.55);
+        }
+
+        @media (min-width: 640px) {
+            .footer-links {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 64px;
+            }
         }
 
         .footer-col {
