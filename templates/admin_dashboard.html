@@ -69,32 +69,32 @@
  <h2 class="text-lg font-semibold text-admin-text mb-4">Quick Actions</h2>
  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
  <a href="{{ url_for('admin_add_challenge') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
- <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="plus" class="w-5 h-5"></i>
  </div>
  <span class="text-xs font-medium text-admin-text">New Challenge</span>
  </a>
 
  <a href="{{ url_for('admin_random_challenge') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
- <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="magic" class="w-5 h-5"></i>
  </div>
  <span class="text-xs font-medium text-admin-text">Auto Generator</span>
  </a>
 
  <a href="{{ url_for('admin_achievements') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
- <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="award" class="w-5 h-5"></i>
  </div>
  <span class="text-xs font-medium text-admin-text">Achievements</span>
  </a>
 
  <a href="{{ url_for('admin_eco_tips') }}"
- class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-white cursor-pointer transition-none">
- <div class="w-10 h-10 bg-white border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
+ class="admin-card p-6 flex flex-col items-center justify-center gap-3 group border hover:border-admin-hover hover:bg-admin-surface cursor-pointer transition-none">
+ <div class="w-10 h-10 bg-admin-surface border border-admin-border rounded-full flex items-center justify-center text-admin-textMuted group-hover:text-admin-hover transition-none">
  <i data-lucide="lightbulb" class="w-5 h-5"></i>
  </div>
  <span class="text-xs font-medium text-admin-text">Eco Tips</span>
@@ -112,7 +112,7 @@
  <span>User Retention</span>
  <span class="text-admin-hover">89%</span>
  </div>
- <div class="w-full bg-white border border-admin-border rounded-full h-1.5">
+ <div class="w-full bg-admin-surface border border-admin-border rounded-full h-1.5">
  <div class="bg-admin-hover h-1.5 rounded-full" style="width: 89%"></div>
  </div>
  </div>
@@ -122,7 +122,7 @@
  <span>Challenge Completion</span>
  <span class="text-blue-600">72%</span>
  </div>
- <div class="w-full bg-white border border-admin-border rounded-full h-1.5">
+ <div class="w-full bg-admin-surface border border-admin-border rounded-full h-1.5">
  <div class="bg-blue-600 h-1.5 rounded-full" style="width: 72%"></div>
  </div>
  </div>
@@ -150,7 +150,7 @@
  </div>
  <div class="overflow-x-auto">
  <table id="challengesTable" class="w-full text-left">
- <thead class="bg-white border-b border-admin-border">
+ <thead class="bg-admin-surface border-b border-admin-border">
  <tr>
  <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Title</th>
  <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Category</th>
@@ -159,15 +159,15 @@
  <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Status</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-admin-border bg-[#F7F7F2]">
+ <tbody class="divide-y divide-admin-border bg-admin-tableAlt">
  {% for challenge in challenges %}
- <tr class="hover:bg-white transition-none">
+ <tr class="hover:bg-admin-surface transition-none">
  <td class="p-4">
  <div class="text-sm font-semibold text-admin-text">{{ challenge.title }}</div>
  <div class="text-[10px] text-admin-textMuted font-mono mt-0.5">ID: {{ loop.index }}</div>
  </td>
  <td class="p-4">
- <span class="text-xs text-admin-text bg-white border border-admin-border px-2 py-0.5 rounded shadow-sm">{{ challenge.category }}</span>
+ <span class="text-xs text-admin-text bg-admin-surface border border-admin-border px-2 py-0.5 rounded shadow-sm">{{ challenge.category }}</span>
  </td>
  <td class="p-4 text-sm text-admin-textMuted font-medium">
  <span class="flex items-center gap-1"><i data-lucide="bolt" class="text-admin-hover w-4 h-4"></i> {{ challenge.points }}</span>
@@ -178,7 +178,7 @@
  'Medium': 'text-yellow-700 bg-yellow-50 border-yellow-200',
  'Hard': 'text-red-700 bg-red-50 border-red-200'
  } %}
- <span class="text-xs font-semibold px-2 py-0.5 rounded border {{ difficulty_colors.get(challenge.difficulty, 'text-admin-textMuted border-admin-border bg-white') }}">
+ <span class="text-xs font-semibold px-2 py-0.5 rounded border {{ difficulty_colors.get(challenge.difficulty, 'text-admin-textMuted border-admin-border bg-admin-surface') }}">
  {{ challenge.difficulty }}
  </span>
  </td>
@@ -186,7 +186,7 @@
  {% if challenge.verification_required %}
  <span class="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded shadow-sm">Verified</span>
  {% else %}
- <span class="text-[10px] font-bold text-admin-textMuted bg-white border border-admin-border px-2 py-0.5 rounded shadow-sm">Auto</span>
+ <span class="text-[10px] font-bold text-admin-textMuted bg-admin-surface border border-admin-border px-2 py-0.5 rounded shadow-sm">Auto</span>
  {% endif %}
  </td>
  </tr>
@@ -204,27 +204,29 @@
  .dataTables_wrapper .dataTables_length,
  .dataTables_wrapper .dataTables_filter {
  padding: 1rem 1.5rem;
- color: #181D00;
+ color: #111111;
  font-size: 0.875rem;
  font-weight: 500;
  }
 
  .dataTables_wrapper .dataTables_filter input {
  background: #FFFFFF;
- border: 1px solid rgba(24, 29, 0, 0.15);
+ border: 1px solid rgba(0,0,0,0.12);
  border-radius: 6px;
- color: #181D00;
+ color: #111111;
  padding: 6px 12px;
  margin-left: 8px;
  outline: none;
+ transition: none;
  }
  .dataTables_wrapper .dataTables_filter input:focus {
- border-color: #181D00;
+ border-color: #2A4A30;
+ box-shadow: 0 0 0 1px #2A4A30;
  }
 
  .dataTables_wrapper .dataTables_info {
  padding: 1rem 1.5rem;
- color: rgba(24,29,0,0.6);
+ color: #666666;
  font-size: 0.875rem;
  }
 
@@ -234,23 +236,24 @@
  }
 
  .dataTables_wrapper .paginate_button {
- color: rgba(24,29,0,0.6) !important;
+ color: #666666 !important;
  padding: 4px 10px !important;
  margin: 0 2px;
  border-radius: 6px;
  border: 1px solid transparent !important;
  cursor: pointer;
+ transition: none;
  }
  .dataTables_wrapper .paginate_button:hover {
- background: rgba(24,29,0,0.05) !important;
- color: #181D00 !important;
+ background: rgba(0,0,0,0.05) !important;
+ color: #111111 !important;
  border: 1px solid transparent !important;
  }
 
  .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
  color: #FFFFFF !important;
- background: #181D00 !important;
- border: 1px solid #181D00 !important;
+ background: #2A4A30 !important;
+ border: 1px solid #2A4A30 !important;
  font-weight: 500;
  }
 </style>

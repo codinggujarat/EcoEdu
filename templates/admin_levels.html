@@ -26,21 +26,21 @@
 
  <div class="space-y-2">
  <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level Number</label>
- {{ form.level_number(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ {{ form.level_number(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
  outline-none transition-none text-sm", placeholder="e.g. 6") }}
  </div>
 
  <div class="space-y-2">
  <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level Name</label>
- {{ form.name(class="w-full bg-white border border-admin-border rounded px-4 py-3 text-admin-text
+ {{ form.name(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3 text-admin-text
  placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
  transition-none text-sm", placeholder="e.g. Expert") }}
  </div>
 
  <div class="space-y-2">
  <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">XP Required</label>
- {{ form.xp_required(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ {{ form.xp_required(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
  outline-none transition-none text-sm", placeholder="e.g. 500") }}
  </div>
@@ -73,7 +73,7 @@
  class="admin-card border border-admin-border rounded-lg p-6 group hover:border-brand-500/50 transition-none relative">
  <div class="flex justify-between items-start mb-4">
  <div
- class="w-10 h-10 rounded bg-white border border-admin-border text-admin-text flex items-center justify-center font-bold text-lg">
+ class="w-10 h-10 rounded bg-admin-surface border border-admin-border text-admin-text flex items-center justify-center font-bold text-lg">
  {{ level.level_number }}
  </div>
  <form action="{{ url_for('delete_level', level_id=level.id) }}" method="POST">
@@ -95,7 +95,7 @@
  </div>
  {% else %}
  <div class="text-center py-20 admin-card border border-admin-border rounded-lg">
- <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+ <div class="w-16 h-16 bg-admin-surface rounded-full flex items-center justify-center mx-auto mb-4">
  <i data-lucide="layer-group" class="text-admin-textMuted text-2xl w-5 h-5"></i>
  </div>
  <h3 class="text-admin-text font-medium">No Levels Defined</h3>

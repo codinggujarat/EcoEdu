@@ -29,7 +29,7 @@
  <div>
  <label
  class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Title</label>
- {{ form.title(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ {{ form.title(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none text-sm", placeholder="e.g. Zero-Waste
  Initiative") }}
@@ -39,7 +39,7 @@
  <div>
  <label
  class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Category</label>
- {{ form.category(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ {{ form.category(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
  transition-none text-sm appearance-none cursor-pointer") }}
  </div>
@@ -48,7 +48,7 @@
  <div>
  <label
  class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Description</label>
- {{ form.description(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ {{ form.description(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none text-sm min-h-[120px]",
  placeholder="Describe the mission objectives...") }}
@@ -67,7 +67,7 @@
  <div class="relative">
  <span
  class="absolute left-4 top-1/2 -translate-y-1/2 text-brand-500 text-xs font-bold">PTS</span>
- {{ form.points(class="w-full bg-white border border-admin-border rounded pl-12 pr-4
+ {{ form.points(class="w-full bg-admin-surface border border-admin-border rounded pl-12 pr-4
  py-3 text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none text-sm", placeholder="100",
  type="number") }}
@@ -78,7 +78,7 @@
  <div>
  <label
  class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Difficulty</label>
- {{ form.difficulty(class="w-full bg-white border border-admin-border rounded px-4 py-3
+ {{ form.difficulty(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
  transition-none text-sm appearance-none cursor-pointer") }}
  </div>
@@ -94,7 +94,7 @@
  <label class="relative inline-flex items-center cursor-pointer">
  {{ form.verification_required(class="sr-only peer") }}
  <div
- class="w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-500 after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-none peer-checked:bg-brand-600">
+ class="w-11 h-6 bg-admin-surface peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-500 after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-none peer-checked:bg-brand-600">
  </div>
  </label>
  </div>
@@ -106,7 +106,7 @@
  Create Challenge
  </button>
  <button type="button" onclick="resetForm()"
- class="px-6 py-3 bg-white hover:bg-[#323842] text-admin-textMuted text-sm font-medium rounded border border-gray-600 transition-none">
+ class="px-6 py-3 bg-admin-surface hover:bg-[#323842] text-admin-textMuted text-sm font-medium rounded border border-gray-600 transition-none">
  Reset
  </button>
  </div>
@@ -120,7 +120,7 @@
  <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex justify-between items-start mb-4">
  <span
- class="px-2 py-1 bg-white text-admin-textMuted text-[10px] font-bold uppercase rounded border border-gray-700"
+ class="px-2 py-1 bg-admin-surface text-admin-textMuted text-[10px] font-bold uppercase rounded border border-gray-700"
  id="preview-category">Category</span>
  <span class="text-xs font-bold text-brand-500" id="preview-points">100 PTS</span>
  </div>
@@ -183,7 +183,7 @@
  previewVerification.className = 'text-[10px] font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded';
  } else {
  previewVerification.textContent = 'Auto-Verify';
- previewVerification.className = 'text-[10px] font-bold text-admin-textMuted bg-white px-2 py-1 rounded';
+ previewVerification.className = 'text-[10px] font-bold text-admin-textMuted bg-admin-surface px-2 py-1 rounded';
  }
  }
 

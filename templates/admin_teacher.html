@@ -22,7 +22,7 @@
  <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
  <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total Faculty</span>
- <i data-lucide="chalkboard-user" class="text-gray-600 w-5 h-5"></i>
+ <i data-lucide="chalkboard-user" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
  <span class="text-3xl font-semibold text-admin-text">{{ teachers|length }}</span>
@@ -33,7 +33,7 @@
  <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
  <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Verified</span>
- <i data-lucide="shield-alt" class="text-gray-600 w-5 h-5"></i>
+ <i data-lucide="shield-alt" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
  <span class="text-3xl font-semibold text-admin-text">{{ (teachers|length * 0.9) | round | int }}</span>
@@ -44,7 +44,7 @@
  <div class="admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-4">
  <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Online Now</span>
- <i data-lucide="clock" class="text-gray-600 w-5 h-5"></i>
+ <i data-lucide="clock" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
  <span class="text-3xl font-semibold text-admin-text">{{ (teachers|length * 0.7) | round | int }}</span>
@@ -58,7 +58,7 @@
  <div class="lg:col-span-2 admin-card border border-admin-border rounded-lg p-6">
  <div class="flex items-center justify-between mb-6">
  <h3 class="text-lg font-semibold text-admin-text">Activity Metrics</h3>
- <span class="px-2 py-1 bg-white text-xs text-admin-textMuted rounded">Last 7 Days</span>
+ <span class="px-2 py-1 bg-admin-surface text-xs text-admin-textMuted rounded">Last 7 Days</span>
  </div>
  <div class="h-64">
  <canvas id="teacherActivityChart"></canvas>
@@ -89,13 +89,13 @@
  <div class="p-6 border-b border-admin-border flex items-center justify-between">
  <h2 class="text-lg font-semibold text-admin-text">Faculty Directory</h2>
  <button
- class="px-4 py-2 bg-white hover:bg-[#323842] text-admin-text text-xs font-medium rounded border border-gray-600 transition-none">
+ class="px-4 py-2 bg-admin-surface hover:bg-[#323842] text-admin-text text-xs font-medium rounded border border-gray-600 transition-none">
  <i data-lucide="plus" class="mr-1 w-5 h-5"></i> Add Faculty
  </button>
  </div>
  <div class="overflow-x-auto">
  <table id="teachersTable" class="w-full text-left">
- <thead class="bg-white border-b border-admin-border">
+ <thead class="bg-admin-surface border-b border-admin-border">
  <tr>
  <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
  <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
@@ -103,13 +103,13 @@
  <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
  </tr>
  </thead>
- <tbody class="divide-y divide-admin-border bg-[#F7F7F2]">
+ <tbody class="divide-y divide-admin-border bg-admin-tableAlt">
  {% for teacher in teachers %}
- <tr class="hover:bg-white/30 transition-none">
+ <tr class="hover:bg-admin-surface/30 transition-none">
  <td class="p-4">
  <div class="flex items-center gap-3">
  <div
- class="w-8 h-8 rounded bg-white border border-admin-border flex items-center justify-center text-admin-textMuted font-bold text-xs">
+ class="w-8 h-8 rounded bg-admin-surface border border-admin-border flex items-center justify-center text-admin-textMuted font-bold text-xs">
  {{ teacher.name[0].upper() if teacher.name else 'T' }}
  </div>
  <div class="text-sm font-medium text-admin-text">{{ teacher.name }}</div>
@@ -123,7 +123,7 @@
  </td>
  <td class="p-4">
  <span
- class="px-2 py-0.5 bg-white border border-gray-700 text-admin-textMuted text-[10px] font-bold uppercase rounded">
+ class="px-2 py-0.5 bg-admin-surface border border-gray-700 text-admin-textMuted text-[10px] font-bold uppercase rounded">
  {{ teacher.role }}
  </span>
  </td>
@@ -132,7 +132,7 @@
  class="inline">
  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
  <button type="submit"
- class="w-8 h-8 rounded bg-white hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-none"
+ class="w-8 h-8 rounded bg-admin-surface hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-none"
  onclick="return confirm('Revoke access for this teacher?')">
  <i data-lucide="trash-2" class="w-5 h-5"></i>
  </button>
@@ -154,27 +154,29 @@
  .dataTables_wrapper .dataTables_length,
  .dataTables_wrapper .dataTables_filter {
  padding: 1rem 1.5rem;
- color: #181D00;
+ color: #111111;
  font-size: 0.875rem;
  font-weight: 500;
  }
 
  .dataTables_wrapper .dataTables_filter input {
  background: #FFFFFF;
- border: 1px solid rgba(24, 29, 0, 0.15);
+ border: 1px solid rgba(0,0,0,0.12);
  border-radius: 6px;
- color: #181D00;
+ color: #111111;
  padding: 6px 12px;
  margin-left: 8px;
  outline: none;
+ transition: none;
  }
  .dataTables_wrapper .dataTables_filter input:focus {
- border-color: #181D00;
+ border-color: #2A4A30;
+ box-shadow: 0 0 0 1px #2A4A30;
  }
 
  .dataTables_wrapper .dataTables_info {
  padding: 1rem 1.5rem;
- color: rgba(24,29,0,0.6);
+ color: #666666;
  font-size: 0.875rem;
  }
 
@@ -184,23 +186,24 @@
  }
 
  .dataTables_wrapper .paginate_button {
- color: rgba(24,29,0,0.6) !important;
+ color: #666666 !important;
  padding: 4px 10px !important;
  margin: 0 2px;
  border-radius: 6px;
  border: 1px solid transparent !important;
  cursor: pointer;
+ transition: none;
  }
  .dataTables_wrapper .paginate_button:hover {
- background: rgba(24,29,0,0.05) !important;
- color: #181D00 !important;
+ background: rgba(0,0,0,0.05) !important;
+ color: #111111 !important;
  border: 1px solid transparent !important;
  }
 
  .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
  color: #FFFFFF !important;
- background: #181D00 !important;
- border: 1px solid #181D00 !important;
+ background: #2A4A30 !important;
+ border: 1px solid #2A4A30 !important;
  font-weight: 500;
  }
 </style>
@@ -221,7 +224,7 @@
  datasets: [{
  label: 'Activity',
  data: [65, 59, 80, 81, 56, 40, 30],
- borderColor: '#181D00',
+ borderColor: '#2A4A30',
  backgroundColor: 'rgba(16, 185, 129, 0.1)',
  fill: true,
  tension: 0.4
@@ -232,8 +235,8 @@
  maintainAspectRatio: false,
  plugins: { legend: { display: false } },
  scales: {
- y: { grid: { color: 'rgba(24,29,0,0.1)' }, ticks: { color: 'rgba(24,29,0,0.6)' } },
- x: { grid: { display: false }, ticks: { color: 'rgba(24,29,0,0.6)' } }
+ y: { grid: { color: 'rgba(0,0,0,0.08)' }, ticks: { color: '#888888' } },
+ x: { grid: { display: false }, ticks: { color: '#888888' } }
  }
  }
  });
@@ -246,7 +249,7 @@
  labels: ['Active', 'Syncing', 'Off'],
  datasets: [{
  data: [80, 15, 5],
- backgroundColor: ['#181D00', '#3b82f6', '#ef4444'],
+ backgroundColor: ['#2A4A30', '#3b82f6', '#ef4444'],
  borderWidth: 0
  }]
  },

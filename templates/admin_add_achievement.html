@@ -29,20 +29,20 @@
  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
  <div class="md:col-span-3 space-y-1.5">
  <label class="block text-xs font-medium text-admin-textMuted">Achievement Title</label>
- {{ form.name(class="w-full bg-white border border-admin-border rounded-lg px-4 py-2.5
+ {{ form.name(class="w-full bg-admin-surface border border-admin-border rounded-lg px-4 py-2.5
  text-sm text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none", placeholder="e.g. Eco Warrior") }}
  </div>
  <div class="space-y-1.5">
  <label class="block text-xs font-medium text-admin-textMuted">Icon (Emoji)</label>
- {{ form.badge_icon(class="w-full bg-white border border-admin-border rounded-lg px-4 py-2.5
+ {{ form.badge_icon(class="w-full bg-admin-surface border border-admin-border rounded-lg px-4 py-2.5
  text-sm text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none text-center", placeholder="🏆") }}
  </div>
 
  <div class="md:col-span-4 space-y-1.5">
  <label class="block text-xs font-medium text-admin-textMuted">Description</label>
- {{ form.description(class="w-full bg-white border border-admin-border rounded-lg px-4
+ {{ form.description(class="w-full bg-admin-surface border border-admin-border rounded-lg px-4
  py-2.5 text-sm text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none min-h-[100px]", placeholder="Describe
  how to earn this achievement...") }}
@@ -62,7 +62,7 @@
  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
  <i data-lucide="bolt" class="text-brand-500 w-5 h-5"></i>
  </div>
- {{ form.points_required(class="w-full bg-white border border-admin-border rounded-lg
+ {{ form.points_required(class="w-full bg-admin-surface border border-admin-border rounded-lg
  pl-9 pr-4 py-2.5 text-sm text-admin-text placeholder-gray-600 focus:border-brand-500
  focus:ring-1 focus:ring-brand-500 outline-none transition-none", placeholder="0",
  type="number") }}
@@ -75,7 +75,7 @@
  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
  <i data-lucide="check-square" class="text-blue-500 w-5 h-5"></i>
  </div>
- {{ form.challenges_required(class="w-full bg-white border border-admin-border
+ {{ form.challenges_required(class="w-full bg-admin-surface border border-admin-border
  rounded-lg pl-9 pr-4 py-2.5 text-sm text-admin-text placeholder-gray-600
  focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
  transition-none", placeholder="0", type="number") }}
@@ -112,7 +112,7 @@
  <div
  class="admin-card border border-admin-border rounded-xl p-6 text-center relative overflow-hidden group">
  <div
- class="w-16 h-16 bg-white border border-admin-border rounded-2xl flex items-center justify-center text-3xl mb-4 mx-auto group- transition-transform">
+ class="w-16 h-16 bg-admin-surface border border-admin-border rounded-2xl flex items-center justify-center text-3xl mb-4 mx-auto group- transition-transform">
  <span id="preview-icon">🏆</span>
  </div>
 
@@ -120,14 +120,14 @@
  <p class="text-sm text-admin-textMuted mb-6" id="preview-description">Description will appear here...</p>
 
  <div class="grid grid-cols-2 gap-3 text-left">
- <div class="bg-white p-3 rounded-lg border border-admin-border">
+ <div class="bg-admin-surface p-3 rounded-lg border border-admin-border">
  <p class="text-[10px] text-admin-textMuted uppercase tracking-wider mb-1">Points</p>
  <div class="flex items-center gap-2">
  <i data-lucide="bolt" class="text-brand-500 w-5 h-5"></i>
  <span class="text-sm font-bold text-admin-text" id="preview-points">0</span>
  </div>
  </div>
- <div class="bg-white p-3 rounded-lg border border-admin-border">
+ <div class="bg-admin-surface p-3 rounded-lg border border-admin-border">
  <p class="text-[10px] text-admin-textMuted uppercase tracking-wider mb-1">Tasks</p>
  <div class="flex items-center gap-2">
  <i data-lucide="check-circle" class="text-blue-500 w-5 h-5"></i>
