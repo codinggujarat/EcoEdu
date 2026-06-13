@@ -252,7 +252,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 20px 20px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -268,7 +268,7 @@
             left: 0;
             right: 0;
             z-index: 999;
-            height: 88px; /* 20 + 20 + 48 = 88px */
+            height: 80px; /* 16 + 16 + 48 = 80px */
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -281,10 +281,11 @@
 
         @media (min-width: 768px) {
             .edit-nav {
-                padding: 48px 64px;
+                padding: 24px 64px;
             }
+
             .nav-backdrop {
-                height: 144px; /* 48 + 48 + 48 = 144px */
+                height: 96px; /* 24 + 24 + 48 = 96px */
             }
         }
 
