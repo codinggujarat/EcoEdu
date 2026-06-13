@@ -1918,7 +1918,7 @@ def handle_csrf_error(e):
 @app.errorhandler(Exception)
 def handle_exception(e):
     traceback.print_exc()
-    return f"Internal Server Error details: {str(e)}", 500
+    return "Something went wrong. Please try again later.", 500
 
 # Initialize Certificate Service
 cert_service = CertificateService(os.path.join(app.root_path, "static"))
@@ -1928,50 +1928,39 @@ with app.app_context():
     # Create all database tables
     db.create_all()
     print("Database Tables Created:", db.metadata.tables.keys())
-    
-    # Check and add new columns if they don't exist (SQLite migration helper)
+    # Check and add new columns if they don't exist
     try:
         engine = db.engine
-        from sqlalchemy import inspect
+        from sqlalchemy import inspect, text
         inspector = inspect(engine)
         
+        def add_column_if_not_exists(table_name, column_name, column_type, default=None):
+            if table_name in inspector.get_table_names():
+                columns = [c['name'] for c in inspector.get_columns(table_name)]
+                if column_name not in columns:
+                    print(f"Migrating {table_name}: Adding {column_name} column...")
+                    with engine.begin() as con:
+                        default_clause = f" DEFAULT {default}" if default is not None else ""
+                        # Add quotes around table name to handle reserved keywords like user
+                        con.execute(text(f'ALTER TABLE "{table_name}" ADD COLUMN {column_name} {column_type}{default_clause}'))
+        
         # Update User table
-        if 'user' in inspector.get_table_names():
-            columns = [c['name'] for c in inspector.get_columns('user')]
-            if 'preferences' not in columns:
-                print("Migrating User table...")
-                with engine.connect() as con:
-                    con.execute(db.text('ALTER TABLE "user" ADD COLUMN preferences TEXT'))
-            if 'challenges_completed' not in columns:
-                print("Migrating User table: Adding challenges_completed column...")
-                with engine.connect() as con:
-                    con.execute(db.text('ALTER TABLE "user" ADD COLUMN challenges_completed INTEGER DEFAULT 0'))
+        add_column_if_not_exists('user', 'preferences', 'TEXT')
+        add_column_if_not_exists('user', 'challenges_completed', 'INTEGER', default='0')
+        add_column_if_not_exists('user', 'profile_pic', 'VARCHAR(200)', default="'default.png'")
+        add_column_if_not_exists('user', 'school', 'VARCHAR(100)')
+        add_column_if_not_exists('user', 'class_name', 'VARCHAR(50)')
         
         # Update Challenge table
-        if 'challenge' in inspector.get_table_names():
-            columns = [c['name'] for c in inspector.get_columns('challenge')]
-            if 'difficulty_score' not in columns:
-                print("Migrating Challenge table...")
-                with engine.connect() as con:
-                    con.execute(db.text('ALTER TABLE challenge ADD COLUMN difficulty_score FLOAT DEFAULT 1.0'))
-                    con.execute(db.text('ALTER TABLE challenge ADD COLUMN tags TEXT'))
+        add_column_if_not_exists('challenge', 'difficulty_score', 'FLOAT', default='1.0')
+        add_column_if_not_exists('challenge', 'tags', 'TEXT')
         
         # Update ChallengeCompletion table
-        if 'challenge_completion' in inspector.get_table_names():
-            columns = [c['name'] for c in inspector.get_columns('challenge_completion')]
-            if 'ai_confidence' not in columns:
-                print("Migrating ChallengeCompletion table...")
-                with engine.connect() as con:
-                    con.execute(db.text('ALTER TABLE challenge_completion ADD COLUMN ai_confidence FLOAT DEFAULT 0.0'))
-                    con.execute(db.text('ALTER TABLE challenge_completion ADD COLUMN ai_verified BOOLEAN DEFAULT 0'))
+        add_column_if_not_exists('challenge_completion', 'ai_confidence', 'FLOAT', default='0.0')
+        add_column_if_not_exists('challenge_completion', 'ai_verified', 'BOOLEAN', default='FALSE')
         
         # Update Achievement table
-        if 'achievement' in inspector.get_table_names():
-            columns = [c['name'] for c in inspector.get_columns('achievement')]
-            if 'challenges_required' not in columns:
-                print("Migrating Achievement table: Adding challenges_required column...")
-                with engine.connect() as con:
-                    con.execute(db.text('ALTER TABLE achievement ADD COLUMN challenges_required INTEGER DEFAULT 0'))
+        add_column_if_not_exists('achievement', 'challenges_required', 'INTEGER', default='0')
                 
     except Exception as e:
         print(f"Migration warning: {e}")
