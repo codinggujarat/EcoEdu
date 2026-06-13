@@ -4,165 +4,183 @@
 
 {% block content %}
 <div class="max-w-[1400px] mx-auto pb-10">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div>
- <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Student Management</h1>
- <p class="text-[15px] text-admin-textMuted">Directory of all registered students.</p>
- </div>
- <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
- <span class="text-xs text-admin-textMuted font-medium">
- <span class="text-admin-text font-bold">{{ students|length }}</span> Total Students
- </span>
- </div>
- </div>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Student Management</h1>
+            <p class="text-[15px] text-admin-textMuted">Directory of all registered students.</p>
+        </div>
+        <div class="px-4 py-2 bg-admin-card border border-admin-border rounded-[12px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ students|length }}</span> Total Students
+            </span>
+        </div>
+    </div>
 
- <!-- Stats Grid -->
- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Total Enrolled</span>
- <i data-lucide="user-graduate" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ students|length }}</span>
- <span class="text-xs text-brand-500 font-medium flex items-center gap-1">
- <i data-lucide="arrow-up" class="w-5 h-5"></i> 15%
- </span>
- </div>
- </div>
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- 4 Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="admin-card !p-5 relative overflow-hidden group">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="user-graduate" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ students|length }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Enrolled</span>
+                        <span class="text-[10px] font-bold text-[#2A4A30] bg-[#F4F4EF] px-1.5 py-0.5 rounded border border-admin-border">+15%</span>
+                    </div>
+                </div>
 
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Active Users</span>
- <i data-lucide="signal" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ (students|length * 0.85) | round | int }}</span>
- <span class="text-xs text-blue-500 font-medium">Online</span>
- </div>
- </div>
+                <div class="admin-card !p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="signal" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ (students|length * 0.85) | round | int }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Active Users</span>
+                        <span class="text-[10px] font-bold text-[#111111] bg-admin-tableAlt px-1.5 py-0.5 rounded border border-admin-border">Online</span>
+                    </div>
+                </div>
 
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Tasks Done</span>
- <i data-lucide="check-circle" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ (students|length * 2.3) | round | int }}</span>
- <span class="text-xs text-admin-textMuted font-medium">Total</span>
- </div>
- </div>
+                <div class="admin-card !p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="check-circle" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ (students|length * 2.3) | round | int }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">Tasks Done</span>
+                        <span class="text-[10px] font-bold text-[#111111] bg-admin-surface px-1.5 py-0.5 rounded border border-admin-border">Total</span>
+                    </div>
+                </div>
 
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">New This Month</span>
- <i data-lucide="user-plus" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ (students|length * 0.12) | round | int }}</span>
- <span class="text-xs text-brand-500 font-medium">Growing</span>
- </div>
- </div>
- </div>
+                <div class="admin-card !p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-8 h-8 rounded-full bg-admin-tableAlt flex items-center justify-center border border-admin-border">
+                            <i data-lucide="user-plus" class="text-admin-text w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="text-[28px] font-semibold text-admin-text mb-1">{{ (students|length * 0.12) | round | int }}</div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-admin-textMuted font-medium">New Monthly</span>
+                        <span class="text-[10px] font-bold text-[#2A4A30] bg-[#F4F4EF] px-1.5 py-0.5 rounded border border-admin-border">Growing</span>
+                    </div>
+                </div>
+            </div>
 
- <!-- Main Content -->
- <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
- <!-- Activity Chart -->
- <div class="lg:col-span-2 admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Engagement Analytics</h3>
- <div class="h-64">
- <canvas id="studentActivityChart"></canvas>
- </div>
- </div>
+            <!-- Student Table -->
+            <div class="admin-card !p-0 overflow-hidden flex flex-col">
+                <div class="p-6 border-b border-admin-border flex items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-admin-text">Student Directory</h2>
+                    </div>
+                    <button class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-admin-surface text-admin-text text-sm font-medium rounded-lg hover:bg-admin-tableAlt border border-admin-border shadow-sm transition-none">
+                        <i data-lucide="download" class="w-4 h-4"></i> Export CSV
+                    </button>
+                </div>
+                <div class="overflow-x-auto p-4 pt-0">
+                    <table id="studentsTable" class="w-full text-left mt-2">
+                        <thead class="bg-admin-surface border border-admin-border rounded-lg">
+                            <tr>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider rounded-tl-lg">Name</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Progress</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-admin-card">
+                            {% for student in students %}
+                            <tr class="hover:bg-admin-surface transition-none">
+                                <td class="p-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-admin-tableAlt border border-admin-border flex items-center justify-center text-admin-text font-bold text-xs">
+                                            {{ student.name[0].upper() if student.name else 'S' }}
+                                        </div>
+                                        <div class="text-sm font-semibold text-admin-text">{{ student.name }}</div>
+                                    </div>
+                                </td>
+                                <td class="p-3">
+                                    <span class="text-[13px] text-admin-textMuted">{{ student.email }}</span>
+                                </td>
+                                <td class="p-3">
+                                    <div class="flex items-center gap-2 text-[12px]">
+                                        <span class="text-[#2A4A30] font-semibold">{{ (loop.index * 50 + 120) }} XP</span>
+                                        <span class="text-admin-textMuted opacity-50">|</span>
+                                        <span class="text-admin-textMuted capitalize font-medium">{{ student.role }}</span>
+                                    </div>
+                                </td>
+                                <td class="p-3 text-right">
+                                    <div class="flex justify-end gap-2">
+                                        <button class="w-8 h-8 rounded-lg bg-admin-surface border border-transparent hover:border-admin-border hover:bg-admin-tableAlt text-admin-text flex items-center justify-center transition-none">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <form action="{{ url_for('admin_delete_user', user_id=student.id) }}" method="POST" class="inline">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 border border-transparent hover:border-red-200 text-red-600 flex items-center justify-center transition-none" onclick="return confirm('Delete this user?')">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
- <!-- Grade Distribution -->
- <div class="admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Performance Tier</h3>
- <div class="h-48 relative mb-6">
- <canvas id="studentPerformanceChart"></canvas>
- </div>
- <div class="space-y-3">
- <div class="flex justify-between items-center text-sm">
- <span class="flex items-center gap-2 text-admin-textMuted">
- <span class="w-2 h-2 rounded-full bg-brand-500"></span> Top Tier
- </span>
- <span class="font-medium text-admin-text">55%</span>
- </div>
- <div class="flex justify-between items-center text-sm">
- <span class="flex items-center gap-2 text-admin-textMuted">
- <span class="w-2 h-2 rounded-full bg-blue-500"></span> Mid Tier
- </span>
- <span class="font-medium text-admin-text">35%</span>
- </div>
- </div>
- </div>
- </div>
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Activity Chart Widget -->
+            <div class="admin-card">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-admin-text">Engagement Analytics</h3>
+                    <i data-lucide="bar-chart-2" class="text-admin-textMuted w-4 h-4"></i>
+                </div>
+                <div class="h-64 mb-2">
+                    <canvas id="studentActivityChart"></canvas>
+                </div>
+            </div>
 
- <!-- Student Table -->
- <div class="admin-card  overflow-hidden">
- <div class="p-6 border-b border-admin-border flex items-center justify-between">
- <h2 class="text-lg font-semibold text-admin-text">Student Directory</h2>
- <button
- class="px-4 py-2 bg-admin-surface hover:bg-[#323842] text-admin-text text-xs font-medium rounded border border-gray-600 transition-none">
- <i data-lucide="download" class="mr-1 w-5 h-5"></i> Export CSV
- </button>
- </div>
- <div class="overflow-x-auto">
- <table id="studentsTable" class="w-full text-left">
- <thead class="bg-admin-surface border-b border-admin-border">
- <tr>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Progress</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
- </tr>
- </thead>
- <tbody class="divide-y divide-admin-border bg-admin-tableAlt">
- {% for student in students %}
- <tr class="hover:bg-admin-surface/30 transition-none">
- <td class="p-4">
- <div class="flex items-center gap-3">
- <div
- class="w-8 h-8 rounded bg-admin-surface border border-admin-border flex items-center justify-center text-admin-textMuted font-bold text-xs">
- {{ student.name[0].upper() if student.name else 'S' }}
- </div>
- <div class="text-sm font-medium text-admin-text">{{ student.name }}</div>
- </div>
- </td>
- <td class="p-4">
- <span class="text-sm text-admin-textMuted">{{ student.email }}</span>
- </td>
- <td class="p-4">
- <div class="flex items-center gap-3 text-xs">
- <span class="text-brand-500 font-medium">{{ (loop.index * 50 + 120) }} XP</span>
- <span class="text-admin-textMuted">|</span>
- <span class="text-admin-textMuted capitalize">{{ student.role }}</span>
- </div>
- </td>
- <td class="p-4 text-right">
- <div class="flex justify-end gap-2">
- <button
- class="w-8 h-8 rounded bg-admin-surface hover:bg-blue-900/30 text-blue-500 hover:text-blue-400 flex items-center justify-center transition-none">
- <i data-lucide="eye" class="w-5 h-5"></i>
- </button>
- <form action="{{ url_for('admin_delete_user', user_id=student.id) }}" method="POST"
- class="inline">
- <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
- <button type="submit"
- class="w-8 h-8 rounded bg-admin-surface hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-none"
- onclick="return confirm('Delete this user?')">
- <i data-lucide="trash-2" class="w-5 h-5"></i>
- </button>
- </form>
- </div>
- </td>
- </tr>
- {% endfor %}
- </tbody>
- </table>
- </div>
- </div>
+            <!-- Grade Distribution Widget -->
+            <div class="admin-card">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-admin-text">Performance Tier</h3>
+                    <i data-lucide="pie-chart" class="text-admin-textMuted w-4 h-4"></i>
+                </div>
+                <div class="h-48 relative mb-8">
+                    <canvas id="studentPerformanceChart"></canvas>
+                </div>
+                <div class="space-y-4 pt-4 border-t border-admin-border">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="flex items-center gap-3 text-admin-text font-medium">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#111111]"></span> Top Tier
+                        </span>
+                        <span class="font-bold text-admin-text">55%</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="flex items-center gap-3 text-admin-text font-medium">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#666666]"></span> Mid Tier
+                        </span>
+                        <span class="font-bold text-admin-text">35%</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -231,9 +249,9 @@
 <script>
  $(document).ready(function () {
  $('#studentsTable').DataTable({
-"pageLength": 10,
-"lengthChange": false,
-"language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
  });
 
  // Activity Chart
@@ -245,8 +263,8 @@
  datasets: [{
  label: 'Engagement',
  data: [45, 52, 48, 70, 85, 92],
- borderColor: '#2A4A30',
- backgroundColor: 'rgba(16, 185, 129, 0.1)',
+ borderColor: '#111111',
+ backgroundColor: 'rgba(0,0,0,0.03)',
  fill: true,
  tension: 0.4
  }]
@@ -256,8 +274,8 @@
  maintainAspectRatio: false,
  plugins: { legend: { display: false } },
  scales: {
- y: { grid: { color: 'rgba(0,0,0,0.08)' }, ticks: { color: '#888888' } },
- x: { grid: { display: false }, ticks: { color: '#888888' } }
+ y: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { color: '#888888', font: {family: "'General Sans', sans-serif"} } },
+ x: { grid: { display: false }, ticks: { color: '#888888', font: {family: "'General Sans', sans-serif"} } }
  }
  }
  });
@@ -270,7 +288,7 @@
  labels: ['High', 'Mid', 'Low'],
  datasets: [{
  data: [55, 35, 10],
- backgroundColor: ['#2A4A30', '#3b82f6', '#ef4444'],
+ backgroundColor: ['#111111', '#666666', '#E5E7EB'],
  borderWidth: 0
  }]
  },

@@ -1,107 +1,151 @@
 {% extends"adminbase.html" %}
+
 {% block title %}Manage Levels | EduEco Admin{% endblock %}
 
 {% block content %}
 <div class="max-w-[1400px] mx-auto pb-10">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div>
- <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Level Management</h1>
- <p class="text-[15px] text-admin-textMuted">Define student progression and milestones.</p>
- </div>
- <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
- <span class="text-xs text-admin-textMuted font-medium">
- <span class="text-admin-text font-bold">{{ levels|length }}</span> Active Levels
- </span>
- </div>
- </div>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Level Progression</h1>
+            <p class="text-[15px] text-admin-textMuted">Configure the student XP requirement curves.</p>
+        </div>
+        <div class="px-4 py-2 bg-admin-card border border-admin-border rounded-[12px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ levels|length }}</span> Defined Levels
+            </span>
+        </div>
+    </div>
 
- <!-- Create Form -->
- <div class="mb-12">
- <div class="admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Create New Level</h3>
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- Levels Table -->
+            <div class="admin-card !p-0 overflow-hidden flex flex-col">
+                <div class="p-6 border-b border-admin-border flex items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-admin-text">Progression Tree</h2>
+                    </div>
+                </div>
+                <div class="overflow-x-auto p-4 pt-0">
+                    <table id="levelsTable" class="w-full text-left mt-2">
+                        <thead class="bg-admin-surface border border-admin-border rounded-lg">
+                            <tr>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider rounded-tl-lg text-center">Level</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Title</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Required XP</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-admin-card">
+                            {% for level in levels|sort(attribute='level_number') %}
+                            <tr class="hover:bg-admin-surface transition-none">
+                                <td class="p-3 text-center">
+                                    <div class="w-8 h-8 mx-auto rounded-full bg-[#111111] text-white flex items-center justify-center font-bold text-sm">
+                                        {{ level.level_number }}
+                                    </div>
+                                </td>
+                                <td class="p-3">
+                                    <div class="text-sm font-semibold text-admin-text">{{ level.title }}</div>
+                                </td>
+                                <td class="p-3">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-admin-surface border border-admin-border text-admin-text uppercase">
+                                        {{ level.min_xp }} XP
+                                    </span>
+                                </td>
+                                <td class="p-3 text-right">
+                                    <form action="{{ url_for('admin_delete_level', level_id=level.id) }}" method="POST" class="inline">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 border border-transparent hover:border-red-200 text-red-600 flex items-center justify-center transition-none" onclick="return confirm('Delete this level tier?')">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% if not levels %}
+                            <tr>
+                                <td colspan="4" class="p-8 text-center text-admin-textMuted text-sm">
+                                    No levels found. Define the progression curve.
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
- <form method="POST" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
- {{ form.csrf_token }}
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Add Level Form Widget -->
+            <div class="admin-card">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-admin-text">Create Tier</h3>
+                    <i data-lucide="chevrons-up" class="text-admin-textMuted w-4 h-4"></i>
+                </div>
 
- <div class="space-y-2">
- <label class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Level Number</label>
- {{ form.level_number(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
- text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
- outline-none transition-none text-sm", placeholder="e.g. 6") }}
- </div>
+                <form method="POST" class="space-y-4">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Level Number</label>
+                            <input type="number" name="level_number" required min="1"
+                                class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
+                                placeholder="e.g. 5">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Rank Title</label>
+                            <input type="text" name="title" required
+                                class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
+                                placeholder="e.g. Eco Warrior">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">XP Required</label>
+                            <input type="number" name="min_xp" required min="0" step="50"
+                                class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
+                                placeholder="e.g. 1500">
+                        </div>
+                    </div>
 
- <div class="space-y-2">
- <label class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Level Name</label>
- {{ form.name(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3 text-admin-text
- placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-none text-sm", placeholder="e.g. Expert") }}
- </div>
+                    <button type="submit"
+                        class="w-full py-2.5 bg-[#111111] hover:bg-[#2A4A30] text-white text-sm font-semibold rounded-lg shadow-sm border border-transparent transition-none flex items-center justify-center gap-2 mt-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Add Tier
+                    </button>
+                </form>
+            </div>
 
- <div class="space-y-2">
- <label class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">XP Required</label>
- {{ form.xp_required(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
- text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
- outline-none transition-none text-sm", placeholder="e.g. 500") }}
- </div>
-
- <button type="submit"
- class="h-[46px] px-6 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded transition-none flex items-center justify-center gap-2">
- <i data-lucide="plus" class="w-5 h-5"></i> Add Level
- </button>
- </form>
-
- <form action="{{ url_for('generate_levels') }}" method="POST" class="mt-6 pt-6 border-t border-admin-border">
- {{ form.csrf_token }}
- <button type="submit"
- onclick="return confirm('Generate standard levels? This will add multiple levels.');"
- class="text-xs text-blue-400 hover:text-blue-300 font-medium flex items-center gap-2">
- <i data-lucide="magic" class="w-5 h-5"></i> Auto-Generate Standard Levels
- </button>
- </form>
- </div>
- </div>
-
- <!-- Levels Grid -->
- <div class="space-y-4">
- <h2 class="text-lg font-semibold text-admin-text px-1">Progression Path</h2>
-
- {% if levels %}
- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
- {% for level in levels %}
- <div
- class="admin-card  p-6 group hover:border-brand-500/50 transition-none relative">
- <div class="flex justify-between items-start mb-4">
- <div
- class="w-10 h-10 rounded bg-admin-surface border border-admin-border text-admin-text flex items-center justify-center font-bold text-lg">
- {{ level.level_number }}
- </div>
- <form action="{{ url_for('delete_level', level_id=level.id) }}" method="POST">
- <button type="submit" onclick="return confirm('Delete this level?');"
- class="text-admin-textMuted hover:text-red-500 transition-none">
- <i data-lucide="trash-can" class="w-5 h-5"></i>
- </button>
- </form>
- </div>
-
- <h3 class="text-base font-bold text-admin-text mb-1 group-hover:text-brand-500 transition-none">{{
- level.name }}</h3>
- <div class="flex items-center gap-2 text-xs text-admin-textMuted">
- <i data-lucide="bolt" class="text-brand-500 w-5 h-5"></i>
- <span>{{ level.xp_required }} XP Required</span>
- </div>
- </div>
- {% endfor %}
- </div>
- {% else %}
- <div class="text-center py-20 admin-card ">
- <div class="w-16 h-16 bg-admin-surface rounded-full flex items-center justify-center mx-auto mb-4">
- <i data-lucide="layer-group" class="text-admin-textMuted text-2xl w-5 h-5"></i>
- </div>
- <h3 class="text-admin-text font-medium">No Levels Defined</h3>
- <p class="text-admin-textMuted text-sm mt-1">Create a new level to start the progression path.</p>
- </div>
- {% endif %}
- </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<style>
+ .dataTables_wrapper .dataTables_length,
+ .dataTables_wrapper .dataTables_filter { padding: 1rem 1.5rem; color: #111111; font-size: 0.875rem; font-weight: 500; }
+ .dataTables_wrapper .dataTables_filter input { background: #FFFFFF; border: 1px solid rgba(0,0,0,0.12); border-radius: 6px; color: #111111; padding: 6px 12px; margin-left: 8px; outline: none; transition: none; }
+ .dataTables_wrapper .dataTables_filter input:focus { border-color: #2A4A30; box-shadow: 0 0 0 1px #2A4A30; }
+ .dataTables_wrapper .dataTables_info { padding: 1rem 1.5rem; color: #666666; font-size: 0.875rem; }
+ .dataTables_wrapper .dataTables_paginate { padding: 1rem 1.5rem; font-size: 0.875rem; }
+ .dataTables_wrapper .paginate_button { color: #666666 !important; padding: 4px 10px !important; margin: 0 2px; border-radius: 6px; border: 1px solid transparent !important; cursor: pointer; transition: none; }
+ .dataTables_wrapper .paginate_button:hover { background: rgba(0,0,0,0.05) !important; color: #111111 !important; border: 1px solid transparent !important; }
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover { color: #FFFFFF !important; background: #2A4A30 !important; border: 1px solid #2A4A30 !important; font-weight: 500; }
+</style>
+
+<script>
+ $(document).ready(function () {
+ $('#levelsTable').DataTable({
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
+ });
+ });
+</script>
 {% endblock %}

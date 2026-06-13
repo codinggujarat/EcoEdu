@@ -1,209 +1,103 @@
 {% extends"adminbase.html" %}
-{% block title %}Add Challenge | EduEco Admin{% endblock %}
+
+{% block title %}Add New Challenge | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div>
- <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Create Challenge</h1>
- <p class="text-[15px] text-admin-textMuted">Add a new environmental mission to the platform.</p>
- </div>
- <a href="{{ url_for('admin_dashboard') }}"
- class="px-4 py-2 admin-card border border-admin-border text-admin-textMuted text-xs font-medium rounded hover:text-admin-text transition-none flex items-center gap-2">
- <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Dashboard
- </a>
- </div>
+<div class="max-w-[1400px] mx-auto pb-10 flex justify-center">
+    
+    <div class="w-full max-w-3xl">
+        <!-- Header -->
+        <div class="mb-8 flex items-center justify-between">
+            <div>
+                <a href="{{ url_for('admin_dashboard') }}" class="inline-flex items-center gap-2 text-[13px] font-semibold text-admin-textMuted hover:text-[#111111] transition-none mb-3">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Dashboard
+                </a>
+                <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Create Challenge</h1>
+                <p class="text-[15px] text-admin-textMuted">Design a new environmental task for students.</p>
+            </div>
+        </div>
 
- <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
- <!-- Main Form -->
- <div class="lg:col-span-2 space-y-8">
- <form method="POST" class="space-y-8">
- {{ form.hidden_tag() }}
+        <div class="admin-card">
+            <form method="POST" class="space-y-8">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
- <!-- details -->
- <div class="admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Challenge Details</h3>
- <div class="space-y-6">
- <!-- Title -->
- <div>
- <label
- class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Title</label>
- {{ form.title(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
- text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-none text-sm", placeholder="e.g. Zero-Waste
- Initiative") }}
- </div>
+                <!-- Title & Category Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Challenge Title</label>
+                        <input type="text" name="title" required
+                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
+                            placeholder="e.g. Zero Waste Week">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Category</label>
+                        <select name="category" required
+                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none appearance-none">
+                            <option value="Waste">Waste Reduction</option>
+                            <option value="Energy">Energy Conservation</option>
+                            <option value="Water">Water Savings</option>
+                            <option value="Nature">Nature & Biodiversity</option>
+                            <option value="Community">Community Action</option>
+                        </select>
+                    </div>
+                </div>
 
- <!-- Category -->
- <div>
- <label
- class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Category</label>
- {{ form.category(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
- text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-none text-sm appearance-none cursor-pointer") }}
- </div>
+                <!-- Description -->
+                <div>
+                    <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Detailed Description</label>
+                    <textarea name="description" required rows="4"
+                        class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
+                        placeholder="Explain the rules and objectives of this challenge..."></textarea>
+                </div>
 
- <!-- Description -->
- <div>
- <label
- class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Description</label>
- {{ form.description(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
- text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-none text-sm min-h-[120px]",
- placeholder="Describe the mission objectives...") }}
- </div>
- </div>
- </div>
+                <!-- Points & Difficulty Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Reward Points (XP)</label>
+                        <input type="number" name="points" required min="10" max="1000" step="10"
+                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none"
+                            placeholder="e.g. 50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Difficulty Level</label>
+                        <select name="difficulty" required
+                            class="w-full bg-[#FFFFFF] border border-[rgba(0,0,0,0.12)] rounded-lg px-4 py-2.5 text-sm text-admin-text focus:border-[#2A4A30] focus:ring-1 focus:ring-[#2A4A30] outline-none transition-none appearance-none">
+                            <option value="Easy">Easy (10-50 pts)</option>
+                            <option value="Medium">Medium (60-150 pts)</option>
+                            <option value="Hard">Hard (160+ pts)</option>
+                        </select>
+                    </div>
+                </div>
 
- <!-- Rewards -->
- <div class="admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Rewards & Difficulty</h3>
- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
- <!-- Points -->
- <div>
- <label
- class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Points</label>
- <div class="relative">
- <span
- class="absolute left-4 top-1/2 -translate-y-1/2 text-brand-500 text-xs font-bold">PTS</span>
- {{ form.points(class="w-full bg-admin-surface border border-admin-border rounded pl-12 pr-4
- py-3 text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
- focus:ring-brand-500 outline-none transition-none text-sm", placeholder="100",
- type="number") }}
- </div>
- </div>
+                <!-- Settings -->
+                <div class="pt-6 border-t border-admin-border space-y-4">
+                    <h3 class="text-[13px] font-bold text-admin-text uppercase tracking-wider">Verification Settings</h3>
+                    
+                    <label class="flex items-start gap-3 p-4 border border-[rgba(0,0,0,0.12)] rounded-lg hover:bg-[#FAFAF8] cursor-pointer transition-none">
+                        <div class="flex items-center h-5">
+                            <input type="checkbox" name="verification_required" value="true" class="w-4 h-4 text-[#2A4A30] bg-[#FFFFFF] border-[rgba(0,0,0,0.12)] rounded focus:ring-[#2A4A30]">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-semibold text-admin-text">Require Teacher Verification</span>
+                            <span class="text-xs text-admin-textMuted mt-0.5">Students must upload proof (photo/text) which requires manual approval from a teacher to award points.</span>
+                        </div>
+                    </label>
+                </div>
 
- <!-- Difficulty -->
- <div>
- <label
- class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Difficulty</label>
- {{ form.difficulty(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
- text-admin-text focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
- transition-none text-sm appearance-none cursor-pointer") }}
- </div>
- </div>
- </div>
+                <!-- Submit Action -->
+                <div class="pt-8 flex justify-end gap-4">
+                    <a href="{{ url_for('admin_dashboard') }}"
+                        class="px-6 py-2.5 bg-admin-surface border border-admin-border text-admin-text text-sm font-semibold rounded-lg hover:bg-[#FAFAF8] transition-none">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                        class="px-8 py-2.5 bg-[#111111] hover:bg-[#2A4A30] text-white text-sm font-semibold rounded-lg shadow-sm border border-transparent transition-none">
+                        Publish Challenge
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
- <!-- Verification -->
- <div class="admin-card  p-6 flex items-center justify-between">
- <div>
- <h3 class="text-sm font-semibold text-admin-text">Require Verification</h3>
- <p class="text-xs text-admin-textMuted mt-1">Admin approval needed for completion</p>
- </div>
- <label class="relative inline-flex items-center cursor-pointer">
- {{ form.verification_required(class="sr-only peer") }}
- <div
- class="w-11 h-6 bg-admin-surface peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-500 after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-none peer-checked:bg-brand-600">
- </div>
- </label>
- </div>
-
- <!-- Actions -->
- <div class="flex items-center gap-4">
- <button type="submit"
- class="flex-1 px-6 py-3 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded transition-none">
- Create Challenge
- </button>
- <button type="button" onclick="resetForm()"
- class="px-6 py-3 bg-admin-surface hover:bg-[#323842] text-admin-textMuted text-sm font-medium rounded border border-gray-600 transition-none">
- Reset
- </button>
- </div>
- </form>
- </div>
-
- <!-- Preview -->
- <div class="lg:col-span-1 space-y-6">
- <h3 class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Live Preview</h3>
-
- <div class="admin-card  p-6">
- <div class="flex justify-between items-start mb-4">
- <span
- class="px-2 py-1 bg-admin-surface text-admin-textMuted text-[10px] font-bold uppercase rounded border border-gray-700"
- id="preview-category">Category</span>
- <span class="text-xs font-bold text-brand-500" id="preview-points">100 PTS</span>
- </div>
-
- <h4 class="text-lg font-semibold text-admin-text mb-2" id="preview-title">Challenge Title</h4>
- <p class="text-sm text-admin-textMuted leading-relaxed mb-6" id="preview-description">Challenge description
- will appear here...</p>
-
- <div class="flex items-center justify-between pt-4 border-t border-admin-border">
- <span class="text-xs font-medium text-admin-textMuted" id="preview-difficulty">Easy</span>
- <span class="text-[10px] font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded"
- id="preview-verification">Auto-Verify</span>
- </div>
- </div>
-
- <div class="p-4 bg-blue-900/10 border border-blue-900/30 rounded-lg">
- <div class="flex gap-3">
- <i data-lucide="info-circle" class="text-blue-400 mt-0.5 w-5 h-5"></i>
- <p class="text-xs text-blue-200">New challenges are instantly available to all students upon
- creation.</p>
- </div>
- </div>
- </div>
- </div>
 </div>
-
-<script>
- document.addEventListener('DOMContentLoaded', function () {
- const titleInput = document.querySelector('input[name="title"]');
- const descriptionInput = document.querySelector('textarea[name="description"]');
- const categoryInput = document.querySelector('select[name="category"]');
- const pointsInput = document.querySelector('input[name="points"]');
- const difficultyInput = document.querySelector('select[name="difficulty"]');
- const verificationInput = document.querySelector('input[name="verification_required"]');
-
- const previewTitle = document.getElementById('preview-title');
- const previewDescription = document.getElementById('preview-description');
- const previewCategory = document.getElementById('preview-category');
- const previewPoints = document.getElementById('preview-points');
- const previewDifficulty = document.getElementById('preview-difficulty');
- const previewVerification = document.getElementById('preview-verification');
-
- function updatePreview() {
- previewTitle.textContent = titleInput.value || 'Challenge Title';
- previewDescription.textContent = descriptionInput.value || 'Challenge description will appear here...';
-
- // Handle category select
- if (categoryInput.selectedIndex !== -1) {
- previewCategory.textContent = categoryInput.options[categoryInput.selectedIndex].text;
- }
-
- previewPoints.textContent = (pointsInput.value || '0') + ' PTS';
-
- if (difficultyInput.selectedIndex !== -1) {
- previewDifficulty.textContent = difficultyInput.options[difficultyInput.selectedIndex].text;
- }
-
- if (verificationInput.checked) {
- previewVerification.textContent = 'Verified';
- previewVerification.className = 'text-[10px] font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded';
- } else {
- previewVerification.textContent = 'Auto-Verify';
- previewVerification.className = 'text-[10px] font-bold text-admin-textMuted bg-admin-surface px-2 py-1 rounded';
- }
- }
-
- [titleInput, descriptionInput, categoryInput, pointsInput, difficultyInput, verificationInput].forEach(el => {
- if (el) el.addEventListener('input', updatePreview);
- });
-
- window.resetForm = function () {
- titleInput.value = '';
- descriptionInput.value = '';
- pointsInput.value = '';
- verificationInput.checked = false;
- // Reset selects to first option
- categoryInput.selectedIndex = 0;
- difficultyInput.selectedIndex = 0;
- updatePreview();
- };
-
- // Initialize preview
- if (titleInput) updatePreview();
- });
-</script>
 {% endblock %}

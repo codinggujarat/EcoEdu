@@ -1,288 +1,172 @@
 {% extends"adminbase.html" %}
-{% block title %}Achievements | EduEco Admin{% endblock %}
+
+{% block title %}Manage Achievements | EduEco Admin{% endblock %}
 
 {% block content %}
 <div class="max-w-[1400px] mx-auto pb-10">
- <!-- Header -->
- <div class="flex items-center justify-between mb-8">
- <div>
- <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Achievements</h1>
- <p class="text-[15px] text-admin-textMuted">Manage badges and milestone rewards.</p>
- </div>
- <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
- <span class="text-xs text-admin-textMuted font-medium">
- <span class="text-admin-text font-bold">{{ achievements|length }}</span> Active Badges
- </span>
- </div>
- </div>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Achievement Configuration</h1>
+            <p class="text-[15px] text-admin-textMuted">Manage badges, criteria, and rewards.</p>
+        </div>
+        <div class="px-4 py-2 bg-admin-card border border-admin-border rounded-[12px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ achievements|length }}</span> Total Badges
+            </span>
+        </div>
+    </div>
 
- <!-- Stats Grid -->
- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Total</span>
- <i data-lucide="award" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ achievements|length }}</span>
- <span class="text-xs text-brand-500 font-medium">Active</span>
- </div>
- </div>
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- Achievement Table -->
+            <div class="admin-card !p-0 overflow-hidden flex flex-col">
+                <div class="p-6 border-b border-admin-border flex items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-admin-text">Badge Directory</h2>
+                    </div>
+                </div>
+                <div class="overflow-x-auto p-4 pt-0">
+                    <table id="achievementsTable" class="w-full text-left mt-2">
+                        <thead class="bg-admin-surface border border-admin-border rounded-lg">
+                            <tr>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider rounded-tl-lg">Icon</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Achievement Details</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Criteria</th>
+                                <th class="p-3 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-admin-card">
+                            {% for achievement in achievements %}
+                            <tr class="hover:bg-admin-surface transition-none">
+                                <td class="p-3 text-center">
+                                    <div class="w-12 h-12 mx-auto rounded-xl bg-admin-surface border border-admin-border flex items-center justify-center text-2xl shadow-sm">
+                                        {{ achievement.icon }}
+                                    </div>
+                                </td>
+                                <td class="p-3">
+                                    <div class="text-sm font-semibold text-admin-text">{{ achievement.name }}</div>
+                                    <div class="text-[12px] text-admin-textMuted mt-0.5">{{ achievement.description }}</div>
+                                </td>
+                                <td class="p-3">
+                                    <div class="text-[12px] text-admin-textMuted">Type: <span class="font-semibold text-admin-text">{{ achievement.criteria_type }}</span></div>
+                                    <div class="text-[12px] text-admin-textMuted mt-0.5">Value: <span class="font-semibold text-admin-text">{{ achievement.criteria_value }}</span></div>
+                                </td>
+                                <td class="p-3 text-right">
+                                    <div class="flex justify-end gap-2">
+                                        <button class="w-8 h-8 rounded-lg bg-admin-surface border border-transparent hover:border-admin-border hover:bg-admin-tableAlt text-admin-text flex items-center justify-center transition-none">
+                                            <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                        </button>
+                                        <form action="{{ url_for('admin_delete_achievement', achievement_id=achievement.id) }}" method="POST" class="inline">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="w-8 h-8 rounded-lg bg-red-50 border border-transparent hover:border-red-200 text-red-600 flex items-center justify-center transition-none" onclick="return confirm('Delete achievement?')">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% if not achievements %}
+                            <tr>
+                                <td colspan="4" class="p-8 text-center text-admin-textMuted text-sm">
+                                    No achievements found. Create one from the right panel.
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Elite Tier</span>
- <i data-lucide="crown" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ achievements|selectattr('points_required', 'gt',
- 500)|list|length }}</span>
- <span class="text-xs text-blue-500 font-medium">High Value</span>
- </div>
- </div>
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Quick Actions -->
+            <div class="admin-card">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-admin-text">Manage</h3>
+                    <i data-lucide="settings" class="text-admin-textMuted w-4 h-4"></i>
+                </div>
 
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Mission Linked</span>
- <i data-lucide="link" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ achievements|selectattr('challenges_required',
- 'gt', 0)|list|length }}</span>
- <span class="text-xs text-yellow-500 font-medium">Integrated</span>
- </div>
- </div>
+                <div class="space-y-3">
+                    <a href="{{ url_for('admin_add_achievement') }}" class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-admin-border hover:bg-admin-tableAlt transition-none group cursor-pointer">
+                        <div class="w-10 h-10 rounded-lg bg-[#111111] border border-transparent flex items-center justify-center transition-none">
+                            <i data-lucide="plus" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-admin-text">New Achievement</h4>
+                            <p class="text-[11px] text-admin-textMuted mt-0.5">Design a new badge or reward.</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-admin-textFaded group-hover:text-admin-text transition-none"></i>
+                    </a>
+                </div>
+            </div>
 
- <div class="admin-card  p-6">
- <div class="flex items-center justify-between mb-4">
- <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Starter</span>
- <i data-lucide="seedling" class="text-admin-textMuted w-5 h-5"></i>
- </div>
- <div class="flex items-baseline gap-2">
- <span class="text-3xl font-semibold text-admin-text">{{ achievements|selectattr('points_required', 'le',
- 100)|list|length }}</span>
- <span class="text-xs text-purple-500 font-medium">Base</span>
- </div>
- </div>
- </div>
+            <!-- Stats Widget -->
+            <div class="admin-card !bg-[#111111] !border-[#222222] !text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Reward Distribution</h3>
+                            <p class="text-xs text-white/60 mt-1">Platform badge statistics</p>
+                        </div>
+                        <i data-lucide="pie-chart" class="text-white/40 w-5 h-5"></i>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between">
+                            <div>
+                                <span class="block text-[11px] text-white/60 uppercase tracking-wider font-bold mb-1">Total Badges</span>
+                                <span class="block text-2xl font-bold text-white">{{ achievements|length }}</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i data-lucide="award" class="text-white w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between">
+                            <div>
+                                <span class="block text-[11px] text-white/60 uppercase tracking-wider font-bold mb-1">Earned by Students</span>
+                                <span class="block text-2xl font-bold text-white">0</span>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i data-lucide="users" class="text-white w-5 h-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
- <!-- Actions -->
- <div class="flex items-center gap-4 mb-8">
- <a href="{{ url_for('admin_add_achievement') }}"
- class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-admin-text text-sm font-medium rounded-md transition-none flex items-center gap-2">
- <i data-lucide="plus" class="w-5 h-5"></i> Create Achievement
- </a>
-
- <form action="{{ url_for('auto_generate_achievements') }}" method="POST">
- <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
- <button type="submit" onclick="return confirm('Generate standard achievements?');"
- class="px-4 py-2 bg-admin-surface hover:bg-[#323842] text-admin-text text-sm font-medium rounded-md border border-gray-600 transition-none flex items-center gap-2">
- <i data-lucide="magic" class="w-5 h-5"></i> Auto-Generate Defaults
- </button>
- </form>
- </div>
-
- <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
- <!-- Distribution Chart -->
- <div class="lg:col-span-2 admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Type Distribution</h3>
- <div class="h-64">
- <canvas id="pointsDistribution"></canvas>
- </div>
- </div>
-
- <!-- Difficulty Chart -->
- <div class="admin-card  p-6">
- <h3 class="text-lg font-semibold text-admin-text mb-6">Difficulty Spread</h3>
- <div class="h-48 relative mb-4">
- <canvas id="difficultyChart"></canvas>
- </div>
- <div class="text-center text-xs text-admin-textMuted">
- Breakdown by point cost tiers
- </div>
- </div>
- </div>
-
- <!-- Table -->
- <div class="admin-card  overflow-hidden">
- <div class="p-6 border-b border-admin-border flex items-center justify-between">
- <h2 class="text-lg font-semibold text-admin-text">Achievement List</h2>
- </div>
- <div class="overflow-x-auto">
- <table id="achievementsTable" class="w-full text-left">
- <thead class="bg-admin-surface border-b border-admin-border">
- <tr>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Achievement</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Icon</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Criteria</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Tier</th>
- <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
- </tr>
- </thead>
- <tbody class="divide-y divide-admin-border bg-admin-tableAlt">
- {% for ach in achievements %}
- <tr class="hover:bg-admin-surface/30 transition-none">
- <td class="p-4">
- <div class="text-sm font-medium text-admin-text">{{ ach.name }}</div>
- <div class="text-[10px] text-admin-textMuted mt-0.5 line-clamp-1">{{ ach.description }}</div>
- </td>
- <td class="p-4">
- <span class="text-2xl">{{ ach.badge_icon if ach.badge_icon else '🏆' }}</span>
- </td>
- <td class="p-4">
- <div class="text-xs text-admin-textMuted">
- <span class="font-bold text-brand-500">{{ ach.points_required }}</span> Pts
- {% if ach.challenges_required > 0 %}
- <span class="text-admin-textMuted mx-1">+</span>
- <span class="font-bold text-blue-500">{{ ach.challenges_required }}</span> Missions
- {% endif %}
- </div>
- </td>
- <td class="p-4">
- {% if ach.points_required <= 100 %} <span
- class="px-2 py-0.5 bg-admin-surface text-admin-textMuted text-[10px] font-bold uppercase rounded">
- Starter</span>
- {% elif ach.points_required <= 500 %} <span
- class="px-2 py-0.5 bg-yellow-900/20 text-yellow-500 text-[10px] font-bold uppercase rounded">
- Advanced</span>
- {% else %}
- <span
- class="px-2 py-0.5 bg-red-900/20 text-red-500 text-[10px] font-bold uppercase rounded">Legend</span>
- {% endif %}
- </td>
- <td class="p-4 text-right">
- <form action="{{ url_for('delete_achievement', achievement_id=ach.id) }}" method="POST"
- class="inline">
- <button type="submit" onclick="return confirm('Delete this achievement?');"
- class="w-8 h-8 rounded bg-admin-surface hover:bg-red-900/30 text-red-500 hover:text-red-400 flex items-center justify-center transition-none">
- <i data-lucide="trash-2" class="w-5 h-5"></i>
- </button>
- </form>
- </td>
- </tr>
- {% endfor %}
- </tbody>
- </table>
- </div>
- </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
- /* Professional DataTables Override */
  .dataTables_wrapper .dataTables_length,
- .dataTables_wrapper .dataTables_filter {
- padding: 1rem 1.5rem;
- color: #111111;
- font-size: 0.875rem;
- font-weight: 500;
- }
-
- .dataTables_wrapper .dataTables_filter input {
- background: #FFFFFF;
- border: 1px solid rgba(0,0,0,0.12);
- border-radius: 6px;
- color: #111111;
- padding: 6px 12px;
- margin-left: 8px;
- outline: none;
- transition: none;
- }
- .dataTables_wrapper .dataTables_filter input:focus {
- border-color: #2A4A30;
- box-shadow: 0 0 0 1px #2A4A30;
- }
-
- .dataTables_wrapper .dataTables_info {
- padding: 1rem 1.5rem;
- color: #666666;
- font-size: 0.875rem;
- }
-
- .dataTables_wrapper .dataTables_paginate {
- padding: 1rem 1.5rem;
- font-size: 0.875rem;
- }
-
- .dataTables_wrapper .paginate_button {
- color: #666666 !important;
- padding: 4px 10px !important;
- margin: 0 2px;
- border-radius: 6px;
- border: 1px solid transparent !important;
- cursor: pointer;
- transition: none;
- }
- .dataTables_wrapper .paginate_button:hover {
- background: rgba(0,0,0,0.05) !important;
- color: #111111 !important;
- border: 1px solid transparent !important;
- }
-
- .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover {
- color: #FFFFFF !important;
- background: #2A4A30 !important;
- border: 1px solid #2A4A30 !important;
- font-weight: 500;
- }
+ .dataTables_wrapper .dataTables_filter { padding: 1rem 1.5rem; color: #111111; font-size: 0.875rem; font-weight: 500; }
+ .dataTables_wrapper .dataTables_filter input { background: #FFFFFF; border: 1px solid rgba(0,0,0,0.12); border-radius: 6px; color: #111111; padding: 6px 12px; margin-left: 8px; outline: none; transition: none; }
+ .dataTables_wrapper .dataTables_filter input:focus { border-color: #2A4A30; box-shadow: 0 0 0 1px #2A4A30; }
+ .dataTables_wrapper .dataTables_info { padding: 1rem 1.5rem; color: #666666; font-size: 0.875rem; }
+ .dataTables_wrapper .dataTables_paginate { padding: 1rem 1.5rem; font-size: 0.875rem; }
+ .dataTables_wrapper .paginate_button { color: #666666 !important; padding: 4px 10px !important; margin: 0 2px; border-radius: 6px; border: 1px solid transparent !important; cursor: pointer; transition: none; }
+ .dataTables_wrapper .paginate_button:hover { background: rgba(0,0,0,0.05) !important; color: #111111 !important; border: 1px solid transparent !important; }
+ .dataTables_wrapper .paginate_button.current, .dataTables_wrapper .paginate_button.current:hover { color: #FFFFFF !important; background: #2A4A30 !important; border: 1px solid #2A4A30 !important; font-weight: 500; }
 </style>
+
 <script>
  $(document).ready(function () {
  $('#achievementsTable').DataTable({
-"pageLength": 10,
-"lengthChange": false,
-"language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
- });
-
- // Charts
- const easyCount = {{ achievements| selectattr("points_required","le", 100) | list | length
- }};
- const mediumCount = {{ achievements| selectattr("points_required","gt", 100) | selectattr("points_required","le", 500) | list | length }};
- const hardCount = {{ achievements| selectattr("points_required","gt", 500) | list | length }};
- const challengeCount = {{ achievements| selectattr("challenges_required","gt", 0) | list | length }};
- const pointsOnlyCount = {{ achievements| selectattr("challenges_required","eq", 0) | list | length }};
-
- new Chart(document.getElementById('difficultyChart'), {
- type: 'doughnut',
- data: {
- labels: ['Starter', 'Advanced', 'Legend'],
- datasets: [{
- data: [easyCount, mediumCount, hardCount],
- backgroundColor: ['#2A4A30', '#fbbf24', '#ef4444'],
- borderWidth: 0
- }]
- },
- options: {
- responsive: true,
- maintainAspectRatio: false,
- plugins: { legend: { display: false } },
- cutout: '75%'
- }
- });
-
- new Chart(document.getElementById('pointsDistribution'), {
- type: 'bar',
- data: {
- labels: ['Mission Linked', 'Points Only'],
- datasets: [{
- label: 'Count',
- data: [challengeCount, pointsOnlyCount],
- backgroundColor: ['#3b82f6', '#8b5cf6'],
- borderRadius: 4,
- barThickness: 32
- }]
- },
- options: {
- responsive: true,
- maintainAspectRatio: false,
- plugins: { legend: { display: false } },
- scales: {
- y: { grid: { color: 'rgba(0,0,0,0.08)' }, ticks: { color: '#888888' } },
- x: { grid: { display: false }, ticks: { color: '#888888' } }
- }
- }
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
  });
  });
 </script>
