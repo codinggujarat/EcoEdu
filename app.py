@@ -5,8 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask_mail import Mail, Message
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+
 from wtforms import StringField, PasswordField, SelectField, TextAreaField, SubmitField, HiddenField, IntegerField
 from wtforms.validators import DataRequired, Email, Length, Optional
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -72,12 +71,7 @@ login_manager.login_view = 'login'
 mail = Mail(app)
 csrf = CSRFProtect(app)
 
-# Initialize rate limiter
-limiter = Limiter(
-    app=app,
-    key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"]
-)
+
 
 # User loader for Flask-Login
 @login_manager.user_loader
@@ -402,7 +396,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
-@limiter.limit("5 per minute, 10 per hour")
+
 def register():
     form = RegistrationForm()
     
@@ -454,7 +448,7 @@ def verify_otp():
     return render_template('verify_otp.html', form=form, email=email)
 
 @app.route('/verify-otp', methods=['POST'])
-@limiter.limit("10 per minute, 20 per hour")
+
 def verify_otp_post():
     form = OTPForm()
     
@@ -487,7 +481,7 @@ def verify_otp_post():
     return render_template('verify_otp.html', form=form, email=form.email.data)
 
 @app.route('/login', methods=['GET', 'POST'])
-@limiter.limit("20 per minute, 100 per hour")
+
 def login():
     form = LoginForm()
     
