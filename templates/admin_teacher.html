@@ -3,12 +3,12 @@
 {% block title %}Manage Teachers | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="w-full">
+<div class="max-w-[1400px] mx-auto pb-10">
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-admin-text mb-1">Teacher Management</h1>
- <p class="text-sm text-admin-textMuted font-medium">Coordinate faculty credentials and access.</p>
+ <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Teacher Management</h1>
+ <p class="text-[15px] text-admin-textMuted">Coordinate faculty credentials and access.</p>
  </div>
  <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
  <span class="text-xs text-admin-textMuted font-medium">
@@ -19,9 +19,9 @@
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total Faculty</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Total Faculty</span>
  <i data-lucide="chalkboard-user" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -30,9 +30,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Verified</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Verified</span>
  <i data-lucide="shield-alt" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -41,9 +41,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Online Now</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Online Now</span>
  <i data-lucide="clock" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -55,7 +55,7 @@
 
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
  <!-- Activity Chart -->
- <div class="lg:col-span-2 admin-card border border-admin-border rounded-lg p-6">
+ <div class="lg:col-span-2 admin-card  p-6">
  <div class="flex items-center justify-between mb-6">
  <h3 class="text-lg font-semibold text-admin-text">Activity Metrics</h3>
  <span class="px-2 py-1 bg-admin-surface text-xs text-admin-textMuted rounded">Last 7 Days</span>
@@ -66,7 +66,7 @@
  </div>
 
  <!-- Status -->
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <h3 class="text-lg font-semibold text-admin-text mb-6">Deployment Status</h3>
  <div class="h-48 relative mb-6">
  <canvas id="teacherStatusChart"></canvas>
@@ -85,7 +85,7 @@
  </div>
 
  <!-- Teacher Table -->
- <div class="admin-card border border-admin-border rounded-lg overflow-hidden">
+ <div class="admin-card  overflow-hidden">
  <div class="p-6 border-b border-admin-border flex items-center justify-between">
  <h2 class="text-lg font-semibold text-admin-text">Faculty Directory</h2>
  <button
@@ -97,10 +97,10 @@
  <table id="teachersTable" class="w-full text-left">
  <thead class="bg-admin-surface border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Role</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Role</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-admin-border bg-admin-tableAlt">

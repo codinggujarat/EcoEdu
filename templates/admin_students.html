@@ -3,12 +3,12 @@
 {% block title %}Manage Students | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="w-full">
+<div class="max-w-[1400px] mx-auto pb-10">
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-admin-text mb-1">Student Management</h1>
- <p class="text-sm text-admin-textMuted font-medium">Directory of all registered students.</p>
+ <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Student Management</h1>
+ <p class="text-[15px] text-admin-textMuted">Directory of all registered students.</p>
  </div>
  <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
  <span class="text-xs text-admin-textMuted font-medium">
@@ -19,9 +19,9 @@
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total Enrolled</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Total Enrolled</span>
  <i data-lucide="user-graduate" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -32,9 +32,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Active Users</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Active Users</span>
  <i data-lucide="signal" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -43,9 +43,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Tasks Done</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Tasks Done</span>
  <i data-lucide="check-circle" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -54,9 +54,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">New This Month</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">New This Month</span>
  <i data-lucide="user-plus" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -69,7 +69,7 @@
  <!-- Main Content -->
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
  <!-- Activity Chart -->
- <div class="lg:col-span-2 admin-card border border-admin-border rounded-lg p-6">
+ <div class="lg:col-span-2 admin-card  p-6">
  <h3 class="text-lg font-semibold text-admin-text mb-6">Engagement Analytics</h3>
  <div class="h-64">
  <canvas id="studentActivityChart"></canvas>
@@ -77,7 +77,7 @@
  </div>
 
  <!-- Grade Distribution -->
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <h3 class="text-lg font-semibold text-admin-text mb-6">Performance Tier</h3>
  <div class="h-48 relative mb-6">
  <canvas id="studentPerformanceChart"></canvas>
@@ -100,7 +100,7 @@
  </div>
 
  <!-- Student Table -->
- <div class="admin-card border border-admin-border rounded-lg overflow-hidden">
+ <div class="admin-card  overflow-hidden">
  <div class="p-6 border-b border-admin-border flex items-center justify-between">
  <h2 class="text-lg font-semibold text-admin-text">Student Directory</h2>
  <button
@@ -112,10 +112,10 @@
  <table id="studentsTable" class="w-full text-left">
  <thead class="bg-admin-surface border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Progress</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Name</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Email</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Progress</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-admin-border bg-admin-tableAlt">

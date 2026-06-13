@@ -2,12 +2,12 @@
 {% block title %}Achievements | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto">
+<div class="max-w-[1400px] mx-auto pb-10">
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-admin-text mb-1">Achievements</h1>
- <p class="text-sm text-admin-textMuted font-medium">Manage badges and milestone rewards.</p>
+ <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Achievements</h1>
+ <p class="text-[15px] text-admin-textMuted">Manage badges and milestone rewards.</p>
  </div>
  <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
  <span class="text-xs text-admin-textMuted font-medium">
@@ -18,9 +18,9 @@
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Total</span>
  <i data-lucide="award" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -29,9 +29,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Elite Tier</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Elite Tier</span>
  <i data-lucide="crown" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -41,9 +41,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Mission Linked</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Mission Linked</span>
  <i data-lucide="link" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -53,9 +53,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Starter</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Starter</span>
  <i data-lucide="seedling" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -84,7 +84,7 @@
 
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
  <!-- Distribution Chart -->
- <div class="lg:col-span-2 admin-card border border-admin-border rounded-lg p-6">
+ <div class="lg:col-span-2 admin-card  p-6">
  <h3 class="text-lg font-semibold text-admin-text mb-6">Type Distribution</h3>
  <div class="h-64">
  <canvas id="pointsDistribution"></canvas>
@@ -92,7 +92,7 @@
  </div>
 
  <!-- Difficulty Chart -->
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <h3 class="text-lg font-semibold text-admin-text mb-6">Difficulty Spread</h3>
  <div class="h-48 relative mb-4">
  <canvas id="difficultyChart"></canvas>
@@ -104,7 +104,7 @@
  </div>
 
  <!-- Table -->
- <div class="admin-card border border-admin-border rounded-lg overflow-hidden">
+ <div class="admin-card  overflow-hidden">
  <div class="p-6 border-b border-admin-border flex items-center justify-between">
  <h2 class="text-lg font-semibold text-admin-text">Achievement List</h2>
  </div>
@@ -112,11 +112,11 @@
  <table id="achievementsTable" class="w-full text-left">
  <thead class="bg-admin-surface border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Achievement</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Icon</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Criteria</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Tier</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Achievement</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Icon</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Criteria</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Tier</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
  </tr>
  </thead>
  <tbody class="divide-y divide-admin-border bg-admin-tableAlt">

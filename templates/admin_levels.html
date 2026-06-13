@@ -2,12 +2,12 @@
 {% block title %}Manage Levels | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto">
+<div class="max-w-[1400px] mx-auto pb-10">
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-admin-text mb-1">Level Management</h1>
- <p class="text-sm text-admin-textMuted font-medium">Define student progression and milestones.</p>
+ <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Level Management</h1>
+ <p class="text-[15px] text-admin-textMuted">Define student progression and milestones.</p>
  </div>
  <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
  <span class="text-xs text-admin-textMuted font-medium">
@@ -18,28 +18,28 @@
 
  <!-- Create Form -->
  <div class="mb-12">
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <h3 class="text-lg font-semibold text-admin-text mb-6">Create New Level</h3>
 
  <form method="POST" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
  {{ form.csrf_token }}
 
  <div class="space-y-2">
- <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level Number</label>
+ <label class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Level Number</label>
  {{ form.level_number(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
  outline-none transition-none text-sm", placeholder="e.g. 6") }}
  </div>
 
  <div class="space-y-2">
- <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">Level Name</label>
+ <label class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Level Name</label>
  {{ form.name(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3 text-admin-text
  placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none
  transition-none text-sm", placeholder="e.g. Expert") }}
  </div>
 
  <div class="space-y-2">
- <label class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider">XP Required</label>
+ <label class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">XP Required</label>
  {{ form.xp_required(class="w-full bg-admin-surface border border-admin-border rounded px-4 py-3
  text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1 focus:ring-brand-500
  outline-none transition-none text-sm", placeholder="e.g. 500") }}
@@ -70,7 +70,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
  {% for level in levels %}
  <div
- class="admin-card border border-admin-border rounded-lg p-6 group hover:border-brand-500/50 transition-none relative">
+ class="admin-card  p-6 group hover:border-brand-500/50 transition-none relative">
  <div class="flex justify-between items-start mb-4">
  <div
  class="w-10 h-10 rounded bg-admin-surface border border-admin-border text-admin-text flex items-center justify-center font-bold text-lg">
@@ -94,7 +94,7 @@
  {% endfor %}
  </div>
  {% else %}
- <div class="text-center py-20 admin-card border border-admin-border rounded-lg">
+ <div class="text-center py-20 admin-card ">
  <div class="w-16 h-16 bg-admin-surface rounded-full flex items-center justify-center mx-auto mb-4">
  <i data-lucide="layer-group" class="text-admin-textMuted text-2xl w-5 h-5"></i>
  </div>

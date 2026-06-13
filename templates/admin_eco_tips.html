@@ -2,12 +2,12 @@
 {% block title %}Eco Tips | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto">
+<div class="max-w-[1400px] mx-auto pb-10">
  <!-- Header -->
  <div class="flex items-center justify-between mb-8">
  <div>
- <h1 class="text-2xl font-semibold text-admin-text mb-1">Eco Tips</h1>
- <p class="text-sm text-admin-textMuted font-medium">Manage daily environmental tips and content.</p>
+ <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Eco Tips</h1>
+ <p class="text-[15px] text-admin-textMuted">Manage daily environmental tips and content.</p>
  </div>
  <div class="px-3 py-1 admin-card border border-admin-border rounded-full">
  <span class="text-xs text-admin-textMuted font-medium">
@@ -18,9 +18,9 @@
 
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Total</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Total</span>
  <i data-lucide="database" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -29,9 +29,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Daily</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Daily</span>
  <i data-lucide="sun" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -41,9 +41,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Weekly</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Weekly</span>
  <i data-lucide="calendar-week" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -53,9 +53,9 @@
  </div>
  </div>
 
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <div class="flex items-center justify-between mb-4">
- <span class="text-xs font-bold text-admin-textMuted uppercase tracking-wider">Monthly</span>
+ <span class="text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Monthly</span>
  <i data-lucide="calendar-alt" class="text-admin-textMuted w-5 h-5"></i>
  </div>
  <div class="flex items-baseline gap-2">
@@ -69,7 +69,7 @@
  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
  <!-- Form -->
  <div class="lg:col-span-4 space-y-8">
- <div class="admin-card border border-admin-border rounded-lg p-6 sticky top-8">
+ <div class="admin-card  p-6 sticky top-8">
  <h3 class="text-lg font-semibold text-admin-text mb-6">{{"Edit Tip" if edit else"Add New Tip" }}</h3>
 
  <form method="POST" class="space-y-6">
@@ -77,7 +77,7 @@
 
  <div>
  <label
- class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Content</label>
+ class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Content</label>
  {{ form.tip(value=tip.tip if edit else"", class="w-full bg-admin-surface border border-admin-border
  rounded px-4 py-3 text-admin-text placeholder-gray-600 focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none text-sm min-h-[150px]", placeholder="Enter
@@ -86,7 +86,7 @@
 
  <div>
  <label
- class="block text-xs font-bold text-admin-textMuted uppercase tracking-wider mb-2">Frequency</label>
+ class="block text-[11px] font-bold text-admin-textMuted uppercase tracking-wider mb-2">Frequency</label>
  {{ form.frequency(value=tip.frequency if edit else"", class="w-full bg-admin-surface border
  border-admin-border rounded px-4 py-3 text-admin-text focus:border-brand-500 focus:ring-1
  focus:ring-brand-500 outline-none transition-none text-sm appearance-none cursor-pointer") }}
@@ -111,7 +111,7 @@
  <!-- Lists & Charts -->
  <div class="lg:col-span-8 space-y-8">
  <!-- Table -->
- <div class="admin-card border border-admin-border rounded-lg overflow-hidden">
+ <div class="admin-card  overflow-hidden">
  <div class="p-6 border-b border-admin-border">
  <h2 class="text-lg font-semibold text-admin-text">Content Library</h2>
  </div>
@@ -119,9 +119,9 @@
  <table id="ecoTipsTable" class="w-full text-left">
  <thead class="bg-admin-surface border-b border-admin-border">
  <tr>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Details</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Frequency</th>
- <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Details</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider">Frequency</th>
+ <th class="p-4 text-[11px] font-bold text-admin-textMuted uppercase tracking-wider text-right">
  Actions</th>
  </tr>
  </thead>
@@ -170,13 +170,13 @@
 
  <!-- Charts -->
  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <h3 class="text-sm font-semibold text-admin-text mb-4">Frequency Distribution</h3>
  <div class="h-48">
  <canvas id="frequencyChart"></canvas>
  </div>
  </div>
- <div class="admin-card border border-admin-border rounded-lg p-6">
+ <div class="admin-card  p-6">
  <h3 class="text-sm font-semibold text-admin-text mb-4">Content Balance</h3>
  <div class="h-48 relative">
  <canvas id="frequencyDoughnut"></canvas>
