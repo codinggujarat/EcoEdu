@@ -544,7 +544,39 @@ def admin_students():
         abort(403)
 
     students = User.query.filter_by(role='student').all()
-    return render_template('admin_students.html', students=students)
+    
+    # Real-time Performance Tiers
+    high_tier = sum(1 for s in students if s.eco_points >= 500)
+    mid_tier = sum(1 for s in students if 100 <= s.eco_points < 500)
+    low_tier = sum(1 for s in students if s.eco_points < 100)
+    
+    total = len(students) or 1
+    high_pct = round((high_tier / total) * 100)
+    mid_pct = round((mid_tier / total) * 100)
+    
+    # Real-time Engagement Analytics (Completions over last 6 months)
+    from datetime import datetime, timedelta
+    today = datetime.utcnow()
+    six_months_ago = today - timedelta(days=180)
+    completions = ChallengeCompletion.query.filter(ChallengeCompletion.completed_at >= six_months_ago).all()
+    
+    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    months_order = [(today.month - i - 1) % 12 + 1 for i in range(5, -1, -1)]
+    engagement_labels = [month_names[m - 1] for m in months_order]
+    
+    engagement_data = {m: 0 for m in months_order}
+    for c in completions:
+        if c.completed_at.month in engagement_data:
+            engagement_data[c.completed_at.month] += 1
+            
+    engagement_values = [engagement_data[m] for m in months_order]
+
+    return render_template('admin_students.html', 
+                           students=students,
+                           high_tier=high_tier, mid_tier=mid_tier, low_tier=low_tier,
+                           high_pct=high_pct, mid_pct=mid_pct,
+                           engagement_labels=engagement_labels,
+                           engagement_values=engagement_values)
 
 @app.route('/dashboard')
 @login_required

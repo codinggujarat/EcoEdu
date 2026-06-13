@@ -166,15 +166,15 @@
                 <div class="space-y-4 pt-4 border-t border-admin-border">
                     <div class="flex justify-between items-center text-sm">
                         <span class="flex items-center gap-3 text-admin-text font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#111111]"></span> Top Tier
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#111111]"></span> Top Tier (High)
                         </span>
-                        <span class="font-bold text-admin-text">55%</span>
+                        <span class="font-bold text-admin-text">{{ high_pct }}%</span>
                     </div>
                     <div class="flex justify-between items-center text-sm">
                         <span class="flex items-center gap-3 text-admin-text font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#666666]"></span> Mid Tier
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#666666]"></span> Mid Tier (Average)
                         </span>
-                        <span class="font-bold text-admin-text">35%</span>
+                        <span class="font-bold text-admin-text">{{ mid_pct }}%</span>
                     </div>
                 </div>
             </div>
@@ -259,10 +259,10 @@
  new Chart(activityCtx, {
  type: 'line',
  data: {
- labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+ labels: {{ engagement_labels | tojson | safe }},
  datasets: [{
- label: 'Engagement',
- data: [45, 52, 48, 70, 85, 92],
+ label: 'Completions',
+ data: {{ engagement_values | tojson | safe }},
  borderColor: '#111111',
  backgroundColor: 'rgba(0,0,0,0.03)',
  fill: true,
@@ -287,7 +287,7 @@
  data: {
  labels: ['High', 'Mid', 'Low'],
  datasets: [{
- data: [55, 35, 10],
+ data: [{{ high_tier }}, {{ mid_tier }}, {{ low_tier }}],
  backgroundColor: ['#111111', '#666666', '#E5E7EB'],
  borderWidth: 0
  }]
