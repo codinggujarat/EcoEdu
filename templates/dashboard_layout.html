@@ -126,7 +126,16 @@ html.is-animating .transition-fade {
     opacity: 0;
     transform: translateY(15px);
 }
+
+/* Hero Mobile Responsive */
+@media (max-width: 639px) {
+    .premium-hero { padding: 32px 20px !important; gap: 16px !important; }
+    .premium-hero-title { font-size: 32px !important; margin-bottom: 8px !important; line-height: 1.1 !important; }
+    .premium-hero-sub { font-size: 15px !important; line-height: 1.4 !important; }
+    .hero-cta { padding: 0 20px !important; font-size: 14px !important; height: 44px !important; border-radius: 999px !important; }
+}
 </style>
+
 <div class="flex" style="background: #F7F8F5; min-height: 100vh;">
     {% if current_user.role == 'teacher' %}
         {% include "teacher_dashboard_sidebar.html" %}

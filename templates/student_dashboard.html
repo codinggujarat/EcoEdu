@@ -87,7 +87,57 @@ body { background: #FAF9F6 !important; }
     .db-stat-label { font-size: 10px !important; letter-spacing: 0 !important; }
     .db-stat-extra { font-size: 9px !important; margin-top: 6px !important; }
     
+
+/* Mobile Responsive Overrides */
+@media (max-width: 639px) {
+    .premium-section { padding: 32px 16px !important; }
+    .premium-section-title { font-size: 26px !important; margin-bottom: 6px !important; }
+    .premium-section-desc { font-size: 14px !important; margin-bottom: 20px !important; line-height: 1.4 !important; }
+    
+    .premium-card { padding: 16px !important; border-radius: 20px !important; }
+    .premium-card h3 { font-size: 18px !important; margin-bottom: 6px !important; }
+    .premium-card p { font-size: 13px !important; margin-bottom: 12px !important; }
+    .premium-btn { height: 44px !important; font-size: 14px !important; }
+    
+    .db-stat { padding: 16px 12px !important; border-radius: 16px !important; gap: 4px !important; }
+    .db-stat-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+    .db-stat-val { font-size: 24px !important; margin-bottom: 0 !important; }
+    .db-stat-label { font-size: 10px !important; }
+    .db-stat-extra { font-size: 10px !important; margin-top: 4px !important; }
+
+    .journey-card { padding: 16px 12px !important; border-radius: 16px !important; }
+    .journey-card h3, .journey-card .text-xl { font-size: 16px !important; }
+
+    
+    /* Specific Inline Overrides */
+    div[style*="font-size:36px"] { font-size: 28px !important; }
+    h3[style*="font-size:22px"] { font-size: 18px !important; }
+    h3[style*="font-size:18px"] { font-size: 16px !important; }
+    div[style*="width:52px"] { width: 40px !important; height: 40px !important; border-radius: 12px !important; }
+    div[style*="width:48px"] { width: 36px !important; height: 36px !important; border-radius: 10px !important; }
+    div[style*="width:40px"] { width: 32px !important; height: 32px !important; border-radius: 10px !important; }
+    i[style*="width:22px"] { width: 18px !important; height: 18px !important; }
+    div[style*="padding: 32px"] { padding: 16px !important; border-radius: 20px !important; gap: 16px !important; }
+    div[style*="padding:32px"] { padding: 16px !important; border-radius: 20px !important; gap: 16px !important; }
+    
+    /* Level circle */
+    div[style*="width:160px"] { width: 120px !important; height: 120px !important; }
+    div[style*="font-size:28px"] { font-size: 22px !important; }
+
+    /* Fix Grid Gaps */
+    div[style*="gap:24px"] { gap: 16px !important; }
+    div[style*="gap: 24px"] { gap: 16px !important; }
+    
+    /* Activity & Challenges */
+    #calendar-title { font-size: 18px !important; }
+    #calendar-subtitle { font-size: 12px !important; }
+    .cal-tab-btn { padding: 6px 12px !important; font-size: 12px !important; }
+    
+    /* Heatmap/Charts */
+    canvas { max-height: 160px !important; }
+}
 </style>
+
 
 {# ═══════════════════════════════════════════
    SECTION 1 — AT A GLANCE  (tinted)

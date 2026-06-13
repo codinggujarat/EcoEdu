@@ -1,6 +1,6 @@
 <!-- BOTTOM NAVIGATION BAR (MOBILE ONLY) -->
 <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-[100] flex items-end justify-between" 
-     style="background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); height: 84px; padding: 0 16px; box-shadow: 0 -10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);">
+     style="background: linear-gradient(135deg, #173D25 0%, #1F4D36 25%, #2E6A43 60%, #4F8A5B 100%); height: 72px; padding: 0 16px; box-shadow: 0 -10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15);">
     
     <div id="bottom-floating-pill"></div>
     
@@ -45,61 +45,63 @@
 
 </nav>
 
+
 <style>
-/* Bottom Nav Base */
+/* Bottom Nav Base - COMPACT MOBILE OPTIMIZED */
 .bottom-nav-item {
     position: relative;
-    width: 64px; /* Fixed width to reduce white space */
-    height: 100%; /* Fill entire height */
+    width: 20%; /* Evenly distribute space (5 items = 20%) */
+    max-width: 64px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px; /* Tighter gap */
     color: rgba(255,255,255,0.7);
     text-decoration: none;
     transition: all 0.2s;
-    border-radius: 0 0 36px 36px; /* Flat top, highly rounded bottom */
+    border-radius: 0;
     z-index: 10;
 }
 
 .bottom-nav-item i {
-    width: 22px; /* Exact size from sidebar */
-    height: 22px;
-    stroke-width: 1.5;
+    width: 20px; /* Reduced from 22px */
+    height: 20px;
+    stroke-width: 2; /* Slightly thicker for better visibility at small sizes */
     transition: all 0.2s;
 }
 
 .bottom-nav-item span {
-    font-size: 11px;
+    font-size: 10px; /* Reduced from 11px */
     font-weight: 500;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2px;
     transition: all 0.2s;
 }
 
-/* Floating Pill */
+/* Floating Pill - Compact Size */
 #bottom-floating-pill {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 64px; /* Will be overridden dynamically but good default */
+    width: 60px; /* Compact width */
     background: #FAF9F6;
-    border-radius: 0 0 36px 36px;
+    border-radius: 0 0 24px 24px; /* Tighter bottom curve */
     z-index: 5;
-    transition: left 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Snappy smooth transition */
     pointer-events: none;
-    opacity: 0; /* Hidden initially until positioned */
+    opacity: 0;
 }
 
-/* Inverted Cutout Curves hanging from TOP */
+/* Tighter cutouts */
 #bottom-floating-pill::before {
     content: "";
     position: absolute;
     top: 0;
-    left: -28px;
-    width: 28px;
-    height: 28px;
-    background: radial-gradient(circle at bottom left, transparent 28px, #FAF9F6 28px);
+    left: -16px;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at bottom left, transparent 16px, #FAF9F6 16px);
     pointer-events: none;
 }
 
@@ -107,55 +109,36 @@
     content: "";
     position: absolute;
     top: 0;
-    right: -28px;
-    width: 28px;
-    height: 28px;
-    background: radial-gradient(circle at bottom right, transparent 28px, #FAF9F6 28px);
+    right: -16px;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at bottom right, transparent 16px, #FAF9F6 16px);
     pointer-events: none;
 }
 
 /* Active State Styles */
 .bottom-nav-item.active {
-    background: #FAF9F6;
     color: #2A4A30;
     font-weight: 600;
-    z-index: 5; /* Lower z-index so cutouts go under inactive siblings if overlapping */
 }
+.bottom-nav-item.active i { color: #2A4A30; }
+.bottom-nav-item.active span { font-weight: 600; font-size: 11px; } /* Slightly larger when active */
 
-.bottom-nav-item.active i {
-    color: #2A4A30;
-}
-
-.bottom-nav-item.active span {
-    font-weight: 600;
-}
-
-
-
-.bottom-nav-item.active::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -28px;
-    width: 28px;
-    height: 28px;
-    background: radial-gradient(circle at bottom right, transparent 28px, #FAF9F6 28px);
-    pointer-events: none;
-}
-
-/* Avatar styling for Profile nav item */
+/* Avatar */
 .bottom-nav-avatar {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     border: 1px solid currentColor;
     overflow: hidden;
-    padding: 2px;
+    padding: 1px;
 }
-.bottom-nav-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+.bottom-nav-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+/* Navigation Container adjustments */
+nav.lg\:hidden {
+    height: 68px !important; /* Compact height */
+    padding: 0 8px !important; /* Reduced padding so items can spread better */
 }
 </style>
+
