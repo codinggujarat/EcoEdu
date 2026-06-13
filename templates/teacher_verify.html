@@ -139,7 +139,7 @@ body { background: #FAF9F6 !important; }
     </div>
 
     {% if completions %}
-    <div id="verificationsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+    <div id="verificationsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:16px;">
 
         {% for completion, challenge, user, parsed in completions %}
         <div class="verification-card premium-card"
