@@ -21,7 +21,6 @@ uv.lock
 # Database
 *.sqlite3
 *.db
-instance/
 
 # Uploads and User Data
 static/uploads/*
