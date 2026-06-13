@@ -434,6 +434,9 @@ def register():
         db.session.add(user)
         db.session.commit()
         
+        print("DEBUG: User saved successfully:", user.email)
+        print("DEBUG: Total users now:", User.query.count())
+        
         # Send OTP
         if send_otp_email(form.email.data, otp):
             flash('Registration successful! Please check your email for verification code.', 'success')
@@ -489,9 +492,11 @@ def login():
     form = LoginForm()
     
     if form.validate_on_submit():
-        print(f"DEBUG: Login attempt for email: {form.email.data}")
-        # Execute query; if SQLAlchemy fails (e.g. postgres:// dialect missing), it will bubble up correctly.
-        user = User.query.filter_by(email=form.email.data).first()
+        email = form.email.data
+        print("Login email:", email)
+        
+        user = User.query.filter_by(email=email).first()
+        print("User found:", user)
         
         if user:
             print("DEBUG: User found. Checking password hash...")
@@ -1930,6 +1935,12 @@ with app.app_context():
     print("Database Tables Created:", db.metadata.tables.keys())
     # Check and add new columns if they don't exist
     try:
+        print("DEBUG: DATABASE URI:", app.config["SQLALCHEMY_DATABASE_URI"])
+        print("DEBUG: Total users:", User.query.count())
+        print("DEBUG: Registered emails:")
+        for u in User.query.all():
+            print(" -", u.email)
+            
         engine = db.engine
         from sqlalchemy import inspect, text
         inspector = inspect(engine)
