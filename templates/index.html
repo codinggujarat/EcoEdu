@@ -193,9 +193,9 @@
         /* ── Cards ── */
         .edit-card {
             background: #F7F7F2; color: #FFFFFF;
-            border: 1px solid rgba(24, 29, 0, 0.10);
+            border: 1px solid rgba(24,29,0,0.08);
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             padding: 24px;
             will-change: transform, box-shadow;
             transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -517,20 +517,20 @@
         /* Leaderboard / Badge cards */
         .lb-card {
             background: #F7F7F2;
-            border: 1px solid rgba(24, 29, 0, 0.10);
+            border: 1px solid rgba(24,29,0,0.08);
             border-radius: 20px;
             padding: 24px;
             display: flex;
             align-items: center;
             gap: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             will-change: transform, box-shadow;
             cursor: none;
          color: #FFFFFF; }
 
         .badge-card {
             background: #F7F7F2;
-            border: 1px solid rgba(24, 29, 0, 0.10);
+            border: 1px solid rgba(24,29,0,0.08);
             border-radius: 24px;
             padding: 32px;
             display: flex;
@@ -587,7 +587,7 @@
         /* Feature card */
         .feat-card {
             background: #F7F7F2;
-            border: 1px solid rgba(24, 29, 0, 0.10);
+            border: 1px solid rgba(24,29,0,0.08);
             border-radius: 28px;
             overflow: hidden;
             display: flex;
@@ -941,21 +941,45 @@
         }
     @media (min-width: 1024px) { .feature-grid { grid-template-columns: 1fr 1fr !important; gap: 120px !important; } }
 
-        /* SAFETY OVERRIDE: Ensure text inside off-white cards remains readable */
-        .edit-card, .lb-card, .badge-card {
-            color: #111827 !important;
+        
+    
+    
+        /* NEW PREMIUM CARD COLOR SYSTEM */
+        .edit-card, .lb-card, .badge-card, .feat-card, .faq-item {
+            background: #F7F7F2 !important;
+            border: 1px solid rgba(24,29,0,0.08) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+            color: #181D00 !important;
         }
-        .edit-card *, .lb-card *, .badge-card * {
-            color: #111827 !important;
+
+        /* FAQ specific padding/radius since it wasn't a full card before */
+        .faq-item {
+            padding: 24px !important;
+            border-radius: 20px !important;
+            margin-bottom: 24px !important;
         }
-        .edit-card .stat-number, .edit-card h3, .edit-card span, .edit-card div {
-            color: #111827 !important;
+
+        /* Primary Headings in cards */
+        .edit-card h3, .lb-card .rank, .badge-card span, .feat-card h3, .faq-item summary {
+            color: #181D00 !important;
         }
-        .lb-card span, .lb-card div, .badge-card span, .badge-card div {
-            color: #111827 !important;
+
+        /* Secondary text in cards */
+        .edit-card p, .edit-card span, .lb-card div, .feat-card p, .faq-answer {
+            color: rgba(24,29,0,0.75) !important;
+        }
+
+        /* Icons in cards */
+        .edit-card i, .badge-card i, .feat-card i, .faq-icon {
+            color: #2A4A30 !important;
+        }
+
+        /* Stat numbers (specifically requested to be primary heading color #181D00) */
+        .edit-card .stat-number {
+            color: #181D00 !important;
         }
     
-    </style>
+</style>
 <style>
 /* Global Mobile Fixes */
 img { max-width: 100%; height: auto; object-fit: cover; }
@@ -977,19 +1001,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
 .stat-card-padding { padding: 24px !important; }
 @media (min-width: 768px) { .stat-card-padding { padding: 40px !important; } }
 
-        /* SAFETY OVERRIDE: Ensure text inside off-white cards remains readable */
-        .edit-card, .lb-card, .badge-card {
-            color: #111827 !important;
-        }
-        .edit-card *, .lb-card *, .badge-card * {
-            color: #111827 !important;
-        }
-        .edit-card .stat-number, .edit-card h3, .edit-card span, .edit-card div {
-            color: #111827 !important;
-        }
-        .lb-card span, .lb-card div, .badge-card span, .badge-card div {
-            color: #111827 !important;
-        }
+        
     
     </style>
 
@@ -1018,19 +1030,7 @@ img { max-width: 100%; height: auto; object-fit: cover; }
 
 .badge-grid { grid-template-columns: 1fr 1fr; }
 
-        /* SAFETY OVERRIDE: Ensure text inside off-white cards remains readable */
-        .edit-card, .lb-card, .badge-card {
-            color: #111827 !important;
-        }
-        .edit-card *, .lb-card *, .badge-card * {
-            color: #111827 !important;
-        }
-        .edit-card .stat-number, .edit-card h3, .edit-card span, .edit-card div {
-            color: #111827 !important;
-        }
-        .lb-card span, .lb-card div, .badge-card span, .badge-card div {
-            color: #111827 !important;
-        }
+        
     
     </style>
 </head>
