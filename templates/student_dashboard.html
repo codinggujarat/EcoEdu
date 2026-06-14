@@ -206,25 +206,25 @@ body { background: #F7F7F2 !important; }
         </a>
 
         {# Activity Calendar #}
-        <div style="background: white; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,.05); padding: 32px; border: 1px solid rgba(0,0,0,.05); display:flex; flex-direction:column; gap:24px;">
+        <div style="background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,.15); padding: 32px; border: 1px solid rgba(255,255,255,.05); display:flex; flex-direction:column; gap:24px;">
             
             <!-- Header & Controls -->
             <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
                 <div style="display:flex; align-items:center; gap:16px;">
-                    <div style="width:48px; height:48px; background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 12px rgba(24, 29, 0,.15), inset 0 1px 0 rgba(255,255,255,0.15);">
+                    <div style="width:48px; height:48px; background: rgba(255,255,255,0.1); border-radius:14px; display:flex; align-items:center; justify-content:center; border: 1px solid rgba(255,255,255,0.1);">
                         <i data-lucide="calendar-days" style="width:22px; height:22px; color:white;"></i>
                     </div>
                     <div>
-                        <h3 id="calendar-title" style="font-size:22px; font-weight:600; color:#1B1B1B; letter-spacing:-0.01em; margin-bottom:2px;">Activity Calendar</h3>
-                        <p id="calendar-subtitle" style="font-size:14px; color:#707070;">Track your monthly impact</p>
+                        <h3 id="calendar-title" style="font-size:22px; font-weight:600; color:white; letter-spacing:-0.01em; margin-bottom:2px;">Activity Calendar</h3>
+                        <p id="calendar-subtitle" style="font-size:14px; color:rgba(255,255,255,0.7);">Track your monthly impact</p>
                     </div>
                 </div>
                 
-                <div style="display:flex; align-items:center; background:#F7F7F8; border-radius:999px; padding:4px; border:1px solid rgba(0,0,0,.04);">
-                    <button class="cal-tab-btn" data-view="day" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:500; color:#707070;  background:transparent; box-shadow:none;">Day</button>
-                    <button class="cal-tab-btn" data-view="week" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:500; color:#707070;  background:transparent; box-shadow:none;">Week</button>
-                    <button class="cal-tab-btn active-tab" data-view="month" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:600; color:#1B1B1B; background:white; box-shadow:0 2px 8px rgba(0,0,0,.06); ">Month</button>
-                    <button class="cal-tab-btn" data-view="year" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:500; color:#707070;  background:transparent; box-shadow:none;">Year</button>
+                <div style="display:flex; align-items:center; background:rgba(255,255,255,0.05); border-radius:999px; padding:4px; border:1px solid rgba(255,255,255,.1);">
+                    <button class="cal-tab-btn" data-view="day" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.7); background:transparent; box-shadow:none;">Day</button>
+                    <button class="cal-tab-btn" data-view="week" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.7); background:transparent; box-shadow:none;">Week</button>
+                    <button class="cal-tab-btn active-tab" data-view="month" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:600; color:#1B1B1B; background:white; box-shadow:0 2px 8px rgba(0,0,0,.15); ">Month</button>
+                    <button class="cal-tab-btn" data-view="year" style="padding:6px 16px; border-radius:999px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.7); background:transparent; box-shadow:none;">Year</button>
                 </div>
             </div>
 
@@ -244,12 +244,12 @@ body { background: #F7F7F2 !important; }
                 <!-- Month View (Original) -->
                 <div id="view-month" style="display:block; ">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; margin-top:8px;">
-                        <button id="cal-prev" style="width:36px; height:36px; border-radius:50%; border:1px solid rgba(0,0,0,.08); background:white; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#1B1B1B;  box-shadow:0 2px 6px rgba(0,0,0,.02);" onmouseover="this.style.background='#F7F7F8';" onmouseout="this.style.background='white';"><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
+                        <button id="cal-prev" style="width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; cursor:pointer; color:white; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,.1)';" onmouseout="this.style.background='rgba(255,255,255,.05)';"><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
                         <div style="display:flex; gap:160px; flex:1; justify-content:center;">
-                            <h4 id="cal-month-1" style="font-size:16px; font-weight:600; color:#1B1B1B; min-width:140px; text-align:center;"></h4>
-                            <h4 id="cal-month-2" class="hidden lg:block" style="font-size:16px; font-weight:600; color:#1B1B1B; min-width:140px; text-align:center;"></h4>
+                            <h4 id="cal-month-1" style="font-size:16px; font-weight:600; color:white; min-width:140px; text-align:center;"></h4>
+                            <h4 id="cal-month-2" class="hidden lg:block" style="font-size:16px; font-weight:600; color:white; min-width:140px; text-align:center;"></h4>
                         </div>
-                        <button id="cal-next" style="width:36px; height:36px; border-radius:50%; border:1px solid rgba(0,0,0,.08); background:white; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#1B1B1B;  box-shadow:0 2px 6px rgba(0,0,0,.02);" onmouseover="this.style.background='#F7F7F8';" onmouseout="this.style.background='white';"><i data-lucide="chevron-right" style="width:18px;height:18px;"></i></button>
+                        <button id="cal-next" style="width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center; cursor:pointer; color:white; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,.1)';" onmouseout="this.style.background='rgba(255,255,255,.05)';"><i data-lucide="chevron-right" style="width:18px;height:18px;"></i></button>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -626,11 +626,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.style.fontWeight = '600';
                 btn.style.color = '#1B1B1B';
                 btn.style.background = 'white';
-                btn.style.boxShadow = '0 2px 8px rgba(0,0,0,.06)';
+                btn.style.boxShadow = '0 2px 8px rgba(0,0,0,.15)';
             } else {
                 btn.classList.remove('active-tab');
                 btn.style.fontWeight = '500';
-                btn.style.color = '#707070';
+                btn.style.color = 'rgba(255,255,255,0.7)';
                 btn.style.background = 'transparent';
                 btn.style.boxShadow = 'none';
             }
@@ -677,11 +677,11 @@ document.addEventListener('DOMContentLoaded', function () {
         
         let html = `
             <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 0;">
-                <div style="width:80px; height:80px; background:${ch > 0 ? 'linear-gradient(135deg, #181D00 0%, #234A2B 30%, #2A4A30 65%, #2A4A30 100%)' : '#F7F7F8'}; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:${ch > 0 ? '0 10px 20px rgba(24, 29, 0,.2)' : 'none'}; margin-bottom:24px;">
-                    <i data-lucide="${ch > 0 ? 'zap' : 'moon'}" style="width:36px; height:36px; color:${ch > 0 ? 'white' : '#A1A1AA'};"></i>
+                <div style="width:80px; height:80px; background:${ch > 0 ? 'white' : 'rgba(255,255,255,0.05)'}; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:${ch > 0 ? '0 10px 20px rgba(0,0,0,.3)' : 'none'}; margin-bottom:24px;">
+                    <i data-lucide="${ch > 0 ? 'zap' : 'moon'}" style="width:36px; height:36px; color:${ch > 0 ? '#181D00' : 'rgba(255,255,255,0.5)'};"></i>
                 </div>
-                <h4 style="font-size:32px; font-weight:700; color:#1B1B1B; margin-bottom:8px;">${pts} <span style="font-size:18px; color:#707070;">XP Earned</span></h4>
-                <p style="font-size:15px; color:#707070; text-align:center;">You completed <span style="font-weight:600; color:#1B1B1B;">${ch}</span> challenge${ch === 1 ? '' : 's'} today.</p>
+                <h4 style="font-size:32px; font-weight:700; color:white; margin-bottom:8px;">${pts} <span style="font-size:18px; color:rgba(255,255,255,0.7);">XP Earned</span></h4>
+                <p style="font-size:15px; color:rgba(255,255,255,0.7); text-align:center;">You completed <span style="font-weight:600; color:white;">${ch}</span> challenge${ch === 1 ? '' : 's'} today.</p>
             </div>
         `;
         views['day'].innerHTML = html;
@@ -713,11 +713,11 @@ document.addEventListener('DOMContentLoaded', function () {
             
             html += `
                 <div style="display:flex; flex-direction:column; align-items:center; flex:1; gap:12px; cursor:pointer;" title="${day.points} XP">
-                    <div style="font-size:12px; font-weight:600; color:#181D00; opacity:${day.points > 0 ? 1 : 0}; ">${day.points}</div>
-                    <div style="width:100%; max-width:48px; height:180px; display:flex; align-items:flex-end; background:#F7F7F8; border-radius:12px; overflow:hidden;">
-                        <div style="width:100%; height:${h}%; background:${day.points > 0 ? 'linear-gradient(135deg, #181D00 0%, #2A4A30 100%)' : '#F7F7F8'}; border-radius:12px; "></div>
+                    <div style="font-size:12px; font-weight:600; color:white; opacity:${day.points > 0 ? 1 : 0}; ">${day.points}</div>
+                    <div style="width:100%; max-width:48px; height:180px; display:flex; align-items:flex-end; background:rgba(255,255,255,0.05); border-radius:12px; overflow:hidden;">
+                        <div style="width:100%; height:${h}%; background:${day.points > 0 ? 'white' : 'transparent'}; border-radius:12px; "></div>
                     </div>
-                    <div style="font-size:13px; font-weight:600; color:${day.points > 0 ? '#1B1B1B' : '#A1A1AA'};">${day.dayName}</div>
+                    <div style="font-size:13px; font-weight:600; color:${day.points > 0 ? 'white' : 'rgba(255,255,255,0.5)'};">${day.dayName}</div>
                 </div>
             `;
         });
@@ -746,11 +746,11 @@ document.addEventListener('DOMContentLoaded', function () {
             
             const active = ch > 0;
             html += `
-                <div style="padding:16px; border-radius:20px; background:${active ? 'linear-gradient(135deg, #181D00 0%, #234A2B 20%, #181D00 100%)' : '#F7F7F8'}; display:flex; flex-direction:column; gap:8px; box-shadow:${active ? '0 4px 12px rgba(24, 29, 0,.15)' : 'none'}; border:1px solid ${active ? 'transparent' : 'rgba(0,0,0,.04)'};  cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
-                    <div style="font-size:14px; font-weight:600; color:${active ? 'rgba(255,255,255,.8)' : '#A1A1AA'};">${monthNames[m]}</div>
+                <div style="padding:16px; border-radius:20px; background:${active ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.03)'}; display:flex; flex-direction:column; gap:8px; box-shadow:${active ? '0 4px 12px rgba(0,0,0,.15)' : 'none'}; border:1px solid ${active ? 'transparent' : 'rgba(255,255,255,.05)'};  cursor:pointer;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
+                    <div style="font-size:14px; font-weight:600; color:${active ? 'white' : 'rgba(255,255,255,0.5)'};">${monthNames[m]}</div>
                     <div>
-                        <div style="font-size:20px; font-weight:700; color:${active ? 'white' : '#1B1B1B'};">${pts}</div>
-                        <div style="font-size:11px; font-weight:500; color:${active ? 'rgba(255,255,255,.6)' : '#A1A1AA'}; text-transform:uppercase;">${ch} Activity</div>
+                        <div style="font-size:20px; font-weight:700; color:white;">${pts}</div>
+                        <div style="font-size:11px; font-weight:500; color:${active ? 'rgba(255,255,255,.8)' : 'rgba(255,255,255,0.4)'}; text-transform:uppercase;">${ch} Activity</div>
                     </div>
                 </div>
             `;
@@ -797,7 +797,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let html = '<div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:12px; text-align:center;">';
         
         daysOfWeek.forEach(d => {
-            html += `<div style="font-size:12px; font-weight:600; color:#A1A1AA; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">${d}</div>`;
+            html += `<div style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.5); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">${d}</div>`;
         });
         
         for (let i = 0; i < firstDay; i++) {
@@ -815,11 +815,11 @@ document.addEventListener('DOMContentLoaded', function () {
             let style = "width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; margin:0 auto;  cursor:pointer;";
             
             if (hasActivity) {
-                style += " background:linear-gradient(135deg, #181D00 0%, #234A2B 30%, #2A4A30 65%, #2A4A30 100%); color:white; box-shadow:0 4px 12px rgba(24, 29, 0,.2);";
+                style += " background:white; color:#181D00; box-shadow:0 4px 12px rgba(0,0,0,.3);";
             } else if (isToday) {
-                style += " background:#1B1B1B; color:white; box-shadow:0 4px 10px rgba(0,0,0,.15);";
+                style += " border:1px solid rgba(255,255,255,0.4); color:white;";
             } else {
-                style += " background:#F7F7F8; color:#1B1B1B;";
+                style += " background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.8);";
             }
             
             html += `<div>
