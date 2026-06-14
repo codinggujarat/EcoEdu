@@ -1,0 +1,249 @@
+{% extends "dashboard_layout.html" %}
+
+{% block title %}Puzzles | EduEco{% endblock %}
+
+{% block hero_section %}
+{% from 'hero.html' import render_hero with context %}
+{{ render_hero("Test Your Knowledge", "Solve daily eco puzzles to earn points and boost your eco IQ.", "View Puzzles", "#puzzlesGrid", "brain-circuit") }}
+{% endblock %}
+
+{% block dashboard_content %}
+<style>
+/* ─── Puzzles Page ─── */
+body { background: #F7F7F2 !important; }
+
+.pz-inner          { max-width: 1280px; margin: 0 auto; }
+.pz-inner          { max-width: 1280px; margin: 0 auto; }
+
+.pz-h2 {
+    font-size: 32px; font-weight: 500; line-height: 1.1;
+    letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px;
+}
+.pz-p { font-size: 17px; color: #707070; line-height: 1.5; margin-bottom: 28px; }
+
+/* Puzzle Card */
+.pz-card {
+    min-width: 0; box-sizing: border-box;
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
+    border-radius: 28px; padding: 36px;
+    display: flex; flex-direction: column;
+    
+    box-shadow: 0 10px 40px rgba(0,0,0,.02);
+}
+
+.pz-icon-wrap {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: #181D00; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+}
+.pz-icon-wrap svg { width: 28px; height: 28px; }
+
+.pz-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 6px 12px; border-radius: 999px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    background: rgba(24, 29, 0, 0.05); color: #181D00;
+    margin-bottom: 16px; width: fit-content;
+}
+
+.pz-title { font-size: 24px; font-weight: 500; color: #1B1B1B; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; }
+.pz-desc { font-size: 15px; color: #707070; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
+
+.pz-points {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: #181D00; margin-bottom: 24px;
+}
+.pz-points svg { width: 18px; height: 18px; color: #E5A93B; }
+
+.pz-btn {
+    width: 100%; height: 52px; border-radius: 16px;
+    background: #181D00; color: #fff; font-size: 15px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+     border: none; cursor: pointer;
+}
+
+.pz-btn.completed {
+    background: #EAEAE5; color: #707070; pointer-events: none;
+}
+
+/* Modal styling */
+.modal-overlay {
+    background: rgba(10,10,10,0.85); backdrop-filter: blur(4px);
+}
+.modal-content {
+    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10); border-radius: 28px;
+}
+.modal-option {
+    display: flex; align-items: center; gap: 12px; padding: 16px;
+    border-radius: 16px; border: 1px solid rgba(24, 29, 0,.10);
+    cursor: pointer; 
+    background: #fff;
+}
+.modal-option.selected {
+    border-color: #181D00;
+    background: rgba(24, 29, 0,.05);
+}
+.modal-option-letter {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(24, 29, 0,.1); color: #181D00;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 14px;
+}
+.modal-option.selected .modal-option-letter {
+    background: #181D00; color: #fff;
+}
+</style>
+
+<div class="premium-section" id="puzzlesGrid">
+    <div class="pz-inner">
+        <h2 class="pz-h2">Daily Puzzles</h2>
+        <p class="pz-p">Solve environmental logic puzzles and trivia to earn points.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for p in puzzles %}
+            <div class="pz-card relative">
+                {% if p.id in completed_ids %}
+                <div class="absolute top-6 right-6 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+                    <i data-lucide="check" class="w-5 h-5"></i>
+                </div>
+                {% endif %}
+
+                <div class="pz-icon-wrap">
+                    <i data-lucide="brain-circuit"></i>
+                </div>
+                <div class="pz-badge">{{ p.difficulty }}</div>
+                <h3 class="pz-title">{{ p.title }}</h3>
+                <p class="pz-desc">{{ p.description }}</p>
+                
+                <div class="pz-points">
+                    <i data-lucide="star"></i>
+                    <span>+{{ p.points }} Points</span>
+                </div>
+
+                {% if p.id in completed_ids %}
+                <button class="pz-btn completed">
+                    <span>Solved</span>
+                </button>
+                {% else %}
+                <button class="pz-btn" onclick="openPuzzleModal({{ p.id }}, {{ p.title | tojson | forceescape }}, {{ p.question | tojson | forceescape }}, {{ p.options | forceescape }})">
+                    <span>Solve Puzzle</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="col-span-1 md:col-span-2 lg:col-span-3 py-12 text-center text-gray-500 bg-white/50 rounded-3xl border border-gray-100">
+                <i data-lucide="inbox" class="w-12 h-12 mx-auto mb-4 opacity-50"></i>
+                <p>No puzzles available at the moment. Check back later!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Puzzle Modal -->
+<div id="puzzleModal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 modal-overlay" onclick="closePuzzleModal()"></div>
+    <div class="absolute inset-0 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="modal-content relative w-full max-w-lg p-8 shadow-2xl">
+                <!-- Close Button -->
+                <button onclick="closePuzzleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+
+                <!-- Header -->
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-full bg-[#181D00] text-white flex items-center justify-center">
+                        <i data-lucide="help-circle" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 id="modalTitle" class="text-2xl font-semibold text-gray-900 tracking-tight">Puzzle</h3>
+                        <p class="text-sm text-gray-500">Select the correct answer to earn points.</p>
+                    </div>
+                </div>
+
+                <!-- Question -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 mb-6 shadow-sm">
+                    <p id="modalQuestion" class="text-gray-800 text-[16px] leading-relaxed font-medium"></p>
+                </div>
+
+                <form id="puzzleForm" method="POST" action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <!-- Options -->
+                    <div id="modalOptions" class="space-y-3 mb-8">
+                        <!-- Options injected by JS -->
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" id="submitPuzzleBtn" class="pz-btn opacity-50 cursor-not-allowed" disabled>
+                        <span>Submit Answer</span>
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentSelectedOption = null;
+
+function openPuzzleModal(id, title, question, optionsArr) {
+    document.getElementById('puzzleModal').classList.remove('hidden');
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalQuestion').textContent = question;
+    
+    // Set form action
+    document.getElementById('puzzleForm').action = `/solve-puzzle/${id}`;
+    
+    // Build options
+    const container = document.getElementById('modalOptions');
+    container.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    
+    // Options is a JSON list passed to template
+    optionsArr.forEach((optText, index) => {
+        const letter = letters[index] || '';
+        
+        const div = document.createElement('div');
+        div.className = 'modal-option';
+        div.innerHTML = `
+            <div class="modal-option-letter">${letter}</div>
+            <div class="flex-1 font-medium text-gray-800">${optText}</div>
+            <input type="radio" name="answer" value="${letter}" class="hidden" required>
+        `;
+        
+        div.addEventListener('click', () => {
+            // Deselect all
+            container.querySelectorAll('.modal-option').forEach(el => el.classList.remove('selected'));
+            container.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+            
+            // Select this
+            div.classList.add('selected');
+            div.querySelector('input').checked = true;
+            
+            // Enable submit
+            const btn = document.getElementById('submitPuzzleBtn');
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            btn.removeAttribute('disabled');
+        });
+        
+        container.appendChild(div);
+    });
+    
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+    lucide.createIcons();
+}
+
+function closePuzzleModal() {
+    document.getElementById('puzzleModal').classList.add('hidden');
+    document.body.style.overflow = '';
+    
+    // Reset selection
+    document.getElementById('submitPuzzleBtn').classList.add('opacity-50', 'cursor-not-allowed');
+    document.getElementById('submitPuzzleBtn').setAttribute('disabled', 'true');
+}
+</script>
+{% endblock %}

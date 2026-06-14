@@ -3,68 +3,259 @@
 {% block title %}Manage Certificates | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
-    <div>
-        <h1 class="text-3xl font-bold tracking-tight-heading text-gray-900 mb-1">Certificates Ledger</h1>
-        <p class="text-sm text-gray-500">Track and manage issued completion certificates.</p>
-    </div>
-</div>
-
-<div class="premium-card bg-white flex flex-col">
-    <!-- Toolbar -->
-    <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-[#FAFAFA]">
-        <div class="relative w-full max-w-sm">
-            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-            <input type="text" placeholder="Search by recipient or ID..." class="admin-input pl-10">
+<div class="max-w-[1400px] mx-auto pb-10">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Certificates Ledger</h1>
+            <p class="text-[15px] text-admin-textMuted">Track and manage issued completion certificates.</p>
+        </div>
+        <div class="px-4 py-2 bg-[#FFFFFF] border border-[rgba(0,0,0,0.08)] rounded-[16px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ total_certificates }}</span> Issued
+            </span>
         </div>
     </div>
 
-    <!-- Data Table -->
-    <div class="overflow-x-auto">
-        <table class="premium-table">
-            <thead>
-                <tr>
-                    <th>Certificate ID</th>
-                    <th>Recipient</th>
-                    <th>Date Issued</th>
-                    <th class="text-right">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cert in certificates %}
-                <tr class="group">
-                    <td>
-                        <div class="font-mono text-sm font-medium text-gray-600 bg-gray-50 px-2 py-1 rounded inline-block">CERT-{{ "%05d" | format(cert.id) }}</div>
-                    </td>
-                    <td>
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded-full bg-[#F4F4EF] text-[#181D00] flex items-center justify-center font-bold text-xs">{{ cert.user.name[0] | upper }}</div>
-                            <div class="font-medium text-gray-900">{{ cert.user.name }}</div>
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- 3 Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="file-badge" class="w-5 h-5"></i>
                         </div>
-                    </td>
-                    <td>
-                        <div class="text-sm text-gray-600">{{ cert.issued_at.strftime('%Y-%m-%d %H:%M') if cert.issued_at else 'Unknown' }}</div>
-                    </td>
-                    <td class="text-right">
-                        <button class="btn-secondary ml-auto">
-                            <i data-lucide="download" class="w-4 h-4"></i> Download
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-                {% if not certificates %}
-                <tr>
-                    <td colspan="4" class="p-12 text-center">
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Total Issued</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ total_certificates }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Unique Earners</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ unique_students }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Highest Milestone</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ highest_milestone }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="premium-card flex flex-col">
+                <div class="p-6 border-b border-[rgba(0,0,0,0.08)] flex items-center justify-between bg-white">
+                    <h2 class="text-lg font-semibold text-admin-text">Certificate Ledger</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" id="certificatesTable">
+                        <thead class="bg-[#F9F9F8] border-b border-admin-border sticky top-0 z-10">
+                            <tr>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Certificate ID</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Recipient</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Milestone</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-white">
+                            {% for cert in certificates %}
+                            <tr class="hover:bg-admin-tableAlt transition-none group">
+                                <td class="p-4">
+                                    <div class="font-mono text-sm font-medium text-gray-600 bg-[#F4F4EF] px-2 py-1 rounded inline-block border border-[rgba(0,0,0,0.05)]">CERT-{{ "%05d" | format(cert.id) }}</div>
+                                    <div class="text-[11px] text-gray-400 mt-1.5">{{ cert.issued_at.strftime('%Y-%m-%d %H:%M') if cert.issued_at else 'Unknown Date' }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-[#F4F4EF] text-[#181D00] border border-[rgba(0,0,0,0.08)] flex items-center justify-center font-bold text-xs shadow-sm">{{ cert.user.name[0] | upper }}</div>
+                                        <div class="font-semibold text-gray-900 text-[14px]">{{ cert.user.name }}</div>
+                                    </div>
+                                </td>
+                                <td class="p-4">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-[#F4F4EF] text-[#181D00] border border-[rgba(0,0,0,0.08)] uppercase tracking-wide">
+                                        {{ cert.milestone }} XP
+                                    </span>
+                                </td>
+                                <td class="p-4 text-right">
+                                    <button class="btn-secondary h-8 px-3 text-xs text-[#181D00] hover:bg-gray-100 flex items-center gap-1.5 ml-auto">
+                                        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    {% if not certificates %}
+                    <div class="p-12 text-center bg-white border-t border-[rgba(0,0,0,0.08)]">
                         <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-3">
                             <i data-lucide="file-badge" class="w-5 h-5 text-gray-400"></i>
                         </div>
                         <h3 class="text-sm font-medium text-gray-900 mb-1">No certificates issued</h3>
                         <p class="text-xs text-gray-500">Certificates will appear here once students unlock them.</p>
-                    </td>
-                </tr>
-                {% endif %}
-            </tbody>
-        </table>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Activity Chart Widget -->
+            <div class="premium-card p-6 md:p-8 rounded-[20px] shadow-sm text-white" style="background: linear-gradient(180deg, #181D00 0%, #234A2B 50%, #2A4A30 100%); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-lg font-semibold text-white">Issuance Timeline</h3>
+                    <span class="px-3 py-1 bg-white/10 border border-white/20 text-[11px] font-bold text-white rounded-md uppercase tracking-wider">7 Days</span>
+                </div>
+                <div class="h-48 mb-4">
+                    <canvas id="certActivityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Milestone Widget -->
+            <div class="premium-card p-6 md:p-8 rounded-[20px] shadow-sm relative overflow-hidden text-white" style="background: linear-gradient(180deg, #181D00 0%, #234A2B 50%, #2A4A30 100%); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Milestone Split</h3>
+                            <p class="text-xs text-white/60 mt-1">Certificates grouped by XP</p>
+                        </div>
+                    </div>
+                    <div class="h-48 relative mb-8 flex justify-center items-center">
+                        <canvas id="certMilestoneChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+ /* Professional DataTables Override */
+ .dataTables_wrapper .dataTables_length,
+ .dataTables_wrapper .dataTables_filter {
+ padding: 1rem 1.5rem;
+ color: #111111;
+ font-size: 0.875rem;
+ font-weight: 500;
+ }
+
+ .dataTables_wrapper .dataTables_filter input {
+ background: #FFFFFF;
+ border: 1px solid rgba(0,0,0,0.12);
+ border-radius: 6px;
+ color: #111111;
+ padding: 6px 12px;
+ margin-left: 8px;
+ outline: none;
+ 
+ }
+ .dataTables_wrapper .dataTables_filter input:focus {
+ border-color: #2A4A30;
+ box-shadow: 0 0 0 1px #2A4A30;
+ }
+
+ .dataTables_wrapper .dataTables_info {
+ padding: 1rem 1.5rem;
+ color: #666666;
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .dataTables_paginate {
+ padding: 1rem 1.5rem;
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .paginate_button {
+ color: #666666 !important;
+ padding: 4px 10px !important;
+ margin: 0 2px;
+ border-radius: 6px;
+ border: 1px solid transparent !important;
+ cursor: pointer;
+ 
+ }
+</style>
+
+<script>
+ $(document).ready(function () {
+ $('#certificatesTable').DataTable({
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
+ });
+
+ // Activity Chart
+ const activityCtx = document.getElementById('certActivityChart').getContext('2d');
+ new Chart(activityCtx, {
+ type: 'bar',
+ data: {
+ labels: {{ timeline_labels | tojson | safe }},
+ datasets: [{
+ label: 'Certificates Issued',
+ data: {{ timeline_values | tojson | safe }},
+ backgroundColor: '#FFFFFF',
+ borderRadius: 4,
+ barThickness: 16
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ scales: {
+ y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'rgba(255,255,255,0.6)', font: {family: "'General Sans', sans-serif"}, stepSize: 1 } },
+ x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.6)', font: {family: "'General Sans', sans-serif"} } }
+ }
+ }
+ });
+
+ // Milestone Chart
+ const diffCtx = document.getElementById('certMilestoneChart').getContext('2d');
+ new Chart(diffCtx, {
+ type: 'doughnut',
+ data: {
+ labels: {{ milestone_labels | tojson | safe }},
+ datasets: [{
+ data: {{ milestone_values | tojson | safe }},
+ backgroundColor: ['#FFFFFF', 'rgba(255,255,255,0.5)', 'rgba(255,255,255,0.2)'],
+ borderWidth: 0
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ cutout: '75%'
+ }
+ });
+ });
+</script>
 {% endblock %}

@@ -133,7 +133,7 @@
             position: relative;
             overflow: hidden;
             will-change: transform;
-            transition: background-color 0.3s ease;
+            
             cursor: none;
             width: 100%;
         }
@@ -163,7 +163,7 @@
             position: relative;
             overflow: hidden;
             will-change: transform;
-            transition: border-color 0.3s ease;
+            
             cursor: none;
             width: 100%;
         }
@@ -183,7 +183,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.25);
             transform: scale(0);
-            animation: ripple-out 0.7s linear;
+            
             pointer-events: none;
         }
 
@@ -201,12 +201,7 @@
             inset: 0;
             background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%);
             transform: translateX(-100%);
-            transition: transform 0s;
-        }
-
-        .edit-btn-primary:hover::before {
-            transform: translateX(100%);
-            transition: transform 0.6s ease;
+            
         }
 
         .btn-inner {
@@ -224,7 +219,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             padding: 24px;
             will-change: transform, box-shadow;
-            transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            
             transform-style: preserve-3d;
             cursor: none;
             color: #FFFFFF;
@@ -258,7 +253,7 @@
             align-items: center;
             max-width: 1400px;
             margin: 0 auto;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            
         }
 
         /* Full-width nav backdrop */
@@ -270,7 +265,7 @@
             z-index: 999;
             height: 80px;
             /* 16 + 16 + 48 = 80px */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            
         }
 
         .nav-backdrop.scrolled {
@@ -307,7 +302,7 @@
             font-size: 16px;
             font-weight: 500;
             text-decoration: none;
-            transition: color 0.3s ease;
+            
             position: relative;
             cursor: none;
         }
@@ -320,7 +315,7 @@
             width: 0;
             height: 1px;
             background: #181D00;
-            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            
         }
 
         .nav-link:hover::after {
@@ -459,7 +454,7 @@
             height: 28px;
             color: rgba(255, 255, 255, 0.85);
             flex-shrink: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            
         }
 
         details[open] .faq-icon {
@@ -472,7 +467,7 @@
             line-height: 1.7;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            
             opacity: 0;
         }
 
@@ -545,7 +540,7 @@
         .footer-col a {
             color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
-            transition: color 0.3s ease;
+            
             cursor: none;
         }
 
@@ -646,12 +641,8 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(24, 29, 0, 0.03) 0%, transparent 60%);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            
             pointer-events: none;
-        }
-
-        .feat-card:hover::after {
-            opacity: 1;
         }
 
         .feat-card-img {
@@ -665,14 +656,8 @@
             position: relative;
         }
 
-        /* Icon scale on card hover */
-        .feat-card:hover .feat-card-img svg {
-            transform: scale(1.12) translateY(-4px);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
         .feat-card-img svg {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            
         }
 
         .feat-card-body {
@@ -736,7 +721,7 @@
             opacity: 0;
             transform: translate(-50%, 28px);
             white-space: nowrap;
-            transition: opacity 0.3s ease;
+            
         }
 
         /* ── Noise overlay ── */
@@ -877,7 +862,7 @@
             width: 100%;
             height: 100%;
             background: #181D00;
-            animation: scrollDown 1.6s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+            
         }
 
         @keyframes scrollDown {
@@ -932,7 +917,7 @@
             inset: -4px;
             border-radius: 50%;
             border: 1px solid rgba(24, 29, 0, 0.15);
-            animation: badgePulse 2.5s ease-out infinite;
+            
         }
 
         @keyframes badgePulse {

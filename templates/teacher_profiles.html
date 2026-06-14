@@ -23,7 +23,7 @@ body { background: #F7F7F2 !important; }
     width: 100%; height: 56px; background: #EAEAE5;
     border: 1px solid rgba(24, 29, 0,.12); border-radius: 999px;
     padding: 0 20px 0 52px; font-size: 15px; color: #1B1B1B;
-    outline: none; transition: border-color .2s ease, background .2s ease;
+    outline: none; 
 }
 .tp-search:focus { border-color: #181D00; background: #F7F7F2; }
 .tp-search::placeholder { color: #A1A1AA; }
@@ -43,14 +43,8 @@ body { background: #F7F7F2 !important; }
     letter-spacing: 0.3px;
     border: none;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    
     box-shadow: 0 4px 12px rgba(24, 29, 0,0.1);
-}
-
-.premium-btn:hover {
-    background: #234A2B;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(24, 29, 0,0.15);
 }
 
 .premium-btn-secondary {
@@ -68,65 +62,10 @@ body { background: #F7F7F2 !important; }
     letter-spacing: 0.3px;
     text-decoration: none;
     border: 1px solid rgba(24, 29, 0,0.08);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.premium-btn-secondary:hover {
-    background: #EAE8DE;
-    color: #1B1B1B;
-    transform: translateY(-2px);
-}
-
-/* Student List/Grid Hybrid */
-.tp-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
-}
-.tp-card {
-    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
-    border-radius: 20px; padding: 16px;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    transition: border-color .2s, transform .2s; text-decoration: none; color: inherit;
-}
-.tp-card:hover { border-color: rgba(24, 29, 0,.3); transform: translateY(-4px); }
-
-.tp-avatar-wrap { position:relative; margin-bottom:12px; flex-shrink:0; }
-.tp-avatar { width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid rgba(24, 29, 0,.1); }
-.tp-lv-badge { position:absolute; bottom:-4px; right:-8px; background:#F7F7F2; border:1px solid rgba(24, 29, 0,.1); border-radius:999px; padding:2px 6px; font-size:10px; font-weight:700; color:#181D00; box-shadow:0 2px 4px rgba(0,0,0,.05); }
-
-.tp-info-wrap { width:100%; min-width:0; }
-.tp-name { font-size:15px; font-weight:600; color:#1B1B1B; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.tp-school { font-size:11px; color:#707070; margin-bottom:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-.tp-xp-wrap { width:100%; background:rgba(24, 29, 0,.05); border-radius:12px; padding:8px; display:flex; justify-content:center; align-items:center; gap:4px; margin-top:auto; flex-shrink:0; }
-.tp-xp-val { font-size:14px; font-weight:700; color:#181D00; }
-.tp-xp-lbl { font-size:10px; font-weight:700; color:#707070; text-transform:uppercase; }
-
-/* Desktop overrides: List format */
-@media (min-width: 768px) {
-    .tp-grid { display: flex; flex-direction: column; gap: 12px; }
-    .tp-card { flex-direction: row; text-align: left; justify-content: space-between; padding: 20px 24px; border-radius: 24px; }
-    .tp-card:hover { transform: translateY(-2px); }
-    .tp-card-left { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 0; }
     
-    .tp-avatar-wrap { margin-bottom: 0; }
-    .tp-avatar { width: 56px; height: 56px; }
-    .tp-lv-badge { right: -4px; }
-    
-    .tp-info-wrap { flex: 1; }
-    .tp-name { font-size: 16px; margin-bottom: 4px; }
-    .tp-school { font-size: 13px; margin-bottom: 0; }
-    
-    .tp-xp-wrap { width: auto; margin-top: 0; padding: 10px 20px; background: rgba(24, 29, 0,.08); border: 1px solid rgba(24, 29, 0,.1); border-radius: 999px; }
-    .tp-xp-val { font-size: 16px; }
 }
 
-.tp-btn {
-    height: 40px; background: #EAEAE5; color: #1B1B1B;
-    border-radius: 999px; padding: 0 20px; font-size: 13px; font-weight: 600;
-    border: 1px solid rgba(24, 29, 0,.1); cursor: pointer; transition: background .2s;
-    display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
-}
-.tp-btn:hover { background: rgba(24, 29, 0,.1); }
+
 
 @media (min-width: 768px) {
     .tp-section { padding: 56px 48px; }
@@ -210,22 +149,20 @@ body { background: #F7F7F2 !important; }
     </div>
 
     {% if students %}
-        <div class="tp-grid">
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:24px;">
             {% for student in students %}
-            <a href="{{ url_for('teacher_view_profile', student_id=student.id) }}" class="premium-card">
-                <div class="tp-card-left">
-                    <div class="tp-avatar-wrap">
-                        <img src="{{ url_for('static', filename='uploads/' + (student.profile_pic or 'default.png')) }}" onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" class="tp-avatar">
-                        <div class="tp-lv-badge">Lv{{ (student.eco_points // 100) + 1 }}</div>
-                    </div>
-                    <div class="tp-info-wrap">
-                        <h4 class="tp-name">{{ student.name }}</h4>
-                        <p class="tp-school">{{ student.school or 'EduEco Academy' }}</p>
-                    </div>
+            <a href="{{ url_for('teacher_view_profile', student_id=student.id) }}" class="premium-card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:32px 24px; text-decoration:none; color:inherit; aspect-ratio:1/1; justify-content:center;">
+                <div style="position:relative; margin-bottom:16px;">
+                    <img src="{{ url_for('static', filename='uploads/' + (student.profile_pic or 'default.png')) }}" onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid rgba(24, 29, 0,.1);">
+                    <div style="position:absolute; bottom:-4px; right:-8px; background:#F7F7F2; border:1px solid rgba(24, 29, 0,.1); border-radius:999px; padding:2px 8px; font-size:11px; font-weight:700; color:#181D00; box-shadow:0 2px 4px rgba(0,0,0,.05);">Lv{{ (student.eco_points // 100) + 1 }}</div>
                 </div>
-                <div class="tp-xp-wrap">
-                    <span class="tp-xp-val">{{ student.eco_points }}</span>
-                    <span class="tp-xp-lbl">XP</span>
+                
+                <h4 style="font-size:18px; font-weight:600; color:#1B1B1B; margin-bottom:4px; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ student.name }}</h4>
+                <p style="font-size:13px; color:#707070; margin-bottom:20px; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ student.school or 'EduEco Academy' }}</p>
+                
+                <div style="background:rgba(24, 29, 0,.05); border-radius:12px; padding:8px 16px; display:inline-flex; align-items:center; gap:6px;">
+                    <span style="font-size:16px; font-weight:700; color:#181D00;">{{ student.eco_points }}</span>
+                    <span style="font-size:11px; font-weight:700; color:#707070; text-transform:uppercase;">XP</span>
                 </div>
             </a>
             {% endfor %}

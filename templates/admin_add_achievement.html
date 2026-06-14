@@ -3,74 +3,74 @@
 {% block title %}Add Achievement | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto">
-    <div class="mb-8">
-        <a href="{{ url_for('admin_achievements') }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors mb-4">
+<div class="max-w-[1000px] mx-auto pb-10">
+    <div class="flex flex-col mb-8">
+        <a href="{{ url_for('admin_achievements') }}" class="inline-flex items-center text-sm font-medium text-[#707070] hover:text-[#181D00] transition-colors mb-4">
             <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back to Achievements
         </a>
-        <h1 class="text-3xl font-bold tracking-tight-heading text-gray-900 mb-1">Create New Achievement</h1>
-        <p class="text-sm text-gray-500">Design a milestone badge for students to unlock.</p>
+        <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Create New Achievement</h1>
+        <p class="text-[15px] text-admin-textMuted">Design a milestone badge for students to unlock.</p>
     </div>
 
-    <div class="premium-card bg-white p-8">
+    <div class="premium-card p-6 md:p-8 bg-white border border-[rgba(0,0,0,0.08)] rounded-[20px] shadow-sm">
         <form method="POST">
             {{ form.hidden_tag() }}
             
-            <div class="space-y-6">
+            <div class="space-y-8">
                 
                 <!-- Title & Icon -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
                     <div class="md:col-span-3">
-                        {{ form.name.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        {{ form.name.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
                         {{ form.name(class="admin-input", placeholder="E.g., Eco Warrior") }}
                         {% for error in form.name.errors %}
-                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
                         {% endfor %}
                     </div>
                     <div>
-                        {{ form.badge_icon.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
-                        {{ form.badge_icon(class="admin-input", placeholder="🌍") }}
+                        {{ form.badge_icon.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
+                        {{ form.badge_icon(class="admin-input", placeholder="trophy") }}
                         {% for error in form.badge_icon.errors %}
-                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
                         {% endfor %}
                     </div>
                 </div>
 
                 <!-- Description -->
                 <div>
-                    {{ form.description.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                    {{ form.description.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
                     {{ form.description(class="admin-textarea", rows="3", placeholder="What does this badge signify?") }}
                     {% for error in form.description.errors %}
-                        <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                        <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
                     {% endfor %}
                 </div>
 
                 <!-- Split Grid for Requirements & Points -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     <div>
-                        {{ form.points_required.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        {{ form.points_required.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
                         <div class="relative">
-                            <i data-lucide="target" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                            {{ form.points_required(class="admin-input", placeholder="500") }}
+                            <i data-lucide="target" class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            {{ form.points_required(class="admin-input pl-11", placeholder="500") }}
                         </div>
                         {% for error in form.points_required.errors %}
-                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
                         {% endfor %}
                     </div>
 
                     <div>
-                        {{ form.challenges_required.label(class="block text-sm font-semibold text-gray-900 mb-1.5") }}
+                        {{ form.challenges_required.label(class="block text-[15px] font-semibold text-[#181D00] mb-2") }}
                         <div class="relative">
-                            <i data-lucide="zap" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                            {{ form.challenges_required(class="admin-input", placeholder="5") }}
+                            <i data-lucide="zap" class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                            {{ form.challenges_required(class="admin-input pl-11", placeholder="5") }}
                         </div>
                         {% for error in form.challenges_required.errors %}
-                            <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                            <span class="text-[13px] text-red-500 mt-1.5 block font-medium">{{ error }}</span>
                         {% endfor %}
                     </div>
                 </div>
 
-                <div class="pt-6 border-t border-gray-100 flex justify-end gap-3">
+                <div class="pt-8 mt-4 border-t border-[rgba(0,0,0,0.08)] flex justify-end gap-3">
                     <a href="{{ url_for('admin_achievements') }}" class="btn-secondary">Cancel</a>
                     <button type="submit" class="btn-primary">Create Achievement</button>
                 </div>

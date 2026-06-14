@@ -72,6 +72,12 @@
                     </div>
                 </div>
 
+                <!-- Teacher Verification Checkbox -->
+                <div class="flex items-center gap-3 p-4 rounded-2xl border border-[rgba(0,0,0,0.12)] bg-white" style="min-height: 52px;">
+                    {{ form.verification_required(class="w-5 h-5 rounded border-[rgba(0,0,0,0.2)] text-[#181D00] focus:ring-[#181D00] cursor-pointer") }}
+                    {{ form.verification_required.label(class="text-[15px] font-medium text-[#181D00] cursor-pointer mb-0 select-none") }}
+                </div>
+
                 <div class="pt-8 mt-4 border-t border-[rgba(0,0,0,0.08)] flex justify-end gap-3">
                     <a href="{{ url_for('admin_challenges') }}" class="btn-secondary">Cancel</a>
                     <button type="submit" class="btn-primary">Create Challenge</button>

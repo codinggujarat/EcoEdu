@@ -3,89 +3,297 @@
 {% block title %}Manage Eco Tips | EduEco Admin{% endblock %}
 
 {% block content %}
-<div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
-    <div>
-        <h1 class="text-3xl font-bold tracking-tight-heading text-gray-900 mb-1">Eco Tips Content</h1>
-        <p class="text-sm text-gray-500">Manage the educational sustainability tips shown to students.</p>
-    </div>
-</div>
-
-<!-- Bento Layout for Form + Table -->
-<div class="bento-grid">
-    
-    <!-- Left Col: Form -->
-    <div class="col-span-12 lg:col-span-4 premium-card p-8 self-start sticky top-24">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Add New Eco Tip</h2>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            
-            <div class="space-y-4">
-                <div>
-                    {{ form.tip.label(class="block text-sm font-medium text-gray-700 mb-1") }}
-                    {{ form.tip(class="w-full text-sm bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-100 focus:border-green-600 outline-none transition-all resize-none p-3", rows="4", placeholder="E.g., Turning off the tap while brushing saves up to 8 gallons of water...") }}
-                    {% for error in form.tip.errors %}
-                        <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div>
-                    {{ form.frequency.label(class="block text-sm font-medium text-gray-700 mb-1") }}
-                    {{ form.frequency(class="admin-input") }}
-                </div>
-                
-                <button type="submit" class="btn-primary w-full mt-2">Publish Tip</button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Right Col: Table -->
-    <div class="col-span-12 lg:col-span-8 premium-card flex flex-col">
-        <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-[#FAFAFA]">
-            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Published Tips Library</h3>
+<div class="max-w-[1400px] mx-auto pb-10">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-[32px] font-semibold text-admin-text tracking-tight mb-1">Eco Tips Directory</h1>
+            <p class="text-[15px] text-admin-textMuted">Manage educational tips sent to users to encourage eco-friendly habits.</p>
         </div>
+        <div class="px-4 py-2 bg-[#FFFFFF] border border-[rgba(0,0,0,0.08)] rounded-[16px] shadow-sm flex items-center gap-2">
+            <span class="text-sm text-admin-textMuted font-medium">
+                <span class="text-admin-text font-bold">{{ total_tips }}</span> Total Tips
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Asymmetric Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <div class="overflow-x-auto">
-            <table class="premium-table">
-                <thead>
-                    <tr>
-                        <th class="w-16 text-center">ID</th>
-                        <th>Content</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tip in tips %}
-                    <tr class="group">
-                        <td class="text-center">
-                            <span class="text-xs font-medium text-gray-400">#{{ tip.id }}</span>
-                        </td>
-                        <td>
-                            <div class="text-[14px] text-gray-800 leading-relaxed">{{ tip.tip }}</div>
-                        </td>
-                        <td class="text-right">
-                            <form action="{{ url_for('admin_delete_eco_tip', tip_id=tip.id) }}" method="POST" class="inline">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn-secondary ml-auto text-[#181D00] hover:bg-gray-100 hover:border-red-200" onclick="return confirm('Delete tip?')">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i> Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    {% if not tips %}
-                    <tr>
-                        <td colspan="3" class="p-12 text-center">
-                            <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-3">
-                                <i data-lucide="lightbulb" class="w-5 h-5 text-gray-400"></i>
+        <!-- Left Side (Takes up 8 cols out of 12) -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- 3 Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Total Tips</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ total_tips }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Active Tips</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ active_tips }}</h3>
+                    </div>
+                </div>
+
+                <div class="premium-card p-8 flex flex-col justify-between group cursor-pointer hover:border-gray-300">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-[#F4F4EF] text-[#181D00] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="calendar" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Weekly Frequency</p>
+                        <h3 class="text-3xl font-bold tracking-tight-display text-gray-900">{{ weekly_tips }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="premium-card flex flex-col">
+                <div class="p-6 border-b border-[rgba(0,0,0,0.08)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white">
+                    <h2 class="text-lg font-semibold text-admin-text">All Eco Tips</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" id="ecoTipsTable">
+                        <thead class="bg-[#F9F9F8] border-b border-admin-border sticky top-0 z-10">
+                            <tr>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Tip Content</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Frequency</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider">Status</th>
+                                <th class="p-4 text-xs font-bold text-admin-textMuted uppercase tracking-wider text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-admin-border bg-white">
+                            {% for tip in tips %}
+                            <tr class="hover:bg-admin-tableAlt transition-none group">
+                                <td class="p-4 max-w-sm">
+                                    <div class="font-medium text-gray-900 line-clamp-2">{{ tip.tip }}</div>
+                                    <div class="text-[11px] text-gray-400 mt-1">Added {{ tip.created_at.strftime('%b %d, %Y') if tip.created_at else 'Unknown Date' }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#F4F4EF] text-[#181D00] border border-[rgba(0,0,0,0.08)] uppercase tracking-wide">
+                                        {{ tip.frequency }}
+                                    </span>
+                                </td>
+                                <td class="p-4">
+                                    {% if tip.is_active %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-green-50 text-green-700 border border-green-200 uppercase tracking-wide">Active</span>
+                                    {% else %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-gray-50 text-gray-600 border border-gray-200 uppercase tracking-wide">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td class="p-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="{{ url_for('admin_edit_eco_tip', tip_id=tip.id) }}" class="btn-secondary text-[#181D00] h-8 px-3 text-xs hover:bg-gray-100">
+                                            Edit
+                                        </a>
+                                        <form action="{{ url_for('admin_delete_eco_tip', tip_id=tip.id) }}" method="POST" class="inline">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn-secondary text-[#181D00] h-8 px-3 text-xs hover:bg-gray-100 hover:border-red-200" onclick="return confirm('Delete this tip?')">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side (Takes up 4 cols out of 12) -->
+        <div class="lg:col-span-4 flex flex-col gap-8">
+            
+            <!-- Add/Edit Tip Form -->
+            <div class="premium-card p-6 md:p-8 bg-white shadow-sm border border-[rgba(0,0,0,0.08)]">
+                <h2 class="text-lg font-semibold text-gray-900 mb-6">
+                    {% if edit %}Edit Eco Tip{% else %}Add New Tip{% endif %}
+                </h2>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="space-y-5">
+                        <div>
+                            {{ form.tip.label(class="block text-[14px] font-semibold text-[#181D00] mb-2") }}
+                            {{ form.tip(class="admin-textarea", rows="3", placeholder="Enter the eco tip content...") }}
+                            {% for error in form.tip.errors %}
+                                <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div>
+                            {{ form.frequency.label(class="block text-[14px] font-semibold text-[#181D00] mb-2") }}
+                            <div class="relative">
+                                {{ form.frequency(class="admin-input appearance-none") }}
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                             </div>
-                            <h3 class="text-sm font-medium text-gray-900 mb-1">No eco tips found</h3>
-                            <p class="text-xs text-gray-500">Use the form to add the first educational tip.</p>
-                        </td>
-                    </tr>
-                    {% endif %}
-                </tbody>
-            </table>
+                            {% for error in form.frequency.errors %}
+                                <span class="text-xs text-red-500 mt-1 block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full mt-4">
+                            {% if edit %}Update Tip{% else %}Save Tip{% endif %}
+                        </button>
+                        {% if edit %}
+                        <a href="{{ url_for('admin_eco_tips') }}" class="btn-secondary w-full mt-2 text-center block border border-gray-200">Cancel Edit</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            <!-- Activity Chart Widget -->
+            <div class="premium-card p-6 md:p-8 rounded-[20px] shadow-sm text-white" style="background: linear-gradient(180deg, #181D00 0%, #234A2B 50%, #2A4A30 100%); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-lg font-semibold text-white">Creation Timeline</h3>
+                    <span class="px-3 py-1 bg-white/10 border border-white/20 text-[11px] font-bold text-white rounded-md uppercase tracking-wider">7 Days</span>
+                </div>
+                <div class="h-48 mb-4">
+                    <canvas id="tipActivityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Status Widget -->
+            <div class="premium-card p-6 md:p-8 rounded-[20px] shadow-sm relative overflow-hidden text-white" style="background: linear-gradient(180deg, #181D00 0%, #234A2B 50%, #2A4A30 100%); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Frequency Split</h3>
+                            <p class="text-xs text-white/60 mt-1">Daily vs Weekly Tips</p>
+                        </div>
+                        <i data-lucide="pie-chart" class="text-white/40 w-5 h-5"></i>
+                    </div>
+                    <div class="h-48 relative mb-8 flex justify-center items-center">
+                        <canvas id="tipStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+ /* Professional DataTables Override */
+ .dataTables_wrapper .dataTables_length,
+ .dataTables_wrapper .dataTables_filter {
+ padding: 1rem 1.5rem;
+ color: #111111;
+ font-size: 0.875rem;
+ font-weight: 500;
+ }
+
+ .dataTables_wrapper .dataTables_filter input {
+ background: #FFFFFF;
+ border: 1px solid rgba(0,0,0,0.12);
+ border-radius: 6px;
+ color: #111111;
+ padding: 6px 12px;
+ margin-left: 8px;
+ outline: none;
+ 
+ }
+ .dataTables_wrapper .dataTables_filter input:focus {
+ border-color: #2A4A30;
+ box-shadow: 0 0 0 1px #2A4A30;
+ }
+
+ .dataTables_wrapper .dataTables_info {
+ padding: 1rem 1.5rem;
+ color: #666666;
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .dataTables_paginate {
+ padding: 1rem 1.5rem;
+ font-size: 0.875rem;
+ }
+
+ .dataTables_wrapper .paginate_button {
+ color: #666666 !important;
+ padding: 4px 10px !important;
+ margin: 0 2px;
+ border-radius: 6px;
+ border: 1px solid transparent !important;
+ cursor: pointer;
+ 
+ }
+</style>
+
+<script>
+ $(document).ready(function () {
+ $('#ecoTipsTable').DataTable({
+ "pageLength": 10,
+ "lengthChange": false,
+ "language": {"search":"Search:","paginate": {"previous":"<","next":">" } }
+ });
+
+ // Activity Chart
+ const activityCtx = document.getElementById('tipActivityChart').getContext('2d');
+ new Chart(activityCtx, {
+ type: 'bar',
+ data: {
+ labels: {{ timeline_labels | tojson | safe }},
+ datasets: [{
+ label: 'Created',
+ data: {{ timeline_values | tojson | safe }},
+ backgroundColor: '#FFFFFF',
+ borderRadius: 4,
+ barThickness: 16
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ scales: {
+ y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'rgba(255,255,255,0.6)', font: {family: "'General Sans', sans-serif"}, stepSize: 1 } },
+ x: { grid: { display: false }, ticks: { color: 'rgba(255,255,255,0.6)', font: {family: "'General Sans', sans-serif"} } }
+ }
+ }
+ });
+
+ // Status Chart
+ const statusCtx = document.getElementById('tipStatusChart').getContext('2d');
+ new Chart(statusCtx, {
+ type: 'doughnut',
+ data: {
+ labels: {{ freq_labels | tojson | safe }},
+ datasets: [{
+ data: {{ freq_values | tojson | safe }},
+ backgroundColor: ['#FFFFFF', 'rgba(255,255,255,0.2)'],
+ borderWidth: 0
+ }]
+ },
+ options: {
+ responsive: true,
+ maintainAspectRatio: false,
+ plugins: { legend: { display: false } },
+ cutout: '75%'
+ }
+ });
+ });
+</script>
 {% endblock %}

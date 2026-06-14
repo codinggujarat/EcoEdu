@@ -47,6 +47,17 @@
             </div>
         </a>
 
+        <a href="{{ url_for('puzzles_page') }}" class="nav-row {% if request.endpoint == 'puzzles_page' %}active{% endif %}">
+            <div class="icon-part">
+                
+                <i data-lucide="brain-circuit"></i>
+            </div>
+            <div class="text-part">
+                <span>Puzzles</span>
+                <i data-lucide="chevron-right" class="arrow-icon"></i>
+            </div>
+        </a>
+
         <a href="{{ url_for('achievements') }}" class="nav-row {% if request.endpoint == 'achievements' %}active{% endif %}">
             <div class="icon-part">
                 

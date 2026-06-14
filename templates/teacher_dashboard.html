@@ -4,7 +4,7 @@
 
 {% block hero_section %}
 {% from 'hero.html' import render_hero with context %}
-{{ render_hero('Hello, ' ~ current_user.name.split()[0] ~ ' 👋', 'Teacher Command Center. Coordinate, verify, and analyze student impact.', 'Verify Pending', url_for('teacher_verify_challenges'), 'check-circle') }}
+{{ render_hero('Hello, ' ~ current_user.name.split()[0], 'Teacher Command Center. Coordinate, verify, and analyze student impact.', 'Verify Pending', url_for('teacher_verify_challenges'), 'check-circle') }}
 {% endblock %}
 
 {% block dashboard_content %}
@@ -26,9 +26,8 @@ body { background: #F7F7F2 !important; }
     background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 24px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
-    transition: border-color .2s, transform .2s;
+    
 }
-.td-card:hover { border-color: rgba(24, 29, 0,.3); }
 
 /* Stat cards */
 .td-stat {
@@ -147,7 +146,7 @@ body { background: #F7F7F2 !important; }
             {% if recent_activity %}
             <div style="display:flex; flex-direction:column; gap:16px;">
                 {% for item in recent_activity %}
-                <div style="background:#EAEAE5; border:1px solid rgba(24, 29, 0,.1); border-radius:20px; padding:20px; display:flex; justify-content:space-between; align-items:center; transition:.2s; flex-wrap:wrap; gap:16px;">
+                <div style="background:#EAEAE5; border:1px solid rgba(24, 29, 0,.1); border-radius:20px; padding:20px; display:flex; justify-content:space-between; align-items:center;  flex-wrap:wrap; gap:16px;">
                     <div style="display:flex; align-items:center; gap:16px; flex:1; min-width:200px;">
                         <img src="{{ url_for('static', filename='uploads/' + (item.user.profile_pic or 'default.png')) }}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:1px solid rgba(24, 29, 0,.1); flex-shrink:0;">
                         <div style="min-width:0; flex:1;">
@@ -180,7 +179,7 @@ body { background: #F7F7F2 !important; }
             
             <div style="width:100%; min-height:200px; display:flex; align-items:flex-end; gap:8px; padding-bottom:12px; border-bottom:1px solid rgba(24, 29, 0,.1);">
                 {% for t in impact_trends %}
-                <div title="{{ t.points }} points earned" style="flex:1; width:100%; background:{% if t.is_today %}#181D00{% else %}rgba(24, 29, 0,.15){% endif %}; height:{{ t.height|default('5') }}%; min-height:4px; border-radius:8px 8px 0 0; position:relative; transition:.3s; cursor:pointer;" onmouseover="this.style.background='#234A2B';" onmouseout="this.style.background='{% if t.is_today %}#181D00{% else %}rgba(24, 29, 0,.15){% endif %}';">
+                <div title="{{ t.points }} points earned" style="flex:1; width:100%; background:{% if t.is_today %}#181D00{% else %}rgba(24, 29, 0,.15){% endif %}; height:{{ t.height|default('5') }}%; min-height:4px; border-radius:8px 8px 0 0; position:relative;  cursor:pointer;" onmouseover="this.style.background='#234A2B';" onmouseout="this.style.background='{% if t.is_today %}#181D00{% else %}rgba(24, 29, 0,.15){% endif %}';">
                 </div>
                 {% endfor %}
                 {% if not impact_trends %}

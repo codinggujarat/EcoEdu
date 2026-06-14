@@ -655,8 +655,18 @@ def admin_analytics():
     if current_user.role != 'admin':
         abort(403)
         
-    # User Acquisition (Last 6 Months)
+    # KPI 1: Total Students
+    total_students = User.query.filter_by(role='student').count()
+    
+    # KPI 2: Total Completions (Approved)
+    total_completions = ChallengeCompletion.query.filter_by(status='approved').count()
+    
+    # KPI 3: Total Eco Points
+    total_points = db.session.query(db.func.sum(User.eco_points)).filter_by(role='student').scalar() or 0
+
     today = datetime.utcnow()
+    
+    # Chart 1: User Acquisition (Last 6 Months)
     months_order = []
     month_names = {1:'Jan', 2:'Feb', 3:'Mar', 4:'Apr', 5:'May', 6:'Jun', 7:'Jul', 8:'Aug', 9:'Sep', 10:'Oct', 11:'Nov', 12:'Dec'}
     
@@ -664,7 +674,7 @@ def admin_analytics():
         m = (today - timedelta(days=30*i)).month
         months_order.append(m)
         
-    labels = [month_names[m] for m in months_order]
+    acq_labels = [month_names[m] for m in months_order]
     
     students = User.query.filter_by(role='student').all()
     acquisition_data = {m: 0 for m in months_order}
@@ -673,7 +683,7 @@ def admin_analytics():
             acquisition_data[s.created_at.month] += 1
     acq_values = [acquisition_data[m] for m in months_order]
 
-    # Challenge Completions by Category
+    # Chart 2: Challenge Completions by Category
     completions = ChallengeCompletion.query.filter_by(status='approved').all()
     categories = {}
     for c in completions:
@@ -683,7 +693,7 @@ def admin_analytics():
     comp_labels = list(categories.keys()) if categories else ['Waste', 'Energy', 'Water', 'Nature']
     comp_values = list(categories.values()) if categories else [0, 0, 0, 0]
 
-    # Engagement Heatmap (Last 7 Days)
+    # Chart 3: Engagement Heatmap (Last 7 Days)
     heatmap_labels = []
     heatmap_values = []
     for i in range(6, -1, -1):
@@ -692,10 +702,33 @@ def admin_analytics():
         day_count = sum(1 for c in completions if c.completed_at and c.completed_at.date() == d.date())
         heatmap_values.append(day_count)
 
+    # Chart 4: Puzzle Solves by Difficulty (Doughnut)
+    puzzles_solved = PuzzleCompletion.query.all()
+    diff_counts = {'Easy': 0, 'Medium': 0, 'Hard': 0}
+    for p_comp in puzzles_solved:
+        if p_comp.puzzle:
+            diff_counts[p_comp.puzzle.difficulty] += 1
+            
+    puzzle_diff_labels = list(diff_counts.keys())
+    puzzle_diff_values = list(diff_counts.values())
+
+    # Chart 5: Certificates Issued (Last 7 Days)
+    cert_values = []
+    certs_issued = Certificate.query.all()
+    for i in range(6, -1, -1):
+        d = today - timedelta(days=i)
+        day_count = sum(1 for c in certs_issued if c.issued_at and c.issued_at.date() == d.date())
+        cert_values.append(day_count)
+
     return render_template('admin_analytics.html', 
-                           acq_labels=labels, acq_values=acq_values,
+                           total_students=total_students,
+                           total_completions=total_completions,
+                           total_points=total_points,
+                           acq_labels=acq_labels, acq_values=acq_values,
                            comp_labels=comp_labels, comp_values=comp_values,
-                           heatmap_labels=heatmap_labels, heatmap_values=heatmap_values)
+                           heatmap_labels=heatmap_labels, heatmap_values=heatmap_values,
+                           puzzle_diff_labels=puzzle_diff_labels, puzzle_diff_values=puzzle_diff_values,
+                           cert_labels=heatmap_labels, cert_values=cert_values)
 
 @app.route('/admin/reports')
 @login_required
@@ -762,7 +795,41 @@ def admin_certificates():
     if current_user.role != 'admin':
         abort(403)
     certificates = Certificate.query.order_by(Certificate.issued_at.desc()).all()
-    return render_template('admin_certificates.html', certificates=certificates)
+    
+    total_certificates = len(certificates)
+    unique_students = len(set(c.user_id for c in certificates))
+    highest_milestone = max((c.milestone for c in certificates), default=0)
+
+    # Chart 1: Milestone Split
+    milestone_counts = {}
+    for c in certificates:
+        milestone_counts[c.milestone] = milestone_counts.get(c.milestone, 0) + 1
+    
+    milestone_labels = [f"{m} XP" for m in sorted(milestone_counts.keys())]
+    milestone_values = [milestone_counts[m] for m in sorted(milestone_counts.keys())]
+
+    # Chart 2: Issued in Last 7 Days
+    from datetime import datetime, timedelta
+    today = datetime.utcnow()
+    timeline_labels = []
+    timeline_values = []
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        timeline_labels.append(target_date.strftime('%a'))
+        start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        comps = Certificate.query.filter(Certificate.issued_at >= start_of_day, Certificate.issued_at <= end_of_day).count()
+        timeline_values.append(comps)
+
+    return render_template('admin_certificates.html', 
+                           certificates=certificates,
+                           total_certificates=total_certificates,
+                           unique_students=unique_students,
+                           highest_milestone=highest_milestone,
+                           milestone_labels=milestone_labels,
+                           milestone_values=milestone_values,
+                           timeline_labels=timeline_labels,
+                           timeline_values=timeline_values)
 
 
 @app.route('/dashboard')
@@ -908,29 +975,47 @@ def dashboard():
 @app.route('/solve-puzzle/<int:puzzle_id>', methods=['POST'])
 @login_required
 def solve_puzzle(puzzle_id):
-    puzzle = Puzzle.query.get_or_404(puzzle_id)
-    
-    # Check if already solved
-    if PuzzleCompletion.query.filter_by(user_id=current_user.id, puzzle_id=puzzle.id).first():
-        flash('Neural link already established. Puzzle previously solved.', 'info')
+    try:
+        puzzle = Puzzle.query.get_or_404(puzzle_id)
+        
+        # Check if already solved
+        if PuzzleCompletion.query.filter_by(user_id=current_user.id, puzzle_id=puzzle.id).first():
+            flash('Neural link already established. Puzzle previously solved.', 'info')
+            return redirect(url_for('dashboard'))
+            
+        user_answer = request.form.get('answer')
+        
+        if not user_answer:
+            flash('Error: No answer was received from the form. Please try again.', 'error')
+            return redirect(url_for('dashboard'))
+            
+        if str(user_answer).strip().upper() == str(puzzle.correct_option).strip().upper():
+            # Correct!
+            if current_user.eco_points is None: current_user.eco_points = 0
+            if puzzle.points is None: puzzle.points = 0
+            current_user.eco_points += puzzle.points
+            
+            completion = PuzzleCompletion(user_id=current_user.id, puzzle_id=puzzle.id)
+            db.session.add(completion)
+            db.session.commit()
+            
+            flash(f'Correct! Neural connection established. +{puzzle.points} Eco-Points acquired.', 'success')
+        else:
+            # Incorrect
+            import json
+            try:
+                options_list = json.loads(puzzle.options)
+                correct_idx = ord(puzzle.correct_option.strip().upper()) - 65
+                correct_text = f"{puzzle.correct_option}: {options_list[correct_idx]}"
+            except:
+                correct_text = puzzle.correct_option
+                
+            flash(f'<strong>Incorrect Answer</strong><br>The correct answer is {correct_text}.<br>Keep learning and try the next challenge! 🌱', 'error')
+            
         return redirect(url_for('dashboard'))
-        
-    user_answer = request.form.get('answer')
-    
-    if user_answer == puzzle.correct_option:
-        # Correct!
-        current_user.eco_points += puzzle.points
-        
-        completion = PuzzleCompletion(user_id=current_user.id, puzzle_id=puzzle.id)
-        db.session.add(completion)
-        db.session.commit()
-        
-        flash(f'Correct! Neural connection established. +{puzzle.points} Eco-Points acquired.', 'success')
-    else:
-        # Incorrect
-        flash('Incorrect protocol sequence. Try again.', 'error')
-        
-    return redirect(url_for('dashboard'))
+    except Exception as e:
+        import traceback
+        return f"<pre>{traceback.format_exc()}</pre>", 500
 
 @app.route('/api/contribution-data')
 @login_required
@@ -972,6 +1057,19 @@ def challenges():
         'challenges.html',
         challenges=all_challenges,   # 👈 here it's passed as `challenges`
         completed_ids=completed_challenge_ids
+    )
+
+@app.route('/puzzles')
+@login_required
+def puzzles_page():
+    if current_user.role != 'student':
+        abort(403)
+    all_puzzles = Puzzle.query.all()
+    completed_puzzle_ids = [pc.puzzle_id for pc in current_user.puzzle_completions]
+    return render_template(
+        'puzzles.html',
+        puzzles=all_puzzles,
+        completed_ids=completed_puzzle_ids
     )
 
 @app.route('/challenges/<int:challenge_id>/complete', methods=['GET', 'POST'])
@@ -1051,7 +1149,7 @@ def complete_challenge(challenge_id):
         completion = ChallengeCompletion(
             user_id=current_user.id,
             challenge_id=challenge_id,
-            notes=form.notes.data + (f" [Photo Included]" if photo_filename else "") + journal_feedback + (f" [Flagged: {fraud_reason}]" if is_suspicious else ""),
+            notes=(form.notes.data or "") + (f" [Photo: {photo_filename}]" if photo_filename else "") + journal_feedback + (f" [Flagged: {fraud_reason}]" if is_suspicious else ""),
             verified=is_verified,
             ai_confidence=ai_conf,
             ai_verified=verification_result[0]
@@ -1163,21 +1261,32 @@ def teacher_verify_challenges():
 
     def parse_notes(raw):
         if not raw:
-            return dict(plain_text='', ai_feedback='', has_photo=False,
+            return dict(plain_text='', ai_feedback='', has_photo=False, photo_url='',
                         is_flagged=False, fraud_reason='')
-        has_photo  = '[Photo Included]' in raw
+        
+        photo_url = ''
+        has_photo = False
+        
+        photo_match = _re.search(r'\[Photo: (.+?)\]', raw)
+        if photo_match:
+            has_photo = True
+            photo_url = photo_match.group(1).strip()
+        elif '[Photo Included]' in raw:
+            has_photo = True
+            
         is_flagged = '[Flagged:' in raw
         ai_fb = fraud = ''
         m = _re.search(r'\[AI Feedback: (.+?)\]', raw)
         if m: ai_fb = m.group(1).strip()
         m = _re.search(r'\[Flagged: (.+?)\]', raw)
         if m: fraud = m.group(1).strip()
-        clean = _re.sub(r'\[(Photo Included|AI Feedback: .+?|Flagged: .+?)\]', '', raw).strip()
+        
+        clean = _re.sub(r'\[(Photo: .+?|Photo Included|AI Feedback: .+?|Flagged: .+?)\]', '', raw).strip()
         p = _Strip()
         try: p.feed(clean)
         except Exception: pass
         return dict(plain_text=' '.join(p.parts).strip(),
-                    ai_feedback=ai_fb, has_photo=has_photo,
+                    ai_feedback=ai_fb, has_photo=has_photo, photo_url=photo_url,
                     is_flagged=is_flagged, fraud_reason=fraud)
 
     parsed_completions = [
@@ -1385,6 +1494,29 @@ def admin_dashboard():
     recent_logs.sort(key=lambda x: x['time'], reverse=True)
     recent_logs = recent_logs[:5]
 
+    # Dynamic Greeting
+    current_hour = today.hour
+    if current_hour < 12:
+        greeting = "Good morning"
+    elif current_hour < 18:
+        greeting = "Good afternoon"
+    else:
+        greeting = "Good evening"
+        
+    # Pending Teacher Verifications
+    pending_teachers_count = User.query.filter_by(role='teacher', is_verified=False).count()
+    
+    # Engagement Growth
+    this_week_start = today - timedelta(days=7)
+    last_week_start = today - timedelta(days=14)
+    comps_this_week = sum(1 for c in completions if c.completed_at and c.completed_at >= this_week_start)
+    comps_last_week = sum(1 for c in completions if c.completed_at and last_week_start <= c.completed_at < this_week_start)
+    
+    if comps_last_week > 0:
+        engagement_growth = int(((comps_this_week - comps_last_week) / comps_last_week) * 100)
+    else:
+        engagement_growth = 100 if comps_this_week > 0 else 0
+
     return render_template(
         'admin_dashboard.html',
         students=students,
@@ -1393,7 +1525,10 @@ def admin_dashboard():
         achievements=achievements,
         activity_labels=activity_labels,
         activity_values=activity_values,
-        recent_logs=recent_logs
+        recent_logs=recent_logs,
+        greeting=greeting,
+        pending_teachers_count=pending_teachers_count,
+        engagement_growth=engagement_growth
     )
 
 @app.route('/admin/add-challenge', methods=['GET','POST'])
@@ -1499,7 +1634,43 @@ def admin_levels():
         return redirect(url_for('admin_levels'))
     
     levels = Level.query.order_by(Level.level_number.asc()).all()
-    return render_template('admin_levels.html', form=form, levels=levels)
+    
+    total_levels = len(levels)
+    users = User.query.filter_by(role='student').all()
+    total_students = len(users)
+    
+    level_counts = {}
+    highest_level = 0
+    for u in users:
+        l = u.level
+        if getattr(u, 'level', 0) > highest_level:
+            highest_level = u.level
+        level_counts[l] = level_counts.get(l, 0) + 1
+        
+    # Chart 1: Level Distribution
+    distribution_labels = [f"Level {lvl}" for lvl in sorted(level_counts.keys())]
+    distribution_values = [level_counts[lvl] for lvl in sorted(level_counts.keys())]
+    if not distribution_labels:
+        distribution_labels = ["No Data"]
+        distribution_values = [0]
+        
+    # Chart 2: XP Requirements
+    xp_labels = [f"Level {l.level_number}" for l in levels]
+    xp_values = [l.xp_required for l in levels]
+    if not xp_labels:
+        xp_labels = ["No Data"]
+        xp_values = [0]
+
+    return render_template('admin_levels.html', 
+                           form=form, 
+                           levels=levels,
+                           total_levels=total_levels,
+                           total_students=total_students,
+                           highest_level=highest_level,
+                           distribution_labels=distribution_labels,
+                           distribution_values=distribution_values,
+                           xp_labels=xp_labels,
+                           xp_values=xp_values)
 
 @app.route('/admin/levels/delete/<int:level_id>', methods=['POST'])
 @login_required
@@ -1930,7 +2101,37 @@ def admin_eco_tips():
         # Refresh tips list immediately
         tips = EcoTip.query.order_by(EcoTip.created_at.desc()).all()
 
-    return render_template('admin_eco_tips.html', tips=tips, form=form)
+    total_tips = len(tips)
+    active_tips = len([t for t in tips if t.is_active])
+    daily_tips = len([t for t in tips if t.frequency == 'daily'])
+    weekly_tips = len([t for t in tips if t.frequency == 'weekly'])
+
+    # Chart 1: Frequency Split
+    freq_labels = ['Daily', 'Weekly']
+    freq_values = [daily_tips, weekly_tips]
+
+    # Chart 2: Added in Last 7 Days
+    today = datetime.utcnow()
+    timeline_labels = []
+    timeline_values = []
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        timeline_labels.append(target_date.strftime('%a'))
+        start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        comps = EcoTip.query.filter(EcoTip.created_at >= start_of_day, EcoTip.created_at <= end_of_day).count()
+        timeline_values.append(comps)
+
+    return render_template('admin_eco_tips.html', 
+                           tips=tips, 
+                           form=form,
+                           total_tips=total_tips,
+                           active_tips=active_tips,
+                           weekly_tips=weekly_tips,
+                           freq_labels=freq_labels,
+                           freq_values=freq_values,
+                           timeline_labels=timeline_labels,
+                           timeline_values=timeline_values)
 
 @app.route('/admin/eco-tips/edit/<int:tip_id>', methods=['GET', 'POST'])
 @login_required
@@ -1949,8 +2150,39 @@ def admin_edit_eco_tip(tip_id):
         return redirect(url_for('admin_eco_tips'))
 
     # Pass 'edit=True' and the tip to the same template as the add page
-    tips = EcoTip.query.all()
-    return render_template('admin_eco_tips.html', form=form, edit=True, tip=tip, tips=tips)
+    tips = EcoTip.query.order_by(EcoTip.created_at.desc()).all()
+    
+    total_tips = len(tips)
+    active_tips = len([t for t in tips if t.is_active])
+    daily_tips = len([t for t in tips if t.frequency == 'daily'])
+    weekly_tips = len([t for t in tips if t.frequency == 'weekly'])
+
+    freq_labels = ['Daily', 'Weekly']
+    freq_values = [daily_tips, weekly_tips]
+
+    today = datetime.utcnow()
+    timeline_labels = []
+    timeline_values = []
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        timeline_labels.append(target_date.strftime('%a'))
+        start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        comps = EcoTip.query.filter(EcoTip.created_at >= start_of_day, EcoTip.created_at <= end_of_day).count()
+        timeline_values.append(comps)
+
+    return render_template('admin_eco_tips.html', 
+                           form=form, 
+                           edit=True, 
+                           tip=tip, 
+                           tips=tips,
+                           total_tips=total_tips,
+                           active_tips=active_tips,
+                           weekly_tips=weekly_tips,
+                           freq_labels=freq_labels,
+                           freq_values=freq_values,
+                           timeline_labels=timeline_labels,
+                           timeline_values=timeline_values)
 @app.route('/admin/eco-tips/delete/<int:tip_id>', methods=['POST'])
 @login_required
 def admin_delete_eco_tip(tip_id):
@@ -2015,8 +2247,46 @@ def admin_puzzles():
         
     puzzles = Puzzle.query.order_by(Puzzle.id.desc()).all()
     # Deserialize options for display if needed
+    import json
+    for p in puzzles:
+        try:
+            p.parsed_options = json.loads(p.options)
+        except:
+            p.parsed_options = []
+
+    total_puzzles = len(puzzles)
+    total_solves = PuzzleCompletion.query.count()
+    avg_points = int(sum(p.points for p in puzzles) / total_puzzles) if total_puzzles > 0 else 0
+
+    # Chart 1: Difficulty Distribution
+    easy_count = len([p for p in puzzles if p.difficulty == 'Easy'])
+    medium_count = len([p for p in puzzles if p.difficulty == 'Medium'])
+    hard_count = len([p for p in puzzles if p.difficulty == 'Hard'])
+    diff_labels = ['Easy', 'Medium', 'Hard']
+    diff_values = [easy_count, medium_count, hard_count]
+
+    # Chart 2: Solves Last 7 Days
+    today = datetime.utcnow()
+    timeline_labels = []
+    timeline_values = []
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        timeline_labels.append(target_date.strftime('%a'))
+        start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        comps = PuzzleCompletion.query.filter(PuzzleCompletion.solved_at >= start_of_day, PuzzleCompletion.solved_at <= end_of_day).count()
+        timeline_values.append(comps)
     
-    return render_template('admin_puzzles.html', form=form, puzzles=puzzles)
+    return render_template('admin_puzzles.html', 
+                           form=form, 
+                           puzzles=puzzles,
+                           total_puzzles=total_puzzles,
+                           total_solves=total_solves,
+                           avg_points=avg_points,
+                           diff_labels=diff_labels,
+                           diff_values=diff_values,
+                           timeline_labels=timeline_labels,
+                           timeline_values=timeline_values)
 
 @app.route('/admin/puzzles/delete/<int:puzzle_id>', methods=['POST'])
 @login_required

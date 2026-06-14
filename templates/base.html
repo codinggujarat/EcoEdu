@@ -91,8 +91,7 @@
  .section-heading { font-size:20px; font-weight:700; color:var(--color-text); letter-spacing:-.01em; margin-bottom:20px; }
  .section-subheading { font-size:14px; color:var(--color-muted); margin-top:4px; }
  /* Podium Cards */
- .podium-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:28px; padding:40px 28px; display:flex; flex-direction:column; align-items:center; box-shadow:var(--shadow-card); position:relative; transition:box-shadow .2s; }
- .podium-card:hover { box-shadow:0 20px 50px rgba(0,0,0,.07); }
+ .podium-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:28px; padding:40px 28px; display:flex; flex-direction:column; align-items:center; box-shadow:var(--shadow-card); position:relative;  }
  .podium-rank-badge { position:absolute; top:-16px; width:36px; height:36px; border-radius:50%; background:var(--color-surface); border:2px solid var(--color-border); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:var(--color-text); }
  .podium-card.rank-1 { border-color:rgba(234,179,8,.25); }
  .podium-card.rank-1 .podium-rank-badge { border-color:#EAB308; color:#EAB308; }
@@ -105,8 +104,7 @@
  .featured-achievement { background:var(--color-secondary); border:1px solid var(--color-border); border-radius:28px; padding:40px; display:flex; align-items:center; gap:32px; margin-bottom:40px; flex-wrap:wrap; }
  .featured-achievement-icon { width:96px; height:96px; font-size:48px; border-radius:20px; background:var(--color-surface); border:1px solid var(--color-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
  /* Filter Pills */
- .filter-pill { height:40px; padding:0 20px; border-radius:999px; font-size:14px; font-weight:600; white-space:nowrap; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-muted); cursor:pointer; transition:border-color .15s,color .15s,background .15s; }
- .filter-pill:hover { border-color:var(--color-primary); color:var(--color-primary); }
+ .filter-pill { height:40px; padding:0 20px; border-radius:999px; font-size:14px; font-weight:600; white-space:nowrap; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-muted); cursor:pointer;  }
  .filter-pill.active { background:var(--color-primary); color:#FFFFFF; border-color:var(--color-primary); }
  body {
 
@@ -143,7 +141,6 @@
  ::-webkit-scrollbar { width: 6px; height: 6px; }
  ::-webkit-scrollbar-track { background: #F7F7F2; }
  ::-webkit-scrollbar-thumb { background: rgba(24, 29, 0,0.15); border-radius: 4px; }
- ::-webkit-scrollbar-thumb:hover { background: rgba(24, 29, 0,0.25); }
 
  /* ============ PREMIUM SAAS SECTION & CARD SYSTEM ============ */
  .premium-section {
@@ -163,14 +160,10 @@
      border: 1px solid rgba(0, 0, 0, 0.04);
      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
      padding: 24px;
-     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+     
      height: 100%;
      display: flex;
      flex-direction: column;
- }
- .premium-card:hover {
-     transform: translateY(-4px);
-     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
  }
 
  .premium-section-title {
@@ -325,7 +318,7 @@
    font-size: 15px;
    font-weight: 600;
    text-decoration: none;
-   transition: background 150ms ease, transform 150ms ease;
+   
    white-space: nowrap;
  }
  @media (min-width: 1024px) {
@@ -335,16 +328,6 @@
      padding: 0 32px;
      font-size: 15px;
    }
- }
- .hero-cta:hover {
-   background: #EAEAE5;
-   transform: translateY(-1px);
- }
-
- .premium-card:hover {
- border-color: rgba(24, 29, 0,0.10);
- background: #F7F7F2; box-shadow: 0 12px 40px rgba(0,0,0,0.05);
- transform: translateY(-2px);
  }
 
  .btn-primary {
@@ -358,12 +341,7 @@
  justify-content: center;
  font-weight: 600;
  font-size: 15px;
- transition: background-color 150ms ease, transform 150ms ease;
- }
-
- .btn-primary:hover {
- background-color: #234A2B;
- transform: translateY(-1px);
+ 
  }
 
  .btn-secondary {
@@ -378,13 +356,7 @@
  justify-content: center;
  font-weight: 600;
  font-size: 15px;
- transition: border-color 150ms ease, color 150ms ease, transform 150ms ease;
- }
-
- .btn-secondary:hover {
- border-color: #181D00;
- color: #181D00;
- transform: translateY(-1px);
+ 
  }
 
  .premium-input {
@@ -395,7 +367,7 @@
  padding: 0 14px;
  color: #1B1B1B;
  font-size: 14px;
- transition: border-color 150ms ease;
+ 
  width: 100%;
  }
 
@@ -682,7 +654,7 @@
  {% endif %}
  <div class="flex-1 mt-1.5">
  <h4 class="text-[13px] font-semibold text-text-primary capitalize leading-none mb-1">{{ category }}</h4>
- <p class="text-[13px] text-text-secondary leading-snug">{{ message }}</p>
+ <p class="text-[13px] text-text-secondary leading-snug">{{ message | safe }}</p>
  </div>
  <button onclick="this.parentElement.remove()" class="ml-auto text-text-secondary hover:text-text-primary transition-colors p-1 mt-0.5">
  <i data-lucide="x" class="w-5 h-5"></i>
@@ -710,7 +682,7 @@
  }
 
  .animate-slide-in {
- animation: slideIn 0.3s ease-out forwards;
+ 
  }
    /* ============ EDITORIAL DASHBOARD SECTIONS — Homepage Style ============ */
   /* Sections are full-width, edge-to-edge with alternating backgrounds.

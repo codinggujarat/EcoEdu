@@ -33,13 +33,13 @@ body { background: #F7F7F2 !important; }
     font-family: inherit !important;
     font-size: 16px !important;
     min-height: 200px;
-    background: #F7F7F2;
+    background: #FFFFFF;
 }
 .ql-toolbar {
     border: 1px solid rgba(24, 29, 0,.10) !important;
     border-bottom: none !important;
     border-radius: 16px 16px 0 0 !important;
-    background: #F7F7F2;
+    background: #FFFFFF;
 }
 .ql-editor { color: #1B1B1B; }
 .ql-editor::before { color: #A1A1AA !important; font-style: normal !important; }
@@ -48,18 +48,16 @@ body { background: #F7F7F2 !important; }
 .cc-btn-primary {
     height: 56px; background: #181D00; color: #FFFFFF;
     border-radius: 999px; padding: 0 32px; font-size: 15px; font-weight: 600;
-    border: none; cursor: pointer; transition: background .2s, transform .15s;
+    border: none; cursor: pointer; 
     display: inline-flex; align-items: center; justify-content: center; text-decoration: none; width: 100%;
 }
-.cc-btn-primary:hover { background: #234A2B; transform: translateY(-1px); }
 
 .cc-btn-secondary {
     height: 56px; background: transparent; color: #1B1B1B;
     border-radius: 999px; padding: 0 28px; font-size: 15px; font-weight: 600;
-    border: 1px solid rgba(24, 29, 0,.15); cursor: pointer; transition: border-color .2s;
+    border: 1px solid rgba(24, 29, 0,.15); cursor: pointer; 
     display: inline-flex; align-items: center; justify-content: center; text-decoration: none; width: 100%;
 }
-.cc-btn-secondary:hover { border-color: rgba(24, 29, 0,.4); }
 
 @media (min-width: 768px) {
     .cc-section { padding: 56px 48px; }
@@ -110,7 +108,7 @@ body { background: #F7F7F2 !important; }
         <div class="cc-card">
             <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:24px;">Submission Details</h3>
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
 
                 <div style="margin-bottom:24px;">
@@ -123,6 +121,21 @@ body { background: #F7F7F2 !important; }
                         </p>
                     {% endfor %}
                     <p style="font-size:13px; color:#707070; margin-top:12px;">Describe your experience or outcomes. You can add links to photos or documents.</p>
+                </div>
+
+                <!-- Proof Photo Upload -->
+                <div style="margin-bottom:32px;">
+                    {{ form.photo.label(style="display:block; font-size:14px; font-weight:600; color:#707070; margin-bottom:8px;") }}
+                    <div style="position: relative; background: #FFFFFF; border: 1px solid rgba(0,0,0,0.12); border-radius: 16px; padding: 12px 16px; display: flex; align-items: center; min-height: 52px; ">
+                        <i data-lucide="image" style="width: 20px; height: 20px; color: #A1A1AA; margin-right: 12px; flex-shrink: 0;"></i>
+                        {{ form.photo(style="width: 100%; color: #181D00; font-size: 15px; outline: none; background: transparent; cursor: pointer;", class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#181D00] file:text-white hover:file:bg-[#234A2B] transition-colors") }}
+                    </div>
+                    {% for error in form.photo.errors %}
+                        <p style="color:#EF4444; font-size:13px; margin-top:8px; display:flex; align-items:center; gap:4px;">
+                            <i data-lucide="alert-circle" style="width:14px; height:14px;"></i> {{ error }}
+                        </p>
+                    {% endfor %}
+                    <p style="font-size:13px; color:#707070; margin-top:8px;">Upload a photo of your completed challenge (JPG, PNG).</p>
                 </div>
 
                 {% if challenge.verification_required %}

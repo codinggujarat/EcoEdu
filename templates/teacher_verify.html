@@ -24,17 +24,16 @@ body { background: #F7F7F2 !important; }
     background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 24px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
-    transition: border-color .2s, transform .2s;
+    
     display: flex; flex-direction: column;
 }
-.tv-card:hover { border-color: rgba(24, 29, 0,.3); }
 
 /* Form Controls */
 .tv-search {
     width: 100%; height: 56px; background: #EAEAE5;
     border: 1px solid rgba(24, 29, 0,.12); border-radius: 999px;
     padding: 0 20px 0 52px; font-size: 15px; color: #1B1B1B;
-    outline: none; transition: border-color .2s ease, background .2s ease;
+    outline: none; 
 }
 .tv-search:focus { border-color: #181D00; background: #F7F7F2; }
 .tv-search::placeholder { color: #A1A1AA; }
@@ -42,16 +41,15 @@ body { background: #F7F7F2 !important; }
 .tv-filter {
     height: 40px; background: #F7F7F2; color: #707070;
     border-radius: 999px; padding: 0 20px; font-size: 13px; font-weight: 600;
-    border: 1px solid rgba(24, 29, 0,.15); cursor: pointer; transition: background .2s, color .2s;
+    border: 1px solid rgba(24, 29, 0,.15); cursor: pointer; 
     display: inline-flex; align-items: center; justify-content: center;
 }
 .tv-filter.active { background: #181D00; color: #FFFFFF; border-color: #181D00; }
 
 .tv-action-btn {
-    flex: 1; height: 48px; border-radius: 999px; font-size: 14px; font-weight: 600;
-    display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .1s, filter .2s;
+    width: 100%; height: 48px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center; cursor: pointer; 
 }
-.tv-action-btn:hover { transform: translateY(-1px); filter: brightness(0.95); }
 .tv-btn-approve { background: #181D00; color: #FFFFFF; border: none; }
 .tv-btn-reject  { background: #F7F7F2; color: #EF4444; border: 1px solid rgba(239,68,68,.3); }
 
@@ -131,20 +129,20 @@ body { background: #F7F7F2 !important; }
             </div>
             <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;" id="filterChips">
                 <style>#filterChips::-webkit-scrollbar{display:none;}</style>
-                <button data-filter="pending" class="tv-filter active" style="flex-shrink:0;">⏳ Pending</button>
-                <button data-filter="approved" class="tv-filter" style="flex-shrink:0;">✅ Approved</button>
-                <button data-filter="rejected" class="tv-filter" style="flex-shrink:0;">❌ Rejected</button>
+                <button data-filter="pending" class="tv-filter active" style="flex-shrink:0; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="clock" style="width:14px; height:14px;"></i> Pending</button>
+                <button data-filter="approved" class="tv-filter" style="flex-shrink:0; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="check-circle" style="width:14px; height:14px;"></i> Approved</button>
+                <button data-filter="rejected" class="tv-filter" style="flex-shrink:0; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="x-circle" style="width:14px; height:14px;"></i> Rejected</button>
             </div>
         </div>
     </div>
 
     {% if completions %}
-    <div id="verificationsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:16px;">
+    <div id="verificationsGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap:24px;">
 
         {% for completion, challenge, user, parsed in completions %}
         <div class="verification-card premium-card"
              data-status="{{ completion.status }}"
-             data-search="{{ user.name | lower }} {{ challenge.title | lower }} {{ user.school | lower }}"
+             data-search="{{ user.name | lower }} {{ challenge.title | lower }}"
              style="display:{% if completion.status == 'pending' %}flex{% else %}none{% endif %};">
 
             <!-- Student Info -->
@@ -163,6 +161,24 @@ body { background: #F7F7F2 !important; }
 
             <!-- Challenge Details -->
             <div style="margin-bottom:20px; flex:1;">
+                
+                <!-- Proof Photo Thumbnail -->
+                {% if parsed.photo_url %}
+                <div style="margin-bottom: 16px;">
+                    <img src="{{ url_for('static', filename='uploads/' + parsed.photo_url) }}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 16px; border: 1px solid rgba(24, 29, 0, 0.1);">
+                </div>
+                {% elif parsed.has_photo %}
+                <div style="margin-bottom: 16px; width: 100%; aspect-ratio: 16/9; background: #EAEAE5; border-radius: 16px; border: 1px solid rgba(24, 29, 0, 0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #A1A1AA;">
+                    <i data-lucide="image" style="width: 32px; height: 32px; margin-bottom: 8px;"></i>
+                    <span style="font-size: 13px; font-weight: 500;">Legacy Photo Unavailable</span>
+                </div>
+                {% else %}
+                <div style="margin-bottom: 16px; width: 100%; aspect-ratio: 16/9; background: #EAEAE5; border-radius: 16px; border: 1px solid rgba(24, 29, 0, 0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #A1A1AA;">
+                    <i data-lucide="image-off" style="width: 32px; height: 32px; margin-bottom: 8px;"></i>
+                    <span style="font-size: 13px; font-weight: 500;">No Photo Provided</span>
+                </div>
+                {% endif %}
+
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px;">
                     <h3 style="font-size:18px; font-weight:500; color:#1B1B1B; line-height:1.3;">{{ challenge.title }}</h3>
                     {% if completion.status == 'approved' %}
@@ -205,14 +221,12 @@ body { background: #F7F7F2 !important; }
             <!-- Actions (only for pending) -->
             {% if completion.status == 'pending' %}
             <div style="display:flex; gap:12px; margin-top:auto;">
-                <form action="{{ url_for('teacher_verify_action', completion_id=completion.id) }}" method="POST" style="flex:1;">
+                <form action="{{ url_for('verify_challenge_completion', completion_id=completion.id, action='reject') }}" method="POST" style="flex:1;">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="action" value="reject">
                     <button type="submit" class="tv-action-btn tv-btn-reject">Reject</button>
                 </form>
-                <form action="{{ url_for('teacher_verify_action', completion_id=completion.id) }}" method="POST" style="flex:1;">
+                <form action="{{ url_for('verify_challenge_completion', completion_id=completion.id, action='approve') }}" method="POST" style="flex:1;">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="action" value="approve">
                     <button type="submit" class="tv-action-btn tv-btn-approve">Approve</button>
                 </form>
             </div>

@@ -1,93 +1,255 @@
 {# ============================================================
-   PREMIUM HERO MACRO — Editorial Grid Layout
-   Supports: title, subtitle, cta_text, cta_url, cta_icon
+PREMIUM HERO MACRO — Editorial Grid Layout
+Supports: title, subtitle, cta_text, cta_url, cta_icon
 ============================================================ #}
 {% macro render_hero(title, subtitle, cta_text, cta_url, cta_icon="zap") %}
 <div class="premium-hero">
 
-  {# Mobile Top Info (Date + Avatar) #}
-  <div class="hero-top-info lg:hidden">
-    <div class="hero-date-badge">
-      <i data-lucide="calendar" style="width:13px;height:13px;opacity:0.7;"></i>
-      <span class="hero-date-span"></span>
-    </div>
-    <a href="{{ url_for('profile') }}" class="hero-avatar-link" title="My Profile">
-      <img
-        src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
-        onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
-        alt="Profile"
-        style="width:100%;height:100%;object-fit:cover;">
-    </a>
-  </div>
+  {# Decorative Background Elements #}
+  <div class="hero-blob top-blob"></div>
+  <div class="hero-blob bottom-blob"></div>
 
-  {# ── Left: Text content ── #}
-  <div class="hero-left">
-    <h1 class="premium-hero-title">{{ title }}</h1>
-    {% if subtitle %}
-    <p class="premium-hero-sub">{{ subtitle }}</p>
-    {% endif %}
+  {# ── MAIN CONTENT (Left on Desktop, Top on Mobile) ── #}
+  <div class="hero-main">
 
-    {# Mobile-only CTA (hidden on desktop) #}
-    {% if cta_text and cta_url %}
-    <div class="hero-mobile-cta">
-      <a href="{{ cta_url }}" class="hero-cta">
-        <i data-lucide="{{ cta_icon }}" style="width:16px;height:16px;flex-shrink:0;"></i>
-        {{ cta_text }}
-      </a>
-    </div>
-    {% endif %}
-  </div>
-
-  {# ── Right: Date + Desktop CTA ── #}
-  <div class="hero-actions">
-    
-    {# Desktop Top Info (Date + Avatar) #}
-    <div class="hero-top-info hidden lg:flex">
+    {# Mobile Top Info (hidden on desktop) #}
+    <div class="hero-top-info mobile-only">
       <div class="hero-date-badge">
-        <i data-lucide="calendar" style="width:13px;height:13px;opacity:0.7;"></i>
+        <i data-lucide="calendar" style="width:14px;height:14px;opacity:0.8;"></i>
         <span class="hero-date-span"></span>
       </div>
       <a href="{{ url_for('profile') }}" class="hero-avatar-link" title="My Profile">
-        <img
-          src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
-          onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'"
-          alt="Profile"
+        <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+          onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" alt="Profile"
           style="width:100%;height:100%;object-fit:cover;">
       </a>
     </div>
 
-    {# Desktop CTA button #}
-    {% if cta_text and cta_url %}
-    <a href="{{ cta_url }}" class="hero-cta hero-desktop-cta">
-      <i data-lucide="{{ cta_icon }}" style="width:16px;height:16px;flex-shrink:0;"></i>
-      {{ cta_text }}
-    </a>
-    {% endif %}
+    <div class="hero-text-content">
+      <h1 class="premium-hero-title">{{ title|safe }}</h1>
+      {% if subtitle %}
+      <p class="premium-hero-sub">{{ subtitle|safe }}</p>
+      {% endif %}
+    </div>
+
 
   </div>
 
+  {# ── SIDEBAR (Right on Desktop, Hidden/Moved on Mobile) ── #}
+  <div class="hero-sidebar desktop-only">
+
+    {# Desktop Top Info #}
+    <div class="hero-top-info">
+      <div class="hero-date-badge">
+        <i data-lucide="calendar" style="width:14px;height:14px;opacity:0.8;"></i>
+        <span class="hero-date-span"></span>
+      </div>
+      <a href="{{ url_for('profile') }}" class="hero-avatar-link" title="My Profile">
+        <img src="{{ url_for('static', filename='uploads/' + (current_user.profile_pic or 'default.png')) }}"
+          onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" alt="Profile"
+          style="width:100%;height:100%;object-fit:cover;">
+      </a>
+    </div>
+
+
+
+  </div>
 </div>
 
 <style>
-  /* Mobile: only show in hero-left */
-  .hero-mobile-cta { display: block; margin-top: 20px; }
-  /* Desktop: hidden in hero-left */
-  @media (min-width: 1024px) { .hero-mobile-cta { display: none; } }
+  .premium-hero {
+    position: relative;
+    border-radius: 24px;
+    padding: 32px 24px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #2A4A30 100%);
+    margin-top: 24px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
 
-  /* Desktop CTA hidden on mobile, shown on desktop */
-  .hero-desktop-cta { display: none; }
-  @media (min-width: 1024px) { .hero-desktop-cta { display: inline-flex; } }
+  @media (min-width: 1024px) {
+    .premium-hero {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch;
+      padding: 48px;
+      min-height: 240px;
+    }
+  }
 
-  /* Avatar link */
-  .hero-avatar-link {
-    width: 42px;
-    height: 42px;
+  /* Decorative Blobs */
+  .hero-blob {
+    position: absolute;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.25);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .top-blob {
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  }
+
+  .bottom-blob {
+    bottom: -30%;
+    left: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+  }
+
+  /* Layout Sections */
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+    position: relative;
+    max-width: 600px;
+  }
+
+  .hero-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 10;
+    position: relative;
+  }
+
+  /* Top Info Bar */
+  .hero-top-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-top-info {
+      margin-bottom: 0;
+      /* Let flex space-between handle vertical spacing */
+    }
+  }
+
+  /* Date Badge */
+  .hero-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+  }
+
+  /* Avatar */
+  .hero-avatar-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
     flex-shrink: 0;
+
+    display: block;
+    background: #000;
+  }
+
+  /* Typography */
+  .premium-hero-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  @media (min-width: 1024px) {
+    .premium-hero-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .premium-hero-sub {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin-bottom: 0;
+    font-weight: 400;
+  }
+
+  @media (min-width: 1024px) {
+    .premium-hero-sub {
+      font-size: 1.05rem;
+    }
+  }
+
+  /* CTA Button */
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    color: #181D00;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Responsiveness Toggles */
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .hero-cta-wrapper.mobile-only {
+    margin-top: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    .desktop-only {
+      display: flex !important;
+    }
+
+    .mobile-only {
+      display: none !important;
+    }
   }
 </style>
 
-
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const dateSpans = document.querySelectorAll('.hero-date-span');
+    if (dateSpans.length > 0) {
+      const today = new Date();
+      const options = { month: 'short', day: 'numeric', year: 'numeric' };
+      const dateStr = today.toLocaleDateString('en-US', options);
+      dateSpans.forEach(span => {
+        span.textContent = dateStr;
+      });
+    }
+  });
+</script>
 {% endmacro %}

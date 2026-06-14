@@ -70,62 +70,31 @@ body { background: var(--eco-bg) !important; }
     border: 1px solid rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
     padding: 24px;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    
     height: 100%;
     display: flex;
     flex-direction: column;
 }
-.premium-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-}
 
 /* ── Premium Interaction Styles (Global) ── */
 .premium-card, .td-card, .db-stat, .td-stat, .journey-card, .user-card, .leaderboard-row, .verification-card {
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.2s ease !important;
-}
-.premium-card:hover, .td-card:hover, .user-card:hover, .verification-card:hover {
-    transform: scale(1.02) translateY(-5px);
-    box-shadow: 0 20px 40px rgba(24, 29, 0,0.1) !important;
-}
-.db-stat:hover, .td-stat:hover {
-    transform: scale(1.02) translateY(-5px);
-    box-shadow: 0 15px 30px rgba(24, 29, 0,0.1) !important;
-}
-.journey-card:hover, .leaderboard-row:hover {
-    transform: scale(1.02) translateY(-3px);
-    box-shadow: 0 10px 25px rgba(24, 29, 0,0.08) !important;
+    
 }
 .carousel-item {
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
-}
-.carousel-item:hover {
-    transform: scale(1.05) rotate(3deg);
-    box-shadow: 0 15px 30px rgba(24, 29, 0,0.15) !important;
+    
 }
 /* Button Interactions */
 a.premium-btn, button.premium-btn, .premium-card a[href], .td-card a[href], button[type="submit"], .pf-btn-primary, .pf-btn-secondary, .pf-btn-danger, .tv-action-btn, .tp-btn {
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background 0.2s ease, filter 0.2s ease !important;
+    
     display: inline-flex;
-}
-a.premium-btn:hover, button.premium-btn:hover, .premium-card a[href]:hover, .td-card a[href]:hover, button[type="submit"]:hover, .pf-btn-primary:hover, .pf-btn-secondary:hover, .pf-btn-danger:hover, .tv-action-btn:hover, .tp-btn:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 20px rgba(24, 29, 0,0.2) !important;
 }
 a.premium-btn:active, button.premium-btn:active, .premium-card a[href]:active, .td-card a[href]:active, button[type="submit"]:active, .pf-btn-primary:active, .pf-btn-secondary:active, .pf-btn-danger:active, .tv-action-btn:active, .tp-btn:active {
     transform: scale(0.97);
 }
 
 /* Swup Transition Styles */
-.transition-fade {
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 1;
-    transform: translateY(0);
-}
-html.is-animating .transition-fade {
-    opacity: 0;
-    transform: translateY(15px);
-}
+
+html.is-animating 
 
 /* Hero Mobile Responsive */
 @media (max-width: 639px) {
@@ -174,48 +143,9 @@ html.is-animating .transition-fade {
 </div>
 
 <!-- Global Premium GSAP Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script>
 function initGSAPAnimations() {
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-        // Refresh ScrollTrigger for new DOM elements
-        ScrollTrigger.refresh();
-
-        // 1. Hero Load Animation + Parallax
-        const heroSection = document.querySelector('[style*="background: #181D00"]') || document.querySelector('.hero-section');
-        if (heroSection) {
-            gsap.fromTo(heroSection, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" });
-            gsap.to(heroSection, { y: 10, ease: "none", scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: true } });
-        }
-
-        // 2. Stats cards stagger on load
-        gsap.fromTo('.db-stat, .td-stat', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8, delay: 0.1, stagger: 0.1, ease: "power3.out" });
-
-        // 3. Number Counters
-        gsap.utils.toArray('.db-stat-val, .td-stat-val, .premium-card div[style*="font-size:28px"], .premium-card div[style*="font-size:36px"]').forEach(el => {
-            const text = el.innerText.trim();
-            const finalVal = parseInt(text.replace(/,/g, ''), 10);
-            if(!isNaN(finalVal) && text.match(/^[0-9,]+$/) && finalVal > 0) { 
-                gsap.fromTo(el, { innerHTML: 0 }, { innerHTML: finalVal, duration: 1.5, ease: "power3.out", snap: { innerHTML: 1 }, scrollTrigger: { trigger: el, start: "top 90%", once: true } });
-            }
-        });
-
-        // 4. Scroll Animations for Sections
-        gsap.utils.toArray('.premium-section, .td-section, .td-section-alt, .lb-wrapper, .pf-section').forEach(section => {
-            const children = section.querySelectorAll('.premium-card, .td-card, .journey-card, h2, p, .carousel-item, canvas, .db-stat, .td-stat, .user-card, .podium-col, .ch-filter-container, form, .verification-card, .leaderboard-row');
-            if(children.length > 0) {
-                gsap.fromTo(children, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.1, scrollTrigger: { trigger: section, start: "top 85%", once: true } });
-            }
-        });
-
-        // 5. Progress Bars
-        gsap.utils.toArray('.progress-bar-fill').forEach(bar => {
-            const w = bar.getAttribute('data-target-width');
-            gsap.fromTo(bar, { width: '0%' }, { width: w, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: bar, start: "top 90%", once: true } });
-        });
-    }
+    // Animations removed per request
 }
 
 function updateHeroDate() {
@@ -234,6 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         swup.hooks.on('page:view', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
             initGSAPAnimations();
             updateHeroDate();
             
@@ -244,6 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (window.lucide) {
+        lucide.createIcons();
+    }
     initGSAPAnimations();
     updateHeroDate();
 });
