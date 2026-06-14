@@ -72,7 +72,7 @@
     ECOEDU GLOBAL DESIGN TOKENS
     ====================================================== */
  :root {
-   --color-bg:           #F7F7F2;
+   --color-bg:           #F3F4E5;
    --color-surface:      #FFFFFF;
    --color-secondary:    #EAEAE5;
    --color-primary:      #181D00;
@@ -107,9 +107,8 @@
  .filter-pill { height:40px; padding:0 20px; border-radius:999px; font-size:14px; font-weight:600; white-space:nowrap; border:1px solid var(--color-border); background:var(--color-surface); color:var(--color-muted); cursor:pointer;  }
  .filter-pill.active { background:var(--color-primary); color:#FFFFFF; border-color:var(--color-primary); }
  body {
-
- background-color: #F7F7F2;
- color: #1B1B1B;
+    background-color: #F3F4E5;
+color: #1B1B1B;
  font-family: 'General Sans', sans-serif;
  -webkit-font-smoothing: antialiased;
  -moz-osx-font-smoothing: grayscale;
@@ -530,7 +529,7 @@
 
  <!-- Navigation -->
  {% if not current_user.is_authenticated %}
- <nav class="fixed top-0 left-0 right-0 z-50 bg-[#F7F7F2]/90 backdrop-blur-md border-b border-[#181D00]/10 transition-all duration-300">
+ <nav class="fixed top-0 left-0 right-0 z-50 bg-[#F3F4E5]/90 backdrop-blur-md border-b border-[#181D00]/10 transition-all duration-300">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div class="flex items-center justify-between h-[72px]">
  <!-- Logo -->
@@ -597,7 +596,7 @@
  </div>
 
  <!-- Mobile Menu -->
- <div id="mobile-menu" class="hidden md:hidden border-t border-[#181D00]/10 bg-[#F7F7F2]">
+ <div id="mobile-menu" class="hidden md:hidden border-t border-[#181D00]/10 bg-[#F3F4E5]">
  <div class="px-4 pt-2 pb-6 space-y-1">
  {% if current_user.is_authenticated %}
  {% if current_user.role == 'admin' %}
@@ -689,7 +688,7 @@
      Layout mirrors the homepage edit-section system exactly. */
 
   .edit-dashboard-section {
-      background-color: #FFFFFF;
+        background-color: #F3F4E5;
       padding: 48px 0;
       width: 100%;
   }

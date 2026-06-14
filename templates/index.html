@@ -117,12 +117,16 @@
             background-color: #181D00;
         }
 
-        /* ── Buttons ── */
+        /* ✨ Buttons ✨ */
         .edit-btn-primary {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: #181D00;
+            background: rgba(24, 29, 0, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             color: #fff;
             height: 50px;
             padding: 0 24px;
@@ -131,10 +135,7 @@
             font-weight: 500;
             text-decoration: none;
             position: relative;
-            overflow: hidden;
-            will-change: transform;
-            
-            cursor: none;
+            cursor: pointer;
             width: 100%;
         }
 
@@ -151,9 +152,12 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
             color: #FFFFFF;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             height: 50px;
             padding: 0 24px;
             border-radius: 999px;
@@ -161,10 +165,7 @@
             font-weight: 500;
             text-decoration: none;
             position: relative;
-            overflow: hidden;
-            will-change: transform;
-            
-            cursor: none;
+            cursor: pointer;
             width: 100%;
         }
 
@@ -175,33 +176,6 @@
                 font-size: 18px;
                 width: auto;
             }
-        }
-
-        /* Ripple effect */
-        .btn-ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(0);
-            
-            pointer-events: none;
-        }
-
-        @keyframes ripple-out {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Button shimmer */
-        .edit-btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.12) 50%, transparent 60%);
-            transform: translateX(-100%);
-            
         }
 
         .btn-inner {
@@ -977,16 +951,18 @@
 
 
 
-        /* NEW PREMIUM CARD COLOR SYSTEM */
+        /* PREMIUM GLASSMORPHISM CARD SYSTEM */
         .edit-card,
         .lb-card,
         .badge-card,
         .feat-card,
         .faq-item {
-            background: #F7F7F2 !important;
-            border: 1px solid rgba(24, 29, 0, 0.08) !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
-            color: #181D00 !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+            color: #FFFFFF !important;
         }
 
         /* FAQ specific padding/radius since it wasn't a full card before */
@@ -1002,7 +978,7 @@
         .badge-card span,
         .feat-card h3,
         .faq-item summary {
-            color: #181D00 !important;
+            color: #FFFFFF !important;
         }
 
         /* Secondary text in cards */
@@ -1011,7 +987,7 @@
         .lb-card div,
         .feat-card p,
         .faq-answer {
-            color: rgba(24, 29, 0, 0.75) !important;
+            color: rgba(255, 255, 255, 0.7) !important;
         }
 
         /* Icons in cards */
@@ -1019,12 +995,12 @@
         .badge-card i,
         .feat-card i,
         .faq-icon {
-            color: #2A4A30 !important;
+            color: rgba(255, 255, 255, 0.9) !important;
         }
 
-        /* Stat numbers (specifically requested to be primary heading color #181D00) */
+        /* Stat numbers */
         .edit-card .stat-number {
-            color: #181D00 !important;
+            color: #FFFFFF !important;
         }
     </style>
     <style>
@@ -1114,7 +1090,7 @@
 
         @media (min-width: 1024px) {
             .hero-grid {
-                grid-template-columns: 1fr 1fr !important;
+                grid-template-columns: 1fr !important;
                 gap: 64px !important;
             }
         }
@@ -1127,14 +1103,15 @@
         }
 
         .hero-text-col {
-            max-width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
         }
 
         @media (min-width: 1024px) {
             .hero-text-col {
-                max-width: 580px;
-                text-align: left;
+                max-width: 800px;
+                text-align: center;
             }
         }
 
@@ -1287,7 +1264,7 @@
         <div style="display:flex;align-items:center;gap:24px;">
             <a href="{{ url_for('login') }}" class="nav-link" style="display:none;" id="nav-signin">Sign In</a>
             <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn"
-                style="height:48px;padding:0 24px;font-size:15px;background:#F7F7F2;color:#181D00;">
+                style="height:48px;padding:0 24px;font-size:15px;">
                 <span class="btn-inner">Get Started</span>
             </a>
         </div>
@@ -1296,8 +1273,43 @@
     <!-- ============================================================
      1. HERO
      ============================================================ -->
-    <section class="hero-section" id="hero">
-        <div class="hero-grid">
+    <div style="position: relative; width: 100%; min-height: 100vh; display: flex; align-items: center; overflow: hidden;">
+        <video id="hero-bg-video" autoplay muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+            <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4">
+        </video>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const video = document.getElementById('hero-bg-video');
+                if (video) {
+                    // Check time frequently for a seamless loop
+                    const loopVideo = () => {
+                        if (video.currentTime >= 38) {
+                            video.currentTime = 0;
+                        }
+                        requestAnimationFrame(loopVideo);
+                    };
+                    requestAnimationFrame(loopVideo);
+
+                    // Mute Toggle Logic
+                    const muteBtn = document.getElementById('hero-mute-btn');
+                    if (muteBtn) {
+                        muteBtn.addEventListener('click', () => {
+                            video.muted = !video.muted;
+                            const iconName = video.muted ? 'volume-x' : 'volume-2';
+                            muteBtn.innerHTML = `<i id="mute-icon" data-lucide="${iconName}" style="width: 24px; height: 24px;"></i>`;
+                            if (window.lucide) lucide.createIcons();
+                        });
+                    }
+                }
+            });
+        </script>
+        <button id="hero-mute-btn" style="position: absolute; bottom: 40px; right: 40px; z-index: 10; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; transition: background 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            <i id="mute-icon" data-lucide="volume-x" style="width: 24px; height: 24px;"></i>
+        </button>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(24, 29, 0, 0.4); z-index: 1;"></div>
+        
+        <section class="hero-section" id="hero" style="position: relative; z-index: 2; width: 100%;">
+            <div class="hero-grid">
 
             <!-- Left: Text -->
             <div class="hero-text-col">
@@ -1314,13 +1326,13 @@
                 </p>
 
                 <div class="hero-btns"
-                    style="display:flex;justify-content:start;margin-top:24px;margin-bottom:24px;gap:16px;">
+                    style="display:flex;justify-content:center;margin-top:24px;margin-bottom:24px;gap:16px;">
                     <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn"
-                        style="opacity:0;color:#F7F7F2;">
+                        style="opacity:0;">
                         <span class="btn-inner">Start Your Journey</span>
                     </a>
                     <a href="#how-it-works" class="edit-btn-secondary magnetic-btn"
-                        style="opacity:0;background:#F7F7F2;color:#181D00;border:none;">
+                        style="opacity:0;">
                         <span class="btn-inner">See How It Works</span>
                     </a>
                 </div>
@@ -1332,21 +1344,24 @@
                 </div>
             </div>
 
-            <!-- Right: Cinematic image -->
-            <div class="edit-image-container hero-img-wrap"
-                style="width:100%;aspect-ratio:1/1;position:relative;overflow:hidden;border-radius:30px;">
-                <img id="hero-img" src="{{ url_for('static', filename='img/hero-eco-education.jpg') }}"
-                    alt="Environmental education" style="width:100%;height:100%;object-fit:cover;">
-                <!-- Floating orbs -->
-                <div class="hero-orb"
-                    style="width:300px;height:300px;background:radial-gradient(circle, rgba(24, 29, 0,0.06) 0%, transparent 70%);top:-50px;right:-80px;">
-                </div>
-                <div class="hero-orb"
-                    style="width:200px;height:200px;background:radial-gradient(circle, rgba(24, 29, 0,0.08) 0%, transparent 70%);bottom:60px;left:-40px;">
-                </div>
             </div>
         </div>
     </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const heroVideo = document.getElementById("hero-bg-video");
+            if (heroVideo) {
+                heroVideo.addEventListener("timeupdate", function() {
+                    if (this.currentTime >= 38) {
+                        this.currentTime = 0;
+                        this.play().catch(e => console.log("Video play error:", e));
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- ============================================================
      MARQUEE BAND
@@ -1771,12 +1786,10 @@
                     Join thousands of students and teachers making a measurable impact on the planet.
                 </p>
                 <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;">
-                    <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn"
-                        style="background:#fff;color:#181D00;">
+                    <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn">
                         <span class="btn-inner">Create Free Account</span>
                     </a>
-                    <a href="{{ url_for('login') }}" class="edit-btn-secondary magnetic-btn"
-                        style="border-color:rgba(255,255,255,0.3);color:#fff;">
+                    <a href="{{ url_for('login') }}" class="edit-btn-secondary magnetic-btn">
                         <span class="btn-inner">Sign In</span>
                     </a>
                 </div>
@@ -2038,47 +2051,6 @@
                     repeat: -1,
                     yoyo: true,
                     ease: 'sine.inOut'
-                });
-            });
-
-            // ============================================================
-            // 9. MAGNETIC BUTTONS — premium elastic
-            // ============================================================
-            document.querySelectorAll('.magnetic-btn').forEach(btn => {
-                const inner = btn.querySelector('.btn-inner') || btn;
-                let isHovered = false;
-
-                btn.addEventListener('mousemove', e => {
-                    const rect = btn.getBoundingClientRect();
-                    const cx = rect.left + rect.width / 2;
-                    const cy = rect.top + rect.height / 2;
-                    const dx = (e.clientX - cx) * 0.32;
-                    const dy = (e.clientY - cy) * 0.32;
-                    gsap.to(btn, { x: dx, y: dy, duration: 0.45, ease: 'power3.out' });
-                    gsap.to(inner, { x: dx * 0.45, y: dy * 0.45, duration: 0.45, ease: 'power3.out' });
-                });
-
-                btn.addEventListener('mouseleave', () => {
-                    gsap.to(btn, { x: 0, y: 0, duration: 0.85, ease: 'elastic.out(1, 0.35)' });
-                    gsap.to(inner, { x: 0, y: 0, duration: 0.85, ease: 'elastic.out(1, 0.35)' });
-                });
-
-                btn.addEventListener('mousedown', () => {
-                    gsap.to(btn, { scale: 0.95, duration: 0.15, ease: 'power3.in' });
-                    // Ripple
-                    const ripple = document.createElement('span');
-                    ripple.classList.add('btn-ripple');
-                    const rect = btn.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height) * 2;
-                    ripple.style.width = ripple.style.height = size + 'px';
-                    ripple.style.left = (rect.width / 2 - size / 2) + 'px';
-                    ripple.style.top = (rect.height / 2 - size / 2) + 'px';
-                    btn.appendChild(ripple);
-                    setTimeout(() => ripple.remove(), 800);
-                });
-
-                btn.addEventListener('mouseup', () => {
-                    gsap.to(btn, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
                 });
             });
 
@@ -2440,8 +2412,6 @@
             // ============================================================
             function applyResponsive() {
                 const isMobile = window.innerWidth < 768;
-                const heroGrid = document.querySelector('.hero-grid');
-                if (heroGrid) heroGrid.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
                 const lbBadgesGrid = document.querySelector('.lb-badges-grid');
                 if (lbBadgesGrid) lbBadgesGrid.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
                 const navSignin = document.getElementById('nav-signin');

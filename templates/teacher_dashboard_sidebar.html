@@ -1,34 +1,38 @@
 <!-- Mobile Toggle -->
-<button id="mobile-menu-toggle" class="lg:hidden fixed top-4 left-4 z-[90] w-10 h-10 flex items-center justify-center rounded-xl text-[#1B1B1B]" style="background:#F7F7F2; border:1px solid rgba(24, 29, 0,0.10);">
+<button id="mobile-menu-toggle"
+    class="lg:hidden fixed top-4 left-4 z-[90] w-10 h-10 flex items-center justify-center rounded-xl text-[#1B1B1B]"
+    style="background:#F7F7F2; border:1px solid rgba(24, 29, 0,0.10);">
     <i data-lucide="menu" class="w-5 h-5"></i>
 </button>
-<div id="mobile-sidebar-overlay" class="fixed inset-0 z-[80] hidden lg:hidden" style="background:rgba(10,10,10,0.85); backdrop-filter:blur(4px);"></div>
+<div id="mobile-sidebar-overlay" class="fixed inset-0 z-[80] hidden lg:hidden"
+    style="background:rgba(10,10,10,0.85); backdrop-filter:blur(4px);"></div>
 
 <!-- FLUSH CUTOUT SIDEBAR -->
-<aside id="sidebar-container" class="hidden lg:flex flex-col fixed inset-y-0 left-0 z-[90] transition-transform duration-300" 
-       style="width: 320px; background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset -1px 0 0 rgba(0,0,0,0.1);">
-    
+<aside id="sidebar-container"
+    class="hidden lg:flex flex-col fixed inset-y-0 left-0 z-[90] transition-transform duration-300"
+    style="width: 290px; background: linear-gradient(135deg, #181D00 0%, #234A2B 50%, #181D00 100%); box-shadow: 0 10px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.15), inset -1px 0 0 rgba(0,0,0,0.1);">
+
     <!-- Top Header -->
-    <div style="display: flex; height: 100px; align-items: center; padding-top: 32px; flex-shrink: 0;">
-        <div style="width: 72px; flex-shrink: 0;"></div>
-        <div style="flex: 1; padding-left: 24px; padding-right: 20px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover;">
-                <span style="color: white; font-size: 22px; font-weight: 500; letter-spacing: 0.5px;">EduEco</span>
-            </div>
-            <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin-top: 6px; font-weight: 500; letter-spacing: 0.5px;">{{ current_user.role | capitalize }} Portal</p>
+    <div
+        style="display: flex; height: 48px; align-items: center; padding-top: 12px; flex-shrink: 0; position: relative; z-index: 10;">
+        <div style="width: 56px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo"
+                style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
         </div>
+        <div style="flex: 1;"></div>
     </div>
 
     <!-- Navigation -->
-    <nav id="main-nav" style="flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding-top: 40px; padding-bottom: 32px; position: relative;">
+    <nav id="main-nav"
+        style="flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding-top: 40px; margin-top: -24px; padding-bottom: 32px; position: relative; z-index: 5;">
         <div id="floating-pill"></div>
         <div id="floating-indicator"></div>
-        
+
         {% if current_user.role == 'admin' %}
-        <a href="{{ url_for('admin_teacher') }}" class="nav-row {% if request.endpoint == 'admin_teacher' %}active{% endif %}">
+        <a href="{{ url_for('admin_teacher') }}"
+            class="nav-row {% if request.endpoint == 'admin_teacher' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="shield"></i>
             </div>
             <div class="text-part">
@@ -37,9 +41,10 @@
             </div>
         </a>
 
-        <a href="{{ url_for('admin_students') }}" class="nav-row {% if request.endpoint == 'admin_students' %}active{% endif %}">
+        <a href="{{ url_for('admin_students') }}"
+            class="nav-row {% if request.endpoint == 'admin_students' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="users"></i>
             </div>
             <div class="text-part">
@@ -52,7 +57,7 @@
 
         <a href="{{ url_for('dashboard') }}" class="nav-row {% if request.endpoint == 'dashboard' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="layout-dashboard"></i>
             </div>
             <div class="text-part">
@@ -61,9 +66,10 @@
             </div>
         </a>
 
-        <a href="{{ url_for('teacher_profiles') }}" class="nav-row {% if request.endpoint == 'teacher_profiles' or request.endpoint == 'teacher_view_profile' %}active{% endif %}">
+        <a href="{{ url_for('teacher_profiles') }}"
+            class="nav-row {% if request.endpoint == 'teacher_profiles' or request.endpoint == 'teacher_view_profile' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="users"></i>
             </div>
             <div class="text-part">
@@ -72,9 +78,10 @@
             </div>
         </a>
 
-        <a href="{{ url_for('teacher_verify_challenges') }}" class="nav-row {% if request.endpoint == 'teacher_verify_challenges' %}active{% endif %}">
+        <a href="{{ url_for('teacher_verify_challenges') }}"
+            class="nav-row {% if request.endpoint == 'teacher_verify_challenges' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="check-circle"></i>
             </div>
             <div class="text-part">
@@ -83,9 +90,10 @@
             </div>
         </a>
 
-        <a href="{{ url_for('leaderboard') }}" class="nav-row {% if request.endpoint == 'leaderboard' %}active{% endif %}">
+        <a href="{{ url_for('leaderboard') }}"
+            class="nav-row {% if request.endpoint == 'leaderboard' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="bar-chart-2"></i>
             </div>
             <div class="text-part">
@@ -98,7 +106,7 @@
 
         <a href="{{ url_for('profile') }}" class="nav-row {% if request.endpoint == 'profile' %}active{% endif %}">
             <div class="icon-part">
-                
+
                 <i data-lucide="user"></i>
             </div>
             <div class="text-part">
@@ -119,294 +127,309 @@
 </aside>
 
 <style>
-/* Reset scrollbar for the nav area if it overflows */
-#sidebar-container nav::-webkit-scrollbar { width: 0px; background: transparent; }
-
-/* Nav Row Base */
-.nav-row {
-    display: flex;
-    height: 58px;
-    align-items: center;
-    text-decoration: none;
-    position: relative;
-    margin-bottom: 4px;
-}
-
-/* Left Rail Icon Box */
-.icon-part {
-    width: 72px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: #FFFFFF;
-}
-.icon-part i {
-    width: 22px;
-    height: 22px;
-    stroke-width: 1.5;
-    transition: all 0.2s;
-}
-.nav-row:not(.active) .icon-part {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-
-
-/* Floating Shared Layout Pill */
-#floating-pill {
-    position: absolute;
-    right: 0;
-    width: calc(100% - 92px);
-    height: 58px;
-    background: #F7F7F2;
-    border-radius: 40px 0 0 40px;
-    z-index: 0;
-    pointer-events: none;
-    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    top: -100px;
-    opacity: 0;
-}
-#floating-pill::before, #floating-pill::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    width: 40px;
-    height: 40px;
-    pointer-events: none;
-}
-#floating-pill::before {
-    top: -40px;
-    background: radial-gradient(circle at top left, transparent 40px, #F7F7F2 40px);
-}
-#floating-pill::after {
-    bottom: -40px;
-    background: radial-gradient(circle at bottom left, transparent 40px, #F7F7F2 40px);
-}
-
-#floating-indicator {
-    position: absolute;
-    left: 0;
-    width: 4px;
-    height: 36px;
-    background: #F7F7F2;
-    border-radius: 0 4px 4px 0;
-    z-index: 10;
-    pointer-events: none;
-    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    top: -100px;
-    opacity: 0;
-}
-
-/* Make text sit above floating pill */
-.nav-row {
-    z-index: 1;
-}
-.nav-row.active .text-part {
-    color: #181D00;
-    font-weight: 600;
-}
-
-/* Right Panel Text Box */
-.text-part {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    margin-left: 20px; /* Space between left rail and text pill */
-    padding-left: 24px;
-    padding-right: 24px;
-    border-radius: 40px 0 0 40px;
-    position: relative;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-/* Active State Styles */
-
-
-/* Inverted Cutout Curves for Active Item */
-
-
-/* Chevron Icon */
-.arrow-icon {
-    margin-left: auto;
-    width: 16px !important;
-    height: 16px !important;
-    opacity: 0.5;
-}
-.nav-row.active .arrow-icon {
-    display: none;
-}
-
-/* Mobile Sidebar Drawer */
-@media (max-width: 1023px) {
-    #sidebar-container {
-        transform: translateX(-100%);
+    /* Reset scrollbar for the nav area if it overflows */
+    #sidebar-container nav::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
     }
-    #sidebar-container.mobile-open {
-        transform: translateX(0);
+
+    /* Nav Row Base */
+    .nav-row {
+        display: flex;
+        height: 48px;
+        align-items: center;
+        text-decoration: none;
+        position: relative;
+        margin-bottom: 2px;
     }
-}
+
+    /* Left Rail Icon Box */
+    .icon-part {
+        width: 56px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: #FFFFFF;
+    }
+
+    .icon-part i, .icon-part svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 1.5;
+        transition: all 0.2s;
+    }
+
+    .nav-row:not(.active) .icon-part {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+
+
+    /* Floating Shared Layout Pill */
+    #floating-pill {
+        position: absolute;
+        right: 0;
+        width: calc(100% - 56px);
+        height: 48px;
+        background: #F7F7F2;
+        border-radius: 40px 0 0 40px;
+        z-index: 0;
+        pointer-events: none;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        top: 0;
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    #floating-pill::before,
+    #floating-pill::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        pointer-events: none;
+    }
+
+    #floating-pill::before {
+        top: -40px;
+        background: radial-gradient(circle at top left, transparent 40px, #F7F7F2 40px);
+    }
+
+    #floating-pill::after {
+        bottom: -40px;
+        background: radial-gradient(circle at bottom left, transparent 40px, #F7F7F2 40px);
+    }
+
+    #floating-indicator {
+        position: absolute;
+        left: 0;
+        width: 4px;
+        height: 26px;
+        background: #F7F7F2;
+        border-radius: 0 4px 4px 0;
+        z-index: 2;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        top: 0;
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    /* Make text sit above floating pill */
+    .nav-row {
+        z-index: 1;
+    }
+
+    .nav-row.active .text-part {
+        color: #181D00;
+        font-weight: 600;
+    }
+
+    /* Right Panel Text Box */
+    .text-part {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin-left: 0;
+        /* Space between left rail and text pill */
+        padding-left: 16px;
+        padding-right: 24px;
+        border-radius: 40px 0 0 40px;
+        position: relative;
+        color: #FFFFFF;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+    /* Active State Styles */
+
+
+    /* Inverted Cutout Curves for Active Item */
+
+
+    /* Chevron Icon */
+    .arrow-icon {
+        margin-left: auto;
+        width: 16px !important;
+        height: 16px !important;
+        opacity: 0.5;
+    }
+
+    .nav-row.active .arrow-icon {
+        display: none;
+    }
+
+    /* Mobile Sidebar Drawer */
+    @media (max-width: 1023px) {
+        #sidebar-container {
+            transform: translateX(-100%);
+        }
+
+        #sidebar-container.mobile-open {
+            transform: translateX(0);
+        }
+    }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('mobile-menu-toggle');
-    const overlay = document.getElementById('mobile-sidebar-overlay');
-    const sidebar = document.getElementById('sidebar-container');
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const overlay = document.getElementById('mobile-sidebar-overlay');
+        const sidebar = document.getElementById('sidebar-container');
 
-    
-    // Floating Pill Logic
-    const navRows = document.querySelectorAll('.nav-row');
-    const floatingPill = document.getElementById('floating-pill');
-    const floatingIndicator = document.getElementById('floating-indicator');
 
-    function updatePillPosition(element, animate = true) {
-        if (!element || !floatingPill || !floatingIndicator) return;
-        const topPos = element.offsetTop;
-        
-        if (!animate) {
-            floatingPill.style.transition = 'none';
-            floatingIndicator.style.transition = 'none';
-        } else {
-            floatingPill.style.transition = 'top 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            floatingIndicator.style.transition = 'top 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        }
+        // Floating Pill Logic
+        const navRows = document.querySelectorAll('.nav-row');
+        const floatingPill = document.getElementById('floating-pill');
+        const floatingIndicator = document.getElementById('floating-indicator');
 
-        floatingPill.style.top = `${topPos}px`;
-        floatingPill.style.opacity = '1';
-        
-        floatingIndicator.style.top = `${topPos + 11}px`;
-        floatingIndicator.style.opacity = '1';
-        
-        if (!animate) {
-            void floatingPill.offsetWidth; // Force reflow
-        }
-    }
+        function updatePillPosition(element, animate = true) {
+            if (!element || !floatingPill || !floatingIndicator) return;
+            const topPos = element.offsetTop;
 
-    // Set initial position
-    const activeRow = document.querySelector('.nav-row.active');
-    if (activeRow) {
-        // slight delay to ensure fonts/layout are rendered
-        setTimeout(() => updatePillPosition(activeRow, false), 50);
-    }
-
-    // Handle clicks (Swup now handles the actual navigation!)
-    navRows.forEach(row => {
-        row.addEventListener('click', (e) => {
-            const href = row.getAttribute('href');
-            if (!href || href === '#' || href.includes('logout')) return;
-            
-            // We NO LONGER prevent default. Swup will intercept the click natively.
-            // We just animate the pill immediately for a responsive feel.
-            navRows.forEach(r => r.classList.remove('active'));
-            row.classList.add('active');
-            updatePillPosition(row, true);
-        });
-    });
-
-                // Helper for Bottom Nav Pill
-    function updateBottomPillPosition(element, animate = true) {
-        const bottomPill = document.getElementById('bottom-floating-pill');
-        if (!element || !bottomPill) return;
-        
-        const leftPos = element.offsetLeft;
-        const width = element.offsetWidth;
-        
-        if (!animate) {
-            bottomPill.style.transition = 'none';
-        } else {
-            bottomPill.style.transition = 'left 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), width 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        }
-
-        bottomPill.style.left = `${leftPos}px`;
-        bottomPill.style.width = `${width}px`;
-        bottomPill.style.opacity = '1';
-        
-        if (!animate) {
-            void bottomPill.offsetWidth; // Force reflow
-        }
-    }
-
-    // Expose a global function so Swup can sync the active state if user navigates via back/forward buttons
-    window.updateSidebarActiveState = function() {
-        const currentPath = window.location.pathname;
-        let foundMatch = false;
-        
-        // 1. Sync Desktop Sidebar
-        navRows.forEach(row => {
-            row.classList.remove('active');
-            const href = row.getAttribute('href');
-            if (href && href !== '#' && href !== '/') {
-                const urlObj = new URL(href, window.location.origin);
-                const pathName = urlObj.pathname;
-                if (currentPath === pathName || currentPath.startsWith(pathName + '/')) {
-                    row.classList.add('active');
-                    updatePillPosition(row, true);
-                    foundMatch = true;
-                }
+            if (!animate) {
+                floatingPill.style.transition = 'none';
+                floatingIndicator.style.transition = 'none';
+            } else {
+                floatingPill.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                floatingIndicator.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             }
-        });
-        
-        // Default to dashboard if no match
-        if (!foundMatch && navRows.length > 0) {
-            navRows[0].classList.add('active');
-            updatePillPosition(navRows[0], true);
+
+            floatingPill.style.transform = `translateY(${topPos}px)`;
+            floatingPill.style.opacity = '1';
+
+            floatingIndicator.style.transform = `translateY(${topPos + 11}px)`;
+            floatingIndicator.style.opacity = '1';
+
+            if (!animate) {
+                void floatingPill.offsetWidth; // Force reflow
+            }
         }
 
-        // 2. Sync Mobile Bottom Nav
-        const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
-        if (bottomNavItems.length > 0) {
-            let bottomMatch = false;
-            bottomNavItems.forEach(item => {
-                item.classList.remove('active');
-                const href = item.getAttribute('href');
+        // Set initial position
+        const activeRow = document.querySelector('.nav-row.active');
+        if (activeRow) {
+            // slight delay to ensure fonts/layout are rendered
+            setTimeout(() => updatePillPosition(activeRow, false), 50);
+        }
+
+        // Handle clicks (Swup now handles the actual navigation!)
+        navRows.forEach(row => {
+            row.addEventListener('click', (e) => {
+                const href = row.getAttribute('href');
+                if (!href || href === '#' || href.includes('logout')) return;
+
+                // We NO LONGER prevent default. Swup will intercept the click natively.
+                // We just animate the pill immediately for a responsive feel.
+                navRows.forEach(r => r.classList.remove('active'));
+                row.classList.add('active');
+                updatePillPosition(row, true);
+            });
+        });
+
+        // Helper for Bottom Nav Pill
+        function updateBottomPillPosition(element, animate = true) {
+            const bottomPill = document.getElementById('bottom-floating-pill');
+            if (!element || !bottomPill) return;
+
+            const leftPos = element.offsetLeft;
+            const width = element.offsetWidth;
+
+            if (!animate) {
+                bottomPill.style.transition = 'none';
+            } else {
+                bottomPill.style.transition = 'left 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), width 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            }
+
+            bottomPill.style.left = `${leftPos}px`;
+            bottomPill.style.width = `${width}px`;
+            bottomPill.style.opacity = '1';
+
+            if (!animate) {
+                void bottomPill.offsetWidth; // Force reflow
+            }
+        }
+
+        // Expose a global function so Swup can sync the active state if user navigates via back/forward buttons
+        window.updateSidebarActiveState = function () {
+            const currentPath = window.location.pathname;
+            const fullCurrentPath = window.location.pathname + window.location.search + window.location.hash;
+            let foundMatch = false;
+
+            // 1. Sync Desktop Sidebar
+            navRows.forEach(row => {
+                row.classList.remove('active');
+                const href = row.getAttribute('href');
                 if (href && href !== '#' && href !== '/') {
                     const urlObj = new URL(href, window.location.origin);
-                    const pathName = urlObj.pathname;
-                    if (currentPath === pathName || currentPath.startsWith(pathName + '/')) {
-                        item.classList.add('active');
-                        updateBottomPillPosition(item, true);
-                        bottomMatch = true;
+                    const fullHrefPath = urlObj.pathname + urlObj.search + urlObj.hash;
+                    if (fullCurrentPath === fullHrefPath || fullCurrentPath.startsWith(fullHrefPath + '/') || (currentPath === urlObj.pathname && !urlObj.hash)) {
+                        row.classList.add('active');
+                        updatePillPosition(row, true);
+                        foundMatch = true;
                     }
                 }
             });
-            if (!bottomMatch) {
-                bottomNavItems[0].classList.add('active');
-                updateBottomPillPosition(bottomNavItems[0], true);
+
+            // Default to dashboard if no match
+            if (!foundMatch && navRows.length > 0) {
+                navRows[0].classList.add('active');
+                updatePillPosition(navRows[0], true);
             }
+
+            // 2. Sync Mobile Bottom Nav
+            const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+            if (bottomNavItems.length > 0) {
+                let bottomMatch = false;
+                bottomNavItems.forEach(item => {
+                    item.classList.remove('active');
+                    const href = item.getAttribute('href');
+                    if (href && href !== '#' && href !== '/') {
+                        const urlObj = new URL(href, window.location.origin);
+                        const pathName = urlObj.pathname;
+                        if (currentPath === pathName || currentPath.startsWith(pathName + '/')) {
+                            item.classList.add('active');
+                            updateBottomPillPosition(item, true);
+                            bottomMatch = true;
+                        }
+                    }
+                });
+                if (!bottomMatch) {
+                    bottomNavItems[0].classList.add('active');
+                    updateBottomPillPosition(bottomNavItems[0], true);
+                }
+            }
+        };
+
+        // Initial Bottom Pill setup
+        setTimeout(() => {
+            const activeBottom = document.querySelector('.bottom-nav-item.active');
+            if (activeBottom) updateBottomPillPosition(activeBottom, false);
+        }, 50);
+
+
+        // Handle Mobile Bottom Nav Clicks (Instant visual feedback)
+        document.querySelectorAll('.bottom-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.getAttribute('href') === '#') return;
+                document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        if (toggle && overlay && sidebar) {
+            toggle.addEventListener('click', () => {
+                overlay.classList.remove('hidden');
+                sidebar.classList.add('mobile-open');
+            });
+            overlay.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+                sidebar.classList.remove('mobile-open');
+            });
         }
-    };
-    
-    // Initial Bottom Pill setup
-    setTimeout(() => {
-        const activeBottom = document.querySelector('.bottom-nav-item.active');
-        if (activeBottom) updateBottomPillPosition(activeBottom, false);
-    }, 50);
-
-    
-    // Handle Mobile Bottom Nav Clicks (Instant visual feedback)
-    document.querySelectorAll('.bottom-nav-item').forEach(item => {
-        item.addEventListener('click', () => {
-            if (item.getAttribute('href') === '#') return;
-            document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-        });
     });
-
-    if(toggle && overlay && sidebar) {
-        toggle.addEventListener('click', () => {
-            overlay.classList.remove('hidden');
-            sidebar.classList.add('mobile-open');
-        });
-        overlay.addEventListener('click', () => {
-            overlay.classList.add('hidden');
-            sidebar.classList.remove('mobile-open');
-        });
-    }
-});
 </script>

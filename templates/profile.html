@@ -10,10 +10,10 @@
 {% block dashboard_content %}
 <style>
 /* ── Profile Page — Homepage Editorial Layout ── */
-body { background: #F7F7F2 !important; }
+body { background: #F3F4E5 !important; }
 
-.pf-section     { background: #F7F7F2; padding: 56px 24px; width: 100%; }
-.pf-section-alt { background: #EAEAE5; padding: 56px 24px; width: 100%; }
+.pf-section     { background: #F3F4E5; padding: 56px 24px; width: 100%; }
+.pf-section-alt { background: #F3F4E5; padding: 56px 24px; width: 100%; }
 .pf-inner       { max-width: 1100px; margin: 0 auto; }
 
 .pf-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
@@ -21,7 +21,7 @@ body { background: #F7F7F2 !important; }
 
 /* Card — homepage edit-card */
 .pf-card {
-    background: #F7F7F2; border: 1px solid rgba(24, 29, 0,.10);
+    background: #FFFFFF; border: 1px solid rgba(24, 29, 0,.10);
     border-radius: 28px; padding: 36px;
     box-shadow: 0 10px 40px rgba(0,0,0,.02);
 }
@@ -102,7 +102,7 @@ body { background: #F7F7F2 !important; }
 
         {# Level progress #}
         {% if current_user.role == 'student' %}
-        <div style="background:#F7F7F2; border:1px solid rgba(24, 29, 0,.10); border-radius:20px; padding:20px 24px; width:100%;">
+        <div style="background:#FFFFFF; border:1px solid rgba(24, 29, 0,.10); border-radius:20px; padding:20px 24px; width:100%;">
             <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:10px;">
                 <span style="color:#707070;">Level {{ current_user.level }}</span>
                 <span style="color:#1B1B1B;">{{ current_user.eco_points }} XP</span>

@@ -3,122 +3,191 @@
 {% block content %}
 <!-- Master Layout -->
 <style>
-/* Premium SaaS Global Variables & Classes */
-:root {
-    --eco-dark-green: #234A2B;
-    --eco-primary-green: #2A4A30;
-    --eco-accent-green: #4CAF50;
-    --eco-light-green: #EAF4EC;
-    --eco-bg: #F7F7F2;
-}
-body { background: var(--eco-bg) !important; }
+    /* Premium SaaS Global Variables & Classes */
+    :root {
+        --eco-dark-green: #234A2B;
+        --eco-primary-green: #2A4A30;
+        --eco-accent-green: #4CAF50;
+        --eco-light-green: #EAF4EC;
+        --eco-bg: #F3F4E5;
+    }
 
-/* ── Shared Layout Animation across MPAs ── */
-@view-transition {
-    navigation: auto;
-}
+    body {
+        background: var(--eco-bg) !important;
+    }
 
-/* Make sure the text-part and indicator are mapped globally */
-.nav-row.active .text-part {
-    view-transition-name: sidebar-active-bg;
-}
+    /* ── Shared Layout Animation across MPAs ── */
+    @view-transition {
+        navigation: auto;
+    }
 
-.nav-row.active .active-indicator {
-    view-transition-name: sidebar-active-indicator;
-}
+    /* Make sure the text-part and indicator are mapped globally */
+    .nav-row.active .text-part {
+        view-transition-name: sidebar-active-bg;
+    }
 
-/* Premium Apple/Framer Motion Spring Morphing */
-::view-transition-group(sidebar-active-bg),
-::view-transition-group(sidebar-active-indicator) {
-    animation-duration: 0.4s;
-    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Spring bounce */
-}
+    .nav-row.active .active-indicator {
+        view-transition-name: sidebar-active-indicator;
+    }
 
-/* Prevent text distortion during morphing */
-::view-transition-old(sidebar-active-bg),
-::view-transition-new(sidebar-active-bg) {
-    height: 100%;
-    width: 100%;
-}
+    /* Premium Apple/Framer Motion Spring Morphing */
+    ::view-transition-group(sidebar-active-bg),
+    ::view-transition-group(sidebar-active-indicator) {
+        animation-duration: 0.4s;
+        animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Spring bounce */
+    }
 
-/* Premium Section Wrapper */
-.premium-section {
-    background: rgba(255, 255, 255, 0.88);
-    border-radius: 32px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), 0 2px 10px rgba(0, 0, 0, 0.03);
-    padding: 32px;
-    margin: 32px 24px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-}
-@media (max-width: 767px) {
-    .premium-section { padding: 24px; margin: 16px 16px; border-radius: 24px; }
-}
+    /* Prevent text distortion during morphing */
+    ::view-transition-old(sidebar-active-bg),
+    ::view-transition-new(sidebar-active-bg) {
+        height: 100%;
+        width: 100%;
+    }
 
-/* Premium Title Hierarchy */
-.premium-title { font-size: 28px; font-weight: 600; color: var(--eco-dark-green); letter-spacing: -0.02em; margin-bottom: 8px; line-height: 1.2; }
-.premium-desc { font-size: 15px; color: #707070; margin-bottom: 32px; line-height: 1.5; }
+    /* Premium Section Wrapper */
+    .premium-section {
+        background: rgba(255, 255, 255, 0.88);
+        border-radius: 32px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), 0 2px 10px rgba(0, 0, 0, 0.03);
+        padding: 32px;
+        margin: 32px 24px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
 
-/* Premium Grid */
-.premium-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+    @media (max-width: 767px) {
+        .premium-section {
+            padding: 24px;
+            margin: 16px 16px;
+            border-radius: 24px;
+        }
+    }
 
-/* Premium Card */
-.premium-card {
-    background: #F7F7F2;
-    border-radius: 24px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    padding: 24px;
-    
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    /* Premium Title Hierarchy */
+    .premium-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--eco-dark-green);
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+        line-height: 1.2;
+    }
 
-/* ── Premium Interaction Styles (Global) ── */
-.premium-card, .td-card, .db-stat, .td-stat, .journey-card, .user-card, .leaderboard-row, .verification-card {
-    
-}
-.carousel-item {
-    
-}
-/* Button Interactions */
-a.premium-btn, button.premium-btn, .premium-card a[href], .td-card a[href], button[type="submit"], .pf-btn-primary, .pf-btn-secondary, .pf-btn-danger, .tv-action-btn, .tp-btn {
-    
-    display: inline-flex;
-}
-a.premium-btn:active, button.premium-btn:active, .premium-card a[href]:active, .td-card a[href]:active, button[type="submit"]:active, .pf-btn-primary:active, .pf-btn-secondary:active, .pf-btn-danger:active, .tv-action-btn:active, .tp-btn:active {
-    transform: scale(0.97);
-}
+    .premium-desc {
+        font-size: 15px;
+        color: #707070;
+        margin-bottom: 32px;
+        line-height: 1.5;
+    }
 
-/* Swup Transition Styles */
+    /* Premium Grid */
+    .premium-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    }
 
-html.is-animating 
+    /* Premium Card */
+    .premium-card {
+        background: #F7F7F2;
+        border-radius: 24px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        padding: 24px;
 
-/* Hero Mobile Responsive */
-@media (max-width: 639px) {
-    .premium-hero { padding: 32px 20px !important; gap: 16px !important; }
-    .premium-hero-title { font-size: 32px !important; margin-bottom: 8px !important; line-height: 1.1 !important; }
-    .premium-hero-sub { font-size: 15px !important; line-height: 1.4 !important; }
-    .hero-cta { padding: 0 20px !important; font-size: 14px !important; height: 44px !important; border-radius: 999px !important; }
-}
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ── Premium Interaction Styles (Global) ── */
+    .premium-card,
+    .td-card,
+    .db-stat,
+    .td-stat,
+    .journey-card,
+    .user-card,
+    .leaderboard-row,
+    .verification-card {}
+
+    .carousel-item {}
+
+    /* Button Interactions */
+    a.premium-btn,
+    button.premium-btn,
+    .premium-card a[href],
+    .td-card a[href],
+    button[type="submit"],
+    .pf-btn-primary,
+    .pf-btn-secondary,
+    .pf-btn-danger,
+    .tv-action-btn,
+    .tp-btn {
+
+        display: inline-flex;
+    }
+
+    a.premium-btn:active,
+    button.premium-btn:active,
+    .premium-card a[href]:active,
+    .td-card a[href]:active,
+    button[type="submit"]:active,
+    .pf-btn-primary:active,
+    .pf-btn-secondary:active,
+    .pf-btn-danger:active,
+    .tv-action-btn:active,
+    .tp-btn:active {
+        transform: scale(0.97);
+    }
+
+    /* Swup Transition Styles */
+
+    html.is-animating
+    /* Hero Mobile Responsive */
+    @media (max-width: 639px) {
+        .premium-hero {
+            padding: 32px 20px !important;
+            gap: 16px !important;
+        }
+
+        .premium-hero-title {
+            font-size: 32px !important;
+            margin-bottom: 8px !important;
+            line-height: 1.1 !important;
+        }
+
+        .premium-hero-sub {
+            font-size: 15px !important;
+            line-height: 1.4 !important;
+        }
+
+        .hero-cta {
+            padding: 0 20px !important;
+            font-size: 14px !important;
+            height: 44px !important;
+            border-radius: 999px !important;
+        }
+    }
 </style>
 
 <div class="flex" style="background: #F7F7F2; min-height: 100vh;">
     {% if current_user.role == 'teacher' %}
-        {% include "teacher_dashboard_sidebar.html" %}
+    {% include "teacher_dashboard_sidebar.html" %}
     {% elif current_user.role == 'admin' %}
-        {% include "teacher_dashboard_sidebar.html" %}
+    {% include "teacher_dashboard_sidebar.html" %}
     {% else %}
-        {% include "student_dashboard_sidebar.html" %}
+    {% include "student_dashboard_sidebar.html" %}
     {% endif %}
 
-    <main class="lg:ml-[320px] flex-1 min-w-0 overflow-x-hidden flex flex-col pb-24 lg:pb-0 pt-[64px] lg:pt-0">
+    <main class="lg:ml-[290px] flex-1 min-w-0 overflow-x-hidden flex flex-col pb-24 lg:pb-0 pt-[64px] lg:pt-0">
         <!-- Mobile Top Header (Hidden on Desktop) -->
-        <header class="lg:hidden fixed top-0 left-0 right-0 h-[64px] border-b border-[#181D00]/10 bg-[#F7F7F2] flex items-center justify-between px-6 z-[100]">
+        <header
+            class="lg:hidden fixed top-0 left-0 right-0 h-[64px] border-b border-[#181D00]/10 bg-[#F3F4E5] flex items-center justify-between px-6 z-[100]">
             <a href="{{ url_for('dashboard') }}" class="flex items-center gap-3 text-decoration-none">
-                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo" class="w-8 h-8 rounded-full object-cover">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo"
+                    class="w-8 h-8 rounded-full object-cover">
                 <span class="font-medium text-xl tracking-tight text-[#1B1B1B]">EduEco</span>
             </a>
             <!-- Right side icon placeholder -->
@@ -132,7 +201,8 @@ html.is-animating
             {% block hero_section %}{% endblock %}
 
             <!-- Full-width Content Area (sections manage their own padding) -->
-            <div class="w-full pb-24 lg:pb-0 flex flex-col {% if self.hero_section() | trim %}{% else %}pt-0{% endif %}">
+            <div
+                class="w-full pb-24 lg:pb-0 flex flex-col {% if self.hero_section() | trim %}{% else %}pt-0{% endif %}">
                 {% block dashboard_content %}{% endblock %}
             </div>
         </div>
@@ -144,44 +214,44 @@ html.is-animating
 
 <!-- Global Premium GSAP Scripts -->
 <script>
-function initGSAPAnimations() {
-    // Animations removed per request
-}
-
-function updateHeroDate() {
-    var els = document.querySelectorAll('.hero-date-span');
-    if(els.length > 0) {
-        var dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        els.forEach(function(el) { el.textContent = dateStr; });
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Swup
-    if (typeof Swup !== 'undefined') {
-        const swup = new Swup({
-            plugins: [new SwupScrollPlugin()]
-        });
-        
-        swup.hooks.on('page:view', () => {
-            if (window.lucide) {
-                lucide.createIcons();
-            }
-            initGSAPAnimations();
-            updateHeroDate();
-            
-            // Re-trigger the sidebar pill animation based on new URL
-            if (typeof window.updateSidebarActiveState === 'function') {
-                window.updateSidebarActiveState();
-            }
-        });
+    function initGSAPAnimations() {
+        // Animations removed per request
     }
 
-    if (window.lucide) {
-        lucide.createIcons();
+    function updateHeroDate() {
+        var els = document.querySelectorAll('.hero-date-span');
+        if (els.length > 0) {
+            var dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            els.forEach(function (el) { el.textContent = dateStr; });
+        }
     }
-    initGSAPAnimations();
-    updateHeroDate();
-});
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize Swup
+        if (typeof Swup !== 'undefined') {
+            const swup = new Swup({
+                plugins: [new SwupScrollPlugin()]
+            });
+
+            swup.hooks.on('page:view', () => {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+                initGSAPAnimations();
+                updateHeroDate();
+
+                // Re-trigger the sidebar pill animation based on new URL
+                if (typeof window.updateSidebarActiveState === 'function') {
+                    window.updateSidebarActiveState();
+                }
+            });
+        }
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+        initGSAPAnimations();
+        updateHeroDate();
+    });
 </script>
 {% endblock %}

@@ -10,9 +10,9 @@
 {% block dashboard_content %}
 <style>
 /* ── Student Directory — Homepage Editorial Layout ── */
-body { background: #F7F7F2 !important; }
+body { background: #F3F4E5 !important; }
 
-.tp-section     { background: #F7F7F2; padding: 56px 24px; width: 100%; box-sizing: border-box; min-height: 50vh; }
+.tp-section     { background: #F3F4E5; padding: 56px 24px; width: 100%; box-sizing: border-box; min-height: 50vh; }
 .tp-inner       { max-width: 1000px; margin: 0 auto; }
 
 .tp-h2 { font-size: 32px; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px; }
@@ -25,7 +25,7 @@ body { background: #F7F7F2 !important; }
     padding: 0 20px 0 52px; font-size: 15px; color: #1B1B1B;
     outline: none; 
 }
-.tp-search:focus { border-color: #181D00; background: #F7F7F2; }
+.tp-search:focus { border-color: #181D00; background: #FFFFFF; }
 .tp-search::placeholder { color: #A1A1AA; }
 
 .premium-btn {
@@ -154,7 +154,7 @@ body { background: #F7F7F2 !important; }
             <a href="{{ url_for('teacher_view_profile', student_id=student.id) }}" class="premium-card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:32px 24px; text-decoration:none; color:inherit; aspect-ratio:1/1; justify-content:center;">
                 <div style="position:relative; margin-bottom:16px;">
                     <img src="{{ url_for('static', filename='uploads/' + (student.profile_pic or 'default.png')) }}" onerror="this.src='{{ url_for('static', filename='uploads/default.png') }}'" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid rgba(24, 29, 0,.1);">
-                    <div style="position:absolute; bottom:-4px; right:-8px; background:#F7F7F2; border:1px solid rgba(24, 29, 0,.1); border-radius:999px; padding:2px 8px; font-size:11px; font-weight:700; color:#181D00; box-shadow:0 2px 4px rgba(0,0,0,.05);">Lv{{ (student.eco_points // 100) + 1 }}</div>
+                    <div style="position:absolute; bottom:-4px; right:-8px; background:#FFFFFF; border:1px solid rgba(24, 29, 0,.1); border-radius:999px; padding:2px 8px; font-size:11px; font-weight:700; color:#181D00; box-shadow:0 2px 4px rgba(0,0,0,.05);">Lv{{ (student.eco_points // 100) + 1 }}</div>
                 </div>
                 
                 <h4 style="font-size:18px; font-weight:600; color:#1B1B1B; margin-bottom:4px; width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ student.name }}</h4>
