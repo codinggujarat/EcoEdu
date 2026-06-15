@@ -2569,7 +2569,7 @@ with app.app_context():
         add_column_if_not_exists('achievement', 'challenges_required', 'INTEGER', default='0')
                 
     except Exception as e:
-        print(f"Migration warning: {e}")
+        print(f"CRITICAL ERROR: Database Initialization/Connection Error: {e}")
 
     # Initialize AI Service
     try:
