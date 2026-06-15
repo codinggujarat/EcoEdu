@@ -26,7 +26,7 @@ Supports: title, subtitle, cta_text, cta_url, cta_icon
     </div>
 
     <div class="hero-text-content">
-      <h1 class="premium-hero-title">{{ title|safe }}</h1>
+      <h1 class="section-title">{{ title|safe }}</h1>
       {% if subtitle %}
       <p class="premium-hero-sub">{{ subtitle|safe }}</p>
       {% endif %}
@@ -171,17 +171,18 @@ Supports: title, subtitle, cta_text, cta_url, cta_icon
   }
 
   /* Typography */
-  .premium-hero-title {
-    font-size: 1.75rem;
-    font-weight: 500;
+  .premium-hero .section-title {
+    font-size: 1.75rem !important;
+    font-weight: 400 !important;
     margin-bottom: 8px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+    color: #FFFFFF !important;
   }
 
   @media (min-width: 1024px) {
-    .premium-hero-title {
-      font-size: 2.25rem;
+    .premium-hero .section-title {
+      font-size: 2.25rem !important;
     }
   }
 

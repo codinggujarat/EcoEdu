@@ -8,13 +8,11 @@
     <link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='images/logo.jpg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
     <style>
-        *,
-        *::before,
-        *::after {
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -25,212 +23,124 @@
         }
 
         body {
-            background-color: #181D00;
-            color: #FFFFFF;
-            font-family: 'Inter', 'General Sans', sans-serif;
+            background-color: #F3F4E5;
+            color: #181D00;
+            font-family: 'General Sans', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* ── Typography ── */
-        .edit-h1 {
-            font-size: 36px;
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        .playfair {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            color: #181D00;
+        }
+
+        .hero-title {
+            font-size: 64px;
             font-weight: 500;
             line-height: 1.1;
-            letter-spacing: -0.04em;
-            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
         }
 
         @media (min-width: 768px) {
-            .edit-h1 {
-                font-size: 56px;
-                line-height: 1.05;
+            .hero-title {
+                font-size: 96px;
             }
         }
 
-        @media (min-width: 1024px) {
-            .edit-h1 {
-                font-size: 72px;
-            }
-        }
-
-        .edit-h2 {
-            font-size: 28px;
-            font-weight: 500;
+        .section-title {
+            font-size: 36px;
             line-height: 1.2;
             letter-spacing: -0.02em;
-            color: #FFFFFF;
+            margin-bottom: 24px;
         }
 
         @media (min-width: 768px) {
-            .edit-h2 {
-                font-size: 36px;
-                line-height: 1.1;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .edit-h2 {
+            .section-title {
                 font-size: 48px;
             }
         }
 
-        .edit-p {
-            font-size: 15px;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.75);
+        p {
+            color: rgba(24, 29, 0, 0.7);
+            line-height: 1.6;
+            font-size: 16px;
         }
 
         @media (min-width: 768px) {
-            .edit-p {
-                font-size: 16px;
-                line-height: 1.55;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .edit-p {
+            p {
                 font-size: 18px;
             }
         }
 
-        /* ── Layout ── */
-        .edit-section {
-            padding: 60px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .edit-section {
-                padding: 90px 40px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .edit-section {
-                padding: 120px 64px;
-            }
-        }
-
-        .edit-bg-alt {
-            background-color: #181D00;
-        }
-
-        /* ✨ Buttons ✨ */
-        .edit-btn-primary {
+        /* Buttons */
+        .btn-primary {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(24, 29, 0, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            color: #fff;
-            height: 50px;
-            padding: 0 24px;
+            background: #181D00;
+            color: #FFFFFF;
+            height: 56px;
+            padding: 0 32px;
             border-radius: 999px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             text-decoration: none;
-            position: relative;
-            cursor: pointer;
-            width: 100%;
+            transition: background 0.2s;
         }
 
-        @media (min-width: 768px) {
-            .edit-btn-primary {
-                height: 64px;
-                padding: 0 40px;
-                font-size: 18px;
-                width: auto;
-            }
+        .btn-primary:hover {
+            background: #234A2B;
         }
 
-        .edit-btn-secondary {
+        .btn-secondary {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-            color: #FFFFFF;
-            height: 50px;
-            padding: 0 24px;
+            background: #FFFFFF;
+            color: #181D00;
+            border: 1px solid rgba(24, 29, 0, 0.15);
+            height: 56px;
+            padding: 0 32px;
             border-radius: 999px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             text-decoration: none;
-            position: relative;
-            cursor: pointer;
-            width: 100%;
+            transition: background 0.2s;
         }
 
-        @media (min-width: 768px) {
-            .edit-btn-secondary {
-                height: 64px;
-                padding: 0 40px;
-                font-size: 18px;
-                width: auto;
-            }
+        .btn-secondary:hover {
+            background: #F9F9F9;
         }
 
-        .btn-inner {
-            position: relative;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* ── Cards ── */
-        .edit-card {
-            background: #F7F7F2;
-            color: #FFFFFF;
-            border: 1px solid rgba(24, 29, 0, 0.08);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 24px;
-            will-change: transform, box-shadow;
-            
-            transform-style: preserve-3d;
-            cursor: none;
-            color: #FFFFFF;
-        }
-
-        @media (min-width: 768px) {
-            .edit-card {
-                border-radius: 28px;
-                padding: 48px;
-                color: #FFFFFF;
-            }
-        }
-
-        /* ── Image container ── */
-        .edit-image-container {
-            border-radius: 30px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* ── Nav ── */
-        .edit-nav {
+        /* Navigation */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 80px;
+            padding: 0 24px;
             max-width: 1400px;
             margin: 0 auto;
-            
         }
 
-        /* Full-width nav backdrop */
+        @media (min-width: 768px) {
+            .navbar {
+                padding: 0 64px;
+            }
+        }
+
         .nav-backdrop {
             position: fixed;
             top: 0;
@@ -238,31 +148,14 @@
             right: 0;
             z-index: 999;
             height: 80px;
-            /* 16 + 16 + 48 = 80px */
-            
-        }
-
-        .nav-backdrop.scrolled {
-            background-color: rgba(24, 29, 0, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
-        }
-
-        @media (min-width: 768px) {
-            .edit-nav {
-                padding: 24px 64px;
-            }
-
-            .nav-backdrop {
-                height: 96px;
-                /* 24 + 24 + 48 = 96px */
-            }
+            background: rgba(243, 244, 229, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(24, 29, 0, 0.05);
         }
 
         .nav-links {
             display: none;
-            gap: 48px;
+            gap: 40px;
         }
 
         @media (min-width: 1024px) {
@@ -272,767 +165,74 @@
         }
 
         .nav-link {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 16px;
-            font-weight: 500;
-            text-decoration: none;
-            
-            position: relative;
-            cursor: none;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #181D00;
-            
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link:hover {
-            color: #FFFFFF;
-        }
-
-        /* Word-split for headings */
-        .word-line {
-            display: block;
-            overflow: hidden;
-        }
-
-        .word-inner {
-            display: inline-block;
-            will-change: transform, opacity, filter;
-        }
-
-        /* Clip-path reveal */
-        .clip-reveal {
-            clip-path: inset(0 100% 0 0);
-            will-change: clip-path;
-        }
-
-        /* Floating orbs */
-        .hero-orb {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            will-change: transform;
-        }
-
-        /* Stat counter */
-        .stat-number {
-            font-size: clamp(40px, 5vw, 64px);
-            font-weight: 500;
             color: #181D00;
-            letter-spacing: -0.03em;
-            line-height: 1;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        /* How it works numbers */
-        .step-num {
-            font-size: clamp(80px, 12vw, 160px);
-            font-weight: 500;
-            color: #FFFFFF;
-            opacity: 0.12;
-            line-height: 1;
-            letter-spacing: -0.04em;
-            will-change: transform, opacity;
-            flex-shrink: 0;
-            min-width: 120px;
-        }
-
-        /* Testimonial quote */
-        .quote-mark {
-            font-size: 80px;
-            font-family: Georgia, serif;
-            color: #FFFFFF;
-            opacity: 0.15;
-            line-height: 0.5;
-            height: 40px;
-            display: block;
-            margin-bottom: 32px;
-        }
-
-        /* CTA section */
-        .cta-section {
-            background: #181D00;
-            color: #fff;
-            border-radius: 40px;
-            padding: 64px 32px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 40px 80px rgba(24, 29, 0, 0.3);
-        }
-
-        @media (min-width: 768px) {
-            .cta-section {
-                border-radius: 60px;
-                padding: 128px;
-            }
-        }
-
-        .cta-section .texture {
-            position: absolute;
-            inset: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
-            opacity: 0.07;
-            mix-blend-mode: overlay;
-        }
-
-        /* CTA particle */
-        .cta-particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.06);
-            pointer-events: none;
-        }
-
-        /* FAQ */
-        details>summary::-webkit-details-marker {
-            display: none;
-        }
-
-        details summary {
-            list-style: none;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid rgba(24, 29, 0, 0.10);
-            padding-bottom: 32px;
-            margin-bottom: 32px;
-        }
-
-        .faq-item summary {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: none;
-            font-size: clamp(18px, 2vw, 24px);
-            font-weight: 500;
-            color: #FFFFFF;
-            padding: 8px 0;
-            user-select: none;
-        }
-
-        .faq-icon {
-            width: 28px;
-            height: 28px;
-            color: rgba(255, 255, 255, 0.85);
-            flex-shrink: 0;
-            
-        }
-
-        details[open] .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 18px;
-            line-height: 1.7;
-            max-height: 0;
-            overflow: hidden;
-            
-            opacity: 0;
-        }
-
-        details[open] .faq-answer {
-            max-height: 400px;
-            opacity: 1;
-            padding-top: 24px;
-        }
-
-        /* Footer */
-        footer {
-            background: #181D00;
-            color: #fff;
-            padding: 96px 24px;
-        }
-
-        @media (min-width: 768px) {
-            footer {
-                padding: 96px 64px;
-            }
-        }
-
-        .footer-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 64px;
-        }
-
-        @media (min-width: 768px) {
-            .footer-inner {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: flex-start;
-            }
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
             font-size: 16px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.55);
-        }
-
-        @media (min-width: 640px) {
-            .footer-links {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 64px;
-            }
-        }
-
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .footer-col h4 {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .footer-col a {
-            color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
-            
-            cursor: none;
         }
 
-        .footer-col a:hover {
-            color: #fff;
-        }
-
-        /* Leaderboard / Badge cards */
-        .lb-card {
-            background: #F7F7F2;
-            border: 1px solid rgba(24, 29, 0, 0.08);
-            border-radius: 20px;
-            padding: 24px;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            will-change: transform, box-shadow;
-            cursor: none;
-            color: #FFFFFF;
-        }
-
-        .badge-card {
-            background: #F7F7F2;
-            border: 1px solid rgba(24, 29, 0, 0.08);
-            border-radius: 24px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            will-change: transform, box-shadow;
-            cursor: none;
-            color: #FFFFFF;
-        }
-
-        /* Grid helpers */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
-
-        @media (min-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
-
-        @media (min-width: 768px) {
-            .grid-3 {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .grid-3 {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        @media (min-width: 768px) {
-            .grid-4 {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        /* Feature card */
-        .feat-card {
-            background: #F7F7F2;
-            border: 1px solid rgba(24, 29, 0, 0.08);
-            border-radius: 28px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            will-change: transform, box-shadow;
-            cursor: none;
+        /* Hero */
+        .hero-section {
             position: relative;
-            color: #FFFFFF;
-        }
-
-        /* Card gradient overlay on hover */
-        .feat-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(24, 29, 0, 0.03) 0%, transparent 60%);
-            opacity: 0;
-            
-            pointer-events: none;
-        }
-
-        .feat-card-img {
-            height: 200px;
-            background: #EAEAE5;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 1px solid rgba(24, 29, 0, 0.08);
-            overflow: hidden;
-            position: relative;
+            padding: 120px 24px 80px;
+            text-align: center;
         }
 
-        .feat-card-img svg {
-            
-        }
-
-        .feat-card-body {
-            padding: 40px;
-        }
-
-        .feat-card-body h3 {
-            font-size: 22px;
-            font-weight: 500;
-            color: #FFFFFF;
-            margin-bottom: 12px;
-        }
-
-        .feat-card-body p {
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.65;
-            font-size: 16px;
-        }
-
-        /* ── Custom Cursor ── */
-        #cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #FFFFFF;
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9999;
-            will-change: transform;
-            transform: translate(-50%, -50%);
-        }
-
-        #cursor-ring {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9998;
-            will-change: transform;
-            transform: translate(-50%, -50%);
-        }
-
-        #cursor-label {
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9997;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #181D00;
-            opacity: 0;
-            transform: translate(-50%, 28px);
-            white-space: nowrap;
-            
-        }
-
-        /* ── Noise overlay ── */
-        .noise-overlay {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9990;
-            opacity: 0.018;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
-        /* ── Scroll progress ── */
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: linear-gradient(to right, #181D00, #5a9c68);
-            z-index: 10000;
-            transform-origin: left;
-            transform: scaleX(0);
-            will-change: transform;
-        }
-
-        /* ── Divider ── */
-        .h-divider {
-            width: 96px;
-            height: 1px;
-            background: rgba(24, 29, 0, 0.15);
-            margin: 0 auto;
-        }
-
-        /* ── Hidden by JS ── */
-        .overflow-hidden-clip {
-            overflow: hidden;
-        }
-
-        /* ── Lenis smooth scroll ── */
-        html.lenis {
-            height: auto;
-        }
-
-        .lenis.lenis-smooth {
-            scroll-behavior: auto;
-        }
-
-        .lenis.lenis-smooth [data-lenis-prevent] {
-            overscroll-behavior: contain;
-        }
-
-        /* ── Marquee band ── */
-        .marquee-band {
-            display: flex;
-            overflow: hidden;
-            padding: 20px 0;
-            background: #F7F7F2;
-            position: relative;
-        }
-
-        .marquee-track {
-            display: flex;
-            gap: 0;
-            will-change: transform;
-            white-space: nowrap;
-        }
-
-        .marquee-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 20px;
-            padding: 0 48px;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #181D00;
-            flex-shrink: 0;
-        }
-
-        .marquee-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: rgba(24, 29, 0, 0.3);
-            flex-shrink: 0;
-        }
-
-        /* ── Section label ── */
-        .section-label {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #181D00;
-            margin-bottom: 24px;
-            opacity: 0.7;
-        }
-
-        /* ── Line reveal ── */
-        .line-reveal-wrap {
-            overflow: hidden;
-            display: block;
-        }
-
-        /* ── Scroll indicator ── */
-        .scroll-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-top: 64px;
-            opacity: 0;
-        }
-
-        .scroll-indicator span {
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: rgba(24, 29, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-line::after {
-            content: '';
+        .hero-video-wrap {
             position: absolute;
-            top: -100%;
-            left: 0;
+            inset: 0;
+            overflow: hidden;
+            z-index: -2;
+        }
+
+        .hero-video-wrap video {
             width: 100%;
             height: 100%;
-            background: #181D00;
-            
-        }
-
-        @keyframes scrollDown {
-            0% {
-                top: -100%;
-            }
-
-            50% {
-                top: 0;
-            }
-
-            100% {
-                top: 100%;
-            }
-        }
-
-        /* ── Hover tilt on cards ── */
-        .tilt-card {
-            transform-style: preserve-3d;
-            perspective: 800px;
-        }
-
-        /* ── Image mask reveal ── */
-        .img-mask-wrap {
-            overflow: hidden;
-            position: relative;
-        }
-
-        .img-mask-inner {
-            will-change: transform;
-        }
-
-        /* ── Number ticker ── */
-        .stat-ticker-wrap {
-            overflow: hidden;
-            height: 1.1em;
-        }
-
-        /* ── Step connector line ── */
-        .step-connector {
-            position: absolute;
-            left: 0;
-            width: 1px;
-            background: rgba(24, 29, 0, 0.12);
-            top: 80px;
-            bottom: -96px;
-        }
-
-        /* ── Badge pulse ring ── */
-        .badge-pulse {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            border: 1px solid rgba(24, 29, 0, 0.15);
-            
-        }
-
-        @keyframes badgePulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        /* ── Floating background leaves ── */
-        .bg-leaf {
-            position: absolute;
-            pointer-events: none;
-            will-change: transform;
-            opacity: 0.04;
-        }
-
-        /* ── Active nav link ── */
-        .nav-link.active {
-            color: #FFFFFF;
-        }
-
-        /* ── Cursor: hide system cursor ── */
-        * {
-            cursor: none !important;
-        }
-
-        /* ── Hero image overlay grain ── */
-        .hero-grain {
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-            pointer-events: none;
-            mix-blend-mode: overlay;
-            opacity: 0.4;
-        }
-
-        /* ── Horizontal rule gradient ── */
-        .hr-gradient {
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(24, 29, 0, 0.15), transparent);
-            margin: 0;
-        }
-
-        @media (min-width: 1024px) {
-            .feature-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 120px !important;
-            }
-        }
-
-
-
-
-        /* PREMIUM GLASSMORPHISM CARD SYSTEM */
-        .edit-card,
-        .lb-card,
-        .badge-card,
-        .feat-card,
-        .faq-item {
-            background: rgba(255, 255, 255, 0.04) !important;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
-            color: #FFFFFF !important;
-        }
-
-        /* FAQ specific padding/radius since it wasn't a full card before */
-        .faq-item {
-            padding: 24px !important;
-            border-radius: 20px !important;
-            margin-bottom: 24px !important;
-        }
-
-        /* Primary Headings in cards */
-        .edit-card h3,
-        .lb-card .rank,
-        .badge-card span,
-        .feat-card h3,
-        .faq-item summary {
-            color: #FFFFFF !important;
-        }
-
-        /* Secondary text in cards */
-        .edit-card p,
-        .edit-card span,
-        .lb-card div,
-        .feat-card p,
-        .faq-answer {
-            color: rgba(255, 255, 255, 0.7) !important;
-        }
-
-        /* Icons in cards */
-        .edit-card i,
-        .badge-card i,
-        .feat-card i,
-        .faq-icon {
-            color: rgba(255, 255, 255, 0.9) !important;
-        }
-
-        /* Stat numbers */
-        .edit-card .stat-number {
-            color: #FFFFFF !important;
-        }
-    </style>
-    <style>
-        /* Global Mobile Fixes */
-        img {
-            max-width: 100%;
-            height: auto;
             object-fit: cover;
         }
 
-        .hero-btns {
-            flex-direction: column;
-            width: 100%;
-            gap: 12px;
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(243, 244, 229, 0.4);
+            z-index: -1;
+        }
+
+        /* Sections */
+        .section-padding {
+            padding: 96px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         @media (min-width: 768px) {
-            .hero-btns {
-                flex-direction: row;
-                width: auto;
-                gap: 24px;
+            .section-padding {
+                padding: 128px 48px;
             }
         }
 
+        /* Cards */
+        .card {
+            background: #FFFFFF;
+            border: 1px solid rgba(24, 29, 0, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        /* Stats */
         .stats-grid {
+            display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 24px;
         }
 
         @media (min-width: 768px) {
             .stats-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 32px;
             }
         }
@@ -1040,1401 +240,696 @@
         @media (min-width: 1024px) {
             .stats-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 40px;
             }
         }
 
-        .footer-grid {
-            grid-template-columns: 1fr;
-            gap: 40px;
+        .stat-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(24, 29, 0, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
         }
 
-        @media (min-width: 768px) {
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 40px;
-            }
+        .stat-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 56px;
+            color: #181D00;
+            line-height: 1;
+            margin-bottom: 12px;
         }
 
-        @media (min-width: 1024px) {
-            .footer-grid {
-                grid-template-columns: 2fr 1fr 1fr;
-                gap: 80px;
-            }
+        .stat-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(24, 29, 0, 0.6);
         }
 
-        @media (min-width: 1024px) {
-            .feature-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 120px !important;
-            }
-        }
-
-        .hero-section {
-            padding-top: 100px;
-            padding-bottom: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .hero-section {
-                padding-top: 128px;
-                padding-bottom: 80px;
-                padding-left: 40px;
-                padding-right: 40px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .hero-grid {
-                grid-template-columns: 1fr !important;
-                gap: 64px !important;
-            }
-        }
-
-        .hero-grid {
+        /* Features Bento */
+        .feat-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 32px;
-            align-items: center;
+            gap: 24px;
         }
 
-        .hero-text-col {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
+        @media (min-width: 768px) {
+            .feat-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
         }
 
         @media (min-width: 1024px) {
-            .hero-text-col {
-                max-width: 800px;
-                text-align: center;
+            .feat-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 40px;
             }
         }
 
-        .stat-card-padding {
-            padding: 24px !important;
+        .feat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #F3F4E5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2A4A30;
         }
 
-        @media (min-width: 768px) {
-            .stat-card-padding {
-                padding: 40px !important;
-            }
-        }
-    </style>
-
-    <style>
-        /* More Mobile Layout Fixes */
-        .section-header-margin {
-            text-align: center;
-            margin-bottom: 40px;
-            max-width: 720px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        @media (min-width: 768px) {
-            .section-header-margin {
-                margin-bottom: 96px;
-            }
-        }
-
-        .h2-margin {
-            margin-bottom: 40px;
-            max-width: 520px;
-        }
-
-        @media (min-width: 768px) {
-            .h2-margin {
-                margin-bottom: 96px;
-            }
-        }
-
-        .step-col-gap {
+        /* How it works */
+        .hiw-grid {
             display: flex;
             flex-direction: column;
-            gap: 48px;
-            max-width: 800px;
-            margin: 0 auto;
+            gap: 64px;
         }
 
-        @media (min-width: 768px) {
-            .step-col-gap {
-                gap: 96px;
-            }
-        }
-
-        .step-row-flex {
+        .hiw-step {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 16px;
             align-items: flex-start;
         }
 
         @media (min-width: 768px) {
-            .step-row-flex {
+            .hiw-step {
                 flex-direction: row;
                 gap: 48px;
             }
         }
 
-        .lb-grid {
+        .hiw-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 80px;
+            color: rgba(42, 74, 48, 0.15);
+            line-height: 1;
+            flex-shrink: 0;
+            width: 80px;
+        }
+
+        /* Leaderboard & Testimonials */
+        .grid-2 {
             display: grid;
             grid-template-columns: 1fr;
             gap: 32px;
         }
 
         @media (min-width: 1024px) {
-            .lb-grid {
+            .grid-2 {
                 grid-template-columns: 1fr 1fr;
+                gap: 48px;
             }
         }
 
-        .lb-card {
-            flex-direction: column;
+        .lb-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(24, 29, 0, 0.05);
+        }
+
+        .lb-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        /* Testimonial */
+        .testi-card {
+            padding: 48px;
+            background: #FFFFFF;
+            border: 1px solid rgba(24, 29, 0, 0.08);
+            border-radius: 24px;
+        }
+
+        .quote-icon {
+            color: rgba(42, 74, 48, 0.15);
+            margin-bottom: 24px;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid rgba(24, 29, 0, 0.1);
+            padding: 24px 0;
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid rgba(24, 29, 0, 0.1);
+        }
+
+        .faq-item summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            list-style: none;
+            color: #181D00;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-answer {
+            margin-top: 16px;
+            color: rgba(24, 29, 0, 0.7);
+            line-height: 1.6;
+        }
+
+        details[open] summary .lucide-plus {
+            transform: rotate(45deg);
+        }
+
+        /* Final CTA */
+        .cta-box {
+            background: #181D00;
+            border-radius: 40px;
+            padding: 80px 32px;
             text-align: center;
-            gap: 16px;
-            padding: 24px;
             color: #FFFFFF;
         }
 
         @media (min-width: 768px) {
-            .lb-card {
+            .cta-box {
+                padding: 120px 64px;
+                border-radius: 60px;
+            }
+        }
+
+        .cta-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 40px;
+            color: #FFFFFF;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .cta-title {
+                font-size: 64px;
+            }
+        }
+
+        .btn-green {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #A3D85F;
+            color: #181D00;
+            height: 56px;
+            padding: 0 32px;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-green:hover {
+            background: #92C650;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 64px 24px;
+            border-top: 1px solid rgba(24, 29, 0, 0.1);
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .footer {
                 flex-direction: row;
-                text-align: left;
-                gap: 24px;
-                color: #FFFFFF;
+                justify-content: space-between;
+                padding: 96px 64px;
             }
         }
 
-        .badge-card {
-            padding: 24px;
-            color: #FFFFFF;
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        @media (min-width: 768px) {
-            .badge-card {
-                padding: 32px;
-                color: #FFFFFF;
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(24, 29, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: rgba(24, 29, 0, 0.8);
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .footer-col a:hover {
+            color: #181D00;
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 16px 0;
+            border-top: 1px solid rgba(24, 29, 0, 0.08);
+            border-bottom: 1px solid rgba(24, 29, 0, 0.08);
+        }
+
+        .marquee-track {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-right: 48px;
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(24, 29, 0, 0.6);
+        }
+
+        .marquee-item strong {
+            font-weight: 600;
+            color: #181D00;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
             }
-        }
 
-        .badge-grid {
-            grid-template-columns: 1fr 1fr;
+            100% {
+                transform: translateX(-50%);
+            }
         }
     </style>
 </head>
 
-
 <body>
 
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress"></div>
-
-    <!-- Noise overlay -->
-    <div class="noise-overlay"></div>
-
-    <!-- Custom Cursor -->
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-    <div id="cursor-label"></div>
-
-    <!-- Nav backdrop (full-width) -->
-    <div class="nav-backdrop" id="nav-backdrop"></div>
-
-    <!-- ============================================================
-     NAVBAR
-     ============================================================ -->
-    <nav class="edit-nav" id="main-nav">
-        <div style="display:flex;align-items:center;gap:12px;" class="nav-logo">
-            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo"
-                style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
-            <span style="font-weight:500;font-size:24px;letter-spacing:-0.02em;color:#FFFFFF;">EduEco</span>
+    <!-- Navbar -->
+    <div class="nav-backdrop"></div>
+    <nav class="navbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco"
+                style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+            <span style="font-weight:500;font-size:22px;letter-spacing:-0.02em;color:#181D00;">EduEco</span>
         </div>
-
         <div class="nav-links">
             <a href="#features" class="nav-link">Features</a>
+            <a href="#how-it-works" class="nav-link">How It Works</a>
             <a href="#schools" class="nav-link">Schools</a>
             <a href="#faq" class="nav-link">FAQ</a>
         </div>
-
-        <div style="display:flex;align-items:center;gap:24px;">
-            <a href="{{ url_for('login') }}" class="nav-link" style="display:none;" id="nav-signin">Sign In</a>
-            <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn"
-                style="height:48px;padding:0 24px;font-size:15px;">
-                <span class="btn-inner">Get Started</span>
-            </a>
+        <div style="display:flex;align-items:center;gap:16px;">
+            <a href="{{ url_for('login') }}" class="nav-link">Sign In</a>
+            <a href="{{ url_for('register') }}" class="btn-primary" style="height:48px;padding:0 24px;">Get Started</a>
         </div>
     </nav>
 
-    <!-- ============================================================
-     1. HERO
-     ============================================================ -->
-    <div style="position: relative; width: 100%; min-height: 100vh; display: flex; align-items: center; overflow: hidden;">
-        <video id="hero-bg-video" autoplay muted playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
-            <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4">
-        </video>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const video = document.getElementById('hero-bg-video');
-                if (video) {
-                    // Check time frequently for a seamless loop
-                    const loopVideo = () => {
-                        if (video.currentTime >= 38) {
-                            video.currentTime = 0;
-                        }
-                        requestAnimationFrame(loopVideo);
-                    };
-                    requestAnimationFrame(loopVideo);
-
-                    // Mute Toggle Logic
-                    const muteBtn = document.getElementById('hero-mute-btn');
-                    if (muteBtn) {
-                        muteBtn.addEventListener('click', () => {
-                            video.muted = !video.muted;
-                            const iconName = video.muted ? 'volume-x' : 'volume-2';
-                            muteBtn.innerHTML = `<i id="mute-icon" data-lucide="${iconName}" style="width: 24px; height: 24px;"></i>`;
-                            if (window.lucide) lucide.createIcons();
-                        });
-                    }
-                }
-            });
-        </script>
-        <button id="hero-mute-btn" style="position: absolute; bottom: 40px; right: 40px; z-index: 10; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; transition: background 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-            <i id="mute-icon" data-lucide="volume-x" style="width: 24px; height: 24px;"></i>
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="hero-video-wrap">
+            <video id="hero-bg-video" autoplay muted playsinline>
+                <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-overlay"></div>
+        <div style="max-width:800px; z-index: 1;">
+            <div
+                style="display:inline-flex; align-items:center; gap:8px; padding:6px 16px; background:rgba(255,255,255,0.6); border:1px solid rgba(24,29,0,0.1); border-radius:999px; font-size:13px; font-weight:500; color:#181D00; margin-bottom:32px;">
+                <i data-lucide="leaf" style="width:14px; height:14px; color:#2A4A30;"></i> A new era of environmental
+                education
+            </div>
+            <h1 class="hero-title">Build <span style="color:#2A4A30;">Sustainable</span><br><span
+                    style="color:#2A4A30;">Habits Together.</span></h1>
+            <p style="margin-bottom:48px; max-width:600px; margin-left:auto; margin-right:auto;">Gamify environmental
+                education. Track impact. Empower the next generation of eco-leaders through real-world challenges.</p>
+            <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+                <a href="{{ url_for('register') }}" class="btn-primary">Start Your Journey</a>
+                <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+            </div>
+        </div>
+        <button id="hero-mute-btn"
+            style="position: absolute; bottom: 40px; right: 40px; z-index: 10; background: rgba(255,255,255,0.6); border: 1px solid rgba(24, 29, 0, 0.1); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #181D00;">
+            <i id="mute-icon" data-lucide="volume-x" style="width: 20px; height: 20px;"></i>
         </button>
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(24, 29, 0, 0.4); z-index: 1;"></div>
-        
-        <section class="hero-section" id="hero" style="position: relative; z-index: 2; width: 100%;">
-            <div class="hero-grid">
-
-            <!-- Left: Text -->
-            <div class="hero-text-col">
-
-
-                <!-- H1 — will be word-split by JS -->
-                <h1 class="edit-h1" id="hero-h1" style="margin-bottom:32px;">
-                    Build Sustainable Habits Together.
-                </h1>
-
-                <p class="edit-p hero-p" style="margin-bottom:48px;opacity:0;">
-                    Gamify environmental education. Track impact. Empower the next generation of eco-leaders through
-                    real-world challenges.
-                </p>
-
-                <div class="hero-btns"
-                    style="display:flex;justify-content:center;margin-top:24px;margin-bottom:24px;gap:16px;">
-                    <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn"
-                        style="opacity:0;">
-                        <span class="btn-inner">Start Your Journey</span>
-                    </a>
-                    <a href="#how-it-works" class="edit-btn-secondary magnetic-btn"
-                        style="opacity:0;">
-                        <span class="btn-inner">See How It Works</span>
-                    </a>
-                </div>
-
-                <!-- Scroll indicator -->
-                <div class="scroll-indicator" id="scroll-indicator">
-                    <span>Scroll</span>
-                    <div class="scroll-line"></div>
-                </div>
-            </div>
-
-            </div>
-        </div>
     </section>
-    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const heroVideo = document.getElementById("hero-bg-video");
-            if (heroVideo) {
-                heroVideo.addEventListener("timeupdate", function() {
-                    if (this.currentTime >= 38) {
-                        this.currentTime = 0;
-                        this.play().catch(e => console.log("Video play error:", e));
-                    }
-                });
-            }
-        });
-    </script>
-
-    <!-- ============================================================
-     MARQUEE BAND
-     ============================================================ -->
-    <div class="marquee-band" id="marquee-band">
-        <div class="marquee-track" id="marquee-track">
-            <!-- Duplicated items for seamless loop — JS will clone -->
-            <span class="marquee-item">Eco Challenges<span class="marquee-dot"></span></span>
-            <span class="marquee-item">Live Leaderboards<span class="marquee-dot"></span></span>
-            <span class="marquee-item">Digital Badges<span class="marquee-dot"></span></span>
-            <span class="marquee-item">Verified Certificates<span class="marquee-dot"></span></span>
-            <span class="marquee-item">Advanced Analytics<span class="marquee-dot"></span></span>
-            <span class="marquee-item">Real-World Impact<span class="marquee-dot"></span></span>
-            <span class="marquee-item">12k+ Students<span class="marquee-dot"></span></span>
-            <span class="marquee-item">85 Partner Schools<span class="marquee-dot"></span></span>
+    <!-- Marquee -->
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <!-- First set -->
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span>Advanced <strong>Analytics</strong></span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Real-World</strong> Impact</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>12k+</strong> Students</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>85</strong> Partner Schools</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Eco</strong> Challenges</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Live</strong> Leaderboards</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Digital</strong> Badges</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Verified</strong> Certificates</span></span>
+            <!-- Second set for loop -->
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span>Advanced <strong>Analytics</strong></span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Real-World</strong> Impact</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>12k+</strong> Students</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>85</strong> Partner Schools</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Eco</strong> Challenges</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Live</strong> Leaderboards</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Digital</strong> Badges</span></span>
+            <span class="marquee-item"><i data-lucide="leaf" style="color:#2A4A30; width:18px; height:18px;"></i> <span><strong>Verified</strong> Certificates</span></span>
         </div>
     </div>
 
-    <!-- ============================================================
-     2. STATISTICS
-     ============================================================ -->
-    <section class="edit-bg-alt" id="schools">
-        <div class="edit-section" style="padding-top:96px;padding-bottom:96px;">
-            <div class="grid-4 stats-grid">
-
-                <div class="edit-card stat-card tilt-card stat-card-padding"
-                    style="display:flex;flex-direction:column;align-items:flex-start;">
-                    <span class="stat-number" data-target="12" data-suffix="k+">0</span>
-                    <span
-                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Active
-                        Students</span>
-                </div>
-
-                <div class="edit-card stat-card tilt-card stat-card-padding"
-                    style="display:flex;flex-direction:column;align-items:flex-start;">
-                    <span class="stat-number" data-target="450" data-suffix="+">0</span>
-                    <span
-                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Verified
-                        Teachers</span>
-                </div>
-
-                <div class="edit-card stat-card tilt-card stat-card-padding"
-                    style="display:flex;flex-direction:column;align-items:flex-start;">
-                    <span class="stat-number" data-target="85" data-suffix="">0</span>
-                    <span
-                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Partner
-                        Schools</span>
-                </div>
-
-                <div class="edit-card stat-card tilt-card stat-card-padding"
-                    style="display:flex;flex-direction:column;align-items:flex-start;">
-                    <span class="stat-number" data-target="1.2" data-suffix="M">0</span>
-                    <span
-                        style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Points
-                        Awarded</span>
-                </div>
-
+    <!-- Statistics -->
+    <section class="section-padding">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num">12k+</div>
+                <div class="stat-label">Active Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">450+</div>
+                <div class="stat-label">Verified Teachers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">85</div>
+                <div class="stat-label">Partner Schools</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">1.2M</div>
+                <div class="stat-label">Points Awarded</div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-     3. FEATURES
-     ============================================================ -->
-    <section class="edit-section" id="features">
-        <div class="section-header-margin" class="section-header">
-            <h2 class="edit-h2 reveal-heading" style="margin-bottom:24px;">Engineered for real-world impact.</h2>
-            <p class="edit-p reveal-text">Everything your school needs to run a modern, engaging environmental program
-                without the administrative overhead.</p>
+    <!-- Features -->
+    <section class="section-padding" id="features" style="padding-top:0;">
+        <div style="text-align:center; max-width:700px; margin:0 auto 64px;">
+            <div
+                style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:#2A4A30; margin-bottom:16px;">
+                Features</div>
+            <h2 class="section-title">Engineered for real-world impact.</h2>
+            <p>Everything your school needs to run a modern, engaging environmental program without the administrative
+                overhead.</p>
         </div>
+        <div class="feat-grid">
+            <div class="card">
+                <div class="feat-icon"><i data-lucide="leaf"></i></div>
+                <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Eco Challenges</h3>
+                <p style="font-size:15px;">Actionable, real-world tasks designed to build sustainable habits. From
+                    recycling drives to energy conservation.</p>
+            </div>
+            <div class="card">
+                <div class="feat-icon"><i data-lucide="medal"></i></div>
+                <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Achievement System</h3>
+                <p style="font-size:15px;">Reward consistent behavior with beautifully crafted digital badges that
+                    represent true environmental mastery.</p>
+            </div>
+            <div class="card">
+                <div class="feat-icon"><i data-lucide="bar-chart-2"></i></div>
+                <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Live Leaderboards</h3>
+                <p style="font-size:15px;">Foster healthy competition among students and classes. Watch your school
+                    climb the global ranks.</p>
+            </div>
+            <div class="card">
+                <div class="feat-icon"><i data-lucide="compass"></i></div>
+                <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Learning Journey</h3>
+                <p style="font-size:15px;">A structured path from beginner to eco-warrior. Students unlock new
+                    capabilities as they progress.</p>
+            </div>
+            <div class="card">
+                <div class="feat-icon"><i data-lucide="pie-chart"></i></div>
+                <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Advanced Analytics</h3>
+                <p style="font-size:15px;">Teachers get a bird's-eye view of student impact, with actionable data to
+                    improve engagement.</p>
+            </div>
+            <div class="card">
+                <div class="feat-icon"><i data-lucide="award"></i></div>
+                <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Verified Certificates</h3>
+                <p style="font-size:15px;">Auto-generate official certificates when students complete major milestones,
+                    ready for resumes.</p>
+            </div>
+        </div>
+    </section>
 
-        <div class="grid-3">
-            <div class="feat-card tilt-card reveal-card">
-                <div class="feat-card-img">
-                    <i data-lucide="leaf" style="width:64px;height:64px;color:#181D00;opacity:0.8;"></i>
-                </div>
-                <div class="feat-card-body">
-                    <h3>Eco Challenges</h3>
-                    <p>Actionable, real-world tasks designed to build sustainable habits. From recycling drives to
-                        energy conservation.</p>
+    <!-- How It Works -->
+    <section class="section-padding" id="how-it-works" style="padding-top:0;">
+        <div style="text-align:center; max-width:700px; margin:0 auto 80px;">
+            <div
+                style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:#2A4A30; margin-bottom:16px;">
+                How It Works</div>
+            <h2 class="section-title">A seamless framework for real action.</h2>
+        </div>
+        <div class="hiw-grid" style="max-width:800px; margin:0 auto;">
+            <div class="hiw-step">
+                <div class="hiw-num">01</div>
+                <div style="padding-top:16px;">
+                    <h3 style="font-size:24px; font-weight:600; margin-bottom:12px;">Join</h3>
+                    <p>Students create accounts and connect securely to their teacher's classroom portal to begin their
+                        journey.</p>
                 </div>
             </div>
-
-            <div class="feat-card tilt-card reveal-card">
-                <div class="feat-card-img">
-                    <i data-lucide="medal" style="width:64px;height:64px;color:#181D00;opacity:0.8;"></i>
-                </div>
-                <div class="feat-card-body">
-                    <h3>Achievement System</h3>
-                    <p>Reward consistent behavior with beautifully crafted digital badges that represent true
-                        environmental mastery.</p>
+            <div class="hiw-step">
+                <div class="hiw-num">02</div>
+                <div style="padding-top:16px;">
+                    <h3 style="font-size:24px; font-weight:600; margin-bottom:12px;">Complete Challenges</h3>
+                    <p>Submit photo evidence and reflections for real-world environmental actions directly from any
+                        device.</p>
                 </div>
             </div>
-
-            <div class="feat-card tilt-card reveal-card">
-                <div class="feat-card-img">
-                    <i data-lucide="bar-chart-2" style="width:64px;height:64px;color:#181D00;opacity:0.8;"></i>
-                </div>
-                <div class="feat-card-body">
-                    <h3>Live Leaderboards</h3>
-                    <p>Foster healthy competition among students and classes. Watch your school climb the global ranks.
-                    </p>
+            <div class="hiw-step">
+                <div class="hiw-num">03</div>
+                <div style="padding-top:16px;">
+                    <h3 style="font-size:24px; font-weight:600; margin-bottom:12px;">Earn Points</h3>
+                    <p>Teachers review submissions. Approved actions instantly award XP to the student's profile,
+                        fueling motivation.</p>
                 </div>
             </div>
-
-            <div class="feat-card tilt-card reveal-card">
-                <div class="feat-card-img">
-                    <i data-lucide="compass" style="width:64px;height:64px;color:#181D00;opacity:0.8;"></i>
-                </div>
-                <div class="feat-card-body">
-                    <h3>Learning Journey</h3>
-                    <p>A structured path from beginner to eco-warrior. Students unlock new capabilities as they
-                        progress.</p>
+            <div class="hiw-step">
+                <div class="hiw-num">04</div>
+                <div style="padding-top:16px;">
+                    <h3 style="font-size:24px; font-weight:600; margin-bottom:12px;">Unlock Achievements</h3>
+                    <p>Stack milestones and showcase digital badges on your public profile as a testament to your
+                        commitment.</p>
                 </div>
             </div>
-
-            <div class="feat-card tilt-card reveal-card">
-                <div class="feat-card-img">
-                    <i data-lucide="pie-chart" style="width:64px;height:64px;color:#181D00;opacity:0.8;"></i>
-                </div>
-                <div class="feat-card-body">
-                    <h3>Advanced Analytics</h3>
-                    <p>Teachers get a bird's-eye view of student impact, with actionable data to improve engagement.</p>
-                </div>
-            </div>
-
-            <div class="feat-card tilt-card reveal-card">
-                <div class="feat-card-img">
-                    <i data-lucide="award" style="width:64px;height:64px;color:#181D00;opacity:0.8;"></i>
-                </div>
-                <div class="feat-card-body">
-                    <h3>Verified Certificates</h3>
-                    <p>Auto-generate official certificates when students complete major milestones, ready for resumes.
-                    </p>
+            <div class="hiw-step">
+                <div class="hiw-num">05</div>
+                <div style="padding-top:16px;">
+                    <h3 style="font-size:24px; font-weight:600; margin-bottom:12px;">Receive Certificates</h3>
+                    <p>Graduate to new levels and download official, verifiable certificates perfect for academic
+                        portfolios.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="hr-gradient"></div>
-
-    <!-- ============================================================
-     4. HOW IT WORKS
-     ============================================================ -->
-    <section class="edit-bg-alt" id="how-it-works">
-        <div class="edit-section">
-            <h2 class="edit-h2 reveal-heading h2-margin">A seamless framework for real
-                action.</h2>
-
-            <div class="step-col-gap">
-
-                <div class="step-row" class="step-row-flex">
-                    <div class="step-num reveal-stepnum">01</div>
-                    <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
-                            class="reveal-text">Join</h3>
-                        <p class="edit-p reveal-text">Students create accounts and connect securely to their teacher's
-                            classroom portal to begin their journey.</p>
-                    </div>
-                </div>
-
-                <div class="step-row" class="step-row-flex">
-                    <div class="step-num reveal-stepnum">02</div>
-                    <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
-                            class="reveal-text">Complete Challenges</h3>
-                        <p class="edit-p reveal-text">Submit photo evidence and reflections for real-world environmental
-                            actions directly from any device.</p>
-                    </div>
-                </div>
-
-                <div class="step-row" class="step-row-flex">
-                    <div class="step-num reveal-stepnum">03</div>
-                    <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
-                            class="reveal-text">Earn Points</h3>
-                        <p class="edit-p reveal-text">Teachers review submissions. Approved actions instantly award XP
-                            to the student's profile, fueling motivation.</p>
-                    </div>
-                </div>
-
-                <div class="step-row" class="step-row-flex">
-                    <div class="step-num reveal-stepnum">04</div>
-                    <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
-                            class="reveal-text">Unlock Achievements</h3>
-                        <p class="edit-p reveal-text">Stack milestones and showcase digital badges on your public
-                            profile as a testament to your commitment.</p>
-                    </div>
-                </div>
-
-                <div class="step-row" class="step-row-flex">
-                    <div class="step-num reveal-stepnum">05</div>
-                    <div style="padding-top:24px;flex:1;">
-                        <h3 style="font-size:28px;font-weight:500;color:#FFFFFF;margin-bottom:16px;"
-                            class="reveal-text">Receive Certificates</h3>
-                        <p class="edit-p reveal-text">Graduate to new levels and download official, verifiable
-                            certificates perfect for academic portfolios.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-     5 & 6. LEADERBOARD + BADGES
-     ============================================================ -->
-    <section class="edit-section">
-        <div class="lb-badges-grid lb-grid">
-
-            <!-- Leaderboard -->
-            <div>
-                <h2 class="edit-h2 reveal-heading h2-margin">Leaderboard</h2>
-                <div style="display:flex;flex-direction:column;gap:24px;">
-
-                    <div class="lb-card reveal-card" data-rank="1">
-                        <span style="font-size:22px;font-weight:500;color:rgba(255,255,255,0.85);width:28px;">1</span>
-                        <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;">
-                            <img src="https://ui-avatars.com/api/?name=Sarah+Jenkins&background=2A4A30&color=fff"
-                                style="width:100%;height:100%;object-fit:cover;">
-                        </div>
-                        <div style="flex:1;">
-                            <div style="font-size:18px;font-weight:500;color:#FFFFFF;">Sarah Jenkins</div>
-                            <div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:2px;">Level 12</div>
-                        </div>
-                        <span style="font-size:16px;font-weight:500;color:#181D00;">1,240 XP</span>
-                    </div>
-
-                    <div class="lb-card reveal-card" data-rank="2">
-                        <span style="font-size:22px;font-weight:500;color:rgba(255,255,255,0.85);width:28px;">2</span>
-                        <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;">
-                            <img src="https://ui-avatars.com/api/?name=Michael+Chen&background=2A4A30&color=fff"
-                                style="width:100%;height:100%;object-fit:cover;">
-                        </div>
-                        <div style="flex:1;">
-                            <div style="font-size:18px;font-weight:500;color:#FFFFFF;">Michael Chen</div>
-                            <div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:2px;">Level 11</div>
-                        </div>
-                        <span style="font-size:16px;font-weight:500;color:#181D00;">1,100 XP</span>
-                    </div>
-
-                    <div class="lb-card reveal-card" data-rank="3">
-                        <span style="font-size:22px;font-weight:500;color:rgba(255,255,255,0.85);width:28px;">3</span>
-                        <div style="width:56px;height:56px;border-radius:50%;overflow:hidden;flex-shrink:0;">
-                            <img src="https://ui-avatars.com/api/?name=Aisha+Patel&background=2A4A30&color=fff"
-                                style="width:100%;height:100%;object-fit:cover;">
-                        </div>
-                        <div style="flex:1;">
-                            <div style="font-size:18px;font-weight:500;color:#FFFFFF;">Aisha Patel</div>
-                            <div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:2px;">Level 10</div>
-                        </div>
-                        <span style="font-size:16px;font-weight:500;color:#181D00;">950 XP</span>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Badges -->
-            <div>
-                <h2 class="edit-h2 reveal-heading h2-margin">Badges</h2>
-                <div class="badge-grid" style="display:grid; gap:24px;">
-
-                    <div class="badge-card tilt-card reveal-card">
-                        <div style="position:relative;margin-bottom:20px;">
-                            <div class="badge-pulse"></div>
-                            <div
-                                style="width:72px;height:72px;background:#F7F7F2;border:1px solid rgba(24, 29, 0,.10);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
-                                <i data-lucide="sun" style="width:30px;height:30px;color:#181D00;"></i>
+    <!-- Leaderboard & Testimonials -->
+    <section class="section-padding" id="schools" style="padding-top:0;">
+        <div class="grid-2">
+            <!-- Leaderboard Mini -->
+            <div class="card" style="background:#181D00; color:#FFFFFF; border:none;">
+                <h3 style="font-size:24px; color:#FFFFFF; margin-bottom:32px;">Top Students</h3>
+                <div style="display:flex; flex-direction:column;">
+                    {% if top_students %}
+                    {% for student in top_students %}
+                    <div class="lb-item" style="border-bottom-color:rgba(255,255,255,0.1);">
+                        <div style="display:flex; align-items:center; gap:16px;">
+                            <div style="width:24px; font-weight:600; color:rgba(255,255,255,0.5);">{{ loop.index }}
                             </div>
+                            <img src="https://ui-avatars.com/api/?name={{ student.name | replace(' ', '+') }}&background=2A4A30&color=fff"
+                                style="width:40px; height:40px; border-radius:50%;">
+                            <span style="font-weight:500;">{{ student.name }}</span>
                         </div>
-                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Solar Saver</span>
+                        <div style="font-weight:600; color:#A3D85F;">{{ student.eco_points }} XP</div>
                     </div>
-
-                    <div class="badge-card tilt-card reveal-card">
-                        <div style="position:relative;margin-bottom:20px;">
-                            <div class="badge-pulse"></div>
-                            <div
-                                style="width:72px;height:72px;background:#F7F7F2;border:1px solid rgba(24, 29, 0,.10);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
-                                <i data-lucide="droplet" style="width:30px;height:30px;color:#181D00;"></i>
-                            </div>
-                        </div>
-                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Water Hero</span>
-                    </div>
-
-                    <div class="badge-card tilt-card reveal-card">
-                        <div style="position:relative;margin-bottom:20px;">
-                            <div class="badge-pulse"></div>
-                            <div
-                                style="width:72px;height:72px;background:#F7F7F2;border:1px solid rgba(24, 29, 0,.10);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
-                                <i data-lucide="recycle" style="width:30px;height:30px;color:#181D00;"></i>
-                            </div>
-                        </div>
-                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Zero Waste</span>
-                    </div>
-
-                    <div class="badge-card tilt-card reveal-card">
-                        <div style="position:relative;margin-bottom:20px;">
-                            <div class="badge-pulse"></div>
-                            <div
-                                style="width:72px;height:72px;background:#F7F7F2;border:1px solid rgba(24, 29, 0,.10);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
-                                <i data-lucide="zap" style="width:30px;height:30px;color:#181D00;"></i>
-                            </div>
-                        </div>
-                        <span style="font-weight:500;color:#FFFFFF;font-size:16px;">Energy Master</span>
-                    </div>
-
+                    {% endfor %}
+                    {% else %}
+                    <p style="color:rgba(255,255,255,0.5);">No students yet.</p>
+                    {% endif %}
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- ============================================================
-     7. TESTIMONIALS
-     ============================================================ -->
-    <section class="edit-bg-alt">
-        <div class="edit-section" style="text-align:center;">
-            <h2 class="edit-h2 reveal-heading" style="margin-bottom:96px;">The community speaks.</h2>
-
-            <div style="display:flex;flex-direction:column;gap:128px;max-width:800px;margin:0 auto;">
-
-                <div class="testimonial-block reveal-testimonial"
-                    style="display:flex;flex-direction:column;align-items:center;">
-                    <span class="quote-mark">"</span>
-                    <p
-                        style="font-size:clamp(22px,3.5vw,40px);font-weight:500;color:#FFFFFF;line-height:1.35;margin-bottom:48px;">
-                        EcoEdu completely transformed how my students interact with environmental science. The
-                        gamification makes real-world impact addictive in the best way possible.
-                    </p>
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-                        <span style="font-size:17px;font-weight:500;color:#FFFFFF;">Ms. Rodriguez</span>
-                        <span
-                            style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">Science
-                            Teacher</span>
+            <!-- Badges preview -->
+            <div class="card" style="background:#181D00; color:#FFFFFF; border:none;">
+                <h3 style="font-size:24px; color:#FFFFFF; margin-bottom:32px;">Latest Badges</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                    {% if latest_badges %}
+                    {% for ua in latest_badges %}
+                    <div
+                        style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:24px; background:rgba(255,255,255,0.05); border-radius:16px;">
+                        <i data-lucide="{{ ua.achievement.badge_icon or 'award' }}"
+                            style="width:32px; height:32px; color:#A3D85F; margin-bottom:12px;"></i>
+                        <div style="font-weight:500; font-size:14px;">{{ ua.achievement.name }}</div>
                     </div>
+                    {% endfor %}
+                    {% else %}
+                    <p style="color:rgba(255,255,255,0.5); grid-column: span 2;">No badges earned yet.</p>
+                    {% endif %}
                 </div>
-
-                <div class="h-divider"></div>
-
-                <div class="testimonial-block reveal-testimonial"
-                    style="display:flex;flex-direction:column;align-items:center;">
-                    <span class="quote-mark">"</span>
-                    <p
-                        style="font-size:clamp(22px,3.5vw,40px);font-weight:500;color:#FFFFFF;line-height:1.35;margin-bottom:48px;">
-                        I never thought picking up trash at the local park would put me at the top of a leaderboard.
-                        I've unlocked 12 badges and I'm aiming for Level 20!
-                    </p>
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
-                        <span style="font-size:17px;font-weight:500;color:#FFFFFF;">Jason T.</span>
-                        <span
-                            style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.12em;">High
-                            School Junior</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-     8. FAQ
-     ============================================================ -->
-    <section class="edit-section" id="faq" style="text-align:center;">
-        <h2 class="edit-h2 reveal-heading" style="margin-bottom:96px;">Frequently Asked Questions</h2>
-
-        <div style="max-width:720px;margin:0 auto;text-align:left;">
-
-            <details class="faq-item reveal-card">
-                <summary>
-                    Is EcoEdu free for schools?
-                    <i data-lucide="plus" class="faq-icon"></i>
-                </summary>
-                <div class="faq-answer">
-                    Yes! The core platform is 100% free for educational institutions, teachers, and students to use. Our
-                    goal is to democratize environmental education.
+    <!-- Testimonials -->
+    <section class="section-padding" style="padding-top:0;">
+        <div style="text-align:center; margin-bottom:64px;">
+            <div
+                style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:#2A4A30; margin-bottom:16px;">
+                Testimonials</div>
+            <h2 class="section-title">The community speaks.</h2>
+        </div>
+        <div class="grid-2">
+            <div class="testi-card">
+                <i data-lucide="quote" class="quote-icon" style="width:40px; height:40px;"></i>
+                <p
+                    style="font-family:'Instrument Serif', serif; font-size:24px; color:#181D00; line-height:1.4; margin-bottom:32px;">
+                    "EcoEdu completely transformed how my students interact with environmental science. The
+                    gamification makes real-world impact addictive in the best way possible."</p>
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <img src="https://ui-avatars.com/api/?name=MR&background=EAEAE5&color=181D00"
+                        style="width:48px; height:48px; border-radius:50%;">
+                    <div>
+                        <div style="font-weight:600; color:#181D00;">Ms. Rodriguez</div>
+                        <div style="font-size:13px; color:rgba(24,29,0,0.6);">Science Teacher</div>
+                    </div>
                 </div>
+            </div>
+            <div class="testi-card">
+                <i data-lucide="quote" class="quote-icon" style="width:40px; height:40px;"></i>
+                <p
+                    style="font-family:'Instrument Serif', serif; font-size:24px; color:#181D00; line-height:1.4; margin-bottom:32px;">
+                    "I never thought picking up trash at the local park would put me at the top of a leaderboard.
+                    I've unlocked 12 badges and I'm aiming for Level 20!"</p>
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <img src="https://ui-avatars.com/api/?name=JT&background=EAEAE5&color=181D00"
+                        style="width:48px; height:48px; border-radius:50%;">
+                    <div>
+                        <div style="font-weight:600; color:#181D00;">Jason T.</div>
+                        <div style="font-size:13px; color:rgba(24,29,0,0.6);">High School Junior</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-padding" id="faq" style="padding-top:0; max-width:800px;">
+        <div style="text-align:center; margin-bottom:64px;">
+            <div
+                style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:#2A4A30; margin-bottom:16px;">
+                FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div>
+            <details class="faq-item">
+                <summary>Is EcoEdu free for schools? <i data-lucide="plus"
+                        style="width:24px; height:24px; transition: transform 0.2s;"></i></summary>
+                <div class="faq-answer">Yes! The core platform is 100% free for educational institutions, teachers,
+                    and students to use. Our goal is to democratize environmental education.</div>
             </details>
-
-            <details class="faq-item reveal-card">
-                <summary>
-                    How are challenges verified?
-                    <i data-lucide="plus" class="faq-icon"></i>
-                </summary>
-                <div class="faq-answer">
-                    Students submit photo evidence and written reflections for their challenges. These are securely
-                    routed to their connected teacher's Dashboard for 1-click approval or feedback.
-                </div>
+            <details class="faq-item">
+                <summary>How are challenges verified? <i data-lucide="plus"
+                        style="width:24px; height:24px; transition: transform 0.2s;"></i></summary>
+                <div class="faq-answer">Students submit photo evidence and written reflections for their challenges.
+                    These are securely routed to their connected teacher's Dashboard for 1-click approval or
+                    feedback.</div>
             </details>
-
-            <details class="faq-item reveal-card" style="border-bottom:none;margin-bottom:0;">
-                <summary>
-                    Is student data kept private?
-                    <i data-lucide="plus" class="faq-icon"></i>
-                </summary>
-                <div class="faq-answer">
-                    Absolutely. We comply with all major student data privacy laws. Profiles are only visible within
-                    closed school networks, and student photos are strictly moderated.
-                </div>
+            <details class="faq-item" style="border-bottom:none;">
+                <summary>Is student data kept private? <i data-lucide="plus"
+                        style="width:24px; height:24px; transition: transform 0.2s;"></i></summary>
+                <div class="faq-answer">Absolutely. We comply with all major student data privacy laws. Profiles are
+                    only visible within closed school networks, and student photos are strictly moderated.</div>
             </details>
-
         </div>
     </section>
 
-    <!-- ============================================================
-     9. CTA
-     ============================================================ -->
-    <section style="max-width:1400px;margin:0 auto;padding:0 24px 192px;">
-        <div class="cta-section reveal-cta">
-            <div class="texture"></div>
-            <!-- Animated particles inside CTA -->
-            <div class="cta-particle" style="width:300px;height:300px;top:-80px;right:-60px;" id="cta-p1"></div>
-            <div class="cta-particle" style="width:200px;height:200px;bottom:-40px;left:60px;" id="cta-p2"></div>
-            <div class="cta-particle" style="width:120px;height:120px;top:40px;left:30%;" id="cta-p3"></div>
-            <div style="position:relative;z-index:1;max-width:800px;margin:0 auto;">
-                <h2 style="font-size:clamp(36px,6vw,72px);font-weight:500;color:#fff;line-height:1.1;letter-spacing:-0.03em;margin-bottom:32px;"
-                    class="cta-heading">
-                    Start Your Sustainability Journey Today.
-                </h2>
-                <p style="font-size:clamp(18px,2vw,28px);color:rgba(255,255,255,0.75);margin-bottom:64px;font-weight:300;line-height:1.5;"
-                    class="cta-sub">
-                    Join thousands of students and teachers making a measurable impact on the planet.
-                </p>
-                <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;">
-                    <a href="{{ url_for('register') }}" class="edit-btn-primary magnetic-btn">
-                        <span class="btn-inner">Create Free Account</span>
-                    </a>
-                    <a href="{{ url_for('login') }}" class="edit-btn-secondary magnetic-btn">
-                        <span class="btn-inner">Sign In</span>
-                    </a>
-                </div>
+    <!-- Final CTA -->
+    <section class="section-padding" style="padding-top:0;">
+        <div class="cta-box">
+            <h2 class="cta-title">Start your sustainability<br><span style="color:#A3D85F; font-style:italic;">journey
+                    today.</span></h2>
+            <p style="color:rgba(255,255,255,0.7); font-size:20px; max-width:600px; margin:0 auto 48px;">Join
+                thousands of students and teachers making a measurable impact on the planet.</p>
+            <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+                <a href="{{ url_for('register') }}" class="btn-green">Create Free Account</a>
+                <a href="{{ url_for('login') }}" class="btn-secondary"
+                    style="background:transparent; color:#FFFFFF; border-color:rgba(255,255,255,0.3);">Sign In</a>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-     10. FOOTER
-     ============================================================ -->
-    <footer>
-        <div class="footer-inner">
-            <div style="display:flex;flex-direction:column;gap:24px;">
-                <a href="/" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
-                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco Logo"
-                        style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
-                    <span style="font-weight:500;font-size:22px;letter-spacing:-0.02em;color:#fff;">EduEco</span>
-                </a>
-                <p style="color:rgba(255,255,255,0.45);font-size:15px;">&copy; 2026 EduEco. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div style="display:flex; flex-direction:column; gap:24px; max-width:300px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EduEco"
+                    style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
+                <span style="font-weight:500;font-size:20px;letter-spacing:-0.02em;color:#181D00;">EduEco</span>
             </div>
-
-            <div class="footer-links">
-                <div class="footer-col">
-                    <h4>Product</h4>
-                    <a href="#">Features</a>
-                    <a href="#">Schools</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Social</h4>
-                    <a href="#">Twitter X</a>
-                    <a href="#">LinkedIn</a>
-                </div>
+            <p style="font-size:14px; color:rgba(24,29,0,0.6);">Gamifying environmental education for the next
+                generation of leaders.</p>
+            <p style="font-size:13px; color:rgba(24,29,0,0.4);">&copy; 2026 EduEco. All rights reserved.</p>
+        </div>
+        <div style="display:flex; gap:64px; flex-wrap:wrap;">
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Social</h4>
+                <a href="#">Twitter X</a>
+                <a href="#">LinkedIn</a>
             </div>
         </div>
     </footer>
 
-    <!-- ============================================================
-     SCRIPTS
-     ============================================================ -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/CustomEase.min.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // Init Lucide
+        lucide.createIcons();
 
-            // ── Init Lucide icons ──
-            if (window.lucide) lucide.createIcons();
-
-            // ── Register GSAP plugins ──
-            gsap.registerPlugin(ScrollTrigger, CustomEase);
-
-            // ── Custom eases ──
-            CustomEase.create('expo.premium', '0.16, 1, 0.3, 1');
-            CustomEase.create('smooth.reveal', '0.25, 0.46, 0.45, 0.94');
-
-            // ── Reduced motion ──
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (prefersReducedMotion) {
-                document.querySelectorAll('.hero-badge,.hero-p,.hero-btns .edit-btn-primary,.hero-btns .edit-btn-secondary')
-                    .forEach(el => el.style.opacity = '1');
-                return;
-            }
-
-            // ============================================================
-            // 1. CUSTOM CURSOR — dot + ring + label
-            // ============================================================
-            const dot = document.getElementById('cursor-dot');
-            const ring = document.getElementById('cursor-ring');
-            const cursorLabel = document.getElementById('cursor-label');
-            let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-            let rx = mx, ry = my;
-            let isMoving = false;
-
-            window.addEventListener('mousemove', e => {
-                mx = e.clientX; my = e.clientY;
-                isMoving = true;
-                gsap.to(dot, { x: mx, y: my, duration: 0.08, ease: 'none' });
-                gsap.to(cursorLabel, { x: mx, y: my, duration: 0.08, ease: 'none' });
-            });
-
-            // Ring lags behind
-            (function animateRing() {
-                rx += (mx - rx) * 0.1;
-                ry += (my - ry) * 0.1;
-                gsap.set(ring, { x: rx, y: ry });
-                requestAnimationFrame(animateRing);
-            })();
-
-            // Expand on hover over interactive elements
-            document.querySelectorAll('a, button, summary, .edit-card, .feat-card, .lb-card, .badge-card').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    gsap.to(dot, { scale: 0, duration: 0.3, ease: 'power3.out' });
-                    gsap.to(ring, { scale: 2, borderColor: 'rgba(24, 29, 0,0.6)', duration: 0.35, ease: 'power3.out' });
-                });
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(dot, { scale: 1, duration: 0.3, ease: 'power3.out' });
-                    gsap.to(ring, { scale: 1, borderColor: 'rgba(24, 29, 0,0.35)', duration: 0.35, ease: 'power3.out' });
-                });
-            });
-
-            // ============================================================
-            // 2. SCROLL PROGRESS BAR
-            // ============================================================
-            const progressBar = document.getElementById('scroll-progress');
-            ScrollTrigger.create({
-                trigger: document.body,
-                start: 'top top',
-                end: 'bottom bottom',
-                onUpdate: self => {
-                    gsap.set(progressBar, { scaleX: self.progress, transformOrigin: 'left' });
-                }
-            });
-
-            // ============================================================
-            // 3. STICKY NAV
-            // ============================================================
-            const nav = document.getElementById('main-nav');
-            const navBackdrop = document.getElementById('nav-backdrop');
-            const navSignin = document.getElementById('nav-signin');
-            if (navSignin) navSignin.style.display = 'block';
-
-            ScrollTrigger.create({
-                start: 'top -80',
-                onToggle: self => {
-                    if (self.isActive) {
-                        nav.classList.add('scrolled');
-                        navBackdrop.classList.add('scrolled');
-                    } else {
-                        nav.classList.remove('scrolled');
-                        navBackdrop.classList.remove('scrolled');
+        // Video loop logic
+        document.addEventListener("DOMContentLoaded", function () {
+            const video = document.getElementById("hero-bg-video");
+            if (video) {
+                const loopVideo = () => {
+                    if (video.currentTime >= 38) {
+                        video.currentTime = 0;
                     }
-                }
-            });
+                    requestAnimationFrame(loopVideo);
+                };
+                requestAnimationFrame(loopVideo);
 
-            // Active nav link on scroll
-            const sections = document.querySelectorAll('section[id]');
-            sections.forEach(sec => {
-                ScrollTrigger.create({
-                    trigger: sec,
-                    start: 'top 50%',
-                    end: 'bottom 50%',
-                    onToggle: self => {
-                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                        const activeLink = document.querySelector(`.nav-link[href="#${sec.id}"]`);
-                        if (activeLink && self.isActive) activeLink.classList.add('active');
-                    }
-                });
-            });
-
-            // ============================================================
-            // 4. NAV ENTRANCE
-            // ============================================================
-            gsap.fromTo(nav,
-                { y: -40, opacity: 0, filter: 'blur(8px)' },
-                { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.2, ease: 'expo.premium', delay: 0.1 }
-            );
-
-            // ============================================================
-            // 5. HERO — cinematic image entrance
-            // ============================================================
-            const heroImg = document.getElementById('hero-img');
-            if (heroImg) {
-                gsap.set(heroImg, { filter: 'blur(10px)', opacity: 0 });
-                gsap.to(heroImg, {
-                    filter: 'blur(0px)',
-                    opacity: 1,
-                    duration: 2.2,
-                    ease: 'expo.premium',
-                    delay: 0.05
-                });
-
-                // Scroll parallax on the image
-                gsap.to('.hero-img-wrap', {
-                    y: -140,
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: '#hero',
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: 1.8
-                    }
-                });
-            }
-
-            // ============================================================
-            // 6. HERO — word-split heading
-            // ============================================================
-            const heroH1 = document.getElementById('hero-h1');
-            if (heroH1) {
-                const raw = heroH1.textContent.trim();
-                const words = raw.split(' ');
-                heroH1.innerHTML = words.map(w =>
-                    `<span class="overflow-hidden-clip" style="display:inline-block;vertical-align:top;margin-right:0.22em;overflow:hidden;"><span class="word-inner" style="display:inline-block;">${w}</span></span>`
-                ).join('');
-
-                const wordInners = heroH1.querySelectorAll('.word-inner');
-                gsap.set(wordInners, { y: '115%', opacity: 0, filter: 'blur(8px)', rotationX: -12 });
-                gsap.to(wordInners, {
-                    y: '0%',
-                    opacity: 1,
-                    filter: 'blur(0px)',
-                    rotationX: 0,
-                    duration: 1.2,
-                    stagger: { each: 0.065, ease: 'power2.out' },
-                    ease: 'expo.premium',
-                    delay: 0.55,
-                    transformOrigin: '0% 100%'
-                });
-            }
-
-            // ============================================================
-            // 7. HERO SUPPORTING ELEMENTS
-            // ============================================================
-            gsap.set('.hero-badge', { y: 20, opacity: 0, filter: 'blur(8px)' });
-            gsap.to('.hero-badge', { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1, ease: 'expo.premium', delay: 0.35 });
-
-            gsap.set('.hero-p', { y: 36, opacity: 0, filter: 'blur(10px)' });
-            gsap.to('.hero-p', { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.1, ease: 'expo.premium', delay: 0.9 });
-
-            const heroBtns = document.querySelectorAll('.hero-btns .edit-btn-primary, .hero-btns .edit-btn-secondary');
-            gsap.set(heroBtns, { y: 28, opacity: 0, filter: 'blur(6px)' });
-            gsap.to(heroBtns, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.13, ease: 'expo.premium', delay: 1.15 });
-
-            // Scroll indicator
-            gsap.to('#scroll-indicator', { opacity: 1, duration: 1, delay: 1.8, ease: 'power2.out' });
-            // Hide on scroll
-            ScrollTrigger.create({
-                start: 'top -5%',
-                onEnter: () => gsap.to('#scroll-indicator', { opacity: 0, duration: 0.5 }),
-                onLeaveBack: () => gsap.to('#scroll-indicator', { opacity: 1, duration: 0.5 })
-            });
-
-            // Text column parallax
-            gsap.to('.hero-text-col', {
-                y: -80,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '#hero',
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: 1.5
-                }
-            });
-
-            // ============================================================
-            // 8. HERO ORBS — ambient float
-            // ============================================================
-            document.querySelectorAll('.hero-orb').forEach((orb, i) => {
-                gsap.to(orb, {
-                    x: i % 2 === 0 ? 24 : -24,
-                    y: i % 2 === 0 ? -36 : 24,
-                    duration: 7 + i * 2.5,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'sine.inOut'
-                });
-            });
-
-            // ============================================================
-            // 10. CARD HOVER — 3D tilt + lift + shadow
-            // ============================================================
-            document.querySelectorAll('.tilt-card').forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const cx = rect.left + rect.width / 2;
-                    const cy = rect.top + rect.height / 2;
-                    const nx = (e.clientX - cx) / (rect.width / 2);
-                    const ny = (e.clientY - cy) / (rect.height / 2);
-                    const rx = ny * -6;
-                    const ry = nx * 6;
-
-                    gsap.to(card, {
-                        rotationX: rx,
-                        rotationY: ry,
-                        y: -10,
-                        scale: 1.018,
-                        boxShadow: `${ry * -1.5}px ${-rx * 1.5 + 20}px 48px rgba(24, 29, 0,0.14)`,
-                        duration: 0.5,
-                        ease: 'power3.out',
-                        transformPerspective: 800,
-                        transformOrigin: 'center'
-                    });
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        rotationX: 0,
-                        rotationY: 0,
-                        y: 0,
-                        scale: 1,
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
-                        duration: 0.7,
-                        ease: 'elastic.out(1, 0.4)'
-                    });
-                });
-            });
-
-            // Non-tilt cards still get lift
-            document.querySelectorAll('.edit-card:not(.tilt-card), .feat-card:not(.tilt-card), .lb-card:not(.tilt-card), .badge-card:not(.tilt-card)').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, { y: -10, scale: 1.015, boxShadow: '0 32px 64px rgba(24, 29, 0,0.12)', duration: 0.5, ease: 'power3.out' });
-                });
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, { y: 0, scale: 1, boxShadow: '0 10px 40px rgba(0,0,0,0.02)', duration: 0.5, ease: 'power3.out' });
-                });
-            });
-
-            // ============================================================
-            // 11. STATS — animated counters with blur entrance
-            // ============================================================
-            const statCards = document.querySelectorAll('.stat-card');
-            gsap.set(statCards, { opacity: 0, y: 60, scale: 0.93, filter: 'blur(12px)' });
-            ScrollTrigger.create({
-                trigger: '.stats-grid',
-                start: 'top 82%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(statCards, {
-                        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
-                        duration: 0.9, stagger: 0.1, ease: 'expo.premium',
-                        onComplete: () => {
-                            document.querySelectorAll('.stat-number').forEach(el => {
-                                const target = parseFloat(el.dataset.target);
-                                const suffix = el.dataset.suffix || '';
-                                const isDecimal = el.dataset.target.includes('.');
-                                const obj = { val: 0 };
-                                gsap.to(obj, {
-                                    val: target,
-                                    duration: 2.2,
-                                    ease: 'power3.out',
-                                    onUpdate: () => {
-                                        const v = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val);
-                                        el.textContent = v + suffix;
-                                    }
-                                });
-                            });
-                        }
+                const muteBtn = document.getElementById('hero-mute-btn');
+                if (muteBtn) {
+                    muteBtn.addEventListener('click', () => {
+                        video.muted = !video.muted;
+                        const iconName = video.muted ? 'volume-x' : 'volume-2';
+                        muteBtn.innerHTML = `<i id="mute-icon" data-lucide="${iconName}" style="width: 20px; height: 20px;"></i>`;
+                        lucide.createIcons();
                     });
                 }
-            });
-
-            // ============================================================
-            // 12. SECTION HEADINGS — line-by-line blur reveal
-            // ============================================================
-            document.querySelectorAll('.reveal-heading').forEach(el => {
-                const text = el.innerHTML;
-                // Split into line groups roughly by width
-                gsap.set(el, { opacity: 0, y: 60, filter: 'blur(14px)', transformOrigin: '0 100%' });
-                ScrollTrigger.create({
-                    trigger: el,
-                    start: 'top 88%',
-                    once: true,
-                    onEnter: () => {
-                        gsap.to(el, {
-                            opacity: 1, y: 0, filter: 'blur(0px)',
-                            duration: 1.1, ease: 'expo.premium'
-                        });
-                    }
-                });
-            });
-
-            // ============================================================
-            // 13. REVEAL TEXT — paragraph fade+slide
-            // ============================================================
-            document.querySelectorAll('.reveal-text').forEach(el => {
-                gsap.set(el, { opacity: 0, y: 35, filter: 'blur(8px)' });
-                ScrollTrigger.create({
-                    trigger: el,
-                    start: 'top 90%',
-                    once: true,
-                    onEnter: () => {
-                        gsap.to(el, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'expo.premium' });
-                    }
-                });
-            });
-
-            // ============================================================
-            // 14. FEATURE CARDS — staggered cinematic entrance
-            // ============================================================
-            const featCards = document.querySelectorAll('.feat-card');
-            gsap.set(featCards, { opacity: 0, y: 80, scale: 0.92, filter: 'blur(12px)', rotationX: 8 });
-            ScrollTrigger.create({
-                trigger: '#features',
-                start: 'top 72%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(featCards, {
-                        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationX: 0,
-                        duration: 1.0, stagger: 0.09, ease: 'expo.premium',
-                        transformPerspective: 1000
-                    });
-                }
-            });
-
-            // ============================================================
-            // 15. LEADERBOARD CARDS — slide in from left with stagger
-            // ============================================================
-            const lbCards = document.querySelectorAll('.lb-card');
-            gsap.set(lbCards, { opacity: 0, x: -60, filter: 'blur(10px)' });
-            lbCards.forEach((card, i) => {
-                ScrollTrigger.create({
-                    trigger: card,
-                    start: 'top 88%',
-                    once: true,
-                    onEnter: () => {
-                        gsap.to(card, {
-                            opacity: 1, x: 0, filter: 'blur(0px)',
-                            duration: 0.9, delay: i * 0.12, ease: 'expo.premium'
-                        });
-                    }
-                });
-            });
-
-            // ============================================================
-            // 16. BADGE CARDS — scale + blur with back.out bounce
-            // ============================================================
-            const badgeCards = document.querySelectorAll('.badge-card');
-            gsap.set(badgeCards, { opacity: 0, scale: 0.75, filter: 'blur(12px)', y: 20 });
-            ScrollTrigger.create({
-                trigger: '.badge-card',
-                start: 'top 85%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(badgeCards, {
-                        opacity: 1, scale: 1, filter: 'blur(0px)', y: 0,
-                        duration: 0.85, stagger: 0.1, ease: 'back.out(1.6)'
-                    });
-                }
-            });
-
-            // ============================================================
-            // 17. FAQ ITEMS — fade + slide
-            // ============================================================
-            document.querySelectorAll('.faq-item').forEach((item, i) => {
-                gsap.set(item, { opacity: 0, y: 32, filter: 'blur(6px)' });
-                ScrollTrigger.create({
-                    trigger: item,
-                    start: 'top 90%',
-                    once: true,
-                    onEnter: () => {
-                        gsap.to(item, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, delay: i * 0.1, ease: 'expo.premium' });
-                    }
-                });
-            });
-
-            // ============================================================
-            // 18. HOW-IT-WORKS STEP NUMBERS — parallax + reveal
-            // ============================================================
-            document.querySelectorAll('.reveal-stepnum').forEach((el, i) => {
-                gsap.set(el, { opacity: 0, x: -80, filter: 'blur(14px)' });
-                ScrollTrigger.create({
-                    trigger: el,
-                    start: 'top 82%',
-                    once: true,
-                    onEnter: () => {
-                        gsap.to(el, { opacity: 0.18, x: 0, filter: 'blur(0px)', duration: 1.4, ease: 'expo.premium' });
-                    }
-                });
-                // Parallax movement on each step
-                gsap.to(el, {
-                    y: -56,
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: el.parentElement,
-                        start: 'top bottom',
-                        end: 'bottom top',
-                        scrub: 1.2
-                    }
-                });
-            });
-
-            // ============================================================
-            // 19. TESTIMONIALS — large-text cinematic entrance
-            // ============================================================
-            document.querySelectorAll('.testimonial-block').forEach((block, i) => {
-                const quote = block.querySelector('p');
-                if (quote) {
-                    gsap.set(quote, { opacity: 0, y: 50, filter: 'blur(12px)' });
-                    ScrollTrigger.create({
-                        trigger: block,
-                        start: 'top 80%',
-                        once: true,
-                        onEnter: () => {
-                            gsap.to(quote, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.3, ease: 'expo.premium', delay: i * 0.15 });
-                        }
-                    });
-                }
-                gsap.set(block, { opacity: 0 });
-                ScrollTrigger.create({
-                    trigger: block,
-                    start: 'top 85%',
-                    once: true,
-                    onEnter: () => gsap.to(block, { opacity: 1, duration: 0.5, ease: 'none' })
-                });
-            });
-
-            // ============================================================
-            // 20. CTA SECTION — scale + blur cinematic entrance
-            // ============================================================
-            const ctaSection = document.querySelector('.reveal-cta');
-            if (ctaSection) {
-                gsap.set(ctaSection, { opacity: 0, scale: 0.92, y: 80, filter: 'blur(20px)' });
-                ScrollTrigger.create({
-                    trigger: ctaSection,
-                    start: 'top 82%',
-                    once: true,
-                    onEnter: () => {
-                        gsap.to(ctaSection, {
-                            opacity: 1, scale: 1, y: 0, filter: 'blur(0px)',
-                            duration: 1.5, ease: 'expo.premium'
-                        });
-                        // Stagger CTA content
-                        gsap.fromTo('.cta-heading',
-                            { opacity: 0, y: 40, filter: 'blur(10px)' },
-                            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.premium', delay: 0.3 }
-                        );
-                        gsap.fromTo('.cta-sub',
-                            { opacity: 0, y: 30 },
-                            { opacity: 1, y: 0, duration: 1, ease: 'expo.premium', delay: 0.5 }
-                        );
-                    }
-                });
-
-                // CTA particles
-                ['#cta-p1', '#cta-p2', '#cta-p3'].forEach((sel, i) => {
-                    const el = document.querySelector(sel);
-                    if (el) {
-                        gsap.to(el, {
-                            x: i % 2 === 0 ? 30 : -20,
-                            y: i % 2 === 0 ? -40 : 30,
-                            duration: 6 + i * 1.5,
-                            repeat: -1,
-                            yoyo: true,
-                            ease: 'sine.inOut'
-                        });
-                    }
-                });
             }
-
-            // ============================================================
-            // 21. FOOTER — reveal
-            // ============================================================
-            gsap.set('footer', { opacity: 0, y: 50, filter: 'blur(8px)' });
-            ScrollTrigger.create({
-                trigger: 'footer',
-                start: 'top 92%',
-                once: true,
-                onEnter: () => gsap.to('footer', { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.premium' })
-            });
-
-            // ============================================================
-            // 22. MARQUEE BAND — infinite scroll
-            // ============================================================
-            const track = document.getElementById('marquee-track');
-            if (track) {
-                // Clone items for seamless loop
-                const clone = track.cloneNode(true);
-                // remove ID from clone to avoid duplicates
-                clone.removeAttribute('id');
-                track.parentNode.appendChild(clone);
-
-                const marqueeAnim = gsap.to([track, clone], {
-                    xPercent: -100,
-                    duration: track.scrollWidth / 60,
-                    ease: 'none',
-                    repeat: -1
-                });
-
-                // Slow on hover
-                document.querySelector('.marquee-band').addEventListener('mouseenter', () => {
-                    gsap.to(marqueeAnim, { timeScale: 0.3, duration: 0.5 });
-                });
-                document.querySelector('.marquee-band').addEventListener('mouseleave', () => {
-                    gsap.to(marqueeAnim, { timeScale: 1, duration: 0.5 });
-                });
-            }
-
-            // ============================================================
-            // 23. SECTION HEADER — reveal
-            // ============================================================
-            document.querySelectorAll('.section-header').forEach(el => {
-                gsap.set(el, { opacity: 0, y: 40, filter: 'blur(8px)' });
-                ScrollTrigger.create({
-                    trigger: el,
-                    start: 'top 84%',
-                    once: true,
-                    onEnter: () => gsap.to(el, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.premium' })
-                });
-            });
-
-            // ============================================================
-            // 24. LEADERBOARD+BADGES GRID — subtle parallax
-            // ============================================================
-            gsap.to('.lb-badges-grid', {
-                y: -24,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.lb-badges-grid',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 0.9
-                }
-            });
-
-            // ============================================================
-            // 25. BADGE PULSE — stagger the animation
-            // ============================================================
-            document.querySelectorAll('.badge-pulse').forEach((pulse, i) => {
-                pulse.style.animationDelay = `${i * 0.5}s`;
-            });
-
-            // ============================================================
-            // RESPONSIVE
-            // ============================================================
-            function applyResponsive() {
-                const isMobile = window.innerWidth < 768;
-                const lbBadgesGrid = document.querySelector('.lb-badges-grid');
-                if (lbBadgesGrid) lbBadgesGrid.style.gridTemplateColumns = isMobile ? '1fr' : '1fr 1fr';
-                const navSignin = document.getElementById('nav-signin');
-                if (navSignin) navSignin.style.display = isMobile ? 'none' : 'block';
-                if (isMobile) {
-                    dot.style.display = 'none';
-                    ring.style.display = 'none';
-                }
-            }
-            applyResponsive();
-            window.addEventListener('resize', applyResponsive);
-
-            // ============================================================
-            // PERFORMANCE — will-change cleanup after animation
-            // ============================================================
-            ScrollTrigger.addEventListener('scrollEnd', () => {
-                document.querySelectorAll('[style*="will-change"]').forEach(el => {
-                    if (!el.matches('#hero-img, .hero-orb, .hero-text-col, .hero-img-wrap')) {
-                        el.style.willChange = 'auto';
-                    }
-                });
-            });
-
         });
     </script>
 </body>

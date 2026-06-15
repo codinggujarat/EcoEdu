@@ -54,7 +54,7 @@ body { background: #F3F4E5 !important; }
 /* Mobile Responsive Overrides */
 @media (max-width: 639px) {
     .premium-section { padding: 32px 16px !important; }
-    .premium-section-title { font-size: 26px !important; margin-bottom: 6px !important; }
+    
     .premium-section-desc { font-size: 14px !important; margin-bottom: 20px !important; line-height: 1.4 !important; }
     
     .premium-card { padding: 16px !important; border-radius: 20px !important; }
@@ -105,7 +105,7 @@ body { background: #F3F4E5 !important; }
 {# ════ SECTION 1 — CLASS OVERVIEW ════ #}
 <div class="premium-section">
 <div class="">
-    <h2 class="premium-section-title">Class Overview</h2>
+    <h2 class="section-title">Class Overview</h2>
     <p class="premium-section-desc">High-level statistics for your enrolled students.</p>
 
     <div class="td-stat-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap:16px;">
@@ -131,7 +131,7 @@ body { background: #F3F4E5 !important; }
 {# ════ SECTION 2 — ACTIVITY & INSIGHTS ════ #}
 <div class="premium-section">
 <div class="">
-    <h2 class="premium-section-title">Activity &amp; Insights</h2>
+    <h2 class="section-title">Activity &amp; Insights</h2>
     <p class="premium-section-desc">Recent student actions and impact trends.</p>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:24px;">
@@ -139,7 +139,7 @@ body { background: #F3F4E5 !important; }
         {# Left: Recent Activity Feed #}
         <div class="premium-card" style="display:flex; flex-direction:column; max-width: 100%;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-                <h3 style="font-size:20px; font-weight:500; color:#1B1B1B;">Recent Student Activity</h3>
+                <h3 class="section-title">Recent Student Activity</h3>
                 <a href="{{ url_for('teacher_profiles') }}" style="color:#181D00; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; text-decoration:none;">View All</a>
             </div>
 
@@ -174,7 +174,7 @@ body { background: #F3F4E5 !important; }
 
         {# Right: Analytics Chart #}
         <div class="premium-card" style="display:flex; flex-direction:column;">
-            <h3 style="font-size:20px; font-weight:500; color:#1B1B1B; margin-bottom:8px;">Impact Trends</h3>
+            <h3 class="section-title">Impact Trends</h3>
             <p style="font-size:14px; color:#707070; margin-bottom:32px;">Global points earned over time.</p>
             
             <div style="width:100%; min-height:200px; display:flex; align-items:flex-end; gap:8px; padding-bottom:12px; border-bottom:1px solid rgba(24, 29, 0,.1);">

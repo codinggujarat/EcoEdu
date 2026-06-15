@@ -19,8 +19,7 @@ replit.*
 uv.lock
 
 # Database
-*.sqlite3
-*.db
+
 
 # Uploads and User Data
 static/uploads/*

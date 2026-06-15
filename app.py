@@ -396,7 +396,9 @@ def check_and_award_achievements(user):
 # Routes
 @app.route('/')
 def index():
-    return render_template('index.html')
+    top_students = User.query.filter_by(role='student').order_by(User.eco_points.desc()).limit(3).all()
+    latest_badges = UserAchievement.query.order_by(UserAchievement.earned_at.desc()).limit(4).all()
+    return render_template('index.html', top_students=top_students, latest_badges=latest_badges)
 
 @app.route('/register', methods=['GET', 'POST'])
 

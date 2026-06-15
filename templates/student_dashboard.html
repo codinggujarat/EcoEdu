@@ -27,7 +27,7 @@ body { background: #F3F4E5 !important; }
 .db-inner { max-width: 1280px; margin: 0 auto; }
 
 /* Section headings — same as homepage edit-h2 */
-.premium-section-title {
+.section-title {
     font-size: 32px; font-weight: 500; line-height: 1.1;
     letter-spacing: -0.02em; color: #1B1B1B; margin-bottom: 8px;
 }
@@ -73,7 +73,7 @@ body { background: #F3F4E5 !important; }
 
 @media (min-width: 768px) {
     .db-section, .premium-section { padding: 56px 48px; }
-    .premium-section-title { font-size: 40px; }
+    
     .premium-card { padding: 36px; }
     #carousel { padding: 0 calc(50% - 140px); } /* 280px / 2 = 140px */
     .carousel-item { width:280px; }
@@ -92,7 +92,7 @@ body { background: #F3F4E5 !important; }
 /* Mobile Responsive Overrides */
 @media (max-width: 639px) {
     .premium-section { padding: 32px 16px !important; }
-    .premium-section-title { font-size: 26px !important; margin-bottom: 6px !important; }
+    
     .premium-section-desc { font-size: 14px !important; margin-bottom: 20px !important; line-height: 1.4 !important; }
     
     .premium-card { padding: 16px !important; border-radius: 20px !important; }
@@ -145,7 +145,7 @@ body { background: #F3F4E5 !important; }
    ═══════════════════════════════════════════ #}
 <div class="premium-section">
 <div class="">
-    <h2 class="premium-section-title">At a Glance</h2>
+    <h2 class="section-title">At a Glance</h2>
     <p class="premium-section-desc">Your overall progress in the EduEco program.</p>
 
     {% set completed = user.challenge_completions|length %}
@@ -176,7 +176,7 @@ body { background: #F3F4E5 !important; }
    ═══════════════════════════════════════════ #}
 <div class="premium-section">
 <div class="">
-    <h2 class="premium-section-title">Activity &amp; Challenges</h2>
+    <h2 class="section-title">Activity &amp; Challenges</h2>
     <p class="premium-section-desc">Your current tasks and daily contributions.</p>
 
     <div style="display:grid; grid-template-columns:1fr; gap:24px;">
@@ -286,7 +286,7 @@ body { background: #F3F4E5 !important; }
    ═══════════════════════════════════════════ #}
 <div class="premium-section">
 <div id="trophy-room" style="scroll-margin-top: 80px;">
-    <h2 class="premium-section-title">Trophy Room</h2>
+    <h2 class="section-title">Trophy Room</h2>
     <p class="premium-section-desc">Badges, level progress, and unlocked achievements.</p>
 
     <div style="display:grid; grid-template-columns:1fr; gap:24px;">
@@ -298,7 +298,7 @@ body { background: #F3F4E5 !important; }
                     <div style="width:40px; height:40px; background:rgba(24, 29, 0,.1); border-radius:12px; display:flex; align-items:center; justify-content:center;">
                         <i data-lucide="medal" style="width:18px; height:18px; color:#181D00;"></i>
                     </div>
-                    <h3 style="font-size:18px; font-weight:500; color:#1B1B1B;">Recent Achievements</h3>
+                    <h3 class="section-title">Recent Achievements</h3>
                 </div>
                 <div style="display:flex; gap:8px;">
                     <button id="prev" style="width:36px; height:36px; border-radius:10px; border:1px solid rgba(24, 29, 0,.12); background:#F7F7F2; color:#707070; display:flex; align-items:center; justify-content:center; cursor:pointer; ">
@@ -405,7 +405,7 @@ body { background: #F3F4E5 !important; }
 {% if recommendations %}
 <div class="premium-section">
 <div id="todays-focus" style="scroll-margin-top: 80px;">
-    <h2 class="premium-section-title">Today's Focus</h2>
+    <h2 class="section-title">Today's Focus</h2>
     <p class="premium-section-desc">Curated challenges personalized for your progress level.</p>
     <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:24px;">
         {% for challenge in recommendations %}
@@ -433,7 +433,7 @@ body { background: #F3F4E5 !important; }
    ═══════════════════════════════════════════ #}
 <div class="premium-section">
 <div id="insights-analytics" style="scroll-margin-top: 80px;">
-    <h2 class="premium-section-title">Insights &amp; Analytics</h2>
+    <h2 class="section-title">Insights &amp; Analytics</h2>
     <p class="premium-section-desc">Visualize your eco-impact over time.</p>
     <div id="analytics-section" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap:24px;">
         <div class="premium-card">
@@ -466,7 +466,7 @@ body { background: #F3F4E5 !important; }
    ═══════════════════════════════════════════ #}
 <div class="premium-section">
 <div id="verified-certificates" style="scroll-margin-top: 80px;">
-    <h2 class="premium-section-title">Verified Certificates</h2>
+    <h2 class="section-title">Verified Certificates</h2>
     <p class="premium-section-desc">Official proof of your environmental achievements.</p>
 
     {% if user.certificates %}
@@ -510,7 +510,7 @@ body { background: #F3F4E5 !important; }
    ═══════════════════════════════════════════ #}
 <div class="premium-section">
 <div id="learning-journey" style="scroll-margin-top: 80px;">
-    <h2 class="premium-section-title">Learning Journey</h2>
+    <h2 class="section-title">Learning Journey</h2>
     <p class="premium-section-desc">Track your professional evolution through the EduEco program.</p>
 
     {% set current_lvl = user.level %}
