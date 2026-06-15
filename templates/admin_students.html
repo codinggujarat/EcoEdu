@@ -117,9 +117,12 @@
                                     </div>
                                 </td>
                                 <td class="p-4 text-right">
-                                    <button class="btn-secondary ml-auto text-xs py-1.5 px-3 h-auto">
-                                        Actions <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
-                                    </button>
+                                    <form action="{{ url_for('admin_delete_user', user_id=student.id) }}" method="POST" class="inline">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn-secondary text-[#181D00] hover:bg-gray-100 hover:border-red-200" onclick="return confirm('Delete this student?')">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i> Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             {% endfor %}

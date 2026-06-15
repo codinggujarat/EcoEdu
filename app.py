@@ -47,7 +47,7 @@ app = Flask(__name__)
 
 # Configuration
 app.config['SECRET_KEY'] = os.environ.get('SESSION_SECRET', 'dev-secret-key-change-in-production')
-db_url = os.environ.get('DATABASE_URL', 'sqlite:///eco_education.db')
+db_url = os.environ.get('DATABASE_URL', 'postgresql://ecoedu_db_user:RNGUeCg7McxrBenCA6k8AUuCIyV53w8Q@dpg-d8nphibsq97s73bmh76g-a/ecoedu_db')
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
@@ -2521,16 +2521,20 @@ cert_service = CertificateService(os.path.join(app.root_path, "static"))
 
 # Run initialization for both Development and Production (Gunicorn)
 with app.app_context():
-    # Create all database tables
-    db.create_all()
-    print("Database Tables Created:", db.metadata.tables.keys())
-    # Check and add new columns if they don't exist
     try:
+        print(f"DEBUG: Attempting to connect to database using engine: {db.engine.name}")
+        # Create all database tables
+        db.create_all()
+        print("Database Tables Created:", db.metadata.tables.keys())
+        
         print("DEBUG: DATABASE URI:", app.config["SQLALCHEMY_DATABASE_URI"])
-        print("DEBUG: Total users:", User.query.count())
-        print("DEBUG: Registered emails:")
-        for u in User.query.all():
-            print(" -", u.email)
+        print("DEBUG: Total Users:", User.query.count())
+        print("DEBUG: Total Challenges:", Challenge.query.count())
+        print("DEBUG: Total Achievements:", Achievement.query.count())
+        print("DEBUG: Total Puzzles:", Puzzle.query.count())
+        print("DEBUG: Total Levels:", Level.query.count())
+        print("DEBUG: Total Certificates:", Certificate.query.count())
+        print("DEBUG: Total EcoTips:", EcoTip.query.count())
             
         engine = db.engine
         from sqlalchemy import inspect, text
