@@ -31,13 +31,9 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
 .edit-label { display: block; font-size: 15px; font-weight: 500; color: #181D00; margin-bottom: 8px; }
 .edit-error { color: #EF4444; font-size: 13px; margin-top: 6px; }
 .edit-link { color: #707070; font-size: 14px; font-weight: 500; text-decoration: none;  }
-.otp-input { width: 45px; height: 55px; border: 1px solid rgba(24,29,0,0.08); border-radius: 12px; text-align: center; font-size: 20px; font-weight: 600; color: #181D00;  }
-@media (min-width: 430px) { .otp-input { width: 50px; height: 60px; font-size: 24px; border-radius: 16px; } }
-@media (min-width: 768px) { .otp-input { width: 60px; height: 60px; } }
+.otp-input { width: 60px; height: 60px; border: 1px solid rgba(24,29,0,0.08); border-radius: 16px; text-align: center; font-size: 24px; font-weight: 600; color: #181D00;  }
 .otp-input:focus { border-color: #181D00; outline: none; box-shadow: 0 0 0 1px #181D00; }
 .field-wrapper { margin-bottom: 18px; }
-.otp-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 24px; width: 100%; }
-@media (min-width: 430px) { .otp-container { gap: 12px; } }
 </style>
 
 <style>
@@ -83,7 +79,7 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
                 <input type="hidden" name="email" value="{{ email }}">
                 <input type="hidden" name="otp" id="final-otp">
                 
-                <div class="otp-container">
+                <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px;">
                     <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
                     <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
                     <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
