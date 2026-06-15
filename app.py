@@ -2527,7 +2527,15 @@ with app.app_context():
         db.create_all()
         print("Database Tables Created:", db.metadata.tables.keys())
         
-        print("DEBUG: DATABASE URI:", app.config["SQLALCHEMY_DATABASE_URI"])
+        safe_uri = app.config["SQLALCHEMY_DATABASE_URI"]
+        if "@" in safe_uri and ":" in safe_uri:
+            # Format is usually postgresql://user:pass@host/db
+            parts = safe_uri.split("@")
+            creds = parts[0].split(":")
+            if len(creds) >= 3: # e.g. postgresql://user:password
+                safe_uri = f"{creds[0]}:{creds[1]}:***@{parts[1]}"
+                
+        print(f"DEBUG: DATABASE URI: {safe_uri}")
         print("DEBUG: Total Users:", User.query.count())
         print("DEBUG: Total Challenges:", Challenge.query.count())
         print("DEBUG: Total Achievements:", Achievement.query.count())
