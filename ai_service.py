@@ -91,6 +91,19 @@ class RecommendationEngine:
 class VerificationSystem:
     def __init__(self):
         self.model = None
+        self.tf_image = None
+        self.preprocess_input = None
+        self.decode_predictions = None
+        self._model_load_attempted = False
+        self._tf_available = True
+
+    def _lazy_load_model(self):
+        if self._model_load_attempted:
+            return
+        
+        self._model_load_attempted = True
+        logger.info("Starting lazy load of MobileNetV2 AI model...")
+        
         try:
             import tensorflow as tf
             from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input, decode_predictions
@@ -98,17 +111,24 @@ class VerificationSystem:
             self.tf_image = image
             self.preprocess_input = preprocess_input
             self.decode_predictions = decode_predictions
+            
+            logger.info("TensorFlow imported. Instantiating MobileNetV2 (this may take a moment)...")
             self.model = MobileNetV2(weights='imagenet', include_top=True)
-            logger.info("MobileNetV2 loaded successfully.")
+            logger.info("MobileNetV2 loaded successfully!")
         except ImportError:
+            self._tf_available = False
             logger.warning("TensorFlow not found. AI Verification disabled.")
         except Exception as e:
-            logger.warning(f"Failed to load MobileNetV2: {e}")
+            self._tf_available = False
+            logger.error(f"Failed to load MobileNetV2: {e}")
 
     def verify_submission(self, image_path, challenge_type):
-        if not self.model:
+        # Only load the heavy model when a prediction is actually requested
+        self._lazy_load_model()
+        
+        if not self.model or not self._tf_available:
              # Fallback mock for testing if model fails to load
-             return False, 0.0, "Model not generated"
+             return False, 0.0, "Model not loaded or TensorFlow unavailable"
         
         try:
             img = self.tf_image.load_img(image_path, target_size=(224, 224))
