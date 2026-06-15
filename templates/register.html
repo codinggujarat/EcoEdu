@@ -14,7 +14,7 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
 @media (min-width: 1024px) { .edit-split-left { display: block; } }
 .edit-split-right { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; padding-top: 100px; position: relative; overflow-y: auto; background-color: #F3F4E5; }
 @media (min-width: 1024px) { .edit-split-right { padding: 40px; overflow-y: hidden; min-height: 100vh; } }
-.edit-auth-card { background: #FFFFFF; border-radius: 20px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid rgba(24,29,0,0.08); }
+.edit-auth-card { background: #FFFFFF; border-radius: 20px; padding: 24px; width: 100%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid rgba(24,29,0,0.08); }
 @media (min-width: 768px) { .edit-auth-card { padding: 40px; border-radius: 24px; } }
 .edit-input { width: 100%; height: 50px; border: 1px solid rgba(24,29,0,0.08); border-radius: 14px; padding: 0 16px 0 48px; font-size: 16px; color: #181D00;  background: #FFFFFF; }
 @media (min-width: 768px) { .edit-input { height: 52px; } }
@@ -24,8 +24,8 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
 .edit-input:focus + .edit-input-icon, .edit-input-icon-wrapper:focus-within .edit-input-icon { color: #2A4A30; }
 .edit-btn { width: 100%; height: 50px; border-radius: 999px; background: #181D00; color: #FFFFFF; font-size: 15px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px;  border: none; cursor: pointer; margin-top: 16px; }
 @media (min-width: 768px) { .edit-btn { height: 52px; font-size: 16px; margin-top: 18px; } }
-.edit-h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 400; color: #181D00; letter-spacing: -0.02em; margin-bottom: 8px; }
-@media (min-width: 768px) { .edit-h1 { font-size: 36px; margin-bottom: 12px; } }
+.edit-h1 { font-family: 'Instrument Serif', serif; font-size: 36px; font-weight: 400; color: #181D00; letter-spacing: -0.02em; margin-bottom: 8px; }
+@media (min-width: 768px) { .edit-h1 { font-size: 48px; margin-bottom: 12px; } }
 .edit-p { font-size: 15px; color: rgba(24,29,0,0.75); margin-bottom: 24px; }
 @media (min-width: 768px) { .edit-p { font-size: 16px; margin-bottom: 28px; } }
 .edit-label { display: block; font-size: 15px; font-weight: 500; color: #181D00; margin-bottom: 8px; }
@@ -33,7 +33,17 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
 .edit-link { color: #707070; font-size: 14px; font-weight: 500; text-decoration: none;  }
 .otp-input { width: 60px; height: 60px; border: 1px solid rgba(24,29,0,0.08); border-radius: 16px; text-align: center; font-size: 24px; font-weight: 600; color: #181D00;  }
 .otp-input:focus { border-color: #181D00; outline: none; box-shadow: 0 0 0 1px #181D00; }
-.field-wrapper { margin-bottom: 18px; }
+.field-wrapper { margin-bottom: 0; }
+.form-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 768px) {
+    .form-grid { grid-template-columns: repeat(2, 1fr); }
+    .field-school { grid-column: span 2; }
+}
+@media (min-width: 1024px) {
+    .form-grid { grid-template-columns: repeat(6, 1fr); }
+    .field-name, .field-email, .field-password, .field-confirm { grid-column: span 3; }
+    .field-school, .field-role, .field-class { grid-column: span 2; }
+}
 </style>
 
 <style>
@@ -53,20 +63,20 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
     <div style="position: absolute; inset: 0; width: 100%; height: 100%; background-image: url('{{ url_for("static", filename="img/hero-eco-education.jpg") }}'); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0.9;"></div>
     <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(24, 29, 0,0.4), transparent);"></div>
     <div style="position: absolute; left: 70px; bottom: 70px; z-index: 10; max-width: 500px;">
-        <h2 style="font-size: 48px; font-weight: 500; color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;">The future of environmental education.</h2>
+        <h2 style="font-family: 'Instrument Serif', serif; font-size: 48px; font-weight: 400; color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;">The future of environmental education.</h2>
         <p style="font-size: 20px; color: rgba(255,255,255,0.8); margin: 0;">Join thousands of schools making a measurable impact.</p>
     </div>
 </div>
 
     <div class="edit-split-right">
         <div class="edit-auth-card">
-            <h1 class="edit-h1" style="font-size: 32px;">Create an account</h1>
+            <h1 class="edit-h1">Create an account</h1>
             <p class="edit-p" style="margin-bottom: 20px;">Join the movement for a sustainable future.</p>
             
-            <form method="POST">
+            <form method="POST" class="form-grid">
                 {{ form.hidden_tag() }}
                 
-                <div class="field-wrapper">
+                <div class="field-wrapper field-name">
                     <label class="edit-label">Full Name</label>
                     <div class="edit-input-icon-wrapper" style="position: relative;">
                         {{ form.name(class="edit-input", placeholder="Jane Doe") }}
@@ -75,7 +85,7 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
                     {% for error in form.name.errors %}<div class="edit-error">{{ error }}</div>{% endfor %}
                 </div>
 
-                <div class="field-wrapper">
+                <div class="field-wrapper field-email">
                     <label class="edit-label">Email Address</label>
                     <div class="edit-input-icon-wrapper" style="position: relative;">
                         {{ form.email(class="edit-input", placeholder="name@school.edu") }}
@@ -84,7 +94,7 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
                     {% for error in form.email.errors %}<div class="edit-error">{{ error }}</div>{% endfor %}
                 </div>
 
-                <div class="field-wrapper">
+                <div class="field-wrapper field-school">
                     <label class="edit-label">School / College</label>
                     <div class="edit-input-icon-wrapper" style="position: relative;">
                         {{ form.school(class="edit-input", placeholder="Greenwood High") }}
@@ -93,44 +103,44 @@ body { background-color: #F3F4E5 !important; font-family: 'General Sans', sans-s
                     {% for error in form.school.errors %}<div class="edit-error">{{ error }}</div>{% endfor %}
                 </div>
 
-                <div class="field-wrapper" style="display: flex; gap: 16px;">
-                    <div style="flex: 1;">
-                        <label class="edit-label">Role</label>
-                        <div class="edit-input-icon-wrapper" style="position: relative;">
-                            {{ form.role(class="edit-input", style="padding-left: 48px;") }}
-                            <i data-lucide="users" class="edit-input-icon"></i>
-                        </div>
-                    </div>
-                    <div style="flex: 1;">
-                        <label class="edit-label">Class</label>
-                        <div class="edit-input-icon-wrapper" style="position: relative;">
-                            {{ form.class_name(class="edit-input", placeholder="e.g. 10th") }}
-                            <i data-lucide="graduation-cap" class="edit-input-icon"></i>
-                        </div>
+                <div class="field-wrapper field-role">
+                    <label class="edit-label">Role</label>
+                    <div class="edit-input-icon-wrapper" style="position: relative;">
+                        {{ form.role(class="edit-input", style="padding-left: 48px;") }}
+                        <i data-lucide="users" class="edit-input-icon"></i>
                     </div>
                 </div>
 
-                <div class="field-wrapper" style="display: flex; gap: 16px;">
-                    <div style="flex: 1;">
-                        <label class="edit-label">Password</label>
-                        <div class="edit-input-icon-wrapper" style="position: relative;">
-                            {{ form.password(class="edit-input", placeholder="••••") }}
-                            <i data-lucide="lock" class="edit-input-icon"></i>
-                        </div>
-                    </div>
-                    <div style="flex: 1;">
-                        <label class="edit-label">Confirm</label>
-                        <div class="edit-input-icon-wrapper" style="position: relative;">
-                            <input type="password" name="confirm_password" class="edit-input" placeholder="••••" required>
-                            <i data-lucide="check" class="edit-input-icon"></i>
-                        </div>
+                <div class="field-wrapper field-class">
+                    <label class="edit-label">Class</label>
+                    <div class="edit-input-icon-wrapper" style="position: relative;">
+                        {{ form.class_name(class="edit-input", placeholder="e.g. 10th") }}
+                        <i data-lucide="graduation-cap" class="edit-input-icon"></i>
                     </div>
                 </div>
 
-                <button type="submit" class="edit-btn">
-                    Create Account
-                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-                </button>
+                <div class="field-wrapper field-password">
+                    <label class="edit-label">Password</label>
+                    <div class="edit-input-icon-wrapper" style="position: relative;">
+                        {{ form.password(class="edit-input", placeholder="••••") }}
+                        <i data-lucide="lock" class="edit-input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="field-wrapper field-confirm">
+                    <label class="edit-label">Confirm</label>
+                    <div class="edit-input-icon-wrapper" style="position: relative;">
+                        <input type="password" name="confirm_password" class="edit-input" placeholder="••••" required>
+                        <i data-lucide="check" class="edit-input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="field-wrapper" style="grid-column: 1 / -1;">
+                    <button type="submit" class="edit-btn">
+                        Create Account
+                        <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+                    </button>
+                </div>
             </form>
             
             <div style="text-align: center; margin-top: 18px;">
