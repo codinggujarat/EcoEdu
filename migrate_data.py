@@ -1,18 +1,29 @@
 import os
 from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.exc import IntegrityError
+from dotenv import load_dotenv
 
 def run_migration():
+    # Load .env so it picks up the external PostgreSQL URL
+    load_dotenv()
+    
     # Source SQLite database
     source_url = "sqlite:///eco_education.db"
     
     # Destination PostgreSQL database (from env)
-    dest_url = os.environ.get('DATABASE_URL', 'postgresql://ecoedu_db_user:RNGUeCg7McxrBenCA6k8AUuCIyV53w8Q@dpg-d8nphibsq97s73bmh76g-a/ecoedu_db')
-    if dest_url.startswith('postgres://'):
+    dest_url = os.environ.get('DATABASE_URL')
+    if dest_url and dest_url.startswith('postgres://'):
         dest_url = dest_url.replace('postgres://', 'postgresql://', 1)
 
     print(f"Connecting to Source: {source_url}")
-    print(f"Connecting to Destination: {dest_url}")
+    # Mask password for printing
+    safe_dest = dest_url
+    if "@" in dest_url:
+        parts = dest_url.split("@")
+        creds = parts[0].split(":")
+        if len(creds) >= 3:
+            safe_dest = f"{creds[0]}:{creds[1]}:***@{parts[1]}"
+    print(f"Connecting to Destination: {safe_dest}")
 
     try:
         source_engine = create_engine(source_url)
@@ -43,7 +54,9 @@ def run_migration():
         'eco_tip',
         'user_achievement',
         'challenge_completion',
-        'puzzle_completion'
+        'puzzle_completion',
+        'otp_verification',
+        'password_reset_token'
     ]
 
     with source_engine.connect() as src_conn:

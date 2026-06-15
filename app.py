@@ -50,6 +50,15 @@ app.config['SECRET_KEY'] = os.environ.get('SESSION_SECRET', 'dev-secret-key-chan
 db_url = os.environ.get('DATABASE_URL', 'postgresql://ecoedu_db_user:RNGUeCg7McxrBenCA6k8AUuCIyV53w8Q@dpg-d8nphibsq97s73bmh76g-a/ecoedu_db')
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+# Fallback to SQLite if PostgreSQL driver is missing
+try:
+    if "postgresql" in db_url:
+        import psycopg2
+except ImportError:
+    print("WARNING: psycopg2 not found. Falling back to SQLite database.")
+    db_url = 'sqlite:///eco_education.db'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
